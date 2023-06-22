@@ -48,6 +48,11 @@ const Product = sequelize.define('Product', {
         defaultValue: DataTypes.NOW,
     },
 
+    isActive: { // the product can be deactivated by an admin by setting this to false
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+    },
+
 }, { timestamps: false });
 
 module.exports = Product;
