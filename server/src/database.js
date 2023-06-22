@@ -46,7 +46,7 @@ const {
   Comment,
   Rating,
   Favourite,
-  CartItem
+  Cart,
 } = sequelize.models;
 
 // We establish associations between models
@@ -92,18 +92,18 @@ User.belongsToMany(Product, {
 });
 
 // User many-to-one with CartItem
-User.hasMany(CartItem, {
+User.hasMany(Cart, {
   foreignKey: 'userId',
   onDelete: 'CASCADE', // Optional: Delete cart items when a user is deleted
 });
-CartItem.belongsTo(User, { foreignKey: 'userId' });
+Cart.belongsTo(User, { foreignKey: 'userId' });
 
 // Product many-to-one with CartItem
-Product.hasMany(CartItem, {
+Product.hasMany(Cart, {
   foreignKey: 'productId',
   onDelete: 'CASCADE', // Optional: Delete cart items when a product is deleted
 });
-CartItem.belongsTo(Product, { foreignKey: 'productId' });
+Cart.belongsTo(Product, { foreignKey: 'productId' });
 
 module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require('./database.js');
@@ -117,5 +117,5 @@ module.exports = {
   Comment,
   Rating,
   Favourite,
-  CartItem,
+  Cart,
 };
