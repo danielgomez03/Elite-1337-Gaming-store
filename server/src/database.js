@@ -13,7 +13,7 @@ const basename = path.basename(__filename);
 
 const modelDefiners = [];
 
-// We read all files inside the Models folder, we require them and we add them to the modelDefiners array
+// Read all files inside the Models folder, require them and add them to the modelDefiners array
 fs.readdirSync(path.join(__dirname, "/models"))
   .filter(
     (file) =>
@@ -23,12 +23,12 @@ fs.readdirSync(path.join(__dirname, "/models"))
     modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
-// We inject the connection (sequelize) to every model
+// Inject the connection (sequelize) to every model
 modelDefiners.forEach((model) => {
   model(sequelize);
 });
 
-// We capitalize the name of the models, ie: product => Product
+// Capitalize the name of the models, ie: product => Product
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [
   entry[0][0].toUpperCase() + entry[0].slice(1),
@@ -49,7 +49,7 @@ const {
   Cart,
 } = sequelize.models;
 
-// We establish associations between models
+// Establish the associations between models
 
 // Product one-to-many with Category
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
@@ -91,14 +91,14 @@ User.belongsToMany(Product, {
   foreignKey: 'userId',
 });
 
-// User many-to-one with CartItem
+// User many-to-one with Cart
 User.hasMany(Cart, {
   foreignKey: 'userId',
   onDelete: 'CASCADE', // Optional: Delete cart items when a user is deleted
 });
 Cart.belongsTo(User, { foreignKey: 'userId' });
 
-// Product many-to-one with CartItem
+// Product many-to-one with Cart
 Product.hasMany(Cart, {
   foreignKey: 'productId',
   onDelete: 'CASCADE', // Optional: Delete cart items when a product is deleted
