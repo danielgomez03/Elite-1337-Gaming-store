@@ -23,7 +23,7 @@ const Product = sequelize.define('Product', {
         type: DataTypes.STRING
     },
     
-    origin: { // Country or region of origin of the product, ie: "China". 
+    origin: { // country or region of origin of the product, ie: "China". 
         type: DataTypes.STRING,
     },
 
