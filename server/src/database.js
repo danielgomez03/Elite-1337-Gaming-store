@@ -48,6 +48,7 @@ const {
   Favourite,
   Cart,
   SaleHistory,
+  Contact,
 } = sequelize.models;
 
 // Establish the associations between models
@@ -59,6 +60,14 @@ Category.hasMany(Product, { foreignKey: 'categoryId' });
 // Product many-to-one with Image
 Product.hasMany(Image);
 Image.belongsTo(Product);
+
+// User has one Image (profile picture)
+User.hasOne(Image, {
+  foreignKey: 'userId',
+  as: 'userImage',
+  allowNull: true,
+  defaultValue: 'https://res.cloudinary.com/dwavcdgpu/image/upload/v1687509865/default-userImage_yqbaz3.png',
+});
 
 // User one-to-one with Login
 User.hasOne(Login, { foreignKey: 'userId'});
@@ -107,13 +116,8 @@ Product.hasMany(Cart, {
 Cart.belongsTo(Product, { foreignKey: 'productId' });
 
 // User many-to-one with SaleHistory
-User.hasMany(SaleHistory, {
-  foreignKey: 'userId',
-});
-
-SaleHistory.belongsTo(User, {
-  foreignKey: 'userId',
-});
+User.hasMany(SaleHistory, { foreignKey: 'userId' });
+SaleHistory.belongsTo(User, { foreignKey: 'userId'});
 
 // Product many-to-one with SaleHistory
 Product.hasMany(SaleHistory, {
@@ -123,6 +127,14 @@ Product.hasMany(SaleHistory, {
 SaleHistory.belongsTo(Product, {
   foreignKey: 'productId',
 });
+
+// User many-to-one with Contact
+User.hasMany(Contact, { foreignKey: 'userId', sourceKey: 'userId' });
+Contact.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
+
+// Product many-to-one with Contact
+Product.hasMany(Contact, { foreignKey: 'productId', sourceKey: 'productId' });
+Contact.belongsTo(Product, { foreignKey: 'productId', targetKey: 'productId' });
 
 module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require('./database.js');
@@ -138,4 +150,5 @@ module.exports = {
   Favourite,
   Cart,
   SaleHistory,
+  Contact,
 };

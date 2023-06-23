@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database');
 
 module.exports = (sequelize) => {
     
@@ -12,12 +11,12 @@ module.exports = (sequelize) => {
             primaryKey: true,
         },
 
-        name: {
+        firstName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
 
-        surname: {
+        lastName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -46,8 +45,8 @@ module.exports = (sequelize) => {
             type: DataTypes.DATEONLY,
         },
 
-        phone: {
-            type: DataTypes.INTEGER,
+        phoneNumber: { // a string to add number separation through "-"
+            type: DataTypes.STRING,
         },
 
         idNumber: { // forms of personal identification, like DNI or CUIL
