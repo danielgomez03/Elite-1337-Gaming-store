@@ -1,7 +1,9 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-const Rating = sequelize.define('Rating', {
+module.exports = (sequelize) => {
+  
+  sequelize.define('rating', {
 
     ratingId: { // naming it like this is less confusing when interacting with other id fields
       type: DataTypes.UUID,
@@ -25,6 +27,5 @@ const Rating = sequelize.define('Rating', {
       defaultValue: DataTypes.NOW,
     },
 
-}, { timestamps: false });
-
-module.exports = Rating;
+  }, { timestamps: false });
+};

@@ -47,6 +47,7 @@ const {
   Rating,
   Favourite,
   Cart,
+  SaleHistory,
 } = sequelize.models;
 
 // Establish the associations between models
@@ -105,6 +106,24 @@ Product.hasMany(Cart, {
 });
 Cart.belongsTo(Product, { foreignKey: 'productId' });
 
+// User many-to-one with SaleHistory
+User.hasMany(SaleHistory, {
+  foreignKey: 'userId',
+});
+
+SaleHistory.belongsTo(User, {
+  foreignKey: 'userId',
+});
+
+// Product many-to-one with SaleHistory
+Product.hasMany(SaleHistory, {
+  foreignKey: 'productId',
+});
+
+SaleHistory.belongsTo(Product, {
+  foreignKey: 'productId',
+});
+
 module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require('./database.js');
   conn: sequelize, // to import the connection { conn } = require('./database.js');
@@ -118,4 +137,5 @@ module.exports = {
   Rating,
   Favourite,
   Cart,
+  SaleHistory,
 };
