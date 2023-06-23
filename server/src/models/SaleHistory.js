@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database');
 
 module.exports = (sequelize) => {
   
@@ -19,6 +18,21 @@ module.exports = (sequelize) => {
     discountAtSale: {
       type: DataTypes.FLOAT,
       defaultValue: 0,
+    },
+    
+    quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 1,
+      validate: {
+        min: 1,
+      },
+    },
+
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
     },
 
   }, { timestamps: false });
