@@ -13,7 +13,7 @@ const basename = path.basename(__filename);
 
 const modelDefiners = [];
 
-// We read all files inside the Models folder, we require them and we add them to the modelDefiners array
+// Read all files inside the Models folder, require them and add them to the modelDefiners array
 fs.readdirSync(path.join(__dirname, "/models"))
   .filter(
     (file) =>
@@ -23,12 +23,12 @@ fs.readdirSync(path.join(__dirname, "/models"))
     modelDefiners.push(require(path.join(__dirname, "/models", file)));
   });
 
-// We inject the connection (sequelize) to every model
+// Inject the connection (sequelize) to every model
 modelDefiners.forEach((model) => {
   model(sequelize);
 });
 
-// We capitalize the name of the models, ie: product => Product
+// Capitalize the name of the models, ie: product => Product
 let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [
   entry[0][0].toUpperCase() + entry[0].slice(1),
@@ -47,9 +47,11 @@ const {
   Rating,
   Favourite,
   Cart,
+  SaleHistory,
+  Contact,
 } = sequelize.models;
 
-// We establish associations between models
+// Establish the associations between models
 
 // Product one-to-many with Category
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
@@ -58,6 +60,14 @@ Category.hasMany(Product, { foreignKey: 'categoryId' });
 // Product many-to-one with Image
 Product.hasMany(Image);
 Image.belongsTo(Product);
+
+// User has one Image (profile picture)
+User.hasOne(Image, {
+  foreignKey: 'userId',
+  as: 'userImage',
+  allowNull: true,
+  defaultValue: 'https://res.cloudinary.com/dwavcdgpu/image/upload/v1687509865/default-userImage_yqbaz3.png',
+});
 
 // User one-to-one with Login
 User.hasOne(Login, { foreignKey: 'userId'});
@@ -91,19 +101,40 @@ User.belongsToMany(Product, {
   foreignKey: 'userId',
 });
 
-// User many-to-one with CartItem
+// User many-to-one with Cart
 User.hasMany(Cart, {
   foreignKey: 'userId',
   onDelete: 'CASCADE', // Optional: Delete cart items when a user is deleted
 });
 Cart.belongsTo(User, { foreignKey: 'userId' });
 
-// Product many-to-one with CartItem
+// Product many-to-one with Cart
 Product.hasMany(Cart, {
   foreignKey: 'productId',
   onDelete: 'CASCADE', // Optional: Delete cart items when a product is deleted
 });
 Cart.belongsTo(Product, { foreignKey: 'productId' });
+
+// User many-to-one with SaleHistory
+User.hasMany(SaleHistory, { foreignKey: 'userId' });
+SaleHistory.belongsTo(User, { foreignKey: 'userId'});
+
+// Product many-to-one with SaleHistory
+Product.hasMany(SaleHistory, {
+  foreignKey: 'productId',
+});
+
+SaleHistory.belongsTo(Product, {
+  foreignKey: 'productId',
+});
+
+// User many-to-one with Contact
+User.hasMany(Contact, { foreignKey: 'userId', sourceKey: 'userId' });
+Contact.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
+
+// Product many-to-one with Contact
+Product.hasMany(Contact, { foreignKey: 'productId', sourceKey: 'productId' });
+Contact.belongsTo(Product, { foreignKey: 'productId', targetKey: 'productId' });
 
 module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require('./database.js');
@@ -118,4 +149,6 @@ module.exports = {
   Rating,
   Favourite,
   Cart,
+  SaleHistory,
+  Contact,
 };

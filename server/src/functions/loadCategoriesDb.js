@@ -1,5 +1,4 @@
-const Category = require('./models/Category');
-const sequelize = require('../database');
+const { sequelize, Category } = require('../database');
 
 // NOTE: this function/script can instead be implemented as a controller/handler
 
@@ -161,7 +160,7 @@ const createCategories = async (categories, parentId = null) => {
 // Load categories into the database
 const loadCategories = async () => {
     try {
-        await sequelize.sync({ force: true }); // Drops existing tables and recreates them
+        // await sequelize.sync({ force: true }); // Drops existing tables and recreates them
         await createCategories(categories);
         console.log('Categories loaded successfully.');
     } catch (error) {
