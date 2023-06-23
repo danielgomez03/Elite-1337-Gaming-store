@@ -1,26 +1,25 @@
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database');
 
-const Favourite = sequelize.define('Favourite', {
+module.exports = (sequelize) => {
+
+    sequelize.define('favourite', {
   
-    favouriteId: { // naming it like this is less confusing when interacting with other id fields
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true,
-        unique: true,
-    },
+        favouriteId: { // naming it like this is less confusing when interacting with other id fields
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
+            allowNull: false,
+            primaryKey: true,
+        },
 
-    userId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-    },
+        userId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+        },
 
-    productId: {
-        type: DataTypes.UUID,
-        allowNull: false,
-    },
+        productId: {
+            type: DataTypes.UUID,
+            allowNull: false,
+        },
 
-}, { timestamps: false });
-
-module.exports = Favourite;
+    }, { timestamps: false });
+};
