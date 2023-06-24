@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 
-const categories=[]
+
 const validate=(form)=> {
     let error = {};
     
@@ -33,7 +33,150 @@ const validate=(form)=> {
 
 export default function Form() {
  
-  
+  const categories = [
+  {
+      name: 'Hardware',
+      isMainCategory: true,
+      
+      subcategories: [
+          {
+              name: 'Procesadores (CPU)',
+          },
+          {
+              name: 'Placas Madre (Motherboards)',
+          },
+          {
+              name: 'Placas de Video (GPU)',
+          },
+          {
+              name: 'Almacenamiento',
+              subcategories: [
+                  {
+                      name: 'Disco Rígido Externo',
+                  },
+                  {
+                      name: 'Disco Interno Mecánico',
+                  },
+                  {
+                      name: 'Disco SSD / SSD M.2',
+                  },
+                  {
+                      name: 'Ópticos (DVD / Blu-Ray)',
+                  },
+                  {
+                      name: 'Pen Drives',
+                  },
+                  {
+                      name: 'MicroSD',
+                  },
+              ],
+          },
+          {
+              name: 'Cooling / Refrigeración',
+              subcategories: [
+                  {
+                      name: 'Coolers CPU',
+                  },
+                  {
+                      name: 'Coolers Gabinete',
+                  },
+                  {
+                      name: 'Pastas Térmicas',
+                  },
+              ],
+          },
+          {
+              name: 'Memorias RAM',
+              subcategories: [
+                  {
+                      name: 'DIMM (DDR3, DDR4)',
+                  },
+                  {
+                      name: 'SO-DIMM',
+                  },
+              ],
+          },
+          {
+              name: 'Gabinetes, Fuentes y Alimentación',
+              subcategories: [
+                  {
+                      name: 'Gabinetes',
+                  },
+                  {
+                      name: 'Fuentes',
+                  },
+                  {
+                      name: 'Alimentación',
+                  },
+              ],
+          },
+      ],
+  },
+  {
+      name: 'Monitores',
+      isMainCategory: true,
+      subcategories: [
+          {
+              name: 'Monitores',
+          },
+          {
+              name: 'Monitores Gamer',
+          },
+      ],
+  },
+  {
+      name: 'Periféricos y Accesorios',
+      isMainCategory: true,
+      subcategories: [
+          {
+              name: 'Auriculares',
+          },
+          {
+              name: 'Kit Teclado/Mouse',
+          },
+          {
+              name: 'Teclado',
+          },
+          {
+              name: 'Mouse',
+          },
+          {
+              name: 'Mouse Pads',
+          },
+          {
+              name: 'Micrófonos',
+          },
+          {
+              name: 'Parlantes',
+          },
+          {
+              name: 'Joysticks',
+          },
+          {
+              name: 'Webcams',
+          },
+          {
+              name: 'Conectividad',
+          },
+          {
+              name: 'Tabletas Digitalizadoras',
+          },
+          {
+              name: 'Sillas Gamer',
+          },
+      ],
+  },
+  {
+      name: 'Notebooks / Tablets',
+      isMainCategory: true,
+  },
+  {
+      name: 'Ofertas',
+      isMainCategory: true,
+  },
+];
+const [selectedCategory, setSelectedCategory] = useState('');
+const [selectedSubcategory, setSelectedSubcategory] = useState('');
   
  
   const [form, setForm] = useState({
@@ -47,11 +190,26 @@ export default function Form() {
     isActive:false,//fata input
     category:"",
     image:"",
-    ratings:"", //falta input 
+    
   })
    const [error,setError]= useState({})
 
-  const categoryHandler = ()=>{}
+  const categoryHandler = (event)=>{
+   
+    const category = event.target.value;
+    setSelectedCategory(category);
+
+    // Buscar las subcategorías correspondientes a la categoría seleccionada
+    const selectedCategoryObj = categories.find((cat) => cat.name === category);
+    const subcategories = selectedCategoryObj.subcategories || [];
+    setSelectedSubcategory(subcategories[0]?.name || '');
+
+  }
+
+  const handleSubcategory = (event) => {
+    const subcategory = event.target.value;
+    setSelectedSubcategory(subcategory);
+  };
   
 
  
@@ -103,7 +261,7 @@ export default function Form() {
     </div>
     <div>
     <input placeholder='manufacturer...'type="text" value={form.manufacturer} onChange={onChangeHandler} name='manufacturer'/>
-      {error.manufacturer ? (<p>{error.manufacturer}</p>) : ""}
+      
     </div>
     <div>
     <input placeholder='origin...'type="text" value={form.origin} onChange={onChangeHandler} name='origin'/>
@@ -128,25 +286,28 @@ export default function Form() {
     
    
     <div>
-    <select name="category" onChange={categoryHandler}>
+    <select value={selectedCategory} onChange={categoryHandler}>
                                 <option value='select'>SELECT CATEGORY</option>
                                 {categories.map(cat => 
-                                    <option name={cat.name} value={cat.categoryId}>
-                                        {country.name}
+                                    <option name={cat.name} value={cat.name}>
+                                        {cat.name}
                                     </option>
                                 )
                                 }
                             </select>
-                            {categories.categoryId && (
-        <div>
-          <label>Subcategories:</label>
-          <ul>
-            {subcategorie.map(subcat => (
-              <li value={subcat.name}>{subcat.name}</li>
+                           <div>
+      <select value={selectedSubcategory} onChange={handleSubcategory}>
+        <option value="">SubCategories</option>
+        {selectedCategory &&
+          categories
+            .find((cat) => cat.name === selectedCategory)
+            .subcategories?.map((subcategory) => (
+              <option key={subcategory.name} value={subcategory.name}>
+                {subcategory.name}
+              </option>
             ))}
-          </ul>
-        </div>
-      )}
+      </select>
+                           </div>
     </div>
     <div>
     <label for="image">Image:</label>
