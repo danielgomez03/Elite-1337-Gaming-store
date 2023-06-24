@@ -2,8 +2,10 @@ const {Product} = require('../database');
 const products = require('../../products');
 const cloudinary = require('cloudinary').v2;
 
+
 const postCreateProduct = async (req, res) => {
         try {
+
             const { productId, name, description, manufacturer, origin, price,  discount,
                 stock, isActive, category, images, comments, ratings, carts, favorite } = req.body;
             const product = await Product.create({
@@ -16,13 +18,19 @@ const postCreateProduct = async (req, res) => {
                 discount,
                 stock,
                 isActive,
-                category,
-                images,
-                comments,
-                ratings,
-                carts,
-                favorite
+
+                // category, tablas relacionadas
+                // images, tablas relacionadas
+                // comments, tablas relacionadas
+                // ratings, tablas relacionadas
+                // carts, tablas relacionadas
+                // favorite tablas relacionadas
             });
+
+            
+        
+
+
             res.status(200).json(product);
         } catch (error) {
             res.status(400).json({ message: error.message });
