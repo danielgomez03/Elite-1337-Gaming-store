@@ -10,31 +10,31 @@ const categories = [
         
         subcategories: [
             {
-                name: 'Procesadores (CPU)',
+                name: 'CPUs/Processors',
             },
             {
-                name: 'Placas Madre (Motherboards)',
+                name: 'Motherboards',
             },
             {
-                name: 'Placas de Video (GPU)',
+                name: 'Graphics/Video Cards',
             },
             {
-                name: 'Almacenamiento',
+                name: 'Storage',
                 subcategories: [
                     {
-                        name: 'Disco Rígido Externo',
+                        name: 'External Hard Disk Drives',
                     },
                     {
-                        name: 'Disco Interno Mecánico',
+                        name: 'Internal Hard Disk Drives',
                     },
                     {
-                        name: 'Disco SSD / SSD M.2',
+                        name: 'Solid State Drives',
                     },
                     {
-                        name: 'Ópticos (DVD / Blu-Ray)',
+                        name: 'DVD / Blu-Ray',
                     },
                     {
-                        name: 'Pen Drives',
+                        name: 'USB Drives',
                     },
                     {
                         name: 'MicroSD',
@@ -42,21 +42,21 @@ const categories = [
                 ],
             },
             {
-                name: 'Cooling / Refrigeración',
+                name: 'Cooling',
                 subcategories: [
                     {
-                        name: 'Coolers CPU',
+                        name: 'CPU Coolers',
                     },
                     {
-                        name: 'Coolers Gabinete',
+                        name: 'Case Fans',
                     },
                     {
-                        name: 'Pastas Térmicas',
+                        name: 'Thermal Pastes',
                     },
                 ],
             },
             {
-                name: 'Memorias RAM',
+                name: 'RAM Memory',
                 subcategories: [
                     {
                         name: 'DIMM (DDR3, DDR4)',
@@ -67,57 +67,54 @@ const categories = [
                 ],
             },
             {
-                name: 'Gabinetes, Fuentes y Alimentación',
+                name: 'Cases and Power Supplies',
                 subcategories: [
                     {
-                        name: 'Gabinetes',
+                        name: 'Cases',
                     },
                     {
-                        name: 'Fuentes',
-                    },
-                    {
-                        name: 'Alimentación',
+                        name: 'Power Supplies',
                     },
                 ],
             },
         ],
     },
     {
-        name: 'Monitores',
+        name: 'Monitors',
         isMainCategory: true,
         subcategories: [
             {
-                name: 'Monitores',
+                name: 'Monitors',
             },
             {
-                name: 'Monitores Gamer',
+                name: 'Gaming Monitors',
             },
         ],
     },
     {
-        name: 'Periféricos y Accesorios',
+        name: 'Peripherals and Accessories',
         isMainCategory: true,
         subcategories: [
             {
-                name: 'Auriculares',
+                name: 'Headphones',
             },
             {
-                name: 'Kit Teclado/Mouse',
+                name: 'Keyboard / Mouse Kits',
             },
             {
-                name: 'Teclado',
+                name: 'Keyboards',
             },
             {
-                name: 'Mouse',
+                name: 'Mouse', // "Mice" just doesn't sound right!
             },
             {
                 name: 'Mouse Pads',
             },
             {
-                name: 'Micrófonos',
+                name: 'Microphones',
             },
             {
-                name: 'Parlantes',
+                name: 'Speakers',
             },
             {
                 name: 'Joysticks',
@@ -126,22 +123,22 @@ const categories = [
                 name: 'Webcams',
             },
             {
-                name: 'Conectividad',
+                name: 'Connectivity',
             },
             {
-                name: 'Tabletas Digitalizadoras',
+                name: 'Graphic Tablets',
             },
             {
-                name: 'Sillas Gamer',
+                name: 'Gaming Chairs',
             },
         ],
     },
     {
-        name: 'Notebooks / Tablets',
+        name: 'Laptops / Tablets',
         isMainCategory: true,
     },
     {
-        name: 'Ofertas',
+        name: 'On Sale',
         isMainCategory: true,
     },
 ];
