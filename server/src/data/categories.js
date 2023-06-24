@@ -1,7 +1,3 @@
-const { sequelize, Category } = require('../database');
-
-// NOTE: this function/script can instead be implemented as a controller/handler
-
 // Hardcoded categories
 const categories = [
     {
@@ -181,40 +177,4 @@ const categories = [
     },
 ];
 
-// Recursive function to create categories and subcategories
-const createCategories = async (categories, parentId = null) => {
-    for (const categoryData of categories) {
-        const { name, subcategories } = categoryData;
-
-        // Check if category with the same name already exists
-        const existingCategory = await Category.findOne({ where: { name, parentId } });
-
-        if (existingCategory) {
-            // Category already exists, update its parentId if necessary
-            existingCategory.parentId = parentId;
-            await existingCategory.save();
-        } else {
-            // Category doesn't exist, create a new one
-            const category = await Category.create({ name, parentId, isMainCategory: !parentId });
-
-            if (subcategories && subcategories.length > 0) {
-                await createCategories(subcategories, category.categoryId);
-            }
-        }
-    }
-};
-  
-// Load categories into the database
-const loadCategories = async (req, res) => {
-    try {
-        await createCategories(categories);
-        console.log('Categories loaded successfully.');
-        res.status(200).send('Categories loaded successfully.');
-
-    } catch (error) {
-        console.error('Error loading categories:', error);
-        res.status(500).send('Error loading categories:', error);
-    }
-};
-
-module.exports = loadCategories;
+module.exports = categories;
