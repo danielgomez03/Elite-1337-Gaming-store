@@ -10,7 +10,7 @@ const router = Router();
 // Configure routers
 // Example: router.use('/auth', authRouter);
 router.use(getAllProducts);
-router.use(getProductByName);
+// router.use(getProductByName);
 router.use(postCreateProduct);
 
 

@@ -11,7 +11,7 @@ const {
 } = process.env;
 require('dotenv').config();
 
-const { PORT } = process.env;
+
 
 conn.sync({ force: true }).then(() => {
   server.listen(PORT, () => {
