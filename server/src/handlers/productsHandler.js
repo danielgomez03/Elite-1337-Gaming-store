@@ -1,4 +1,5 @@
 const { getAllProducts, getProductsByName } = require("../controllers/productsController");
+const { getProductById } = require("../controllers/productsController");
 
 const getProducts = async (req, res) => {
   const { name } = req.query;
@@ -16,6 +17,18 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getProductByIdHandler = async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const product = await getProductById(productId);
+    res.status(200).json(product);
+  } catch (error) {
+    console.error("Error en getProductByIdHandler:", error);
+    res.status(500).json({ error: "Ocurrió un error al obtener el producto por ID" });
+  }
+};
+
 module.exports = {
-    getProducts
+    getProducts,
+    getProductByIdHandler
 };

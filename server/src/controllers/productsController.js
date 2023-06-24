@@ -8,6 +8,7 @@ const getAllProducts = async () => {
             model: Image,
             attributes: ["imageId", "url"],
           },
+          order: [["name", "ASC"]],
       });
       return products;
     } catch (error) {
@@ -35,8 +36,33 @@ const getProductsByName = async (name) => {
       throw new Error("Ocurrió un error al obtener los productos por nombre");
     }
   };
+  const getProductById = async (productId) => {
+    try {
+      const product = await Product.findOne({
+        where: {
+          productId: productId,
+        },
+        include: {
+          model: Image,
+          attributes: ["imageId", "url"],
+        },
+      });
+  
+      if (!product) {
+        // El producto no fue encontrado
+        throw new Error("Producto no encontrado");
+      }
+  
+      return product;
+    } catch (error) {
+      console.error("Error en getProductById:", error);
+      throw new Error("Ocurrió un error al obtener el producto por ID");
+    }
+  };
+
 
 module.exports = {
     getAllProducts,
     getProductsByName,
+    getProductById
 };
