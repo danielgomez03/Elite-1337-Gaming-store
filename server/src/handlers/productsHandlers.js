@@ -22,9 +22,26 @@ const postCreateProduct = async (req, res) => {
                 stock,
                 isActive,
             });
+            const categoryDb = [category];
+            for (const category of categoryDb) {
+                const categoryDb2 = await Category.findOne({ where: { name: category.name } });
+                if (!categoryDb2) {
+                    return res.status(400).json({ message: 'Category does not exist' });
+                }
+                if (category.subcategories && category.subcategories.length > 0) {
+                    const categoryDb3 = await Category.findOne({ where: { name: category.subcategories.name } });
+                    if (!categoryDb3) {
+                        return res.status(400).json({ message: 'Category does not exist' });
+                    }
+                }
 
-            const categoryDb = await Category.findOne({ where: { name: category } });
-            await product.addCategory(categoryDb);
+                
+                
+            }
+            
+            
+            
+            
 
             const imagesDb = await Promise.all(images.map(async (image) => {
                 const { url, publicId } = image;
