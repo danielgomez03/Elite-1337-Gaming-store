@@ -155,22 +155,42 @@ const createCategories = async (categories, parentId = null) => {
 };
   
 // Load categories into the database
-const loadCategories = async () => {
+const loadCategories = async (req, res) => {
     try {
         // await sequelize.sync({ force: true }); // Drops existing tables and recreates them
         await createCategories(categories);
         console.log('Categories loaded successfully.');
+        res.status(200).send('Categories loaded successfully.');
+
     } catch (error) {
         console.error('Error loading categories:', error);
-    } finally {
-        sequelize.close();
+        res.status(500).send('Error loading categories:', error);
+
     }
 };
 
-loadCategories();
+// const loadCategories = async () => {
+//     try {
+//         // await sequelize.sync({ force: true }); // Drops existing tables and recreates them
+//         await createCategories(categories);
+//         console.log('Categories loaded successfully.');
+        
+//     } catch (error) {
+//         console.error('Error loading categories:', error);
+        
+//     // } finally {
+//     //     sequelize.close();
+//     }
+    
+// };
 
-module.exports = {
-    createCategories,
-    loadCategories,
-    categories,
-};
+// loadCategories();
+
+module.exports = loadCategories;
+
+
+// module.exports = {
+//     createCategories,
+//     loadCategories,
+//     categories,
+// };
