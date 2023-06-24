@@ -147,7 +147,8 @@ const categories = [
 const createCategories = async (categories, parentId = null) => {
     for (const categoryData of categories) {
       const { name, subcategories } = categoryData;
-      const category = await Category.create({ name, parentId, isMainCategory: !parentId });
+      const category = await Category.create({ name, parentId, isMainCategory: !parentId
+     });
       if (subcategories && subcategories.length > 0) {
         await createCategories(subcategories, category.categoryId);
       }
