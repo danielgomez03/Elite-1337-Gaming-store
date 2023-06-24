@@ -1,6 +1,8 @@
 const { Product, Image } = require('../database');
+const { loadCategories } = require('../functions/loadCategoriesDb');
 
 async function getAllProducts(req, res) {
+    loadCategories();
     res.status(200).json({ message: 'getAllProducts' });
     // try {
     //     const products = await Product.findAll({

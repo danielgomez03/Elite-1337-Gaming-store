@@ -24,8 +24,8 @@ const postCreateProduct = async (req, res) => {
             // const categoryDb = await Category.findOne({ where: { name: category } });
             // await product.addCategory(categoryDb);
             const imagesDb = await Promise.all(images.map(async (image) => {
-                const { url, publicId } = image;
-                const imageDb = await Image.create({ url, publicId });
+                const { url } = image;
+                const imageDb = await Image.create({ url });
                 return imageDb;
             }));
             await product.addImages(imagesDb);
