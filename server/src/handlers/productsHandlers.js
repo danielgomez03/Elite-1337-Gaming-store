@@ -1,13 +1,15 @@
-const {Product} = require('../database');
+const {Product, Image, Category} = require('../database');
 const products = require('../../products');
-const cloudinary = require('cloudinary').v2;
+// const {loadCategoriesDb}  = require('../functions/loadCategoriesDb');
+
+
 
 
 const postCreateProduct = async (req, res) => {
+    
         try {
-
             const { productId, name, description, manufacturer, origin, price,  discount,
-                stock, isActive, category, images, comments, ratings, carts, favorite } = req.body;
+                stock, isActive, category, images } = req.body;
             const product = await Product.create({
                 productId,
                 name,
@@ -18,20 +20,17 @@ const postCreateProduct = async (req, res) => {
                 discount,
                 stock,
                 isActive,
-
-                // category, tablas relacionadas
-                // images, tablas relacionadas
-                // comments, tablas relacionadas
-                // ratings, tablas relacionadas
-                // carts, tablas relacionadas
-                // favorite tablas relacionadas
             });
-
-            
-        
-
-
-            res.status(200).json(product);
+            // const categoryDb = await Category.findOne({ where: { name: category } });
+            // await product.addCategory(categoryDb);
+            const imagesDb = await Promise.all(images.map(async (image) => {
+                const { url, publicId } = image;
+                const imageDb = await Image.create({ url, publicId });
+                return imageDb;
+            }));
+            await product.addImages(imagesDb);
+           
+            res.status(200).json({ message: 'Product created successfully', product });
         } catch (error) {
             res.status(400).json({ message: error.message });
         }
