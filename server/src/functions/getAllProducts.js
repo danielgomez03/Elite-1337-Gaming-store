@@ -1,6 +1,8 @@
 const { Product, Image } = require('../database');
+const { getAllCategories } = require('../handlers/categoriesHandlers');
 
 async function getAllProducts(req, res) {
+    // getAllCategories();
     res.status(200).json({ message: 'getAllProducts' });
     // try {
     //     const products = await Product.findAll({
