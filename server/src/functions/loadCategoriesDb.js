@@ -31,7 +31,7 @@ const categories = [
                         name: 'Solid State Drives',
                     },
                     {
-                        name: 'DVD / Blu-Ray',
+                        name: 'DVD/Blu-Ray',
                     },
                     {
                         name: 'USB Drives',
@@ -99,7 +99,7 @@ const categories = [
                 name: 'Headphones',
             },
             {
-                name: 'Keyboard / Mouse Kits',
+                name: 'Keyboard/Mouse Kits',
             },
             {
                 name: 'Keyboards',
@@ -134,7 +134,7 @@ const categories = [
         ],
     },
     {
-        name: 'Laptops / Tablets',
+        name: 'Laptops/Tablets',
         isMainCategory: true,
     },
     {
