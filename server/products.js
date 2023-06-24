@@ -951,93 +951,93 @@ const products = [
           },
         },
     },
-    {
-        productId: 'abcdefg',
-        name: 'Product 25',
-        description: 'This is product 25',
-        manufacturer: 'Manufacturer C',
-        origin: 'Spain',
-        price: 199.99,
-        discount: 10,
-        stock: 7,
-        isActive: true,
-        category: {
-          categoryId: 8,
-          name: 'Gabinetes',
-          isMainCategory: false,
-          category: {
-            categoryId: 1,
-            name: 'Hardware',
-            isMainCategory: true,
-          },
-        },
-        images: [
-          {
-            imageId: 21,
-            url: 'https://example.com/image21.jpg',
-            caption: 'Image 21'
-          },
-          {
-            imageId: 22,
-            url: 'https://example.com/image22.jpg',
-            caption: 'Image 22'
-          }
-        ],
-        comments: [
-          {
-            commentId: 'comment-25-1',
-            content: 'Great build quality and ample space for components.',
-            user: {
-              userId: 'user25',
-            },
-          },
-          {
-            commentId: 'comment-25-2',
-            content: 'Good cable management options and sleek design.',
-            user: {
-              userId: 'user26',
-            },
-          },
-        ],
-        ratings: [
-          {
-            ratingId: 'rating-25-1',
-            value: 4,
-            user: {
-              userId: 'user25',
-            },
-          },
-          {
-            ratingId: 'rating-25-2',
-            value: 5,
-            user: {
-              userId: 'user26',
-            },
-          },
-        ],
-        carts: [
-          {
-            cartId: 21,
-            quantity: 1,
-            user: {
-              userId: 'user25',
-            },
-          },
-          {
-            cartId: 22,
-            quantity: 1,
-            user: {
-              userId: 'user26',
-            },
-          },
-        ],
-        favourite: {
-          favouriteId: 11,
-          user: {
-            userId: 'user25',
-          },
-        },
-    },         
+    // {
+    //     productId: 'abcdefg',
+    //     name: 'Product 25',
+    //     description: 'This is product 25',
+    //     manufacturer: 'Manufacturer C',
+    //     origin: 'Spain',
+    //     price: 199.99,
+    //     discount: 10,
+    //     stock: 7,
+    //     isActive: true,
+    //     category: {
+    //       categoryId: 8,
+    //       name: 'Gabinetes',
+    //       isMainCategory: false,
+    //       category: {
+    //         categoryId: 1,
+    //         name: 'Hardware',
+    //         isMainCategory: true,
+    //       },
+    //     },
+    //     images: [
+    //       {
+    //         imageId: 21,
+    //         url: 'https://example.com/image21.jpg',
+    //         caption: 'Image 21'
+    //       },
+    //       {
+    //         imageId: 22,
+    //         url: 'https://example.com/image22.jpg',
+    //         caption: 'Image 22'
+    //       }
+    //     ],
+    //     comments: [
+    //       {
+    //         commentId: 'comment-25-1',
+    //         content: 'Great build quality and ample space for components.',
+    //         user: {
+    //           userId: 'user25',
+    //         },
+    //       },
+    //       {
+    //         commentId: 'comment-25-2',
+    //         content: 'Good cable management options and sleek design.',
+    //         user: {
+    //           userId: 'user26',
+    //         },
+    //       },
+    //     ],
+    //     ratings: [
+    //       {
+    //         ratingId: 'rating-25-1',
+    //         value: 4,
+    //         user: {
+    //           userId: 'user25',
+    //         },
+    //       },
+    //       {
+    //         ratingId: 'rating-25-2',
+    //         value: 5,
+    //         user: {
+    //           userId: 'user26',
+    //         },
+    //       },
+    //     ],
+    //     carts: [
+    //       {
+    //         cartId: 21,
+    //         quantity: 1,
+    //         user: {
+    //           userId: 'user25',
+    //         },
+    //       },
+    //       {
+    //         cartId: 22,
+    //         quantity: 1,
+    //         user: {
+    //           userId: 'user26',
+    //         },
+    //       },
+    //     ],
+    //     favourite: {
+    //       favouriteId: 11,
+    //       user: {
+    //         userId: 'user25',
+    //       },
+    //     },
+    // },         
 ];
 
 module.exports = products;  

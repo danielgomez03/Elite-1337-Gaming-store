@@ -1,12 +1,12 @@
 const server = require('./src/app.js');
 const { conn } = require('./src/database.js');
-// const { seedDatabase } = require("./src/controllers/seeding.js");
+const { seedDatabase } = require("./src/controllers/seeding.js");
 // const { Product, Image, Category } = require('./src/database');
 // const products = require('./products');
 
 // Syncing all the models at once.
 conn.sync({ force: true }).then(() => {
-  // seedDatabase();
+  seedDatabase();
   server.listen(3001, () => {
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });

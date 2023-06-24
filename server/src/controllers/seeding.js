@@ -1,102 +1,51 @@
-const { User, Product, Category, Image, Comment, Rating, Cart, Favorite} = require("../database");
+const { Product, Image } = require("../database");
 const products = require("../../products");
 
 const seedDatabase = async () => {
-    try {
-      // Crear categorías y productos
-      for (const productData of products) {
-        const { category, images, comments, ratings, carts, favourite, ...productInfo } = productData;
-  
-        // Crear categoría del producto
-        const categoryData = category.category;
-        const mainCategory = await Category.findOrCreate({
-          where: { categoryId: categoryData.categoryId },
-          defaults: {
-            name: categoryData.name,
-            isMainCategory: categoryData.isMainCategory,
-          },
-        });
-  
-        const subCategory = await Category.findOrCreate({
-          where: { categoryId: category.categoryId },
-          defaults: {
-            name: category.name,
-            isMainCategory: category.isMainCategory,
-          },
-        });
-  
-        // Crear producto
-        const product = await Product.create(productInfo);
-        console.log('Product created:', product); 
-  
-        // Asociar categorías al producto
-        await product.addCategory(mainCategory[0]);
-        await product.addCategory(subCategory[0]);
-  
-        // Crear imágenes del producto
-        for (const imageData of images) {
-          await Image.create(imageData);
-        }
-  
-        // Crear comentarios del producto
-        for (const commentData of comments) {
-          const user = await User.findOrCreate({
-            where: { userId: commentData.user.userId },
-            defaults: { ...commentData.user },
-          });
-  
-          await Comment.create({
-            ...commentData,
-            productId: product.productId,
-            userId: user[0].userId,
-          });
-        }
-  
-        // Crear valoraciones del producto
-        for (const ratingData of ratings) {
-          const user = await User.findOrCreate({
-            where: { userId: ratingData.user.userId },
-            defaults: { ...ratingData.user },
-          });
-  
-          await Rating.create({
-            ...ratingData,
-            productId: product.productId,
-            userId: user[0].userId,
-          });
-        }
-  
-        // Crear carritos del producto
-        for (const cartData of carts) {
-          const user = await User.findOrCreate({
-            where: { userId: cartData.user.userId },
-            defaults: { ...cartData.user },
-          });
-  
-          await Cart.create({
-            ...cartData,
-            productId: product.productId,
-            userId: user[0].userId,
-          });
-        }
-  
-        // Crear favorito del producto
-        const user = await User.findOrCreate({
-          where: { userId: favourite.user.userId },
-          defaults: { ...favourite.user },
-        });
-  
-        await Favorite.create({
-          ...favourite,
-          productId: product.productId,
-          userId: user[0].userId,
-        });
+  try {
+    // Insertar productos en la base de datos
+    for (let i = 0; i < products.length; i++) {
+      const productData = products[i];
+
+      // Verificar si el producto ya existe en la base de datos
+      const existingProduct = await Product.findOne({
+        where: { productId: productData.productId },
+      });
+
+      if (existingProduct) {
+        console.log(`El producto con productId ${productData.productId} ya existe en la base de datos. Saltando la creación.`);
+        continue;
       }
-  
-      console.log('Database seeded successfully');
-    } catch (error) {
-      console.error('Error seeding database:', error);
+
+      // Crear el producto en la base de datos
+      const product = await Product.create({
+        productId: productData.productId,
+        name: productData.name,
+        description: productData.description,
+        manufacturer: productData.manufacturer,
+        origin: productData.origin,
+        price: productData.price,
+        discount: productData.discount,
+        stock: productData.stock,
+        isActive: productData.isActive,
+      });
+
+      // Insertar imágenes del producto en la base de datos
+      const images = productData.images.map(imageData => ({
+        imageId: imageData.imageId,
+        url: imageData.url,
+        caption: imageData.caption,
+        productId: product.productId
+      }));
+
+      await Image.bulkCreate(images);
+      
     }
-  };
-  
-  module.exports = { seedDatabase };
+
+    console.log('Seeding completed successfully.');
+  } catch (error) {
+    console.error('Seeding failed:', error);
+  }
+};
+
+module.exports = { seedDatabase };
