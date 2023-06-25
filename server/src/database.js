@@ -73,9 +73,7 @@ Image.belongsTo(Product);
 // User has one Image (profile picture)
 User.hasOne(Image, {
   foreignKey: 'userId',
-  // as: 'userImage',
   allowNull: true,
-  defaultValue: 'https://res.cloudinary.com/dwavcdgpu/image/upload/v1687509865/default-userImage_yqbaz3.png',
 });
 
 // User one-to-one with Login

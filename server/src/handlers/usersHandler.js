@@ -72,35 +72,25 @@ const postCreateUser = async (req, res) => {
 
     await user.setLogin(login);
 
-    // Create and associate the image with the user
-    if (image) {
-      const { url } = image;
-      const userImage = await Image.create({ url });
-      await user.setUserImage(userImage);
+    let userImage;
+
+    // Check if an image file was uploaded
+    if (req.file) {
+      // Upload the image file and create a new image record
+      userImage = await Image.upload(req.file);
+    } else if (image) {
+      // If no file was uploaded, check if an image URL is provided
+      userImage = await Image.create({ url: image });
+    } else {
+      // If neither file nor URL is provided, use the default image URL
+      const defaultImageURL =
+        'https://res.cloudinary.com/dwavcdgpu/image/upload/v1687509865/default-userImage_yqbaz3.png';
+      userImage = await Image.create({ url: defaultImageURL });
     }
 
-    // // Create and associate the image with the user with text URL
-    // for (const imageData of image) {
-    //   const { url } = imageData;
-    //   const image = await Image.create({
-    //     url
-    //   });
-
-    //   await user.addImage(image);
-    // }
-
-    // // Upload and associate the image with the user using Cloudinary
-    // const uploadedImage = [];
-
-    // for (const imageFile of image) {
-    //   const { url } = imageFile;
-    //   const image = await Image.upload(imageFile);
-    //   uploadedImage.push({ url: image.url });
-    // }
-
-    // await user.addImage(uploadedImage);
-
+    await user.setImage(userImage);
     res.status(201).json({ message: 'User created successfully', user, login, image });
+
   } catch (error) {
     console.error('Error in postCreateUser:', error);
     res.status(400).json({ message: error.message });
