@@ -1,5 +1,5 @@
 const { Product, Image } = require("../database");
-const products = require("../../products");
+const products = require("../data/products");
 
 const seedDatabase = async () => {
   try {
