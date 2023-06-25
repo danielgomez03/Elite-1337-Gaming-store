@@ -33,11 +33,9 @@ const postCreateProduct = async (req, res) => {
                     if (!categoryDb3) {
                         return res.status(400).json({ message: 'Category does not exist' });
                     }
-                }
-
-                
-                
+                }  
             }
+            await product.addCategories(categoryDb);
             
             
             
