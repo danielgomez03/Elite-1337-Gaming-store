@@ -245,86 +245,80 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
     
   
 
-  return (
-  <form action="/products" method="POST" enctype="multipart/form-data" onSubmit={onSubmithandler}>
-    <div>
-    <div>
-    <div>
-      
-      <input placeholder='Enter New Product...'type="text" value={form.name} onChange={onChangeHandler} name='name'/>
-      {error.name ? (<p>{error.name}</p>) : ""}
-    </div>
-    <div>
-    <input placeholder='description...'type="textarea" value={form.description} onChange={onChangeHandler} name='description'/>
-      {error.description ? (<p>{error.description}</p>) : ""}
-     
-    </div>
-    <div>
-    <input placeholder='manufacturer...'type="text" value={form.manufacturer} onChange={onChangeHandler} name='manufacturer'/>
-      
-    </div>
-    <div>
-    <input placeholder='origin...'type="text" value={form.origin} onChange={onChangeHandler} name='origin'/>
-      {error.origin ? (<p>{error.origin}</p>) : ""}
-     
-    </div>
-    
-    <div>
-    <input placeholder='price...'type="text" value={form.price} onChange={onChangeHandler} name='price'/>
-      {error.price ? (<p>{error.price}</p>) : ""}
-    </div>
-    
-    <div>
-    <input placeholder='discount...'type="text" value={form.discount} onChange={onChangeHandler} name='discount'/>
-      {error.discount ? (<p>{error.discount}</p>) : ""}
-    </div>
+    return (
+    <form action="/products" method="POST" enctype="multipart/form-data" onSubmit={onSubmithandler}>
+        <div>
+            <div>
+                <div>
+                    <input placeholder='Enter New Product...'type="text" value={form.name} onChange={onChangeHandler} name='name'/>
+                    {error.name ? (<p>{error.name}</p>) : ""}
+                </div>
 
-    <div>
-    <input placeholder='stock...'type="text" value={form.stock} onChange={onChangeHandler} name='stock'/>
-      {error.stock ? (<p>{error.stock}</p>) : ""}
-    </div>
-    
-   
-    <div>
-    <select value={selectedCategory} onChange={categoryHandler}>
-                                <option value='select'>SELECT CATEGORY</option>
-                                {categories.map(cat => 
-                                    <option name={cat.name} value={cat.name}>
-                                        {cat.name}
-                                    </option>
-                                )
-                                }
-                            </select>
-                           <div>
-      <select value={selectedSubcategory} onChange={handleSubcategory}>
-        <option value="">SubCategories</option>
-        {selectedCategory &&
-          categories
-            .find((cat) => cat.name === selectedCategory)
-            .subcategories?.map((subcategory) => (
-              <option key={subcategory.name} value={subcategory.name}>
-                {subcategory.name}
-              </option>
-            ))}
-      </select>
-                           </div>
-    </div>
-    <div>
-    <label for="image">Image:</label>
-    <input type="file" name="image" alt='image'/>
-  </div>
-  
-    
-      
-      
-      </div>
-      <div>
-      
-                   
-                    <button  type='submit'>SUBMIT</button>
-      </div>
-     
-      </div>
+                <div>
+                    <input placeholder='description...'type="textarea" value={form.description} onChange={onChangeHandler} name='description'/>
+                    {error.description ? (<p>{error.description}</p>) : ""}
+                </div>
+
+                <div>
+                    <input placeholder='manufacturer...'type="text" value={form.manufacturer} onChange={onChangeHandler} name='manufacturer'/>      
+                </div>
+
+                <div>
+                    <input placeholder='origin...'type="text" value={form.origin} onChange={onChangeHandler} name='origin'/>
+                    {error.origin ? (<p>{error.origin}</p>) : ""}
+                
+                </div>
+                
+                <div>
+                    <input placeholder='price...'type="text" value={form.price} onChange={onChangeHandler} name='price'/>
+                    {error.price ? (<p>{error.price}</p>) : ""}
+                </div>
+                
+                <div>
+                    <input placeholder='discount...'type="text" value={form.discount} onChange={onChangeHandler} name='discount'/>
+                    {error.discount ? (<p>{error.discount}</p>) : ""}
+                </div>
+
+                <div>
+                    <input placeholder='stock...'type="text" value={form.stock} onChange={onChangeHandler} name='stock'/>
+                    {error.stock ? (<p>{error.stock}</p>) : ""}
+                </div>
+            
+        
+                <div>
+                    <select value={selectedCategory} onChange={categoryHandler}>
+                        <option value='select'>
+                            SELECT CATEGORY
+                        </option>
+                        {categories.map(cat => 
+                            <option name={cat.name} value={cat.name}>
+                                {cat.name}
+                            </option>
+                        )}
+                    </select>
+                    <div>
+                        <select value={selectedSubcategory} onChange={handleSubcategory}>
+                            <option value="">SubCategories</option>
+                            {selectedCategory &&
+                            categories
+                                .find((cat) => cat.name === selectedCategory)
+                                .subcategories?.map((subcategory) => (
+                                <option key={subcategory.name} value={subcategory.name}>
+                                    {subcategory.name}
+                                </option>
+                                ))}
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label for="image">Image:</label>
+                    <input type="file" name="image" alt='image'/>
+                </div>
+            </div>
+            <div>
+                <button  type='submit'>SUBMIT</button>
+            </div>
+        </div>
     </form>
   )
 }
