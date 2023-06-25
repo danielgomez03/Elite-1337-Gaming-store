@@ -312,7 +312,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
                     </div>
                 </div>
                 <div>
-                    <label for="image">Image:</label>
+                    <label htmlfor="image">Image:</label>
                     <input type="file" name="image" alt='image'/>
                 </div>
             </div>
