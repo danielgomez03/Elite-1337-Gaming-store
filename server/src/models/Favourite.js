@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
 
-    sequelize.define('favorite', {
+    sequelize.define('favourite', {
   
         favouriteId: { // naming it like this is less confusing when interacting with other id fields
             type: DataTypes.UUID,

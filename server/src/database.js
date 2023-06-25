@@ -45,7 +45,7 @@ const {
   Login,
   Comment,
   Rating,
-  Favorite,
+  Favourite,
   Cart,
   SaleHistory,
   Contact,
@@ -98,15 +98,15 @@ Rating.belongsTo(User, { foreignKey: 'userId' });
 Product.hasMany(Rating, { foreignKey: 'productId' });
 Rating.belongsTo(Product, { foreignKey: 'productId' });
 
-// Product many-to-many with User through Favorite
+// Product many-to-many with User through Favourite
 Product.belongsToMany(User, {
-  through: Favorite,
+  through: Favourite,
   foreignKey: 'productId',
 });
 
-// User many-to-many with Product through Favorite
+// User many-to-many with Product through Favourite
 User.belongsToMany(Product, {
-  through: Favorite,
+  through: Favourite,
   foreignKey: 'userId',
 });
 
