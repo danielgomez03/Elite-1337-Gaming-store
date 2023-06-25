@@ -1,4 +1,4 @@
-const { User, Image} = require('../database');
+const { User, Image, Login } = require('../database');
 const { Op } = require('sequelize');
 
 const getAllUsers = async () => {
@@ -7,14 +7,15 @@ const getAllUsers = async () => {
             include: [
               {
                 model: Image,
-                attributes: ['imageId', 'url', 'caption'],
+                attributes: ['imageId', 'url'],
+                as: 'userImage',
               },
               {
                 model: Login,
                 attributes: ['loginId', 'email', 'password', 'verify'],
               },
             ],
-            order: [['name', 'asc']],
+            order: [['firstName', 'asc']],
         });
 
         return users;
@@ -36,7 +37,8 @@ const getUsersByName = async (name) => {
         include: [
             {
               model: Image,
-              attributes: ['imageId', 'url', 'caption'],
+              attributes: ['imageId', 'url'],
+              as: 'userImage',
             },
             {
               model: Login,
@@ -63,7 +65,8 @@ const getUserById = async (userId) => {
         include: [
             {
               model: Image,
-              attributes: ['imageId', 'url', 'caption'],
+              attributes: ['imageId', 'url'],
+              as: 'userImage',
             },
             {
               model: Login,

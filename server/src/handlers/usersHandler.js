@@ -26,8 +26,8 @@ const getUserByIdHandler = async (req, res) => {
   const { userId } = req.params;
   
   try {
-    const product = await getUserById(productId);
-    res.status(200).json(product);
+    const user = await getUserById(userId);
+    res.status(200).json(user);
   } catch (error) {
     console.error('Error in getUserById:', error);
     res.status(500).json({ error: 'An error occurred while retrieving the user by ID' });
@@ -35,35 +35,34 @@ const getUserByIdHandler = async (req, res) => {
 };
 
 const postCreateUser = async (req, res) => {
-  
   try {
-    const { 
-      firstName, 
-      lastName, 
-      country, 
-      region, 
-      city, 
+    const {
+      firstName,
+      lastName,
+      country,
+      region,
+      city,
       address,
       postalCode,
-      birthDate, 
-      phoneNumber, 
-      idNumber, 
-      email, 
+      birthDate,
+      phoneNumber,
+      idNumber,
+      email,
       password,
-      image
+      image,
     } = req.body;
 
     const user = await User.create({
-      firstName, 
-      lastName, 
-      country, 
-      region, 
-      city, 
+      firstName,
+      lastName,
+      country,
+      region,
+      city,
       address,
       postalCode,
-      birthDate, 
-      phoneNumber, 
-      idNumber, 
+      birthDate,
+      phoneNumber,
+      idNumber,
     });
 
     const login = await Login.create({
@@ -73,33 +72,38 @@ const postCreateUser = async (req, res) => {
 
     await user.setLogin(login);
 
-    // Create and associate the images with the user with text URL
-    for (const imageData of image) {
-      const { url, caption } = imageData;
-      const image = await Image.create({
-        url,
-        caption,
-      });
-
-      await user.addImage(image);
+    // Create and associate the image with the user
+    if (image) {
+      const { url } = image;
+      const userImage = await Image.create({ url });
+      await user.setUserImage(userImage);
     }
 
-    // Upload and associate the images with the user using Cloudinary
-    const uploadedImage = [];
+    // // Create and associate the image with the user with text URL
+    // for (const imageData of image) {
+    //   const { url } = imageData;
+    //   const image = await Image.create({
+    //     url
+    //   });
 
-    for (const imageFile of image) {
-      const { url, caption } = imageFile;
-      const image = await Image.upload(imageFile);
-      uploadedImage.push({ url: image.url, caption });
-    }
+    //   await user.addImage(image);
+    // }
 
-    await user.addImage(uploadedImage);
+    // // Upload and associate the image with the user using Cloudinary
+    // const uploadedImage = [];
 
-      res.status(200).json({ message: 'User created successfully', user });
+    // for (const imageFile of image) {
+    //   const { url } = imageFile;
+    //   const image = await Image.upload(imageFile);
+    //   uploadedImage.push({ url: image.url });
+    // }
 
+    // await user.addImage(uploadedImage);
+
+    res.status(201).json({ message: 'User created successfully', user, login, image });
   } catch (error) {
-      console.error('Error in postCreateUser:', error);
-      res.status(400).json({ message: error.message });
+    console.error('Error in postCreateUser:', error);
+    res.status(400).json({ message: error.message });
   }
 };
 
