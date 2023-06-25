@@ -26,10 +26,10 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
 
-    // caption: { // unnecesary?
-    //   type: DataTypes.STRING,
-    //   allowNull: true,
-    // },
+    caption: { // unnecesary?
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
 
   }, { timestamps: false });
   
