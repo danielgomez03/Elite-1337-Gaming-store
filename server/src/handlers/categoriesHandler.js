@@ -19,16 +19,16 @@ const getCategories = async (req, res) => {
 
 const getCategoryById = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { categoryId } = req.params;
 
     if (!allCategories) {
       allCategories = await createCategories(categories);
     }
 
-    const findCategory = allCategories.find(category => category.categoryId.toString() === id);
+    const findCategory = allCategories.find(category => category.categoryId.toString() === categoryId);
 
     if (!findCategory) {
-      return res.status(404).json(`The category with the id ${id} does not exist`);
+      return res.status(404).json(`The category with the id ${categoryId} does not exist`);
     }
 
     return res.status(200).json(findCategory);
