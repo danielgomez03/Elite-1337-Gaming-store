@@ -1,4 +1,3 @@
-
 // Hardcoded categories
 const categories = [
     {

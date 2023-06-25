@@ -18,7 +18,7 @@ module.exports = (sequelize) => {
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,
-      unique: true,
+      // unique: true,
     },
 
     url: {
