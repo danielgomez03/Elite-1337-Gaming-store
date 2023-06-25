@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
-
+import React from 'react';
+import { UseSelector } from 'react-redux/es/hooks/useSelector';
 
 const validate=(form)=> {
     let error = {};
@@ -32,149 +33,149 @@ const validate=(form)=> {
 
 
 export default function Form() {
- 
-  const categories = [
-  {
-      name: 'Hardware',
-      isMainCategory: true,
+ const categories = useSelector(state=>state.categories)
+//   const categories = [
+//   {
+//       name: 'Hardware',
+//       isMainCategory: true,
       
-      subcategories: [
-          {
-              name: 'Procesadores (CPU)',
-          },
-          {
-              name: 'Placas Madre (Motherboards)',
-          },
-          {
-              name: 'Placas de Video (GPU)',
-          },
-          {
-              name: 'Almacenamiento',
-              subcategories: [
-                  {
-                      name: 'Disco Rígido Externo',
-                  },
-                  {
-                      name: 'Disco Interno Mecánico',
-                  },
-                  {
-                      name: 'Disco SSD / SSD M.2',
-                  },
-                  {
-                      name: 'Ópticos (DVD / Blu-Ray)',
-                  },
-                  {
-                      name: 'Pen Drives',
-                  },
-                  {
-                      name: 'MicroSD',
-                  },
-              ],
-          },
-          {
-              name: 'Cooling / Refrigeración',
-              subcategories: [
-                  {
-                      name: 'Coolers CPU',
-                  },
-                  {
-                      name: 'Coolers Gabinete',
-                  },
-                  {
-                      name: 'Pastas Térmicas',
-                  },
-              ],
-          },
-          {
-              name: 'Memorias RAM',
-              subcategories: [
-                  {
-                      name: 'DIMM (DDR3, DDR4)',
-                  },
-                  {
-                      name: 'SO-DIMM',
-                  },
-              ],
-          },
-          {
-              name: 'Gabinetes, Fuentes y Alimentación',
-              subcategories: [
-                  {
-                      name: 'Gabinetes',
-                  },
-                  {
-                      name: 'Fuentes',
-                  },
-                  {
-                      name: 'Alimentación',
-                  },
-              ],
-          },
-      ],
-  },
-  {
-      name: 'Monitores',
-      isMainCategory: true,
-      subcategories: [
-          {
-              name: 'Monitores',
-          },
-          {
-              name: 'Monitores Gamer',
-          },
-      ],
-  },
-  {
-      name: 'Periféricos y Accesorios',
-      isMainCategory: true,
-      subcategories: [
-          {
-              name: 'Auriculares',
-          },
-          {
-              name: 'Kit Teclado/Mouse',
-          },
-          {
-              name: 'Teclado',
-          },
-          {
-              name: 'Mouse',
-          },
-          {
-              name: 'Mouse Pads',
-          },
-          {
-              name: 'Micrófonos',
-          },
-          {
-              name: 'Parlantes',
-          },
-          {
-              name: 'Joysticks',
-          },
-          {
-              name: 'Webcams',
-          },
-          {
-              name: 'Conectividad',
-          },
-          {
-              name: 'Tabletas Digitalizadoras',
-          },
-          {
-              name: 'Sillas Gamer',
-          },
-      ],
-  },
-  {
-      name: 'Notebooks / Tablets',
-      isMainCategory: true,
-  },
-  {
-      name: 'Ofertas',
-      isMainCategory: true,
-  },
-];
+//       subcategories: [
+//           {
+//               name: 'Procesadores (CPU)',
+//           },
+//           {
+//               name: 'Placas Madre (Motherboards)',
+//           },
+//           {
+//               name: 'Placas de Video (GPU)',
+//           },
+//           {
+//               name: 'Almacenamiento',
+//               subcategories: [
+//                   {
+//                       name: 'Disco Rígido Externo',
+//                   },
+//                   {
+//                       name: 'Disco Interno Mecánico',
+//                   },
+//                   {
+//                       name: 'Disco SSD / SSD M.2',
+//                   },
+//                   {
+//                       name: 'Ópticos (DVD / Blu-Ray)',
+//                   },
+//                   {
+//                       name: 'Pen Drives',
+//                   },
+//                   {
+//                       name: 'MicroSD',
+//                   },
+//               ],
+//           },
+//           {
+//               name: 'Cooling / Refrigeración',
+//               subcategories: [
+//                   {
+//                       name: 'Coolers CPU',
+//                   },
+//                   {
+//                       name: 'Coolers Gabinete',
+//                   },
+//                   {
+//                       name: 'Pastas Térmicas',
+//                   },
+//               ],
+//           },
+//           {
+//               name: 'Memorias RAM',
+//               subcategories: [
+//                   {
+//                       name: 'DIMM (DDR3, DDR4)',
+//                   },
+//                   {
+//                       name: 'SO-DIMM',
+//                   },
+//               ],
+//           },
+//           {
+//               name: 'Gabinetes, Fuentes y Alimentación',
+//               subcategories: [
+//                   {
+//                       name: 'Gabinetes',
+//                   },
+//                   {
+//                       name: 'Fuentes',
+//                   },
+//                   {
+//                       name: 'Alimentación',
+//                   },
+//               ],
+//           },
+//       ],
+//   },
+//   {
+//       name: 'Monitores',
+//       isMainCategory: true,
+//       subcategories: [
+//           {
+//               name: 'Monitores',
+//           },
+//           {
+//               name: 'Monitores Gamer',
+//           },
+//       ],
+//   },
+//   {
+//       name: 'Periféricos y Accesorios',
+//       isMainCategory: true,
+//       subcategories: [
+//           {
+//               name: 'Auriculares',
+//           },
+//           {
+//               name: 'Kit Teclado/Mouse',
+//           },
+//           {
+//               name: 'Teclado',
+//           },
+//           {
+//               name: 'Mouse',
+//           },
+//           {
+//               name: 'Mouse Pads',
+//           },
+//           {
+//               name: 'Micrófonos',
+//           },
+//           {
+//               name: 'Parlantes',
+//           },
+//           {
+//               name: 'Joysticks',
+//           },
+//           {
+//               name: 'Webcams',
+//           },
+//           {
+//               name: 'Conectividad',
+//           },
+//           {
+//               name: 'Tabletas Digitalizadoras',
+//           },
+//           {
+//               name: 'Sillas Gamer',
+//           },
+//       ],
+//   },
+//   {
+//       name: 'Notebooks / Tablets',
+//       isMainCategory: true,
+//   },
+//   {
+//       name: 'Ofertas',
+//       isMainCategory: true,
+//   },
+// ];
 const [selectedCategory, setSelectedCategory] = useState('');
 const [selectedSubcategory, setSelectedSubcategory] = useState('');
   
@@ -237,7 +238,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
       
    
     
-    axios.post(URL,form)
+    axios.post("http://localhost:3001/products",form)
     .then(res=>alert(res.data))
     .catch(error=>alert(error.data))
     
