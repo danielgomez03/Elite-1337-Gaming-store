@@ -139,16 +139,4 @@ Contact.belongsTo(Product, { foreignKey: 'productId', targetKey: 'productId' });
 module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require('./database.js');
   conn: sequelize, // to import the connection { conn } = require('./database.js');
-  
-  User,
-  Product,
-  Category,
-  Image,
-  Login,
-  Comment,
-  Rating,
-  Favourite,
-  Cart,
-  SaleHistory,
-  Contact,
 };
