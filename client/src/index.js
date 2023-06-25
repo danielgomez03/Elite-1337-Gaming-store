@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import CardsContainer from "./components/cardsContainer";
+import Footer from "./components/footer";
 
 
 
@@ -28,8 +29,10 @@ export default function Home() {
 
       
 
-        
+     <Footer/>
       </div>
+
+      
     </main>
   )
 }
