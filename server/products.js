@@ -65,14 +65,14 @@ const products = [
         ],
         carts: [
             {
-            cartId: 1,
+            cartId: 'a527352a-7kka-4fc4-80d7-bb9e1ae25c9d',
             quantity: 1,
             user: {
                 userId: 'user1',
             },
             },
             {
-            cartId: 2,
+            cartId: 'a527352a-7b3a-4fc4-80d7-bb9e1ooo5c9d',
             quantity: 2,
             user: {
                 userId: 'user2',
@@ -80,7 +80,7 @@ const products = [
             },
         ],
         favourite: {
-            favouriteId: 1,
+            favouriteId: 'a527352a-711a-4fc4-80d7-bb9e1ae25c9d',
             user: {
             userId: 'user1',
             },
@@ -152,14 +152,14 @@ const products = [
         ],
         carts: [
             {
-            cartId: 3,
+            cartId: 'a527352a-7b3a-4fc4-81d7-bb9e1ae25c9d',
             quantity: 1,
             user: {
                 userId: 'user3',
             },
             },
             {
-            cartId: 4,
+            cartId: 'a527352a-7b3a-4fc4-80d7-bb9e1ae22c9d',
             quantity: 3,
             user: {
                 userId: 'user4',
@@ -167,7 +167,7 @@ const products = [
             },
         ],
         favourite: {
-            favouriteId: 2,
+            favouriteId: 'a527352a-7b3a-4fc4-80d7-bb9e1ae25c9d',
             user: {
             userId: 'user3',
             },
@@ -239,14 +239,14 @@ const products = [
         ],
         carts: [
           {
-            cartId: 5,
+            cartId: 'a527352a-7b3a-4fc4-80d7-b11e1ae25c9d',
             quantity: 1,
             user: {
               userId: 'user5',
             },
           },
           {
-            cartId: 6,
+            cartId: 'a527322a-7b3a-4fc4-80d7-bb9e1ae25c9d',
             quantity: 2,
             user: {
               userId: 'user6',
@@ -254,7 +254,7 @@ const products = [
           },
         ],
         favourite: {
-          favouriteId: 3,
+          favouriteId: 'a527352a-7b3a-4fc4-80d7-bb9e1ae33c9d',
           user: {
             userId: 'user5',
           },
@@ -326,14 +326,14 @@ const products = [
     ],
     carts: [
         {
-        cartId: 7,
+        cartId: 'a527352a-7b3a-4fc4-80d7-bb9ehje25c9d',
         quantity: 1,
         user: {
             userId: 'user7',
         },
         },
         {
-        cartId: 8,
+        cartId: 'a527352a-7b5n-4fc4-80d7-bb9e1ae25c9d',
         quantity: 3,
         user: {
             userId: 'user8',
@@ -341,7 +341,7 @@ const products = [
         },
     ],
     favourite: {
-        favouriteId: 4,
+        favouriteId: 'a5231252a-7b3a-4fc4-80d7-bb9e1ae25c9d',
         user: {
         userId: 'user7',
         },
@@ -408,14 +408,14 @@ const products = [
     ],
     carts: [
         {
-        cartId: 9,
+        cartId: 'a527352a-7b3a-4fc4-80d7-bb444ae25c9d',
         quantity: 2,
         user: {
             userId: 'user9',
         },
         },
         {
-        cartId: 10,
+        cartId: 'a527352a-7b3a-4fc4-80d7-bb935ae25c9d',
         quantity: 1,
         user: {
             userId: 'user10',
@@ -423,7 +423,7 @@ const products = [
         },
     ],
     favourite: {
-        favouriteId: 5,
+        favouriteId: 'a527352a-7b3a-4fc4-80d7-bb9e1ae25c9d',
         user: {
         userId: 'user9',
         },
@@ -495,14 +495,14 @@ const products = [
     ],
     carts: [
         {
-        cartId: 11,
+        cartId: 'a527352a-755a-4fc4-80d7-bb9e1ae25c9d',
         quantity: 1,
         user: {
             userId: 'user11',
         },
         },
         {
-        cartId: 12,
+        cartId: 'a527352a-113a-4fc4-80d7-bb9e1ae25c9d',
         quantity: 1,
         user: {
             userId: 'user12',
@@ -510,7 +510,7 @@ const products = [
         },
     ],
     favourite: {
-        favouriteId: 6,
+        favouriteId: 'a5273524-7b3a-4fc4-80d7-bb9e1ae25c9d',
         user: {
         userId: 'user11',
         },
@@ -582,14 +582,14 @@ const products = [
     ],
     carts: [
         {
-        cartId: 13,
+        cartId: 'a527352a-7b3a-4fc4-55d7-bb9e1ae25c9d',
         quantity: 1,
         user: {
             userId: 'user13',
         },
         },
         {
-        cartId: 14,
+        cartId: 'a527352a-7b3a-4fc4-12d7-bb9e1ae25c9d',
         quantity: 2,
         user: {
             userId: 'user14',
@@ -597,7 +597,7 @@ const products = [
         },
     ],
     favourite: {
-        favouriteId: 7,
+        favouriteId: 'a527222a-7b3a-4fc4-80d7-bb9e1ae25c9d',
         user: {
         userId: 'user13',
         },
@@ -669,14 +669,14 @@ const products = [
     ],
     carts: [
         {
-        cartId: 15,
+        cartId: 'a527352a-7b3ax4fc4-80d7-bb9e1ae25c9d',
         quantity: 1,
         user: {
             userId: 'user15',
         },
         },
         {
-        cartId: 16,
+        cartId: 'a527352a-7b3a-4fc4-80d7-bb9e1a445c9d',
         quantity: 1,
         user: {
             userId: 'user16',
@@ -684,7 +684,7 @@ const products = [
         },
     ],
     favourite: {
-        favouriteId: 8,
+        favouriteId: 'a5273321-7b3a-4fc4-80d7-bb9e1ae25c9d',
         user: {
         userId: 'user15',
         },
@@ -756,14 +756,14 @@ const products = [
     ],
     carts: [
         {
-        cartId: 17,
+        cartId: 'a527352a-444a-4fc4-80d7-bb9e1ae25c9d',
         quantity: 3,
         user: {
             userId: 'user17',
         },
         },
         {
-        cartId: 18,
+        cartId: 'a5273533-7b3a-4fc4-80d7-bb9e1ae25c9d',
         quantity: 2,
         user: {
             userId: 'user18',
@@ -771,7 +771,7 @@ const products = [
         },
     ],
     favourite: {
-        favouriteId: 9,
+        favouriteId: 'a527352a-443a-4fc4-80d7-bb9e1ae25c9d',
         user: {
         userId: 'user17',
         },
@@ -843,14 +843,14 @@ const products = [
     ],
     carts: [
         {
-        cartId: 19,
+        cartId: 'a533352a-7b3a-4fc4-80d7-bb9e1ae25c9d',
         quantity: 1,
         user: {
             userId: 'user19',
         },
         },
         {
-        cartId: 20,
+        cartId: 'a527352a-7b3a-4fc4-80d7-bb2222e25c9d',
         quantity: 1,
         user: {
             userId: 'user20',
@@ -858,7 +858,7 @@ const products = [
         },
     ],
     favourite: {
-        favouriteId: 10,
+        favouriteId: 'a527352a-713a-4fc4-80d7-bb9e1ae25c9d',
         user: {
         userId: 'user19',
         },
@@ -930,14 +930,14 @@ const products = [
         ],
         carts: [
           {
-            cartId: 19,
+            cartId: 'a527352a-7b3a-4fc4-80d7-bbasdae25c9d',
             quantity: 1,
             user: {
               userId: 'user19',
             },
           },
           {
-            cartId: 20,
+            cartId: 'a527352a-7b3a-4fc4-8317-bb9e1ae25c9d',
             quantity: 1,
             user: {
               userId: 'user20',
@@ -945,7 +945,7 @@ const products = [
           },
         ],
         favourite: {
-          favouriteId: 10,
+          favouriteId: 'a52v352a-7b3a-4fc4-80d7-bb9e1ae25c9d',
           user: {
             userId: 'user19',
           },
@@ -1017,14 +1017,14 @@ const products = [
         ],
         carts: [
           {
-            cartId: 21,
+            cartId: 'a527352a-7b44-4fc4-80d7-bb9e1ae25c9d',
             quantity: 1,
             user: {
               userId: 'user25',
             },
           },
           {
-            cartId: 22,
+            cartId: 'a527352a-3v3a-4fc4-80d7-bb9e1ae25c9d',
             quantity: 1,
             user: {
               userId: 'user26',
@@ -1032,7 +1032,7 @@ const products = [
           },
         ],
         favourite: {
-          favouriteId: 11,
+          favouriteId: 'a5273hha-7b3a-4fc4-80d7-bb9e1ae25c9d',
           user: {
             userId: 'user25',
           },
