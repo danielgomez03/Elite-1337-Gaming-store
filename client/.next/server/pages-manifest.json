@@ -1,5 +1,11 @@
 {
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js"
+  "/api/hello": "pages/api/hello.js",
+  "/_document": "pages/_document.js",
+  "/components/card": "pages/components/card.html",
+  "/components/cardsContainer": "pages/components/cardsContainer.html",
+  "/": "pages/index.html",
+  "/createProduct": "pages/createProduct.html",
+  "/404": "pages/404.html"
 }
