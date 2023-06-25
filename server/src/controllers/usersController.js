@@ -8,7 +8,7 @@ const getAllUsers = async () => {
               {
                 model: Image,
                 attributes: ['imageId', 'url'],
-                as: 'userImage',
+                // as: 'userImage',
               },
               {
                 model: Login,
@@ -30,7 +30,7 @@ const getUsersByName = async (name) => {
     try {
         const users = await User.findAll({
         where: {
-            name: {
+            firstName: {
             [Op.iLike]: `%${name}%`
             }
         },
@@ -38,14 +38,14 @@ const getUsersByName = async (name) => {
             {
               model: Image,
               attributes: ['imageId', 'url'],
-              as: 'userImage',
+              // as: 'userImage',
             },
             {
               model: Login,
               attributes: ['loginId', 'email', 'password', 'verify'],
             },
           ],
-          order: [['name', 'asc']],
+          order: [['firstName', 'asc']],
         });
 
         return users;
@@ -63,11 +63,11 @@ const getUserById = async (userId) => {
           userId: userId,
         },
         include: [
-            {
-              model: Image,
-              attributes: ['imageId', 'url'],
-              as: 'userImage',
-            },
+            // {
+            //   model: Image,
+            //   attributes: ['imageId', 'url'],
+            //   as: 'userImage',
+            // },
             {
               model: Login,
               attributes: ['loginId', 'email', 'password', 'verify'],
