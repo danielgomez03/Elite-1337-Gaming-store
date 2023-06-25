@@ -36,4 +36,7 @@ const getCategoryById = async (req, res) => {
   }
 };
 
-module.exports = { getAllCategories, getCategoryById };
+module.exports = { 
+  getAllCategories, 
+  getCategoryById 
+};
