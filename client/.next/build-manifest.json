@@ -1,29 +1,51 @@
 {
   "polyfillFiles": [
-    "static/chunks/polyfills.js"
+    "static/chunks/polyfills-78c92fac7aa8fdd8.js"
   ],
-  "devFiles": [
-    "static/chunks/react-refresh.js"
-  ],
+  "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js"
+    "static/MsQjnDw7kboeuS1TMLt6-/_buildManifest.js",
+    "static/MsQjnDw7kboeuS1TMLt6-/_ssgManifest.js"
   ],
-  "rootMainFiles": [
-    "static/chunks/webpack.js",
-    "static/chunks/main-app.js"
-  ],
+  "rootMainFiles": [],
   "pages": {
+    "/": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/index-30c30fa68d756793.js"
+    ],
     "/_app": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_app.js"
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/_app-4d3e175efa3ef5df.js"
     ],
     "/_error": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_error.js"
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/_error-54de1933a164a1ff.js"
+    ],
+    "/components/card": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/components/card-49e88b9a80da75f2.js"
+    ],
+    "/components/cardsContainer": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/components/cardsContainer-20f5e791fc166445.js"
+    ],
+    "/createProduct": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/154-7942dd40332ec4bf.js",
+      "static/chunks/pages/createProduct-56e6948a3a85a438.js"
     ]
   },
   "ampFirstPages": []
