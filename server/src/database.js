@@ -45,7 +45,7 @@ const {
   Login,
   Comment,
   Rating,
-  Favourite,
+  Favorite,
   Cart,
   SaleHistory,
   Contact,
@@ -59,6 +59,12 @@ const {
 // Product one-to-many with Category
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
 Category.hasMany(Product, { foreignKey: 'categoryId' });
+
+// Category one-to-many with itself
+// The self-referencing relationship enables hierarchical categorization. It uses the parentId field to determine the superior category for each category.
+
+Category.belongsTo(Category, { as: 'parent', foreignKey: 'parentId' });
+Category.hasMany(Category, { as: 'subcategories', foreignKey: 'parentId' });
 
 // Product many-to-one with Image
 Product.hasMany(Image);
@@ -92,15 +98,15 @@ Rating.belongsTo(User, { foreignKey: 'userId' });
 Product.hasMany(Rating, { foreignKey: 'productId' });
 Rating.belongsTo(Product, { foreignKey: 'productId' });
 
-// Product many-to-many with User through Favourite
+// Product many-to-many with User through Favorite
 Product.belongsToMany(User, {
-  through: Favourite,
+  through: Favorite,
   foreignKey: 'productId',
 });
 
-// User many-to-many with Product through Favourite
+// User many-to-many with Product through Favorite
 User.belongsToMany(Product, {
-  through: Favourite,
+  through: Favorite,
   foreignKey: 'userId',
 });
 

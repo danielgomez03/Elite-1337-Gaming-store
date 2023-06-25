@@ -1,9 +1,12 @@
 const server = require('./src/app.js');
-const { conn } = require('./src/database.js');
+const { conn } = require('./src/database');
+const { seedDatabase } = require("./src/controllers/seeding.js");
+const { PORT } = process.env;
+require('dotenv').config();
 
-// Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+conn.sync({ force: true }).then(() => {
+  seedDatabase();
+  server.listen(PORT, () => {
+    console.log(`Server listening at ${PORT}`); // eslint-disable-line no-console
   });
 });
