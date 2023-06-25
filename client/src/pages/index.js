@@ -14,6 +14,7 @@ import CreateProduct from "./admin/CreateProduct"
 
 export default function Index() {
   const router = useRouter();
+  
 
   return (
     <div>
@@ -26,8 +27,8 @@ export default function Index() {
       {router.pathname === "/client-profile" && <Profile />}
       {router.pathname === "/admin" && <Admin />}
       {router.pathname === "/admin/products" && <ProductsAdmin />}
-      {router.pathname === "/terms-and-conditions" && <TermsConditions />}
-      {router.pathname === "/admin/createProduct" && <CreateProduct />}
+      {router.asPath === "/terms-and-conditions" && <TermsConditions />}
+      {router.asPath === "/admin/createProduct" && <CreateProduct />}
 
       <Footer />
     </div>
