@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
-
+import React from 'react';
+// import { UseSelector } from 'react-redux/es/hooks/useSelector';
 
 const validate=(form)=> {
     let error = {};
@@ -32,7 +33,7 @@ const validate=(form)=> {
 
 
 export default function Form() {
- 
+//  const categories = useSelector(state=>state.categories)
   const categories = [
   {
       name: 'Hardware',
@@ -185,8 +186,8 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
     manufacturer: "",
     origin: "",
     price:"",
-    discount:0,
-    stock: 0,
+    discount:"",
+    stock: "",
     isActive:false,//fata input
     category:"",
     image:"",
@@ -237,7 +238,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
       
    
     
-    axios.post(URL,form)
+    axios.post("http://localhost:3001/products",form)
     .then(res=>alert(res.data))
     .catch(error=>alert(error.data))
     
