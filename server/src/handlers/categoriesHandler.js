@@ -3,7 +3,7 @@ const categories = require('../data/categories');
 
 let allCategories = null; // Declare a variable to store all categories
 
-const getAllCategories = async (req, res) => {
+const getCategories = async (req, res) => {
   try {
     if (!allCategories) {
       allCategories = await createCategories(categories);
@@ -40,6 +40,6 @@ const getCategoryById = async (req, res) => {
 };
 
 module.exports = { 
-  getAllCategories, 
+  getCategories, 
   getCategoryById,
 };

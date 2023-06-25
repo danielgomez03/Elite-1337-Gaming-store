@@ -1,9 +1,7 @@
-const { sequelize, Category } = require('../database');
-// const categories = require('../data/categories');
+const { Category } = require('../database');
 
-// Recursive function to create categories and subcategories
 const createCategories = async (categories, parentId = null) => {
-  const createdCategories = []; // Array to store created categories
+  const createdCategories = []; 
 
   for (const categoryData of categories) {
     const { name, subcategories } = categoryData;
@@ -28,7 +26,7 @@ const createCategories = async (categories, parentId = null) => {
     }
   }
 
-  return createdCategories; // Return the created categories
+  return createdCategories;
 };
 
 module.exports = createCategories;

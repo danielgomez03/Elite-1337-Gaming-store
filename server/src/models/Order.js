@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
 
-  const Order = sequelize.define('order', {
+  sequelize.define('order', {
     
     orderId: {
       type: DataTypes.UUID,
@@ -141,7 +141,5 @@ module.exports = (sequelize) => {
     },
     
   }, { timestamps: false });
-
-  return Order;
   
 };

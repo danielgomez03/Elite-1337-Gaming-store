@@ -12,11 +12,11 @@ module.exports = (sequelize) => {
     },
 
     priceAtSale: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DECIMAL(10, 2),
     },
 
     discountAtSale: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.INTEGER,
       defaultValue: 0,
     },
     
