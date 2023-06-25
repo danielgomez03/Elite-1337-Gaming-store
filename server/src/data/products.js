@@ -952,7 +952,7 @@ const products = [
         },
     },
     {
-        productId: 'abcdefg',
+        productId: 'd3842a6d-4d64-42e2-8a07-6acff5d1991e',
         name: 'Product 25',
         description: 'This is product 25',
         manufacturer: 'Manufacturer C',
