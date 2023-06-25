@@ -45,7 +45,7 @@ const {
   Login,
   Comment,
   Rating,
-  Favourite,
+  Favorite,
   Cart,
   SaleHistory,
   Contact,
@@ -95,15 +95,15 @@ Rating.belongsTo(User, { foreignKey: 'userId' });
 Product.hasMany(Rating, { foreignKey: 'productId' });
 Rating.belongsTo(Product, { foreignKey: 'productId' });
 
-// Product many-to-many with User through Favourite
+// Product many-to-many with User through Favorite
 Product.belongsToMany(User, {
-  through: Favourite,
+  through: Favorite,
   foreignKey: 'productId',
 });
 
-// User many-to-many with Product through Favourite
+// User many-to-many with Product through Favorite
 User.belongsToMany(Product, {
-  through: Favourite,
+  through: Favorite,
   foreignKey: 'userId',
 });
 
@@ -146,15 +146,15 @@ module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require('./database.js');
   conn: sequelize, // to import the connection { conn } = require('./database.js');
   
-  User,
-  Product,
-  Category,
-  Image,
-  Login,
-  Comment,
-  Rating,
-  Favourite,
-  Cart,
-  SaleHistory,
-  Contact,
+  // User,
+  // Product,
+  // Category,
+  // Image,
+  // Login,
+  // Comment,
+  // Rating,
+  // Favorite,
+  // Cart,
+  // SaleHistory,
+  // Contact,
 };
