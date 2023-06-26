@@ -16,6 +16,7 @@ export const getProducts = () => {
     const bd = await axios.get("http://localhost:3000/products");
     const products = bd.data;
     dispatch({ type: GET_PRODUCTS, payload: products });
+    dispatch({ type: SET_FILTERED_PRODUCTS, payload: products }); 
   };
 };
 
@@ -38,7 +39,26 @@ export const geProductById = (id) => {
     };
   };
 
-  
+  export const filterProductsByPrice = (minPrice, maxPrice) => {
+    return function (dispatch, getState) {
+      const { products } = getState();
+      const filteredProducts = products.products.filter(product => product.price >= minPrice && product.price <= maxPrice);
+      dispatch({ type: FILTER_PRODUCTS_BY_PRICE, payload: filteredProducts });
+    };
+  };
+
+  export const changeSortOrder = (order) => {
+    return function (dispatch, getState) {
+      const { products } = getState();
+      let sortedProducts = [...products.filteredProducts]; 
+      if (order === 'ascending') {
+        sortedProducts.sort((a, b) => a.price - b.price); 
+      } else if (order === 'descending') {
+        sortedProducts.sort((a, b) => b.price - a.price); 
+      }
+      dispatch({ type: CHANGE_SORT_ORDER, payload: sortedProducts });
+    };
+  };
   
   
 
