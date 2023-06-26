@@ -15,7 +15,6 @@ import CreateProducts from "./admin/CreateProducts"
 export default function Index() {
   const router = useRouter();
   
-
   return (
     <div>
       <NavBar />

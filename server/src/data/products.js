@@ -431,7 +431,7 @@ const products = [
     },
     {
     productId: '50e9fb27-b633-4e96-877d-845f4505e2c4',
-    name: 'Product 20',
+    name: 'Tukis 20',
     description: 'This is product 20',
     manufacturer: 'Manufacturer C',
     origin: 'China',

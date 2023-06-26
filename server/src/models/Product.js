@@ -29,11 +29,11 @@ module.exports = (sequelize) => {
         },
 
         price: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.DECIMAL(10, 2),
         },
 
         discount: { // Discount percentage to apply to the product
-            type: DataTypes.FLOAT,
+            type: DataTypes.INTEGER,
             defaultValue: 0,
         },
 

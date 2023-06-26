@@ -50,7 +50,7 @@ module.exports = (sequelize) => {
         },
 
         idNumber: { // forms of personal identification, like DNI or CUIL
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
         },
 
         userRole: { // the user can be a common user, an admin with limited privileges or a super admin with full control
