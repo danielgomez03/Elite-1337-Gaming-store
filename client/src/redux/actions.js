@@ -1,7 +1,9 @@
 import axios from "axios";
 
+
+
 export const GET_PRODUCTS = "GET_PRODUCTS";
-export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_NAME";
+export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const ORDERS = "ORDERS";
 export const FILTERS = "FILTERS";
@@ -13,16 +15,16 @@ export const CLEAN = "CLEAN";
 
 export const getProducts = () => {
   return async function (dispatch) {
-    const bd = await axios.get("http://localhost:3000/products");
+    const bd = await axios.get("http://localhost:3001/products");
     const products = bd.data;
     dispatch({ type: GET_PRODUCTS, payload: products });
   };
 };
 
 
-export const geProductById = (id) => {
+export const getProductById = (id) => {
     return async function (dispatch) {
-      const bd = await axios.get(`http://localhost:3000/product/${id}`);
+      const bd = await axios.get(`http://localhost:3001/product/${id}`);
       const detail = bd.data
       dispatch({ type: GET_PRODUCT_BY_ID, payload:detail }); 
     };
@@ -31,9 +33,11 @@ export const geProductById = (id) => {
  
   
   export const getCategories = () => {
+    
     return async function (dispatch) {
-      const bd = await axios.get("http://localhost:3000/categories");
+      const bd = await axios.get("http://localhost:3001/categories");
       const categories = bd.data
+      console.log(categories)
       dispatch({ type: GET_CATEGORIES, payload: categories });
     };
   };

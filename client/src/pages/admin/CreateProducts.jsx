@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { useState } from 'react'
-
+import { useSelector,useDispatch } from 'react-redux';
+import { getCategories } from '@/redux/actions';
+import { useEffect } from 'react';
 
 const validate=(form)=> {
     let error = {};
@@ -31,150 +33,18 @@ const validate=(form)=> {
 
 
 
-export default function Form() {
- 
-  const categories = [
-  {
-      name: 'Hardware',
-      isMainCategory: true,
-      
-      subcategories: [
-          {
-              name: 'Procesadores (CPU)',
-          },
-          {
-              name: 'Placas Madre (Motherboards)',
-          },
-          {
-              name: 'Placas de Video (GPU)',
-          },
-          {
-              name: 'Almacenamiento',
-              subcategories: [
-                  {
-                      name: 'Disco Rígido Externo',
-                  },
-                  {
-                      name: 'Disco Interno Mecánico',
-                  },
-                  {
-                      name: 'Disco SSD / SSD M.2',
-                  },
-                  {
-                      name: 'Ópticos (DVD / Blu-Ray)',
-                  },
-                  {
-                      name: 'Pen Drives',
-                  },
-                  {
-                      name: 'MicroSD',
-                  },
-              ],
-          },
-          {
-              name: 'Cooling / Refrigeración',
-              subcategories: [
-                  {
-                      name: 'Coolers CPU',
-                  },
-                  {
-                      name: 'Coolers Gabinete',
-                  },
-                  {
-                      name: 'Pastas Térmicas',
-                  },
-              ],
-          },
-          {
-              name: 'Memorias RAM',
-              subcategories: [
-                  {
-                      name: 'DIMM (DDR3, DDR4)',
-                  },
-                  {
-                      name: 'SO-DIMM',
-                  },
-              ],
-          },
-          {
-              name: 'Gabinetes, Fuentes y Alimentación',
-              subcategories: [
-                  {
-                      name: 'Gabinetes',
-                  },
-                  {
-                      name: 'Fuentes',
-                  },
-                  {
-                      name: 'Alimentación',
-                  },
-              ],
-          },
-      ],
-  },
-  {
-      name: 'Monitores',
-      isMainCategory: true,
-      subcategories: [
-          {
-              name: 'Monitores',
-          },
-          {
-              name: 'Monitores Gamer',
-          },
-      ],
-  },
-  {
-      name: 'Periféricos y Accesorios',
-      isMainCategory: true,
-      subcategories: [
-          {
-              name: 'Auriculares',
-          },
-          {
-              name: 'Kit Teclado/Mouse',
-          },
-          {
-              name: 'Teclado',
-          },
-          {
-              name: 'Mouse',
-          },
-          {
-              name: 'Mouse Pads',
-          },
-          {
-              name: 'Micrófonos',
-          },
-          {
-              name: 'Parlantes',
-          },
-          {
-              name: 'Joysticks',
-          },
-          {
-              name: 'Webcams',
-          },
-          {
-              name: 'Conectividad',
-          },
-          {
-              name: 'Tabletas Digitalizadoras',
-          },
-          {
-              name: 'Sillas Gamer',
-          },
-      ],
-  },
-  {
-      name: 'Notebooks / Tablets',
-      isMainCategory: true,
-  },
-  {
-      name: 'Ofertas',
-      isMainCategory: true,
-  },
-];
+export default function CreateProducts({onClose}) {
+  const dispatch = useDispatch();
+
+    
+            
+    useEffect(() => {
+    
+    (dispatch(getCategories));
+      }, []);
+    const categories = useSelector(state=>state.categories)
+    console.log(categories)
+
 const [selectedCategory, setSelectedCategory] = useState('');
 const [selectedSubcategory, setSelectedSubcategory] = useState('');
   
@@ -247,6 +117,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
 
     return (
     <form action="/products" method="POST" enctype="multipart/form-data" onSubmit={onSubmithandler}>
+        <button onClick={onClose}>X</button>
         <div>
             <div>
                 <div>

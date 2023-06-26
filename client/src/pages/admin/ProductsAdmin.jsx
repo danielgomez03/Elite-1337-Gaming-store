@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CreateProduct from "../../components/CreateProduct"
+import CreateProducts from "../admin/CreateProducts"
 import Link from 'next/link'
 
 function ProductsAdmin() {
@@ -17,7 +17,7 @@ function ProductsAdmin() {
     <div>
       <button onClick={ openCreateProduct }>Add Product</button>
       {selectedButton && (
-        <CreateProduct 
+        <CreateProducts 
           onClose={closeCreateProduct}
         />
       )}
