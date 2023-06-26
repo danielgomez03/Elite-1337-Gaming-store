@@ -13,14 +13,17 @@ const users = [
     idNumber: '123456789',
     userRole: 'common',
     isActive: true,
-    email: 'johndoe@example.com',
-    password: 'password123',
-    image: [
+    image:
       {
         imageId: 'af05ef0a-0a35-448d-b8dd-1a9f24f2d557',
         url: 'https://example.com/image1.jpg'
       },
-    ]
+    login: {
+        loginId: "ca2fc372-7751-4a5c-b8b8-df072e7cf618",
+        email: "jahndwe@example.com",
+        password: "$2b$10$QSu1pcGYM12EUY8beCrHeOKQGXFXQpeBdjmOVccYGvlEUp8NC.ZKi",
+        verify: false,
+      },
   },
   {
     userId: 'bd8f145a-8e6c-4de3-8b8b-9b431f1f29d4',
@@ -36,14 +39,11 @@ const users = [
     idNumber: '987654321',
     userRole: 'common',
     isActive: true,
-    email: 'janesmith@example.com',
-    password: 'password456',
-    image: [
+    image: 
       {
         imageId: 'bd8f145a-8e6c-4de3-8b8b-9b431f1f29d4',
         url: 'https://example.com/image2.jpg',
       },
-    ]
   },
   {
     userId: '6e081b7f-91ab-4195-89f5-24c8ce55b672',
@@ -59,15 +59,11 @@ const users = [
     idNumber: '654321987',
     userRole: 'common',
     isActive: true,
-    email: 'alexjohnson@example.com',
-    password: 'password789',
-    image: [
+    image: 
       {
         imageId: '6e081b7f-91ab-4195-89f5-24c8ce55b672',
         url: 'https://example.com/image3.jpg',
-        caption: 'Profile Picture'
       },
-    ]
   }
 ];
 

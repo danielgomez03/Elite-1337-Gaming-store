@@ -77,8 +77,6 @@ const seedDatabase = async () => {
         const image = await Image.create({
           imageId: profilePicture.imageId,
           url: profilePicture.url,
-          caption: profilePicture.caption,
-          userId: user.userId,
         });
         
         await user.setProfilePicture(image); // Asociar la imagen de perfil al usuario
