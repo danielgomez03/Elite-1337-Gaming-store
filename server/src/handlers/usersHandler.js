@@ -1,5 +1,6 @@
 const { conn, User, Login, Image } = require('../database');
 const { getAllUsers, getUsersByName, getUserById } = require('../controllers/usersController');
+const { userValidation } = require('../../../client/src/components/validations');
 
 const getUsers = async (req, res) => {
   const { name } = req.query;
@@ -51,6 +52,28 @@ const postCreateUser = async (req, res) => {
       password,
       image,
     } = req.body;
+
+    // Validate the input data
+    const errors = userValidation({
+      firstName,
+      lastName,
+      country,
+      region,
+      city,
+      address,
+      postalCode,
+      birthDate,
+      phoneNumber,
+      idNumber,
+      email,
+      password,
+      image,
+    });
+
+    // Check if there are any validation errors
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
+    }
 
     const user = await User.create({
       firstName,

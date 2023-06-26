@@ -5,7 +5,6 @@ const isValidEmail = (email) => {
 };
 
 // PRODUCT CREATION VALIDATIONS
-
 const productValidation = ({
     name,
     description,
@@ -67,8 +66,8 @@ const productValidation = ({
     }
   
     // CATEGORY
-    if (!category || !Array.isArray(category) || category.length === 0) {
-    errors.category = ["Please select at least one category"];
+    if (!category || typeof category !== "number") {
+      errors.category = ["Please provide a valid category"];
     }
   
     // IMAGES
@@ -85,12 +84,11 @@ const productValidation = ({
         }
       }
     }
-  
+    console.log("Errors:", errors);
     return errors;
 };
 
 // USER CREATION VALIDATIONS
-
 const userValidation = ({
     firstName,
     lastName,
@@ -201,16 +199,14 @@ const userValidation = ({
     }
   
     // IMAGE
-    if (image) {
-        if (!image.url || typeof image.url !== "string" || !/^https?:\/\/.*\.(jpeg|jpg|gif|png|bmp)$/.test(image.url)) {
-        errors.image = ["Invalid image format"];
-        }
+    if (image && typeof image !== "string" && (!image.url || typeof image.url !== "string" || !/^https?:\/\/.*\.(jpeg|jpg|gif|png|bmp)$/.test(image.url))) {
+      errors.image = ["Invalid image format"];
     }
 
     return errors;
 };  
 
-export default { productValidation, userValidation };
+module.exports = { productValidation, userValidation };
 
 // // EJEMPLO DE IMPLEMENTACIÓN FRONT
 
