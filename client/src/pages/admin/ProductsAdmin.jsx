@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CreateProducts from "../admin/CreateProducts"
+import CreateProducts from "../../components/CreateProducts"
 import Link from 'next/link'
 
 function ProductsAdmin() {
