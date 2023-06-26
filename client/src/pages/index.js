@@ -10,7 +10,7 @@ import Profile from "./users/Profile";
 import Admin from "./admin/Admin";
 import ProductsAdmin from "./admin/ProductsAdmin";
 import TermsConditions from "./users/TermsConditions";
-import CreateProduct from "./admin/CreateProduct.jsx";
+import CreateProduct from "./admin/CreateProduct";
 
 export default function Index() {
   const router = useRouter();
