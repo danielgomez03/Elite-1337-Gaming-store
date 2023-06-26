@@ -11,24 +11,6 @@ module.exports = (sequelize) => {
       primaryKey: true,
     },
 
-    // userId: {
-    //   type: DataTypes.UUID,
-    //   allowNull: false,
-    //   references: {
-    //     model: 'user',
-    //     key: 'userId',
-    //   },
-    // },
-
-    // loginId: {
-    //   type: DataTypes.UUID,
-    //   allowNull: false,
-    //   references: {
-    //     model: 'login',
-    //     key: 'loginId',
-    //   },
-    // },
-
     tokenValue: {
       type: DataTypes.STRING,
       allowNull: false,
