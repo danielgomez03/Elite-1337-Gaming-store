@@ -2,9 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
   
 
-
-
-export default function CreateProduct() {
+const CreateProduct = () =>{
 
 
     const validate=(form)=> {
@@ -322,3 +320,5 @@ export default function CreateProduct() {
     </form>
   )
 }
+
+export default CreateProduct
