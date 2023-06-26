@@ -80,12 +80,12 @@ const postCreateProduct = async (req, res) => {
     // Create and associate the images with the product with text URL
     for (const imageData of images) {
       const { url, caption } = imageData;
-      const image = await Image.create({
+      const urlImages = await Image.create({
         url,
         caption,
       });
 
-      await product.addImage(image);
+      await product.addImages(urlImages);
     }
 
     // Upload and associate the images with the product using Cloudinary
@@ -101,7 +101,7 @@ const postCreateProduct = async (req, res) => {
 
     // Return the created product with images
     const createdProduct = await Product.findByPk(product.productId, {
-      include: [Image, Category],
+      include: [Category, Image],
     });
 
     res.status(200).json({ message: 'Product created successfully', createdProduct });

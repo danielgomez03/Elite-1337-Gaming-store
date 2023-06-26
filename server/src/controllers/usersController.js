@@ -49,7 +49,7 @@ const getUsersByName = async (name) => {
         return users;
 
     } catch (error) {
-        console.error('Error en getUsersByName:', error);
+        console.error('Error in getUsersByName:', error);
         throw new Error('An error occurred while retrieving the users by name');
     }
 };
