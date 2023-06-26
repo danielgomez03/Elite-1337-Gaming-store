@@ -13,12 +13,11 @@ module.exports = (sequelize) => {
   
   const Image = sequelize.define('image', {
 
-    imageId: { // naming it like this is less confusing when interacting with other id fields
-      type: DataTypes.INTEGER,
-      autoIncrement: true,
+    imageId: {
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
       allowNull: false,
       primaryKey: true,
-      // unique: true,
     },
 
     url: {
@@ -26,7 +25,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
 
-    caption: { // unnecesary?
+    caption: { // Only necessary for product creation, but not for users
       type: DataTypes.STRING,
       allowNull: true,
     },

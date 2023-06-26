@@ -101,7 +101,7 @@ const categories = [
         parentId: null,
         subcategories: [
             {
-                name: 'Monitors',
+                name: 'Standard Monitors',
                 parentId: null,
             },
             {
@@ -128,7 +128,7 @@ const categories = [
                 parentId: null,
             },
             {
-                name: 'Mouse', // "Mice" just doesn't sound right!
+                name: 'Mouse', // 'Mice' just doesn't sound right!
                 parentId: null,
             },
             {

@@ -8,7 +8,6 @@ const getAllUsers = async () => {
               {
                 model: Image,
                 attributes: ['imageId', 'url'],
-                // as: 'userImage',
               },
               {
                 model: Login,
@@ -38,7 +37,6 @@ const getUsersByName = async (name) => {
             {
               model: Image,
               attributes: ['imageId', 'url'],
-              // as: 'userImage',
             },
             {
               model: Login,
@@ -51,7 +49,7 @@ const getUsersByName = async (name) => {
         return users;
 
     } catch (error) {
-        console.error('Error en getUsersByName:', error);
+        console.error('Error in getUsersByName:', error);
         throw new Error('An error occurred while retrieving the users by name');
     }
 };
@@ -63,11 +61,10 @@ const getUserById = async (userId) => {
           userId: userId,
         },
         include: [
-            // {
-            //   model: Image,
-            //   attributes: ['imageId', 'url'],
-            //   as: 'userImage',
-            // },
+            {
+              model: Image,
+              attributes: ['imageId', 'url'],
+            },
             {
               model: Login,
               attributes: ['loginId', 'email', 'password', 'verify'],

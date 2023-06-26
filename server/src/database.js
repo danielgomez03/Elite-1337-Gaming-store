@@ -1,8 +1,8 @@
-require("dotenv").config();
-const { Sequelize } = require("sequelize");
+require('dotenv').config();
+const { Sequelize } = require('sequelize');
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
@@ -14,13 +14,13 @@ const basename = path.basename(__filename);
 const modelDefiners = [];
 
 // Read all files inside the Models folder, require them and add them to the modelDefiners array
-fs.readdirSync(path.join(__dirname, "/models"))
+fs.readdirSync(path.join(__dirname, '/models'))
   .filter(
     (file) =>
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
   )
   .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, "/models", file)));
+    modelDefiners.push(require(path.join(__dirname, '/models', file)));
   });
 
 // Inject the connection (sequelize) to every model
@@ -67,15 +67,17 @@ Category.belongsTo(Category, { as: 'parent', foreignKey: 'parentId' });
 Category.hasMany(Category, { as: 'subcategories', foreignKey: 'parentId' });
 
 // Product many-to-one with Image
-Product.hasMany(Image);
-Image.belongsTo(Product);
+Product.hasMany(Image, { foreignKey: 'productId' });
+Image.belongsTo(Product, { foreignKey: 'productId' });
 
 // User has one Image (profile picture)
 User.hasOne(Image, {
   foreignKey: 'userId',
-  // as: 'userImage',
   allowNull: true,
-  defaultValue: 'https://res.cloudinary.com/dwavcdgpu/image/upload/v1687509865/default-userImage_yqbaz3.png',
+});
+Image.belongsTo(User, {
+  foreignKey: 'userId',
+  allowNull: true,
 });
 
 // User one-to-one with Login

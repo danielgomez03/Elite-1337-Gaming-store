@@ -24,23 +24,23 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING
         },
         
-        origin: { // country or region of origin of the product, ie: "China". 
+        origin: { // country or region of origin of the product, ie: 'China'. 
             type: DataTypes.STRING,
         },
 
         price: {
             type: DataTypes.DECIMAL(10, 2),
+            defaultValue: 0,
         },
 
         discount: { // Discount percentage to apply to the product
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL(3, 1),
             defaultValue: 0,
         },
 
         stock: { 
             type: DataTypes.INTEGER,
             defaultValue: 0,
-            allowNull: false,
         },
 
         createdAt: {
@@ -55,7 +55,6 @@ module.exports = (sequelize) => {
         },
 
     }, { timestamps: false });
-    
 };
 
 // NOTE FOR FRONT-END IMPLEMENTATION OF STOCK DECREASE WHEN A PRODUCT IS SOLD
