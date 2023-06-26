@@ -29,7 +29,7 @@ function App({ Component, pageProps }) {
         <div className='page-container min-h-[calc(100vh-378px)] flex flex-col justify-center items-center p-4'>
           {typeUser === 'admin' && <NavBarAdmin />}
           {typeUser === 'users' && <NavBarUsers />}
-          {typeUser === 'guest' && <NavBarGuest />}
+         
           <Component {...pageProps} />
         </div>
         <Footer className='mt-auto' />
