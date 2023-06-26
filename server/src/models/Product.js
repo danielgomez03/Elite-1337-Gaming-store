@@ -30,17 +30,17 @@ module.exports = (sequelize) => {
 
         price: {
             type: DataTypes.DECIMAL(10, 2),
+            defaultValue: 0,
         },
 
         discount: { // Discount percentage to apply to the product
-            type: DataTypes.INTEGER,
+            type: DataTypes.DECIMAL(2, 2),
             defaultValue: 0,
         },
 
         stock: { 
             type: DataTypes.INTEGER,
             defaultValue: 0,
-            allowNull: false,
         },
 
         createdAt: {
