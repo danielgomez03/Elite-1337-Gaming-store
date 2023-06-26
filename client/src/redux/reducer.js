@@ -1,6 +1,6 @@
 import{
   GET_PRODUCTS,
-  GET_PRODUCT_BY_NAME,
+  GET_PRODUCT_BY_ID,
   GET_CATEGORIES,
   ORDERS,
   FILTERS,
@@ -21,7 +21,7 @@ const rootReducer= (state=initialState,action)=>{
 switch(action.type){
   case GET_PRODUCTS:
       return {...state,products:action.payload}
-    case GET_PRODUCT_BY_NAME:
+    case GET_PRODUCT_BY_ID:
       
         if(action.payload==='not found')
         return {...state}
