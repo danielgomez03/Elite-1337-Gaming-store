@@ -83,7 +83,7 @@ const postCreateProduct = async (req, res) => {
     for (const image of images) {
       const { url, caption } = image;
 
-      if (url.startsWith('http')) {
+      if (url && url.startsWith('http')) {
         // URL image
         const urlImage = await Image.create({
           url,

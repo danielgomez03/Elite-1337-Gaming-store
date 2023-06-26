@@ -38,7 +38,7 @@ export const getProductById = (id) => {
       const bd = await axios.get("http://localhost:3001/categories");
       const categories = bd.data
       console.log(categories)
-      dispatch({ type: GET_CATEGORIES, payload: categories });
+       dispatch({ type: GET_CATEGORIES, payload: categories });
     };
   };
 

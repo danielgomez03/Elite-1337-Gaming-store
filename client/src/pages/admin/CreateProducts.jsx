@@ -40,13 +40,11 @@ export default function CreateProducts({onClose}) {
             
     useEffect(() => {
     
-    (dispatch(getCategories));
+    (dispatch(getCategories()));
       }, []);
     const categories = useSelector(state=>state.categories)
     console.log(categories)
-
-const [selectedCategory, setSelectedCategory] = useState('');
-const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  
   
  
   const [form, setForm] = useState({
@@ -59,27 +57,33 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
     stock: 0,
     isActive:false,//fata input
     category:"",
-    image:"",
+    images:[],
     
   })
    const [error,setError]= useState({})
 
+  const imagesHandler = (event)=>{
+    event.preventDefault();
+    const imagesUrl={url:event.target.value}
+    setForm({
+        ...form,
+        images: [...form.images, imagesUrl],
+      })
+
+  }
   const categoryHandler = (event)=>{
-   
+    
     const category = event.target.value;
     setSelectedCategory(category);
 
     // Buscar las subcategorías correspondientes a la categoría seleccionada
     const selectedCategoryObj = categories.find((cat) => cat.name === category);
-    const subcategories = selectedCategoryObj.subcategories || [];
+    const subcategories = selectedCategoryObj?.subcategories || [];
     setSelectedSubcategory(subcategories[0]?.name || '');
 
   }
 
-  const handleSubcategory = (event) => {
-    const subcategory = event.target.value;
-    setSelectedSubcategory(subcategory);
-  };
+
   
 
  
@@ -107,16 +111,17 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
       
    
     
-    axios.post(URL,form)
+    axios.post("http://localhost:3001/products/create",form)
     .then(res=>alert(res.data))
-    .catch(error=>alert(error.data))
+    .catch(error=>alert("asdfgh"))
     
     }
     
   
 
     return (
-    <form action="/products" method="POST" enctype="multipart/form-data" onSubmit={onSubmithandler}>
+        <form onSubmit={onSubmithandler}>
+     {/* <form action="/products/create" method="POST" encType="multipart/form-data" onSubmit={onSubmithandler}>  */}
         <button onClick={onClose}>X</button>
         <div>
             <div>
@@ -157,18 +162,19 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
             
         
                 <div>
-                    <select value={selectedCategory} onChange={categoryHandler}>
+                    <select name="category"   onChange={onChangeHandler}>
                         <option value='select'>
                             SELECT CATEGORY
                         </option>
                         {categories.map(cat => 
-                            <option name={cat.name} value={cat.name}>
+                            <option name={cat.name} value={cat.categoryId}>
                                 {cat.name}
+                               
                             </option>
                         )}
                     </select>
                     <div>
-                        <select value={selectedSubcategory} onChange={handleSubcategory}>
+                        {/* {categories.subcategory? <select value={selectedSubcategory} onChange={handleSubcategory}>
                             <option value="">SubCategories</option>
                             {selectedCategory &&
                             categories
@@ -178,12 +184,13 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
                                     {subcategory.name}
                                 </option>
                                 ))}
-                        </select>
+                        </select>} */}
                     </div>
                 </div>
                 <div>
-                    <label htmlFor="image">Image:</label>
-                    <input type="file" name="image" alt='image'/>
+                    <label htmlFor="images">Images:</label>
+                    <input placeholder='Enter URL...'type="text" value={form.images} onChange={imagesHandler} name='images'/>
+                   
                 </div>
             </div>
             <div>
