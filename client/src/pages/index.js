@@ -10,11 +10,9 @@ import Profile from "./users/Profile";
 import Admin from "./admin/Admin";
 import ProductsAdmin from "./admin/ProductsAdmin";
 import TermsConditions from "./users/TermsConditions";
-import CreateProduct from "./admin/CreateProduct"
 
 export default function Index() {
   const router = useRouter();
-  
 
   return (
     <div>
@@ -27,8 +25,7 @@ export default function Index() {
       {router.pathname === "/client-profile" && <Profile />}
       {router.pathname === "/admin" && <Admin />}
       {router.pathname === "/admin/products" && <ProductsAdmin />}
-      {router.asPath === "/terms-and-conditions" && <TermsConditions />}
-      {router.asPath === "/admin/createProduct" && <CreateProduct />}
+      {router.pathname === "/terms-and-conditions" && <TermsConditions />}
 
       <Footer />
     </div>
