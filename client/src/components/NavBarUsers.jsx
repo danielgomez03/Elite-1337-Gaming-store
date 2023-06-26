@@ -8,25 +8,25 @@ function NavBarUsers() {
       className="bg-white fixed top-16 left-0 w-full flex justify-center p-4 space-x-10 z-50 font-bold "
     >
       <li>
-        <Link href="/products">Hardware</Link>
+        <Link href="/users/Products">Hardware</Link>
       </li>
       <li>
-        <Link href="/products">Software</Link>
+        <Link href="/users/Products">Software</Link>
       </li>
       <li>
-        <Link href="/products">Pre-built Systems</Link>
+        <Link href="/users/Products">Pre-built Systems</Link>
       </li>
       <li>
-        <Link href="/products">Upgrade Bundles</Link>
+        <Link href="/users/Products">Upgrade Bundles</Link>
       </li>
       <li>
-        <Link href="/profile">My Account</Link>
+        <Link href="/users/Profile">My Account</Link>
       </li>
       <li>
-        <Link href="/notifications">Notifications</Link>
+        <Link href="/users/Notifications">Notifications</Link>
       </li>
       <li>
-        <Link href="/shopCart">Shop Cart</Link>
+        <Link href="/users/ShopCart">Shop Cart</Link>
       </li>
     </ul>
   );
