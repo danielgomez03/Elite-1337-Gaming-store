@@ -13,7 +13,7 @@ import Favorites from './users/Favorites';
 import Profile from './users/Profile';
 import Admin from './admin/Admin';
 import ProductsAdmin from './admin/ProductsAdmin';
-import CreateProduct from "../components/CreateProduct"
+import CreateProducts from "./admin/CreateProducts"
 import TermsConditions from './users/TermsConditions';
 import 'tailwindcss/tailwind.css';
 
@@ -30,7 +30,7 @@ function App({ Component, pageProps }) {
             <NavBarAdmin />
             {router.asPath === '/' && <Admin />}
             {router.asPath === '/admin/products' && <ProductsAdmin />}
-            {router.asPath === '/admin/products/create' && <CreateProduct />}
+            {router.asPath === '/admin/products/create' && <CreateProducts />}
             {router.asPath === '/admin/terms-and-conditions' && <TermsConditions />}
           </div>
         ) : (

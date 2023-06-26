@@ -1,26 +1,58 @@
 import{
-    
-  } from './actions'
+  GET_PRODUCTS,
+  GET_PRODUCT_BY_ID,
+  GET_CATEGORIES,
+  ORDERS,
+  FILTERS,
+  PAGE,
+  CLEAN,
+  
+} from './actions'
 
 const initialState = {
-    products:[
-        {
-            productId: '81f78a64-454c-4ad9-8ff1-92a60745d16f',
-            name: 'Product 15',
-            description: 'This is product 15',
-            manufacturer: 'Manufacturer A',
-            origin: 'USA',
-            price: 199.99,
-            discount: 15,
-            stock: 10,
-            isActive: true,}]
+  page:1,
+  products: [],
+  datail:[],
+  filters:[],
+  categories:[],
 }
 
 const rootReducer= (state=initialState,action)=>{
- switch(action.type){
+switch(action.type){
+  case GET_PRODUCTS:
+      return {...state,products:action.payload}
+    case GET_PRODUCT_BY_ID:
+      
+        if(action.payload==='not found')
+        return {...state}
+        return { ...state, detail: action.payload };
+  
+    
+    case GET_CATEGORIES:
+        return { ...state, categories: action.payload };
    
-    default: return {...state}
- }
+    
+    case ORDERS:
+     
+      return {...state}
+    case FILTERS:
+      
+  return{...state} 
+  
+  
+      
+    case CLEAN:
+        return{
+            ...state,
+            detail:[]
+          }
+    case PAGE:
+      
+      return{
+          ...state,page: action.payload
+      }
+  default: return {...state}
+}
 
 }
 export default rootReducer;
