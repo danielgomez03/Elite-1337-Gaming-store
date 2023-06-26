@@ -19,19 +19,19 @@ function Header() {
   };
 
   return (
-    <div className='w-full h-35'>
+    <div className="bg-white fixed top-0 left-0 right-0 h-16  z-50 flex justify-between p-4 space-x-10" >
       <Link href="/">
         <h1>Your Logo</h1>
       </Link>
       <SearchBar />
       {logIn ? (
-        <div>
+        <div className="flex justify-between space-x-10" >
           <img src="" alt="" />
           <h3>{user.name}</h3>
           <button>Log out</button>
         </div>
       ) : (
-        <div>
+        <div className="flex justify-between space-x-10" >
           <button onClick={() => openSignInRegister('register')}>Register</button>
           <button onClick={() => openSignInRegister('signIn')}>Sign In</button>
         </div>
