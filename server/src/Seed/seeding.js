@@ -71,17 +71,17 @@ const seedDatabase = async () => {
         isActive: userData.isActive,
       });
 
-      const profilePicture = userData.profilePicture; // Datos de la imagen de perfil
-
-      if (profilePicture) {
+      if (userData.image) {
+        // Crear imagen del usuario en la base de datos
         const image = await Image.create({
-          imageId: profilePicture.imageId,
-          url: profilePicture.url,
+          imageId: userData.image.imageId,
+          url: userData.image.url,
+          caption: userData.image.caption,
+          userId: user.userId, // Asociar la imagen al usuario recién creado
         });
-        
-        await user.setProfilePicture(image); // Asociar la imagen de perfil al usuario
+
+        console.log(`Se creó una imagen para el usuario con userId ${user.userId}.`);
       }
-    
     }
     console.log('Seeding completed successfully.');
   } catch (error) {
