@@ -1,5 +1,5 @@
 const { conn, Product, Image, Category } = require('../database');
-const { getAllProducts, getProductsByName, getProductById } = require('../controllers/productsController');
+const { getAllProducts, getProductsByName, getProductById, recursiveParentCategories } = require('../controllers/productsController');
 
 const getProducts = async (req, res) => {
   const { name } = req.query;
@@ -77,32 +77,59 @@ const postCreateProduct = async (req, res) => {
       await product.setCategory(subcategory);
     }
 
-    // Create and associate the images with the product with text URL
-    for (const imageData of images) {
-      const { url, caption } = imageData;
-      const urlImages = await Image.create({
-        url,
-        caption,
-      });
-
-      await product.addImages(urlImages);
-    }
-
     // Upload and associate the images with the product using Cloudinary
     const uploadedImages = [];
 
-    for (const imageFile of images) {
-      const { url, caption } = imageFile;
-      const image = await Image.upload(imageFile);
-      uploadedImages.push({ url: image.url, caption });
+    for (const image of images) {
+      const { url, caption } = image;
+
+      if (url.startsWith('http')) {
+        // URL image
+        const urlImage = await Image.create({
+          url,
+          caption,
+        });
+
+        await product.addImages(urlImage);
+        uploadedImages.push({ url, caption });
+      } else {
+        // Local file upload
+        const cloudinaryImage = await Image.upload(image); // Upload image to Cloudinary
+
+        await product.addImages(cloudinaryImage);
+        uploadedImages.push({ url: cloudinaryImage.url, caption });
+      }
     }
 
-    await product.addImages(uploadedImages);
-
-    // Return the created product with images
+    // Return the created product with category and its parent categories
     const createdProduct = await Product.findByPk(product.productId, {
-      include: [Category, Image],
-    });
+      include: [ // Only includes two parent branches. A better implementation is necessary, like recursion
+        {
+          model: Image,
+          as: 'images',
+          attributes: ['imageId', 'url', 'caption'],
+        },
+        {
+          model: Category,
+          as: 'category',
+          include: [
+            {
+              model: Category,
+              as: 'parent',
+              attributes: ['categoryId', 'name'],
+              include: [
+                {
+                  model: Category,
+                  as: 'parent',
+                  attributes: ['categoryId', 'name'],
+                },
+              ],
+            },
+          ],
+          attributes: ['categoryId', 'name'],
+        },
+      ],
+    });    
 
     res.status(200).json({ message: 'Product created successfully', createdProduct });
   } catch (error) {

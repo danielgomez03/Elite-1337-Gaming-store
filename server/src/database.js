@@ -67,8 +67,8 @@ Category.belongsTo(Category, { as: 'parent', foreignKey: 'parentId' });
 Category.hasMany(Category, { as: 'subcategories', foreignKey: 'parentId' });
 
 // Product many-to-one with Image
-Product.hasMany(Image);
-Image.belongsTo(Product);
+Product.hasMany(Image, { foreignKey: 'productId' });
+Image.belongsTo(Product, { foreignKey: 'productId' });
 
 // User has one Image (profile picture)
 User.hasOne(Image, {
