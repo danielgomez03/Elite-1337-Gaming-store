@@ -8,7 +8,8 @@ const getAllUsers = async () => {
               {
                 model: Image,
                 attributes: ['imageId', 'url'],
-                // as: 'userImage',
+                as: "image",
+                required: false,
               },
               {
                 model: Login,
@@ -18,7 +19,25 @@ const getAllUsers = async () => {
             order: [['firstName', 'asc']],
         });
 
-        return users;
+    // Formatear la respuesta y asegurarse de que la propiedad "image" tenga el formato correcto
+    const formattedUsers = users.map(user => {
+      const formattedUser = user.toJSON();
+
+      // Verificar si la propiedad "image" está presente y no es nula
+      if (formattedUser.image && formattedUser.image.length > 0) {
+        // Convertir la imagen en un objeto con las propiedades deseadas
+        formattedUser.image = formattedUser.image.map(image => ({
+          imageId: image.imageId,
+          url: image.url,
+        }));
+      } else {
+        // Establecer la propiedad "image" como un array vacío si no hay imagen
+        formattedUser.image = [];
+      }
+
+      return formattedUser;
+    });
+    return formattedUsers;
 
     } catch (error) {
         console.error('Error in getAllUsers:', error);

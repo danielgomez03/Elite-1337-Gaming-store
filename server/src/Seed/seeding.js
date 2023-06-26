@@ -1,5 +1,6 @@
-const { Product, Image } = require("../database");
+const { Product, Image, User } = require("../database");
 const products = require("../data/products");
+const users = require("../data/users");
 
 const seedDatabase = async () => {
   try {
@@ -35,13 +36,55 @@ const seedDatabase = async () => {
         imageId: imageData.imageId,
         url: imageData.url,
         caption: imageData.caption,
-        productId: product.productId
       }));
 
       await Image.bulkCreate(images);
-      
     }
 
+    
+    // Insertar usuarios en la base de datos
+    for (let i = 0; i < users.length; i++) {
+      const userData = users[i];
+
+      const existingUser = await User.findOne({
+        where: { userId: userData.userId },
+      });
+
+      if (existingUser) {
+        console.log(`El usuario con userId ${userData.userId} ya existe en la base de datos. Saltando la creación.`);
+        continue;
+      }
+
+      const user = await User.create({
+        userId: userData.userId,
+        firstName: userData.firstName,
+        lastName: userData.lastName,
+        country: userData.country,
+        region: userData.region,
+        city: userData.city,
+        address: userData.address,
+        postalCode: userData.postalCode,
+        birthDate: userData.birthDate,
+        phoneNumber: userData.phoneNumber,
+        idNumber: userData.idNumber,
+        userRole: userData.userRole,
+        isActive: userData.isActive,
+      });
+
+      const profilePicture = userData.profilePicture; // Datos de la imagen de perfil
+
+      if (profilePicture) {
+        const image = await Image.create({
+          imageId: profilePicture.imageId,
+          url: profilePicture.url,
+          caption: profilePicture.caption,
+          userId: user.userId,
+        });
+        
+        await user.setProfilePicture(image); // Asociar la imagen de perfil al usuario
+      }
+    
+    }
     console.log('Seeding completed successfully.');
   } catch (error) {
     console.error('Seeding failed:', error);
