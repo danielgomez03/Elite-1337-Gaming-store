@@ -19,7 +19,7 @@ function Header() {
   };
 
   return (
-    <div>
+    <div className='w-full h-35'>
       <Link href="/">
         <h1>Your Logo</h1>
       </Link>
