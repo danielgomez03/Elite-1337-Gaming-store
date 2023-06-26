@@ -16,6 +16,7 @@ import ProductsAdmin from './admin/ProductsAdmin';
 import CreateProduct from "../components/CreateProduct"
 import TermsConditions from './users/TermsConditions';
 import 'tailwindcss/tailwind.css';
+import 'typeface-montserrat';
 
 function App({ Component, pageProps }) {
   const router = useRouter();
@@ -23,10 +24,10 @@ function App({ Component, pageProps }) {
 
   return (
     <Provider store={store}>
-      <div className="w-full h-screen">
+      <div className="w-full font-montserrat mt-32" >
         <Header />
         {admin ? (
-          <div>
+          <div className='page-container min-h-[calc(100vh-368px)] flex flex-col justify-center items-center p-4 ' >
             <NavBarAdmin />
             {router.asPath === '/' && <Admin />}
             {router.asPath === '/admin/products' && <ProductsAdmin />}
@@ -34,7 +35,7 @@ function App({ Component, pageProps }) {
             {router.asPath === '/admin/terms-and-conditions' && <TermsConditions />}
           </div>
         ) : (
-          <div>
+          <div className='page-container min-h-[calc(100vh-368px)] flex flex-col justify-center items-center p-4 ' >
             <NavBarUsers />
             {router.asPath === '/' && <Index />}
             {router.asPath === '/products' && <Products />}
@@ -43,7 +44,10 @@ function App({ Component, pageProps }) {
             {router.asPath === '/client-profile' && <Profile />}
           </div>
         )}
-        <Footer admin={admin} />
+        <Footer  
+          className='mt-auto' 
+          admin={admin}
+        />
       </div>
     </Provider>
   );

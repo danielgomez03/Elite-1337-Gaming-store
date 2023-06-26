@@ -244,71 +244,120 @@ const CreateProduct = ({onClose}) =>{
   
 
     return (
-    <form action="/products" method="POST" encType="multipart/form-data" onSubmit={onSubmithandler}>
-    <button onClick={onClose}>X</button>
-        <div>
-            <div>
-                <div>
-                    <input placeholder='Enter New Product...'type="text" value={form.name} onChange={onChangeHandler} name='name'/>
-                    {error.name ? (<p>{error.name}</p>) : ""}
+    <form
+        action="/products" 
+        method="POST" 
+        encType="multipart/form-data" 
+        onSubmit={onSubmithandler}
+        className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 ml-0 gap-2" >
+        <div 
+            className="relative w-auto h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-10" >
+            <button  
+                className="absolute top-2 right-4"
+                onClick={onClose}
+            >
+                X
+            </button>
+            <div className='w-full'>
+                <div className="mb-4">
+                    <input
+                    placeholder="Enter New Product..."
+                    type="text"
+                    value={form.name}
+                    onChange={onChangeHandler}
+                    name="name"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                    />
+                    {error.name && <p className="text-red-500">{error.name}</p>}
                 </div>
 
-                <div>
-                    <input placeholder='description...'type="textarea" value={form.description} onChange={onChangeHandler} name='description'/>
-                    {error.description ? (<p>{error.description}</p>) : ""}
+                <div className="mb-4">
+                    <textarea
+                    placeholder="Description..."
+                    value={form.description}
+                    onChange={onChangeHandler}
+                    name="description"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                    />
+                    {error.description && <p className="text-red-500">{error.description}</p>}
                 </div>
 
-                <div>
-                    <input placeholder='manufacturer...'type="text" value={form.manufacturer} onChange={onChangeHandler} name='manufacturer'/>      
+                <div className="mb-4">
+                    <input
+                    placeholder="Manufacturer..."
+                    type="text"
+                    value={form.manufacturer}
+                    onChange={onChangeHandler}
+                    name="manufacturer"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                    />
                 </div>
 
-                <div>
-                    <input placeholder='origin...'type="text" value={form.origin} onChange={onChangeHandler} name='origin'/>
-                    {error.origin ? (<p>{error.origin}</p>) : ""}
-                
-                </div>
-                
-                <div>
-                    <input placeholder='price...'type="text" value={form.price} onChange={onChangeHandler} name='price'/>
-                    {error.price ? (<p>{error.price}</p>) : ""}
-                </div>
-                
-                <div>
-                    <input placeholder='discount...'type="text" value={form.discount} onChange={onChangeHandler} name='discount'/>
-                    {error.discount ? (<p>{error.discount}</p>) : ""}
+                <div className="mb-4">
+                    <input
+                    placeholder="Origin..."
+                    type="text"
+                    value={form.origin}
+                    onChange={onChangeHandler}
+                    name="origin"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                    />
+                    {error.origin && <p className="text-red-500">{error.origin}</p>}
                 </div>
 
-                <div>
-                    <input placeholder='stock...'type="text" value={form.stock} onChange={onChangeHandler} name='stock'/>
-                    {error.stock ? (<p>{error.stock}</p>) : ""}
+                <div className="mb-4">
+                    <input
+                    placeholder="Price..."
+                    type="text"
+                    value={form.price}
+                    onChange={onChangeHandler}
+                    name="price"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                    />
+                    {error.price && <p className="text-red-500">{error.price}</p>}
                 </div>
-            
-        
-                <div>
-                    <select value={selectedCategory} onChange={categoryHandler}>
-                        <option value='select'>
-                            SELECT CATEGORY
-                        </option>
-                        {categories.map(cat => 
-                            <option name={cat.name} value={cat.name}>
-                                {cat.name}
-                            </option>
-                        )}
-                    </select>
-                    <div>
-                        <select value={selectedSubcategory} onChange={handleSubcategory}>
-                            <option value="">SubCategories</option>
-                            {selectedCategory &&
-                            categories
-                                .find((cat) => cat.name === selectedCategory)
-                                .subcategories?.map((subcategory) => (
-                                <option key={subcategory.name} value={subcategory.name}>
-                                    {subcategory.name}
-                                </option>
-                                ))}
-                        </select>
+
+                <div className="mb-4">
+                    <input
+                    placeholder="Discount..."
+                    type="text"
+                    value={form.discount}
+                    onChange={onChangeHandler}
+                    name="discount"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                    />
+                    {error.discount && <p className="text-red-500">{error.discount}</p>}
+                </div>
+
+                <div className="mb-4">
+                    <input
+                    placeholder="Stock..."
+                    type="text"
+                    value={form.stock}
+                    onChange={onChangeHandler}
+                    name="stock"
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                    />
+                    {error.stock && <p className="text-red-500">{error.stock}</p>}
+                </div>
+
+                <div className="mb-4">
+                    <select
+                    value={selectedCategory}
+                    onChange={categoryHandler}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                    >
+                                <option value="">SubCategories</option>
+                                {selectedCategory &&
+                                categories
+                                    .find((cat) => cat.name === selectedCategory)
+                                    .subcategories?.map((subcategory) => (
+                                    <option key={subcategory.name} value={subcategory.name}>
+                                        {subcategory.name}
+                                    </option>
+                                    ))}
+                            </select>
                     </div>
-                </div>
                 <div>
                     <label for="image">Image:</label>
                     <input type="file" name="image" alt='image'/>
