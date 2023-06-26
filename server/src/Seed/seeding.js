@@ -36,6 +36,7 @@ const seedDatabase = async () => {
         imageId: imageData.imageId,
         url: imageData.url,
         caption: imageData.caption,
+        productProductId: product.productId, // Asociar la imagen al producto recién creado
       }));
 
       await Image.bulkCreate(images);
