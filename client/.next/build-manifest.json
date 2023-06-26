@@ -22,10 +22,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/CreateProduct": [
+    "/admin/CreateProducts": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/CreateProduct.js"
+      "static/chunks/pages/admin/CreateProducts.js"
     ]
   },
   "ampFirstPages": []
