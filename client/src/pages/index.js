@@ -28,7 +28,7 @@ export default function Index() {
       {router.pathname === "/admin" && <Admin />}
       {router.pathname === "/admin/products" && <ProductsAdmin />}
       {router.asPath === "/terms-and-conditions" && <TermsConditions />}
-      {router.asPath === "/admin/createProduct" && <CreateProduct />}
+      {router.asPath === "/admin/CreateProduct" && <CreateProduct />}
 
       <Footer />
     </div>
