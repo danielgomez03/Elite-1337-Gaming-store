@@ -3,34 +3,34 @@ import Link from 'next/link';
 
 function NavBarAdmin() {
   return (
-    <div>
-      <ul>
-        <li>
-          <Link href="/admin">Dashboards</Link>
-        </li>
-        <li>
-          <Link href="/admin/products">Products</Link>
-        </li>
-        <li>
-          <Link href="/admin/orders">Orders</Link>
-        </li>
-        <li>
-          <Link href="/admin/customers">Customers</Link>
-        </li>
-        <li>
-          <Link href="/admin/reports">Reports</Link>
-        </li>
-        <li>
-          <Link href="/admin/userAccounts">User Accounts</Link>
-        </li>
-        <li>
-          <Link href="/admin/support">Support</Link>
-        </li>
-        <li>
-          <Link href="/admin/profile">Profile</Link>
-        </li>
-      </ul>
-    </div>
+    <ul
+      className="bg-white fixed top-16 left-0 w-full flex justify-center p-4 space-x-10 z-50 font-bold "
+    >
+      <li>
+        <Link href="/admin/Dashboard">Dashboards</Link>
+      </li>
+      <li>
+        <Link href="/admin/Products">Products</Link>
+      </li>
+      <li>
+        <Link href="/admin/Orders">Orders</Link>
+      </li>
+      <li>
+        <Link href="/admin/Customers">Customers</Link>
+      </li>
+      <li>
+        <Link href="/admin/Reports">Reports</Link>
+      </li>
+      <li>
+        <Link href="/admin/UserAccounts">User Accounts</Link>
+      </li>
+      <li>
+        <Link href="/admin/Support">Support</Link>
+      </li>
+      <li>
+        <Link href="/admin/Profile">Profile</Link>
+      </li>
+    </ul>
   )
 }
 
