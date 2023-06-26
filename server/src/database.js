@@ -49,9 +49,6 @@ const {
   Cart,
   SaleHistory,
   Contact,
-  Token,
-  Order,
-  Payment,
 } = sequelize.models;
 
 // Establish the associations between models
@@ -59,12 +56,6 @@ const {
 // Product one-to-many with Category
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
 Category.hasMany(Product, { foreignKey: 'categoryId' });
-
-// Category one-to-many with itself
-// The self-referencing relationship enables hierarchical categorization. It uses the parentId field to determine the superior category for each category.
-
-Category.belongsTo(Category, { as: 'parent', foreignKey: 'parentId' });
-Category.hasMany(Category, { as: 'subcategories', foreignKey: 'parentId' });
 
 // Product many-to-one with Image
 Product.hasMany(Image);
@@ -129,8 +120,13 @@ User.hasMany(SaleHistory, { foreignKey: 'userId' });
 SaleHistory.belongsTo(User, { foreignKey: 'userId'});
 
 // Product many-to-one with SaleHistory
-Product.hasMany(SaleHistory, { foreignKey: 'productId' });
-SaleHistory.belongsTo(Product, { foreignKey: 'productId' });
+Product.hasMany(SaleHistory, {
+  foreignKey: 'productId',
+});
+
+SaleHistory.belongsTo(Product, {
+  foreignKey: 'productId',
+});
 
 // User many-to-one with Contact
 User.hasMany(Contact, { foreignKey: 'userId', sourceKey: 'userId' });
@@ -140,39 +136,19 @@ Contact.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 Product.hasMany(Contact, { foreignKey: 'productId', sourceKey: 'productId' });
 Contact.belongsTo(Product, { foreignKey: 'productId', targetKey: 'productId' });
 
-// User one-to-one with Token
-User.hasOne(Token, { foreignKey: 'userId' });
-Token.belongsTo(User, { foreignKey: 'userId' });
-
-// Login one-to-one with Token
-Login.hasOne(Token, { foreignKey: 'loginId' });
-Token.belongsTo(Login, { foreignKey: 'loginId' });
-
-// User many-to-one with Order
-User.hasMany(Order, { foreignKey: 'userId' });
-Order.belongsTo(User, { foreignKey: 'userId' });
-
-// Login many-to-one with Order
-Login.hasMany(Order, { foreignKey: 'loginId' });
-Order.belongsTo(Login, { foreignKey: 'loginId' });
-
-// Product many-to-many with Order through a junction table
-Product.belongsToMany(Order, { through: 'OrderProduct', foreignKey: 'productId' });
-Order.belongsToMany(Product, { through: 'OrderProduct', foreignKey: 'orderId' });
-
-// Order one-to-one with Payment
-Order.hasOne(Payment, { foreignKey: 'orderId' });
-Payment.belongsTo(Order, { foreignKey: 'orderId' });
-
-// User has many-to-one with Payment
-User.hasMany(Payment, { foreignKey: 'userId' });
-Payment.belongsTo(User, { foreignKey: 'userId' });
-
-// Login has many-to-one with Payment
-Login.hasMany(Payment, { foreignKey: 'loginId' });
-Payment.belongsTo(Login, { foreignKey: 'loginId' });
-
 module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require('./database.js');
   conn: sequelize, // to import the connection { conn } = require('./database.js');
+  
+  User,
+  Product,
+  Category,
+  Image,
+  Login,
+  Comment,
+  Rating,
+  Favourite,
+  Cart,
+  SaleHistory,
+  Contact,
 };

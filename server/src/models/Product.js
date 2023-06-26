@@ -55,7 +55,6 @@ module.exports = (sequelize) => {
         },
 
     }, { timestamps: false });
-    
 };
 
 // NOTE FOR FRONT-END IMPLEMENTATION OF STOCK DECREASE WHEN A PRODUCT IS SOLD
