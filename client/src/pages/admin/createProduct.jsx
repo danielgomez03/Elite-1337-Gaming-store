@@ -31,9 +31,7 @@ const validate=(form)=> {
   
 
 
-
-export default function CreateProduct() {
-//  const categories = useSelector(state=>state.categories)
+const CreateProduct = () => {
   const categories = [
   {
       name: 'Hardware',
@@ -323,3 +321,5 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
     </form>
   )
 }
+
+export default CreateProduct
