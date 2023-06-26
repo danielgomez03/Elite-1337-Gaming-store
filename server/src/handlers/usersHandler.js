@@ -91,10 +91,20 @@ const postCreateUser = async (req, res) => {
     await user.setImage(userImage);
 
     const createdUser = await User.findByPk(user.userId, {
-      include: [Login, Image],
+      include: [
+        {
+          model: Login,
+        },
+        {
+          model: Image,
+          attributes: {
+            exclude: ['caption', 'productId'],
+          },
+        },
+      ],
     });
-
-    res.status(201).json({ message: 'User created successfully', createdUser });
+    
+    res.status(200).json({ message: 'User created successfully', createdUser });    
 
   } catch (error) {
     console.error('Error in postCreateUser:', error);

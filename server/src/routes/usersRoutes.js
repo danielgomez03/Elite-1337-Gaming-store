@@ -6,6 +6,6 @@ const usersRoutes = Router();
 usersRoutes.get("/", getUsers);
 usersRoutes.get("/:userId", getUserByIdHandler);
 
-usersRoutes.post("/", postCreateUser);
+usersRoutes.post("/register", postCreateUser);
 
 module.exports = usersRoutes;
