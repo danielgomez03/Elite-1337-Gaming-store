@@ -13,8 +13,8 @@ export const CLEAN = "CLEAN";
 
 export const getProducts = () => {
   return async function (dispatch) {
-    const bd = await axios.get("http://localhost:3000/products");
-    const products = bd.data;
+    const response = await axios.get("http://localhost:3001/products");
+    const products = response.data;
     dispatch({ type: GET_PRODUCTS, payload: products });
     dispatch({ type: SET_FILTERED_PRODUCTS, payload: products }); 
   };
@@ -23,7 +23,7 @@ export const getProducts = () => {
 
 export const geProductById = (id) => {
     return async function (dispatch) {
-      const bd = await axios.get(`http://localhost:3000/product/${id}`);
+      const bd = await axios.get(`http://localhost:3001/product/${id}`);
       const detail = bd.data
       dispatch({ type: GET_PRODUCT_BY_ID, payload:detail }); 
     };
