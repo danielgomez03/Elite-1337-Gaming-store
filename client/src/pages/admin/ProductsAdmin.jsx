@@ -1,5 +1,5 @@
 import React from 'react'
-import CreateProduct from './CreateProduct'
+import CreateProduct from "./createProduct"
 import Link from 'next/link'
 
 function ProductsAdmin() {
