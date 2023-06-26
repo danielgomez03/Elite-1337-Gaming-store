@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
-import React from 'react';
-// import { UseSelector } from 'react-redux/es/hooks/useSelector';
+
 
 const validate=(form)=> {
     let error = {};
@@ -32,8 +31,8 @@ const validate=(form)=> {
 
 
 
-export default function CreateProduct() {
-//  const categories = useSelector(state=>state.categories)
+export default function Form() {
+ 
   const categories = [
   {
       name: 'Hardware',
@@ -186,8 +185,8 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
     manufacturer: "",
     origin: "",
     price:"",
-    discount:"",
-    stock: "",
+    discount:0,
+    stock: 0,
     isActive:false,//fata input
     category:"",
     image:"",
@@ -238,7 +237,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
       
    
     
-    axios.post("http://localhost:3001/products",form)
+    axios.post(URL,form)
     .then(res=>alert(res.data))
     .catch(error=>alert(error.data))
     
@@ -292,7 +291,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
                             SELECT CATEGORY
                         </option>
                         {categories.map(cat => 
-                            <option key={cat.name} name={cat.name} value={cat.name}>
+                            <option name={cat.name} value={cat.name}>
                                 {cat.name}
                             </option>
                         )}
@@ -312,7 +311,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
                     </div>
                 </div>
                 <div>
-                    <label htmlfor="image">Image:</label>
+                    <label for="image">Image:</label>
                     <input type="file" name="image" alt='image'/>
                 </div>
             </div>
