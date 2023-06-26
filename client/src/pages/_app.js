@@ -13,7 +13,7 @@ import Favorites from './users/Favorites';
 import Profile from './users/Profile';
 import Admin from './admin/Admin';
 import ProductsAdmin from './admin/ProductsAdmin';
-import CreateProduct from "./admin/createProduct";
+import CreateProduct from "./admin/CreateProduct";
 import TermsConditions from './users/TermsConditions';
 import 'tailwindcss/tailwind.css';
 
