@@ -32,7 +32,7 @@ const validate=(form)=> {
 
 
 
-export default function Form() {
+export default function CreateProduct() {
 //  const categories = useSelector(state=>state.categories)
   const categories = [
   {
@@ -292,7 +292,7 @@ const [selectedSubcategory, setSelectedSubcategory] = useState('');
                             SELECT CATEGORY
                         </option>
                         {categories.map(cat => 
-                            <option name={cat.name} value={cat.name}>
+                            <option key={cat.name} name={cat.name} value={cat.name}>
                                 {cat.name}
                             </option>
                         )}

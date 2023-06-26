@@ -20,9 +20,9 @@ export const getProducts = () => {
 };
 
 
-export const geProductByName = (name) => {
+export const geProductByName = (id) => {
     return async function (dispatch) {
-      const bd = await axios.get(`http://localhost:3000/product?name=${name}`);
+      const bd = await axios.get(`http://localhost:3000/${id}`);
       const detail = bd.data
       dispatch({ type: GET_PRODUCT_BY_NAME, payload:detail }); 
     };
