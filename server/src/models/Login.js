@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
     }, { timestamps: false, 
         uniqueKeys: {
         uniqueUserLoginKey: {
-        fields: ["userId", "loginId"],
+        fields: ['userId', 'loginId'],
         }},
     });
 

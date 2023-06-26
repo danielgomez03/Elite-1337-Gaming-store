@@ -3,9 +3,9 @@ const { getUsers, getUserByIdHandler, postCreateUser, } = require('../handlers/u
 
 const usersRoutes = Router();
 
-usersRoutes.get("/", getUsers);
-usersRoutes.get("/:userId", getUserByIdHandler);
+usersRoutes.get('/', getUsers);
+usersRoutes.get('/:userId', getUserByIdHandler);
 
-usersRoutes.post("/register", postCreateUser);
+usersRoutes.post('/register', postCreateUser);
 
 module.exports = usersRoutes;

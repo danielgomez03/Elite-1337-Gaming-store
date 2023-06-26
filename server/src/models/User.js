@@ -45,7 +45,7 @@ module.exports = (sequelize) => {
             type: DataTypes.DATEONLY,
         },
 
-        phoneNumber: { // a string to add number separation through "-"
+        phoneNumber: { // a string to add number separation through '-'
             type: DataTypes.STRING,
         },
 

@@ -24,7 +24,7 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING
         },
         
-        origin: { // country or region of origin of the product, ie: "China". 
+        origin: { // country or region of origin of the product, ie: 'China'. 
             type: DataTypes.STRING,
         },
 

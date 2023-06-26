@@ -1,7 +1,7 @@
-const { Product, Image, User, Category, Login } = require("../database");
-const products = require("../data/products");
-const users = require("../data/users");
-const categories = require("../data/categories");
+const { Product, Image, User, Category, Login } = require('../database');
+const products = require('../data/products');
+const users = require('../data/users');
+const categories = require('../data/categories');
 
 const createCategories = async (categories, parentId = null) => {
   const createdCategories = [];
@@ -116,9 +116,9 @@ const seedDatabase = async () => {
       await Image.bulkCreate(images);
     }
 
-    console.log("Seeding completed successfully.");
+    console.log('Seeding completed successfully.');
   } catch (error) {
-    console.error("Seeding failed:", error);
+    console.error('Seeding failed:', error);
   }
 };
 
@@ -165,9 +165,9 @@ module.exports = { seedDatabase };
 
 
 
-// const { Product, Image, User } = require("../database");
-// const products = require("../data/products");
-// const users = require("../data/users");
+// const { Product, Image, User } = require('../database');
+// const products = require('../data/products');
+// const users = require('../data/users');
 
 // const seedDatabase = async () => {
 //   try {
