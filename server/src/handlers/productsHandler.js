@@ -1,5 +1,6 @@
 const { conn, Product, Image, Category } = require('../database');
-const { getAllProducts, getProductsByName, getProductById, recursiveParentCategories } = require('../controllers/productsController');
+const { getAllProducts, getProductsByName, getProductById } = require('../controllers/productsController');
+const { productValidation } = require('../../../client/src/components/validations');
 
 const getProducts = async (req, res) => {
   const { name } = req.query;
@@ -48,6 +49,25 @@ const postCreateProduct = async (req, res) => {
       category, 
       images, 
     } = req.body;
+
+    // Validate the input data
+    const errors = productValidation({
+      name,
+      description,
+      manufacturer,
+      origin,
+      price,
+      discount,
+      stock,
+      isActive,
+      category,
+      images,
+    });
+
+    // Check if there are any validation errors
+    if (Object.keys(errors).length > 0) {
+      return res.status(400).json({ errors });
+    }
 
     // Retrieve the category hierarchy from the database
     const categories = await Category.findAll({ order: [['categoryId', 'asc']] });
@@ -133,7 +153,7 @@ const postCreateProduct = async (req, res) => {
 
     res.status(200).json({ message: 'Product created successfully', createdProduct });
   } catch (error) {
-    console.error('Error in postCreateProduct:', error);
+
     res.status(400).json({ message: error.message });
   }
 };
