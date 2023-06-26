@@ -33,7 +33,7 @@ export const geProductById = (id) => {
   
   export const getCategories = () => {
     return async function (dispatch) {
-      const bd = await axios.get("http://localhost:3000/categories");
+      const bd = await axios.get("http://localhost:3001/categories");
       const categories = bd.data
       dispatch({ type: GET_CATEGORIES, payload: categories });
     };
