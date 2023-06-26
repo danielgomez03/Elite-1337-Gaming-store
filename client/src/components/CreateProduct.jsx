@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useState } from 'react'
   
 
-const CreateProduct = () =>{
+const CreateProduct = ({onClose}) =>{
 
 
     const validate=(form)=> {
@@ -245,6 +245,7 @@ const CreateProduct = () =>{
 
     return (
     <form action="/products" method="POST" encType="multipart/form-data" onSubmit={onSubmithandler}>
+    <button onClick={onClose}>X</button>
         <div>
             <div>
                 <div>
