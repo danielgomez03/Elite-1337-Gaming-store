@@ -1,8 +1,13 @@
-import React from 'react';
+import React from 'react'
+import CreateProduct from './createProduct'
+import Link from 'next/link'
 
-const ProductsAdmin = () => {
-  // Contenido de la página
-  return <div>Administrar productos</div>;
-};
+function ProductsAdmin() {
+  return (
+    <div>      
+      <Link href="/admin/products/create">Create Product</Link>
+    </div>
+  )
+}
 
-export default ProductsAdmin;
+export default ProductsAdmin
