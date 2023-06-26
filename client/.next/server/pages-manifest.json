@@ -4,7 +4,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/admin/Admin": "pages/admin/Admin.html",
-  "/admin/CreateProduct": "pages/admin/CreateProduct.html",
+  "/admin/CreateProducts": "pages/admin/CreateProducts.js",
   "/admin/ProductsAdmin": "pages/admin/ProductsAdmin.html",
   "/": "pages/index.html",
   "/users/Details": "pages/users/Details.html",
@@ -15,4 +15,5 @@
   "/users/ShopCart": "pages/users/ShopCart.html",
   "/users/TermsConditions": "pages/users/TermsConditions.html",
   "/404": "pages/404.html"
+
 }

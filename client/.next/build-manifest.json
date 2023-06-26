@@ -40,11 +40,10 @@
       "static/chunks/main-8f5aa507902b2d74.js",
       "static/chunks/pages/admin/Admin-c6083c2ad6d1027e.js"
     ],
-    "/admin/CreateProduct": [
-      "static/chunks/webpack-8fa1640cc84ba8fe.js",
-      "static/chunks/framework-6cbe6e332df95288.js",
-      "static/chunks/main-8f5aa507902b2d74.js",
-      "static/chunks/pages/admin/CreateProduct-b9f0a9b4af625d3c.js"
+    "/admin/CreateProducts": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/CreateProducts.js"
     ],
     "/admin/ProductsAdmin": [
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
@@ -93,6 +92,12 @@
       "static/chunks/framework-6cbe6e332df95288.js",
       "static/chunks/main-8f5aa507902b2d74.js",
       "static/chunks/pages/users/TermsConditions-1349d2765cca683f.js"
+
+    "/admin/CreateProducts": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/admin/CreateProducts.js"
+
     ]
   },
   "ampFirstPages": []
