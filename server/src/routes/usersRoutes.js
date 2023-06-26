@@ -4,7 +4,7 @@ const { getUsers, getUserByIdHandler, postCreateUser, } = require('../handlers/u
 const usersRoutes = Router();
 
 usersRoutes.get('/', getUsers);
-usersRoutes.get('/:userId', getUserByIdHandler);
+usersRoutes.get('/id/:userId', getUserByIdHandler);
 
 usersRoutes.post('/register', postCreateUser);
 

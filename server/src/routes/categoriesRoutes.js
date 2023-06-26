@@ -4,6 +4,6 @@ const { getCategories, getCategoryById } = require('../handlers/categoriesHandle
 const categoriesRoutes = Router();
 
 categoriesRoutes.get('/', getCategories);
-categoriesRoutes.get('/:categoryId', getCategoryById);
+categoriesRoutes.get('/id/:categoryId', getCategoryById);
 
 module.exports = categoriesRoutes;
