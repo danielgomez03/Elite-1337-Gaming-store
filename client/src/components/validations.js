@@ -49,7 +49,7 @@ const productValidation = ({
   
     // DISCOUNT
     if (discount && (!/^(\d{1,2}(\.\d{1,2})?)?$/.test(discount) || discount < 0 || discount > 100)) {
-      errors.discount = ["Discount must be a number between 0 and 100 with up to 2 decimal places"];
+      errors.discount = ["Discount must be a number between 0 and 100 with up to 1 decimal places"];
     }
   
     // STOCK
@@ -67,9 +67,9 @@ const productValidation = ({
     }
   
     // CATEGORY
-if (!category || !Array.isArray(category) || category.length === 0) {
+    if (!category || !Array.isArray(category) || category.length === 0) {
     errors.category = ["Please select at least one category"];
-  }
+    }
   
     // IMAGES
     if (images && !Array.isArray(images)) {
