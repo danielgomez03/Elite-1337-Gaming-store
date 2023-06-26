@@ -173,19 +173,7 @@ export default function CreateProducts({onClose}) {
                             </option>
                         )}
                     </select>
-                    <div>
-                        {/* {categories.subcategory? <select value={selectedSubcategory} onChange={handleSubcategory}>
-                            <option value="">SubCategories</option>
-                            {selectedCategory &&
-                            categories
-                                .find((cat) => cat.name === selectedCategory)
-                                .subcategories?.map((subcategory) => (
-                                <option key={subcategory.name} value={subcategory.name}>
-                                    {subcategory.name}
-                                </option>
-                                ))}
-                        </select>} */}
-                    </div>
+                   
                 </div>
                 <div>
                     <label htmlFor="images">Images:</label>
