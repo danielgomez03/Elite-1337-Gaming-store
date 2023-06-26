@@ -37,6 +37,8 @@ export const geProductById = (id) => {
       dispatch({ type: GET_CATEGORIES, payload: categories });
     };
   };
+
+  
   
   
 
