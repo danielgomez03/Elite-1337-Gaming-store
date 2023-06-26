@@ -78,7 +78,7 @@ const products = [
 		],
 		category: {
 			categoryId: 23,
-			name: 'Monitors',
+			name: 'Standard Monitors',
 			parent: {
 				categoryId: 22,
 				name: 'Monitors',

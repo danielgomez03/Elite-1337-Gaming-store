@@ -101,7 +101,7 @@ const categories = [
         parentId: null,
         subcategories: [
             {
-                name: 'Monitors',
+                name: 'Standard Monitors',
                 parentId: null,
             },
             {
