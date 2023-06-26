@@ -10,12 +10,14 @@ import{
 } from './actions'
 
 const initialState = {
-  page:1,
+  page: 1,
   products: [],
-  datail:[],
-  filters:[],
-  categories:[],
-}
+  detail: [],
+  filters: [],
+  categories: [],
+  filteredProducts: [], 
+  sortOrder: 'ascending'
+};
 
 const rootReducer= (state=initialState,action)=>{
 switch(action.type){
