@@ -1,23 +1,33 @@
 {
   "polyfillFiles": [
-    "static/chunks/polyfills.js"
+    "static/chunks/polyfills-78c92fac7aa8fdd8.js"
   ],
-  "devFiles": [
-    "static/chunks/react-refresh.js"
-  ],
+  "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/development/_buildManifest.js",
-    "static/development/_ssgManifest.js"
+    "static/0-E5dYsoKg_GqFbArVGNx/_buildManifest.js",
+    "static/0-E5dYsoKg_GqFbArVGNx/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
+<<<<<<< Updated upstream
+=======
+    "/": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/index-53ae21954dd108d7.js"
+    ],
+>>>>>>> Stashed changes
     "/_app": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/_app.js"
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/css/4f6216574c50e397.css",
+      "static/chunks/pages/_app-b20cfac7b92e8e9a.js"
     ],
     "/_error": [
+<<<<<<< Updated upstream
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
@@ -31,6 +41,72 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/users/Details/[id].js"
+=======
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/_error-54de1933a164a1ff.js"
+    ],
+    "/admin/Admin": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/admin/Admin-c6083c2ad6d1027e.js"
+    ],
+    "/admin/CreateProducts": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/admin/CreateProducts-36a3824032b01171.js"
+    ],
+    "/admin/ProductsAdmin": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/admin/ProductsAdmin-de0ad69c50d00575.js"
+    ],
+    "/users/Details": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/users/Details-9b1f7f9f0ce570de.js"
+    ],
+    "/users/Favorites": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/users/Favorites-c1d045b4626eca82.js"
+    ],
+    "/users/Notifications": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/users/Notifications-e6e96ffc810fa9c8.js"
+    ],
+    "/users/Products": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/users/Products-ff59d098ee59d671.js"
+    ],
+    "/users/Profile": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/users/Profile-587dffd2159977e4.js"
+    ],
+    "/users/ShopCart": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/users/ShopCart-7b63fa7826b94312.js"
+    ],
+    "/users/TermsConditions": [
+      "static/chunks/webpack-8fa1640cc84ba8fe.js",
+      "static/chunks/framework-6cbe6e332df95288.js",
+      "static/chunks/main-8f5aa507902b2d74.js",
+      "static/chunks/pages/users/TermsConditions-1349d2765cca683f.js"
+>>>>>>> Stashed changes
     ]
   },
   "ampFirstPages": []
