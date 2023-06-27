@@ -14,8 +14,11 @@ module.exports = (sequelize) => {
 
         email: {
             type: DataTypes.STRING,
-            allowNull: false,
             unique: true,
+            allowNull: false,
+            validate: {
+                isEmail: true,
+            },
         },
 
         password: { 
@@ -31,7 +34,7 @@ module.exports = (sequelize) => {
     }, { timestamps: false, 
         uniqueKeys: {
         uniqueUserLoginKey: {
-        fields: ["userId", "loginId"],
+        fields: ['userId', 'loginId'],
         }},
     });
 

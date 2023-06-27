@@ -1,8 +1,8 @@
-require("dotenv").config();
-const { Sequelize } = require("sequelize");
+require('dotenv').config();
+const { Sequelize } = require('sequelize');
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME, DB_PORT } = process.env;
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
@@ -14,13 +14,13 @@ const basename = path.basename(__filename);
 const modelDefiners = [];
 
 // Read all files inside the Models folder, require them and add them to the modelDefiners array
-fs.readdirSync(path.join(__dirname, "/models"))
+fs.readdirSync(path.join(__dirname, '/models'))
   .filter(
     (file) =>
-      file.indexOf(".") !== 0 && file !== basename && file.slice(-3) === ".js"
+      file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js'
   )
   .forEach((file) => {
-    modelDefiners.push(require(path.join(__dirname, "/models", file)));
+    modelDefiners.push(require(path.join(__dirname, '/models', file)));
   });
 
 // Inject the connection (sequelize) to every model
@@ -48,6 +48,10 @@ const {
   Favourite,
   Cart,
   SaleHistory,
+  Contact,
+  Token,
+  Order,
+  Payment,
 } = sequelize.models;
 
 // Establish the associations between models
@@ -56,9 +60,25 @@ const {
 Product.belongsTo(Category, { foreignKey: 'categoryId' });
 Category.hasMany(Product, { foreignKey: 'categoryId' });
 
+// Category one-to-many with itself
+// The self-referencing relationship enables hierarchical categorization. It uses the parentId field to determine the superior category for each category.
+
+Category.belongsTo(Category, { as: 'parent', foreignKey: 'parentId' });
+Category.hasMany(Category, { as: 'subcategories', foreignKey: 'parentId' });
+
 // Product many-to-one with Image
-Product.hasMany(Image);
-Image.belongsTo(Product);
+Product.hasMany(Image, { foreignKey: 'productId' });
+Image.belongsTo(Product, { foreignKey: 'productId' });
+
+// User has one Image (profile picture)
+User.hasOne(Image, {
+  foreignKey: 'userId',
+  allowNull: true,
+});
+Image.belongsTo(User, {
+  foreignKey: 'userId',
+  allowNull: true,
+});
 
 // User one-to-one with Login
 User.hasOne(Login, { foreignKey: 'userId'});
@@ -107,35 +127,54 @@ Product.hasMany(Cart, {
 Cart.belongsTo(Product, { foreignKey: 'productId' });
 
 // User many-to-one with SaleHistory
-User.hasMany(SaleHistory, {
-  foreignKey: 'userId',
-});
-
-SaleHistory.belongsTo(User, {
-  foreignKey: 'userId',
-});
+User.hasMany(SaleHistory, { foreignKey: 'userId' });
+SaleHistory.belongsTo(User, { foreignKey: 'userId'});
 
 // Product many-to-one with SaleHistory
-Product.hasMany(SaleHistory, {
-  foreignKey: 'productId',
-});
+Product.hasMany(SaleHistory, { foreignKey: 'productId' });
+SaleHistory.belongsTo(Product, { foreignKey: 'productId' });
 
-SaleHistory.belongsTo(Product, {
-  foreignKey: 'productId',
-});
+// User many-to-one with Contact
+User.hasMany(Contact, { foreignKey: 'userId', sourceKey: 'userId' });
+Contact.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
+
+// Product many-to-one with Contact
+Product.hasMany(Contact, { foreignKey: 'productId', sourceKey: 'productId' });
+Contact.belongsTo(Product, { foreignKey: 'productId', targetKey: 'productId' });
+
+// User one-to-one with Token
+User.hasOne(Token, { foreignKey: 'userId' });
+Token.belongsTo(User, { foreignKey: 'userId' });
+
+// Login one-to-one with Token
+Login.hasOne(Token, { foreignKey: 'loginId' });
+Token.belongsTo(Login, { foreignKey: 'loginId' });
+
+// User many-to-one with Order
+User.hasMany(Order, { foreignKey: 'userId' });
+Order.belongsTo(User, { foreignKey: 'userId' });
+
+// Login many-to-one with Order
+Login.hasMany(Order, { foreignKey: 'loginId' });
+Order.belongsTo(Login, { foreignKey: 'loginId' });
+
+// Product many-to-many with Order through a junction table
+Product.belongsToMany(Order, { through: 'OrderProduct', foreignKey: 'productId' });
+Order.belongsToMany(Product, { through: 'OrderProduct', foreignKey: 'orderId' });
+
+// Order one-to-one with Payment
+Order.hasOne(Payment, { foreignKey: 'orderId' });
+Payment.belongsTo(Order, { foreignKey: 'orderId' });
+
+// User has many-to-one with Payment
+User.hasMany(Payment, { foreignKey: 'userId' });
+Payment.belongsTo(User, { foreignKey: 'userId' });
+
+// Login has many-to-one with Payment
+Login.hasMany(Payment, { foreignKey: 'loginId' });
+Payment.belongsTo(Login, { foreignKey: 'loginId' });
 
 module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require('./database.js');
   conn: sequelize, // to import the connection { conn } = require('./database.js');
-  
-  User,
-  Product,
-  Category,
-  Image,
-  Login,
-  Comment,
-  Rating,
-  Favourite,
-  Cart,
-  SaleHistory,
 };
