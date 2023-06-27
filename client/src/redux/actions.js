@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const GET_PRODUCTS = "GET_PRODUCTS";
-export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_NAME";
+export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const ORDERS = "ORDERS";
 export const FILTERS = "FILTERS";
@@ -21,9 +21,9 @@ export const getProducts = () => {
 };
 
 
-export const geProductById = (id) => {
+export const getProductById = (id) => {
     return async function (dispatch) {
-      const bd = await axios.get(`http://localhost:3001/product/${id}`);
+      const bd = await axios.get(`http://localhost:3001/products/id/${id}`);
       const detail = bd.data
       dispatch({ type: GET_PRODUCT_BY_ID, payload:detail }); 
     };
