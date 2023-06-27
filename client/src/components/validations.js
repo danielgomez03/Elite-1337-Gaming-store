@@ -52,7 +52,7 @@ const productValidation = ({
     }
   
     // STOCK
-    if (stock && (!Number.isInteger(stock) || stock < 0)) {
+    if (stock && (!Number.isInteger(Number(stock)) || Number(stock) < 0)) {
       errors.stock = ["Stock must be a non-negative integer"];
     }
   
@@ -66,7 +66,7 @@ const productValidation = ({
     }
   
     // CATEGORY
-    if (!category || typeof category !== "number") {
+    if (!category || isNaN(Number(category))) {
       errors.category = ["Please provide a valid category"];
     }
   

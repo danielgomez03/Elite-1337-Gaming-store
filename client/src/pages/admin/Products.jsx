@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import CreateProduct from "../../components/CreateProduct"
 import Link from 'next/link'
 
-function ProductsAdmin() {
+function Products() {
   const [selectedButton, setSelectedButton] = useState(false);
 
   const openCreateProduct = () => {
@@ -25,4 +25,4 @@ function ProductsAdmin() {
   )
 }
 
-export default ProductsAdmin
+export default Products
