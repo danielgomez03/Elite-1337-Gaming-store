@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     
     sequelize.define('category', {
         
-        categoryId: { // naming it like this is less confusing when interacting with other id fields
+        categoryId: { 
             type: DataTypes.INTEGER,
             autoIncrement: true,
             allowNull: false,
@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
             defaultValue: false,
         },
 
-        }, { timestamps: false });
+    }, { timestamps: false });
 };
 
 // We can access the category of a product using product.getCategory() and retrieve all products belonging to a category using category.getProducts().

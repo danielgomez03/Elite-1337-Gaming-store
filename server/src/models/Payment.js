@@ -31,20 +31,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    
-    updatedAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-    
-  });
+  }, { timestamps: true });
 
   return Payment;
-
 };

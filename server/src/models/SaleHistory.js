@@ -28,14 +28,8 @@ module.exports = (sequelize) => {
         min: 1,
       },
     },
-
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
-    },
-
-  }, { timestamps: false });
+    
+  }, { timestamps: true });
 };
 
 // NOTE FOR FRONT-END IMPLEMENTATION:

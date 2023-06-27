@@ -107,7 +107,7 @@ const postCreateUser = async (req, res) => {
     } else {
       // If neither file nor URL is provided, use the default image URL
       const defaultImageURL =
-        'https://res.cloudinary.com/dwavcdgpu/image/upload/v1687509865/default-userImage_yqbaz3.png';
+        'https://asset.cloudinary.com/dwavcdgpu/2c3bbd3e727ac547f1a8a31f6a458ac5';
       userImage = await Image.create({ url: defaultImageURL });
     }
 

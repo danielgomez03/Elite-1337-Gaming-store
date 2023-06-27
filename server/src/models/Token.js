@@ -20,11 +20,10 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM('Auth0', 'Google'),
       allowNull: false,
     },
-
-    createdAt: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.NOW,
+    
+    ipAddress: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
 
     expiresAt: {
@@ -32,12 +31,7 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
 
-    ipAddress: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-
-  }, { timestamps: false });
+  }, { timestamps: true });
 
   return Token;
 };

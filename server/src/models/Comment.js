@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
     
     sequelize.define('comment', {
         
-        commentId: { // naming it like this is less confusing when interacting with other id fields
+        commentId: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,

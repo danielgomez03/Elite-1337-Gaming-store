@@ -43,18 +43,12 @@ module.exports = (sequelize) => {
             defaultValue: 0,
         },
 
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: DataTypes.NOW,
-        },
-
         isActive: { // the product can be deactivated by an admin by setting this to false
             type: DataTypes.BOOLEAN,
             defaultValue: true,
         },
 
-    }, { timestamps: false });
+    }, { timestamps: true });
 };
 
 // NOTE FOR FRONT-END IMPLEMENTATION OF STOCK DECREASE WHEN A PRODUCT IS SOLD

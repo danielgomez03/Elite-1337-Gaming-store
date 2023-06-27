@@ -1,53 +1,94 @@
 const { conn, Product, Image, Category } = require('../database');
-const { getAllProducts, getProductsByName, getProductById } = require('../controllers/productsController');
+const {
+  getAllProducts,
+  getProductsByName,
+  getProductsByNameAndDescription,
+  getProductById,
+  getProductsByManufacturer,
+  getProductsByOrigin,
+} = require('../controllers/productsController');
 const { productValidation } = require('../../../client/src/components/validations');
 
 const getProducts = async (req, res) => {
   const { name } = req.query;
-  
+
   try {
     let products;
 
     if (name) {
       products = await getProductsByName(name);
     } else {
-      products = await getAllProducts()
+      products = await getAllProducts();
     }
 
     res.status(200).json(products);
-
   } catch (error) {
-      console.error('Error in getProducts:', error);
-      res.status(500).json({ message: 'An error occurred while retrieving the products' });
+    console.error('Error in getProducts:', error);
+    res.status(500).json({ message: 'An error occurred while retrieving the products' });
   }
 };
 
 const getProductByIdHandler = async (req, res) => {
   const { productId } = req.params;
-  
+
   try {
     const product = await getProductById(productId);
     res.status(200).json(product);
-
   } catch (error) {
     console.error('Error in getProductByIdHandler:', error);
     res.status(500).json({ error: 'An error occurred while retrieving the product by ID' });
   }
 };
 
+const getProductsByNameAndDescriptionHandler = async (req, res) => {
+  const { name } = req.query;
+
+  try {
+    const products = await getProductsByNameAndDescription(name);
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error in getProductsByNameAndDescriptionHandler:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving the products by name and description' });
+  }
+};
+
+const getProductsByManufacturerHandler = async (req, res) => {
+  const { manufacturer } = req.query;
+
+  try {
+    const products = await getProductsByManufacturer(manufacturer);
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error in getProductsByManufacturerHandler:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving the products by manufacturer' });
+  }
+};
+
+const getProductsByOriginHandler = async (req, res) => {
+  const { origin } = req.query;
+
+  try {
+    const products = await getProductsByOrigin(origin);
+    res.status(200).json(products);
+  } catch (error) {
+    console.error('Error in getProductsByOriginHandler:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving the products by origin' });
+  }
+};
+
 const postCreateProduct = async (req, res) => {
   try {
-    const { 
-      name, 
-      description, 
-      manufacturer, 
-      origin, 
-      price, 
-      discount, 
-      stock, 
-      isActive, 
-      category, 
-      images, 
+    const {
+      name,
+      description,
+      manufacturer,
+      origin,
+      price,
+      discount,
+      stock,
+      isActive,
+      category,
+      images,
     } = req.body;
 
     // Validate the input data
@@ -73,7 +114,7 @@ const postCreateProduct = async (req, res) => {
     const categories = await Category.findAll({ order: [['categoryId', 'asc']] });
 
     // Find the selected category and its subcategories
-    const selectedCategory = categories.find(c => c.categoryId === category);
+    const selectedCategory = categories.find((c) => c.categoryId === category);
     const subcategories = selectedCategory ? await selectedCategory.getSubcategories() : [];
 
     // Associate the product with the selected category
@@ -123,7 +164,7 @@ const postCreateProduct = async (req, res) => {
 
     // Return the created product with category and its parent categories
     const createdProduct = await Product.findByPk(product.productId, {
-      include: [ // Only includes two parent branches. A better implementation is necessary, like recursion
+      include: [
         {
           model: Image,
           as: 'images',
@@ -149,17 +190,21 @@ const postCreateProduct = async (req, res) => {
           attributes: ['categoryId', 'name'],
         },
       ],
-    });    
+    });
 
     res.status(200).json({ message: 'Product created successfully', createdProduct });
   } catch (error) {
-
     res.status(400).json({ message: error.message });
   }
 };
 
+
+
 module.exports = {
-    getProducts,
-    getProductByIdHandler,
-    postCreateProduct,
+  getProducts,
+  getProductByIdHandler,
+  getProductsByNameAndDescriptionHandler,
+  getProductsByManufacturerHandler,
+  getProductsByOriginHandler,
+  postCreateProduct,
 };

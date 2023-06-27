@@ -81,6 +81,49 @@ const getProductsByName = async (name) => {
   }
 };
 
+const getProductsByNameAndDescription = async (name) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.iLike]: `%${name}%` } },
+          { description: { [Op.iLike]: `%${name}%` } },
+        ],
+      },
+      include: [
+        {
+          model: Image,
+          attributes: ['imageId', 'url', 'caption'],
+        },
+        {
+          model: Category,
+          as: 'category',
+          include: [
+            {
+              model: Category,
+              as: 'parent',
+              attributes: ['categoryId', 'name'],
+              include: [
+                {
+                  model: Category,
+                  as: 'parent',
+                  attributes: ['categoryId', 'name'],
+                },
+              ],
+            },
+          ],
+          attributes: ['categoryId', 'name'],
+        },
+      ],
+    });
+
+    return products;
+  } catch (error) {
+    console.error('Error in getProductsByName:', error);
+    throw new Error('An error occurred while retrieving the products by name');
+  }
+};
+
 const getProductById = async (productId) => {
   try {
     const product = await Product.findOne({
@@ -125,8 +168,95 @@ const getProductById = async (productId) => {
   }
 };
 
+const getProductsByManufacturer = async (manufacturer) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        manufacturer: {
+          [Op.iLike]: `%${manufacturer}%`,
+        },
+      },
+      include: [
+        {
+          model: Image,
+          attributes: ['imageId', 'url', 'caption'],
+        },
+        {
+          model: Category,
+          as: 'category',
+          include: [
+            {
+              model: Category,
+              as: 'parent',
+              attributes: ['categoryId', 'name'],
+              include: [
+                {
+                  model: Category,
+                  as: 'parent',
+                  attributes: ['categoryId', 'name'],
+                },
+              ],
+            },
+          ],
+          attributes: ['categoryId', 'name'],
+        },
+      ],
+    });
+
+    return products;
+  } catch (error) {
+    console.error('Error in getProductsByManufacturer:', error);
+    throw new Error('An error occurred while retrieving the products by manufacturer');
+  }
+};
+
+const getProductsByOrigin = async (origin) => {
+  try {
+    const products = await Product.findAll({
+      where: {
+        origin: {
+          [Op.iLike]: `%${origin}%`,
+        },
+      },
+      include: [
+        {
+          model: Image,
+          attributes: ['imageId', 'url', 'caption'],
+        },
+        {
+          model: Category,
+          as: 'category',
+          include: [
+            {
+              model: Category,
+              as: 'parent',
+              attributes: ['categoryId', 'name'],
+              include: [
+                {
+                  model: Category,
+                  as: 'parent',
+                  attributes: ['categoryId', 'name'],
+                },
+              ],
+            },
+          ],
+          attributes: ['categoryId', 'name'],
+        },
+      ],
+    });
+
+    return products;
+  } catch (error) {
+    console.error('Error in getProductsByOrigin:', error);
+    throw new Error('An error occurred while retrieving the products by origin');
+  }
+};
+
 module.exports = {
   getAllProducts,
   getProductsByName,
+  getProductsByNameAndDescription,
   getProductById,
+  getProductsByManufacturer,
+  getProductsByOrigin,
 };
