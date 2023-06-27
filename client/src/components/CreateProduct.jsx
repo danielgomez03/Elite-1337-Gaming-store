@@ -56,7 +56,7 @@ export default function CreateProduct({onClose}) {
     discount:0,
     stock: 0,
     isActive:false,//fata input
-    category:"",
+    category:0,
     images:[],
     
   })
