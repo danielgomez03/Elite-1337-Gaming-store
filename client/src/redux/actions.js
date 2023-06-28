@@ -1,5 +1,5 @@
 import axios from "axios";
-
+export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const FILTER_PRODUCTS_BY_PRICE = "FILTER_PRODUCTS_BY_PRICE";
@@ -19,6 +19,13 @@ export const getProducts = () => {
   };
 };
 
+export const getProductByName = (name) => {
+  return async function (dispatch) {
+    const bd = await axios.get(`http://localhost:3001/products?name=${name}`);
+    const product = bd.data
+    dispatch({ type: GET_PRODUCT_BY_NAME, payload:product }); 
+  };
+};
 
 export const getProductById = (id) => {
     return async function (dispatch) {
