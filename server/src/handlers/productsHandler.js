@@ -107,6 +107,8 @@ const postCreateProduct = async (req, res) => {
 
     const images = req.body.images || [];
     const captions = req.body.images.map((image) => image.caption);
+    // Convert the category value to a number if it's a string
+    const categoryId = parseInt(category, 10); // Convert category to a number if it's a string
 
     // Validate the input data
     const errors = productValidation({
@@ -118,8 +120,9 @@ const postCreateProduct = async (req, res) => {
       discount,
       stock,
       isActive,
-      category,
+      category: categoryId,
       images,
+      captions,
     });
 
     // Check if there are any validation errors
@@ -133,10 +136,9 @@ const postCreateProduct = async (req, res) => {
     });
 
     // Find the selected category and its subcategories
-    const selectedCategory = categories.find((c) => c.categoryId === category);
-    const subcategories = selectedCategory
-      ? await selectedCategory.getSubcategories()
-      : [];
+    const selectedCategory = categories.find(
+      (c) => c.categoryId === categoryId,
+    );
 
     // Associate the product with the selected category
     const product = await Product.create({
@@ -148,16 +150,10 @@ const postCreateProduct = async (req, res) => {
       discount,
       stock,
       isActive,
+      categoryId: selectedCategory.categoryId,
     });
 
-    if (selectedCategory) {
-      await product.setCategory(selectedCategory);
-    }
-
-    // Associate the product with the selected subcategories
-    for (const subcategory of subcategories) {
-      await product.setCategory(subcategory);
-    }
+    await product.setCategory(selectedCategory);
 
     // Upload and associate the images with the product using Cloudinary and Multer
     const uploadedImages = [];
