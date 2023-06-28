@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getProducts, clean, filterProductsByPrice, sortProducts } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Card from '@/components/card';
 
 const Products = () => {
   const dispatch = useDispatch();
@@ -77,20 +78,22 @@ const Products = () => {
       </div>
 
       <div className="grid gap-4">
-    {products.map(product => (
-      <div key={product.productId} className="bg-white shadow rounded p-4">
-        <h2 className="text-xl font-bold mb-2">{product.name}</h2>
-        <p className="text-gray-700 mb-2">{product.description}</p>
-        <div className="grid grid-cols-2 gap-2">
-          <p className="text-gray-700"><span className="font-bold">Manufacturer:</span> {product.manufacturer}</p>
-          <p className="text-gray-700"><span className="font-bold">Origin:</span> {product.origin}</p>
-          <p className="text-gray-700"><span className="font-bold">Price:</span> {product.price}</p>
-          <p className="text-gray-700"><span className="font-bold">Discount:</span> {product.discount}</p>
-          <p className="text-gray-700"><span className="font-bold">Stock:</span> {product.stock} pzs</p>
-          <p className="text-gray-700"><span className="font-bold">Category:</span> {product.categoryId}</p>
-        </div>
-      </div>
-    ))}
+    {products.map((product, index) => {
+            return (
+              <Card
+                key={product.productId}
+                id={product.productId}
+                name={product.name}
+                description={product.description}
+                manufacture={product.manufacturer}
+                origin={product.origin}
+                price={product.price}
+                discount={product.discount}
+                stock={product.stock}
+                categoryId={product.categoryId}
+              />
+            );
+          })}
   </div>
     </div>
   );
