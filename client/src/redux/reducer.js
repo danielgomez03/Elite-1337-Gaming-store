@@ -1,5 +1,6 @@
 import{
   GET_PRODUCTS,
+  GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
   GET_CATEGORIES,
   SORT_PRODUCTS,
@@ -10,6 +11,7 @@ import{
 } from './actions'
 
 const initialState = {
+  productsbyName:[],
   page: 1,
   products: [],
   filteredProducts: [],
@@ -27,6 +29,9 @@ switch(action.type){
       products: [...state.products, ...action.payload],
       filteredProducts: [...state.products, ...action.payload]
     };
+    case GET_PRODUCT_BY_NAME:
+      console.log(action.payload)
+        return { ...state, productsbyName: action.payload };
 
     case FILTER_PRODUCTS_BY_PRICE:
       const { minPrice, maxPrice } = action.payload;
