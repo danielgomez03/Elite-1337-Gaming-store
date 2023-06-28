@@ -84,6 +84,7 @@ const productValidation = ({
         }
       }
     }
+    console.log(errors);
     return errors;
 };
 
@@ -202,7 +203,6 @@ const userValidation = ({
       errors.image = ["Invalid image format"];
     }
 
-    console.log(errors);
     return errors;
 };  
 
