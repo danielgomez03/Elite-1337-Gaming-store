@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { getCategories } from '@/redux/actions';
 import { productValidation } from './validations';
 
 const CreateProduct = ({ onClose }) => {
-
-    /* const dispatch = useDispatch();
+    
+    const dispatch = useDispatch();
 
     
             
@@ -14,152 +14,255 @@ const CreateProduct = ({ onClose }) => {
     
     (dispatch(getCategories()));
       }, []);
-    const categories = useSelector(state=>state.categories) */
+    const categories = useSelector(state=>state.categories)
+    /* 
+    PARA USO LOCAL SIN BACK
     const categories = [
         {
-            name: 'Hardware',
-            isMainCategory: true,
-
-            subcategories: [
-                {
-                    name: 'Procesadores (CPU)',
-                },
-                {
-                    name: 'Placas Madre (Motherboards)',
-                },
-                {
-                    name: 'Placas de Video (GPU)',
-                },
-                {
-                    name: 'Almacenamiento',
-                    subcategories: [
-                        {
-                            name: 'Disco Rígido Externo',
-                        },
-                        {
-                            name: 'Disco Interno Mecánico',
-                        },
-                        {
-                            name: 'Disco SSD / SSD M.2',
-                        },
-                        {
-                            name: 'Ópticos (DVD / Blu-Ray)',
-                        },
-                        {
-                            name: 'Pen Drives',
-                        },
-                        {
-                            name: 'MicroSD',
-                        },
-                    ],
-                },
-                {
-                    name: 'Cooling / Refrigeración',
-                    subcategories: [
-                        {
-                            name: 'Coolers CPU',
-                        },
-                        {
-                            name: 'Coolers Gabinete',
-                        },
-                        {
-                            name: 'Pastas Térmicas',
-                        },
-                    ],
-                },
-                {
-                    name: 'Memorias RAM',
-                    subcategories: [
-                        {
-                            name: 'DIMM (DDR3, DDR4)',
-                        },
-                        {
-                            name: 'SO-DIMM',
-                        },
-                    ],
-                },
-                {
-                    name: 'Gabinetes, Fuentes y Alimentación',
-                    subcategories: [
-                        {
-                            name: 'Gabinetes',
-                        },
-                        {
-                            name: 'Fuentes',
-                        },
-                        {
-                            name: 'Alimentación',
-                        },
-                    ],
-                },
-            ],
+            "categoryId": 1,
+            "name": "Hardware",
+            "isMainCategory": true,
+            "parentId": null
         },
         {
-            name: 'Monitores',
-            isMainCategory: true,
-            subcategories: [
-                {
-                    name: 'Monitores',
-                },
-                {
-                    name: 'Monitores Gamer',
-                },
-            ],
+            "categoryId": 2,
+            "name": "CPUs/Processors",
+            "isMainCategory": false,
+            "parentId": 1
         },
         {
-            name: 'Periféricos y Accesorios',
-            isMainCategory: true,
-            subcategories: [
-                {
-                    name: 'Auriculares',
-                },
-                {
-                    name: 'Kit Teclado/Mouse',
-                },
-                {
-                    name: 'Teclado',
-                },
-                {
-                    name: 'Mouse',
-                },
-                {
-                    name: 'Mouse Pads',
-                },
-                {
-                    name: 'Micrófonos',
-                },
-                {
-                    name: 'Parlantes',
-                },
-                {
-                    name: 'Joysticks',
-                },
-                {
-                    name: 'Webcams',
-                },
-                {
-                    name: 'Conectividad',
-                },
-                {
-                    name: 'Tabletas Digitalizadoras',
-                },
-                {
-                    name: 'Sillas Gamer',
-                },
-            ],
+            "categoryId": 3,
+            "name": "Motherboards",
+            "isMainCategory": false,
+            "parentId": 1
         },
         {
-            name: 'Notebooks / Tablets',
-            isMainCategory: true,
+            "categoryId": 4,
+            "name": "Graphics/Video Cards",
+            "isMainCategory": false,
+            "parentId": 1
         },
         {
-            name: 'Ofertas',
-            isMainCategory: true,
+            "categoryId": 5,
+            "name": "Storage",
+            "isMainCategory": false,
+            "parentId": 1
         },
-    ];
+        {
+            "categoryId": 6,
+            "name": "External Hard Disk Drives",
+            "isMainCategory": false,
+            "parentId": 5
+        },
+        {
+            "categoryId": 7,
+            "name": "Internal Hard Disk Drives",
+            "isMainCategory": false,
+            "parentId": 5
+        },
+        {
+            "categoryId": 8,
+            "name": "Solid State Drives",
+            "isMainCategory": false,
+            "parentId": 5
+        },
+        {
+            "categoryId": 9,
+            "name": "DVD/Blu-Ray",
+            "isMainCategory": false,
+            "parentId": 5
+        },
+        {
+            "categoryId": 10,
+            "name": "USB Drives",
+            "isMainCategory": false,
+            "parentId": 5
+        },
+        {
+            "categoryId": 11,
+            "name": "MicroSD",
+            "isMainCategory": false,
+            "parentId": 5
+        },
+        {
+            "categoryId": 12,
+            "name": "Cooling",
+            "isMainCategory": false,
+            "parentId": 1
+        },
+        {
+            "categoryId": 13,
+            "name": "CPU Coolers",
+            "isMainCategory": false,
+            "parentId": 12
+        },
+        {
+            "categoryId": 14,
+            "name": "Case Fans",
+            "isMainCategory": false,
+            "parentId": 12
+        },
+        {
+            "categoryId": 15,
+            "name": "Thermal Pastes",
+            "isMainCategory": false,
+            "parentId": 12
+        },
+        {
+            "categoryId": 16,
+            "name": "RAM Memory",
+            "isMainCategory": false,
+            "parentId": 1
+        },
+        {
+            "categoryId": 17,
+            "name": "DIMM (DDR3, DDR4)",
+            "isMainCategory": false,
+            "parentId": 16
+        },
+        {
+            "categoryId": 18,
+            "name": "SO-DIMM",
+            "isMainCategory": false,
+            "parentId": 16
+        },
+        {
+            "categoryId": 19,
+            "name": "Cases and Power Supplies",
+            "isMainCategory": false,
+            "parentId": 1
+        },
+        {
+            "categoryId": 20,
+            "name": "Cases",
+            "isMainCategory": false,
+            "parentId": 19
+        },
+        {
+            "categoryId": 21,
+            "name": "Power Supplies",
+            "isMainCategory": false,
+            "parentId": 19
+        },
+        {
+            "categoryId": 22,
+            "name": "Monitors",
+            "isMainCategory": true,
+            "parentId": null
+        },
+        {
+            "categoryId": 23,
+            "name": "Standard Monitors",
+            "isMainCategory": false,
+            "parentId": 22
+        },
+        {
+            "categoryId": 24,
+            "name": "Gaming Monitors",
+            "isMainCategory": false,
+            "parentId": 22
+        },
+        {
+            "categoryId": 25,
+            "name": "Peripherals and Accessories",
+            "isMainCategory": true,
+            "parentId": null
+        },
+        {
+            "categoryId": 26,
+            "name": "Headphones",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 27,
+            "name": "Keyboard/Mouse Kits",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 28,
+            "name": "Keyboards",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 29,
+            "name": "Mouse",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 30,
+            "name": "Mouse Pads",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 31,
+            "name": "Microphones",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 32,
+            "name": "Speakers",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 33,
+            "name": "Joysticks",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 34,
+            "name": "Webcams",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 35,
+            "name": "Connectivity",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 36,
+            "name": "Graphic Tablets",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 37,
+            "name": "Gaming Chairs",
+            "isMainCategory": false,
+            "parentId": 25
+        },
+        {
+            "categoryId": 38,
+            "name": "Laptops/Tablets",
+            "isMainCategory": true,
+            "parentId": null
+        },
+        {
+            "categoryId": 39,
+            "name": "On Sale",
+            "isMainCategory": true,
+            "parentId": null
+        }
+    ]
+ */
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
     const [selectedSubSubcategory, setSelectedSubSubcategory] = useState('');
+    const [listSubCategories, setListSubCategories] = useState([]);
+    const [listSubSubCategories, setListSubSubCategories] = useState([]);
+
+    const mainCategories = categories.filter((category) => category.isMainCategory);
+    let subCategories = [];
+    let subSubCategories = [];
 
     const [form, setForm] = useState({
         name: "",
@@ -170,48 +273,55 @@ const CreateProduct = ({ onClose }) => {
         discount: 0,
         stock: 0,
         isActive: false,
-        category: ["","",""],
+        category: 150,
         image: "",
         images: []
     });
 
-    const [error, setError] = useState({})
+    useEffect(() => {
+        subCategories = categories.filter((category) => category.parentId === form.category);
+        setListSubCategories(subCategories)
+    }, [selectedCategory]);
 
     useEffect(() => {
+        subSubCategories = categories.filter((category) => category.parentId === form.category);
+        setListSubSubCategories(subSubCategories)
+    }, [selectedSubcategory]);
+
+    const [error, setError] = useState({})
+
+    /* useEffect(() => {
         setError(productValidation(form));
-    }, [form]);    
+    }, [form]); */
 
     const categoryHandler = (event) => {
-
-        const category = event.target.value;
-        setSelectedCategory(category);
-        form.category[0] = category;
-
-        // Buscar las subcategorías correspondientes a la categoría seleccionada
-        const selectedCategoryObj = categories.find((cat) => cat.name === category);
-        const subcategories = selectedCategoryObj.subcategories || [];
-        setSelectedSubcategory(subcategories[0]?.name || '');
+        const category = categories.find((category) => category.name === event.target.value);
+        setSelectedCategory(category.name);
+        form.category = category.categoryId;
     }
 
     const handleSubcategory = (event) => {
-        const subcategory = event.target.value;
-        setSelectedSubcategory(subcategory);
-        form.category[1] = subcategory;
+        const subcategory = categories.find((category) => category.name === event.target.value);
+        setSelectedSubcategory(subcategory.name);
+        form.category = subcategory.categoryId;
     };
 
     const handleSubSubcategory = (event) => {
-        const subsubcategory = event.target.value;
-        setSelectedSubSubcategory(subsubcategory);
-        form.category[2] = subsubcategory;
+        const subsubcategory = categories.find((category) => category.name === event.target.value);
+        setSelectedSubSubcategory(subsubcategory.name);
+        form.category = subsubcategory.categoryId;
     };
 
     const onChangeHandler = (e) => {
         let { name, value } = e.target;
+        name === "discount" ? setDiscount(value) : null;
         value === "true" ? value = true : value === "false" ? value = false : null;
         setForm((prevForm) => ({
             ...prevForm,
             [name]: value,
         }));
+
+        setError(productValidation(form));
     };
 
 
@@ -225,6 +335,8 @@ const CreateProduct = ({ onClose }) => {
                 image: ""
             }));
         }
+
+        setError(productValidation(form));
     };
 
     const handleImageUpload = (event) => {
@@ -253,6 +365,8 @@ const CreateProduct = ({ onClose }) => {
 
             reader.readAsDataURL(imageFile);
         });
+
+        setError(productValidation(form));
     };
 
     const removeImage = (index) => {
@@ -263,22 +377,8 @@ const CreateProduct = ({ onClose }) => {
                 ...prevForm,
                 images: updatedImages
             };
-        });
-    };
-
-    const onSubmithandler = (event) => {
-        event.preventDefault();
-        console.log(form);
-        if (Object.keys(error).length) {
-            return alert('missing info');
-        }
-
-        if (shouldSubmit) {
-            axios
-                .post(`http://localhost:3000/admin/products`, form)
-                .then((res) => alert(res.data))
-                .catch((error) => alert(error.data));
-        }
+        });        
+        setError(productValidation(form));
     };
 
     const [shouldSubmit, setShouldSubmit] = useState(false);
@@ -299,9 +399,31 @@ const CreateProduct = ({ onClose }) => {
         setIsFocused(false);
     };
 
-    const handleSelectOption = (value) => {
-        setDiscount(value);
+    const handleSelectOption = () => {
         setIsFocused(false);
+    };
+
+    const onSubmithandler = (event) => {
+        event.preventDefault();
+        if (Object.keys(error).length) {
+            return alert('missing info');
+        }
+
+        console.log(form);
+        setError(productValidation(form));
+
+        if (shouldSubmit && !error) {
+            console.log(form);
+            axios
+                .post(`http://localhost:3000/admin/products`, form)
+                .then((res) => {
+                    console.log(res.data);
+                    onClose();
+                })
+                .catch((error) => {
+                    console.error(error.message);
+                });
+        }
     };
 
     return (
@@ -372,9 +494,7 @@ const CreateProduct = ({ onClose }) => {
                             <select
                                 id="discount"
                                 value={discount}
-                                onChange={(e) => setDiscount(e.target.value)}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
+                                onChange={onChangeHandler}
                                 name="discount"
                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                             >
@@ -383,7 +503,6 @@ const CreateProduct = ({ onClose }) => {
                                         key={value}
                                         value={value}
                                         className="px-4 py-2 cursor-pointer hover:bg-gray-200"
-                                        onClick={() => handleSelectOption(value)}
                                     >
                                         {value}
                                     </option>
@@ -462,13 +581,17 @@ const CreateProduct = ({ onClose }) => {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                         >
                             <option value="">----------</option>
-                            {categories.map((category) => (
-                                <option key={category.name} value={category.name}>
+                            {mainCategories.map((category) => (
+                                <option key={category.categoryId} value={category.name}>
                                     {category.name}
                                 </option>
                             ))}
                         </select>
-                        {error.category ? <p className="text-red-500 text-sm">{error.category}</p> : ""}
+                        {error.category ? (
+                            <p className="text-red-500 text-sm">{error.category}</p>
+                        ) : (
+                            ""
+                        )}
                     </div>
 
                     <div className="mb-4 w-1/3 px-2">
@@ -482,13 +605,11 @@ const CreateProduct = ({ onClose }) => {
                         >
                             <option value="">----------</option>
                             {selectedCategory &&
-                                categories
-                                    .find((category) => category.name === selectedCategory)
-                                    ?.subcategories?.map((subcategory) => (
-                                        <option key={subcategory.name} value={subcategory.name}>
-                                            {subcategory.name}
-                                        </option>
-                                    ))}
+                                listSubCategories?.map((subcategory) => (
+                                    <option key={subcategory.categoryId} value={subcategory.name}>
+                                        {subcategory.name}
+                                    </option>
+                                ))}
                         </select>
                     </div>
 
@@ -504,14 +625,11 @@ const CreateProduct = ({ onClose }) => {
                             <option value="">----------</option>
                             {selectedCategory &&
                                 selectedSubcategory &&
-                                categories
-                                    .find((category) => category.name === selectedCategory)
-                                    ?.subcategories?.find((subcategory) => subcategory.name === selectedSubcategory)
-                                    ?.subcategories?.map((subsubcategory) => (
-                                        <option key={subsubcategory.name} value={subsubcategory.name}>
-                                            {subsubcategory.name}
-                                        </option>
-                                    ))}
+                                listSubSubCategories?.map((subsubcategory) => (
+                                    <option key={subsubcategory.categoryId} value={subsubcategory.name}>
+                                        {subsubcategory.name}
+                                    </option>
+                                ))}
                         </select>
                     </div>
 
@@ -522,6 +640,7 @@ const CreateProduct = ({ onClose }) => {
                                 {form.images.length} {form.images.length === 1 ? "image" : "images"} loaded)
                             </span>
                         </label>
+                        {error.images ? <p className="text-red-500 text-sm">{error.images}</p> : ""}
                         <div className="flex flex-col items-center">
                             <div className='w-full mb-4'>
                                 <input
@@ -550,7 +669,6 @@ const CreateProduct = ({ onClose }) => {
                                 disabled={form.images.length >= 3}
                             />
                         </div>
-                        {error.images ? <p className="text-red-500 text-sm">{error.images}</p> : ""}
                     </div>
 
                     {/* Render the loaded images */}

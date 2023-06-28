@@ -84,7 +84,6 @@ const productValidation = ({
         }
       }
     }
-    console.log("Errors:", errors);
     return errors;
 };
 
