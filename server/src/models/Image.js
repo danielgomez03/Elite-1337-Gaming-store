@@ -31,49 +31,77 @@ module.exports = (sequelize) => {
       },
     },
     { timestamps: false }
-  );
+);
 
-  // Configure the storage engine
-  const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-      folder: 'uploads', // Optional folder in your Cloudinary account
-      format: async (req, file) => 'jpg', // Specify the desired file format
-      public_id: (req, file) => 'custom_filename', // Specify the desired public ID
-    },
-  });
+// Configure the storage engine for user images
+const userStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'images/users', // Store user images in the 'images/users' folder
+    format: async (req, file) => 'jpg', // Specify the desired file format
+  },
+});
 
-  // Create the multer instance
-  const upload = multer({ storage: storage });
+// Configure the storage engine for product images
+const productStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'images/products', // Store product images in the 'images/products' folder
+    format: async (req, file) => 'jpg', // Specify the desired file format
+  },
+});
 
-  Image.upload = async function (file) {
-    try {
-      const uploadMiddleware = upload.single('image'); // Multer middleware for single file upload
-      const promise = new Promise((resolve, reject) => {
-        uploadMiddleware(file, null, async (error) => {
-          if (error) {
-            reject(new Error('Image upload failed'));
-          } else {
-            const result = file;
-            const image = await Image.create({
-              url: result.secure_url,
-            });
-            resolve(image);
-          }
-        });
+// Create the multer instances for user and product image uploads
+const uploadUser = multer({ storage: userStorage }).single('image');
+const uploadProduct = multer({ storage: productStorage }).array('images', 3);
+
+Image.uploadUser = async function (file) {
+  try {
+    const promise = new Promise((resolve, reject) => {
+      uploadUser(file, null, async (error) => {
+        if (error) {
+          reject(new Error('Image upload failed'));
+        } else {
+          const image = await Image.create({
+            url: file.secure_url,
+          });
+          resolve(image);
+        }
       });
+    });
 
-      return promise;
-    } catch (error) {
-      throw new Error('Image upload failed');
-    }
-  };
+    return promise;
+  } catch (error) {
+    throw new Error('Image upload failed');
+  }
+};
+
+Image.uploadProduct = async function (files) {
+  try {
+    const promise = new Promise((resolve, reject) => {
+      uploadProduct(files, null, async (error) => {
+        if (error) {
+          reject(new Error('Image upload failed'));
+        } else {
+          const uploadResults = files.map((file) => ({
+            url: file.secure_url,
+            caption: file.caption,
+          }));
+
+          const images = await Image.bulkCreate(uploadResults);
+          resolve(images);
+        }
+      });
+    });
+
+    return promise;
+  } catch (error) {
+    throw new Error('Image upload failed');
+  }
+};
 
   return Image;
 };
-
-
-
 
 // OLD MODEL, FOR ROLLBACKS
 

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getAllImagesHandler, getImageByIdHandler, getImagesByCaptionsHandler, getImagesByUsersHandler, getImagesByProductsHandler, } = require('../handlers/imagesHandler')
+const { getAllImagesHandler, getImageByIdHandler, getImagesByCaptionsHandler, getImagesByUsersHandler, getImagesByProductsHandler } = require('../handlers/imagesHandler');
 
 const imagesRoutes = Router();
 

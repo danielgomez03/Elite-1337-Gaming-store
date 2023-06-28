@@ -1,4 +1,3 @@
-const { conn, User, Product, Image } = require('../database');
 const {
     getAllImages,
     getImageById,
@@ -58,11 +57,12 @@ const getImagesByProductsHandler = async (req, res) => {
     res.status(500).json({ error: 'An error occurred while retrieving product images' });
   }
 };
-  
+
 module.exports = {
   getAllImagesHandler,
   getImageByIdHandler,
   getImagesByCaptionsHandler,
   getImagesByUsersHandler,
   getImagesByProductsHandler,
-};  
+  uploadProductImagesHandler,
+};

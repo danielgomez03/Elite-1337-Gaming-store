@@ -89,6 +89,7 @@ const postCreateProduct = async (req, res) => {
       isActive,
       category,
       images,
+      captions, // User-provided image captions
     } = req.body;
 
     // Validate the input data
@@ -138,55 +139,28 @@ const postCreateProduct = async (req, res) => {
       await product.setCategory(subcategory);
     }
 
-    // Upload and associate the images with the product using Cloudinary
+    // Upload and associate the images with the product using Cloudinary and Multer
     const uploadedImages = [];
 
-    for (const image of images) {
-      const { url, caption } = image;
+    for (let i = 0; i < images.length; i++) {
+      const image = images[i];
+      const caption = captions[i];
 
-      if (url.startsWith('http')) {
-        // URL image
-        const urlImage = await Image.create({
+      const uploadResults = await Image.uploadProduct([image]);
+
+      for (const uploadResult of uploadResults) {
+        const { url } = uploadResult;
+
+        const uploadedImage = await Image.create({
           url,
           caption,
         });
 
-        await product.addImages(urlImage);
+        await product.addImages(uploadedImage);
         uploadedImages.push({ url, caption });
-      } else {
-        // Local file upload
-        const cloudinaryImage = await Image.upload(image); // Upload image to Cloudinary
-
-        await product.addImages(cloudinaryImage);
-        uploadedImages.push({ url: cloudinaryImage.url, caption });
       }
     }
 
-     // ROLLBACK PROTECTION! :D 
-    // // Upload and associate the images with the product using Cloudinary
-    // const uploadedImages = [];
-
-    // for (const image of images) {
-    //   const { url, caption } = image;
-
-    //   if (url.startsWith('http')) {
-    //     // URL image
-    //     const urlImage = await Image.create({
-    //       url,
-    //       caption,
-    //     });
-
-    //     await product.addImages(urlImage);
-    //     uploadedImages.push({ url, caption });
-    //   } else {
-    //     // Local file upload
-    //     const cloudinaryImage = await Image.upload(image); // Upload image to Cloudinary
-
-    //     await product.addImages(cloudinaryImage);
-    //     uploadedImages.push({ url: cloudinaryImage.url, caption });
-    //   }
-    // }
-    
     // Return the created product with category and its parent categories
     const createdProduct = await Product.findByPk(product.productId, {
       include: [
@@ -223,8 +197,6 @@ const postCreateProduct = async (req, res) => {
   }
 };
 
-
-
 module.exports = {
   getProducts,
   getProductByIdHandler,
@@ -233,3 +205,28 @@ module.exports = {
   getProductsByOriginHandler,
   postCreateProduct,
 };
+
+    // ROLLBACK PROTECTION! :D 
+    // // Upload and associate the images with the product using Cloudinary
+    // const uploadedImages = [];
+
+    // for (const image of images) {
+    //   const { url, caption } = image;
+
+    //   if (url.startsWith('http')) {
+    //     // URL image
+    //     const urlImage = await Image.create({
+    //       url,
+    //       caption,
+    //     });
+
+    //     await product.addImages(urlImage);
+    //     uploadedImages.push({ url, caption });
+    //   } else {
+    //     // Local file upload
+    //     const cloudinaryImage = await Image.upload(image); // Upload image to Cloudinary
+
+    //     await product.addImages(cloudinaryImage);
+    //     uploadedImages.push({ url: cloudinaryImage.url, caption });
+    //   }
+    // }
