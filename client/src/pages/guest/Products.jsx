@@ -1,15 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import { getProducts, clean, filterProductsByPrice, changeSortOrder } from '../../redux/actions';
+import { getProducts, clean, filterProductsByPrice, sortProducts } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
-
-
-
-
-const GuestProducts = () => {
+const Products = () => {
   const dispatch = useDispatch();
-  const router = useRouter();
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
@@ -20,15 +14,17 @@ const GuestProducts = () => {
     };
   }, [dispatch]);
 
-  const products = useSelector(state => state.products);
-  const sortOrder = useSelector(state => state.sortOrder);
+  const products = useSelector(state => state.filteredProducts);
+  const [sortOrder, setSortOrder] = useState('');
 
   const handleFilter = () => {
     dispatch(filterProductsByPrice(minPrice, maxPrice));
   };
 
   const handleSortOrderChange = (e) => {
-    dispatch(changeSortOrder(e.target.value));
+    const order = e.target.value;
+    dispatch(sortProducts(order));
+    setSortOrder(order);
   };
 
   return (
@@ -63,20 +59,23 @@ const GuestProducts = () => {
       >
         Filter
       </button>
+      
       <div className="flex flex-col mt-4">
         <label htmlFor="sortOrder" className="text-gray-700">
           Sort Order:
         </label>
         <select
-          id="sortOrder"
-          value={sortOrder}
-          onChange={handleSortOrderChange}
-          className="border border-gray-300 rounded px-2 py-1"
-        >
-          <option value="ascending">Ascending</option>
-          <option value="descending">Descending</option>
-        </select>
+  id="sortOrder"
+  value={sortOrder}
+  onChange={handleSortOrderChange}
+  className="border border-gray-300 rounded px-2 py-1"
+>
+  <option value="">Sort Order</option>
+  <option value="ascending">Ascending</option>
+  <option value="descending">Descending</option>
+</select>
       </div>
+
       <div className="grid gap-4">
     {products.map(product => (
       <div key={product.productId} className="bg-white shadow rounded p-4">
@@ -97,5 +96,5 @@ const GuestProducts = () => {
   );
 };
 
-export default GuestProducts;
+export default Products;
 
