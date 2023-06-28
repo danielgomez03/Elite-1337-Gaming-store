@@ -1,4 +1,4 @@
-const Login = require("../../../server/src/database");
+const { Login } = require("../../../server/src/database");
 
 // Email validation pattern
 const isValidEmail = (email) => {
@@ -6,13 +6,12 @@ const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
-// Function to check if email already exists in the database
 const isEmailDuplicate = async (email) => {
   try {
-    const existingLogin = await Login.findOne({ email });
+    const existingLogin = await Login.findOne({ where: { email } });
 
     if (existingLogin) {
-      return true;
+      throw new Error("Email already exists");
     }
 
     return false;
