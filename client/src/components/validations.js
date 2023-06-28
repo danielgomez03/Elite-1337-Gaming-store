@@ -202,6 +202,7 @@ const userValidation = ({
       errors.image = ["Invalid image format"];
     }
 
+    console.log(errors);
     return errors;
 };  
 
