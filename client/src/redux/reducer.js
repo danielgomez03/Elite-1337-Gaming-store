@@ -2,8 +2,8 @@ import{
   GET_PRODUCTS,
   GET_PRODUCT_BY_ID,
   GET_CATEGORIES,
-  ORDERS,
-  FILTERS,
+  SORT_PRODUCTS,
+  FILTER_PRODUCTS_BY_PRICE,
   PAGE,
   CLEAN,
   
@@ -12,17 +12,42 @@ import{
 const initialState = {
   page: 1,
   products: [],
+  filteredProducts: [],
+  sortOrder: '', 
   detail: [],
-  filters: [],
   categories: [],
-  filteredProducts: [], 
-  sortOrder: 'ascending'
 };
 
 const rootReducer= (state=initialState,action)=>{
 switch(action.type){
+
   case GET_PRODUCTS:
-      return {...state,products:action.payload}
+    return {
+      ...state,
+      products: [...state.products, ...action.payload],
+      filteredProducts: [...state.products, ...action.payload]
+    };
+
+    case FILTER_PRODUCTS_BY_PRICE:
+      const { minPrice, maxPrice } = action.payload;
+      const filteredProducts = state.products.filter(
+        (product) =>
+          parseFloat(product.price) >= parseFloat(minPrice) &&
+          parseFloat(product.price) <= parseFloat(maxPrice)
+      );
+      return {
+        ...state,
+        filteredProducts: filteredProducts,
+      };
+
+      case SORT_PRODUCTS:
+        return {
+          ...state,
+          filteredProducts: action.payload,
+          sortOrder: action.payload.length > 0 ? state.sortOrder : '', // Restablece el sortOrder si no hay productos filtrados
+        };
+
+
     case GET_PRODUCT_BY_ID:
       
         if(action.payload==='not found')
@@ -32,16 +57,7 @@ switch(action.type){
     
     case GET_CATEGORIES:
         return { ...state, categories: action.payload };
-   
-    
-    case ORDERS:
      
-      return {...state}
-    case FILTERS:
-      
-  return{...state} 
-  
-  
       
     case CLEAN:
         return{
