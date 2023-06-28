@@ -5,7 +5,7 @@ const isValidEmail = (email) => {
 };
 
 // PRODUCT CREATION VALIDATIONS
-const productValidation = ({
+export const productValidation = ({
     name,
     description,
     manufacturer,
@@ -89,7 +89,7 @@ const productValidation = ({
 };
 
 // USER CREATION VALIDATIONS
-const userValidation = ({
+export const userValidation = ({
     firstName,
     lastName,
     country,
@@ -206,7 +206,7 @@ const userValidation = ({
     return errors;
 };  
 
-module.exports = { productValidation, userValidation };
+
 
 // // EJEMPLO DE IMPLEMENTACIÓN FRONT
 

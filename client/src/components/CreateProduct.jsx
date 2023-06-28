@@ -1,4 +1,5 @@
 import axios from 'axios'
+
 import { useState } from 'react'
 import { useSelector,useDispatch } from 'react-redux';
 import { getCategories } from '@/redux/actions';
@@ -113,15 +114,16 @@ export default function CreateProduct({onClose}) {
     
     axios.post("http://localhost:3001/products/create",form)
     .then(res=>alert(res.data))
-    .catch(error=>alert("asdfgh"))
+    .catch(error=>alert("error"))
     
     }
     
   
 
     return (
-        <form onSubmit={onSubmithandler}>
-     {/* <form action="/products/create" method="POST" encType="multipart/form-data" onSubmit={onSubmithandler}>  */}
+        
+        
+    <form action="http://localhost:3001/products/create" method="POST" encType="multipart/form-data" onSubmit={onSubmithandler}> 
         <button onClick={onClose}>X</button>
         <div>
             <div>
@@ -178,7 +180,10 @@ export default function CreateProduct({onClose}) {
                 <div>
                     <label htmlFor="images">Images:</label>
                     <input placeholder='Enter URL...'type="text" value={form.images} onChange={imagesHandler} name='images'/>
-                   
+    
+  <input type="file" name="images"/>
+ 
+
                 </div>
             </div>
             <div>
