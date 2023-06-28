@@ -1,8 +1,8 @@
-const { DataTypes } = require('sequelize');
-const cloudinary = require('cloudinary').v2;
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const multer = require('multer');
-require('dotenv').config();
+const { DataTypes } = require("sequelize");
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const multer = require("multer");
+require("dotenv").config();
 
 // Cloudinary configuration
 cloudinary.config({
@@ -13,7 +13,7 @@ cloudinary.config({
 
 module.exports = (sequelize) => {
   const Image = sequelize.define(
-    'image',
+    "image",
     {
       imageId: {
         type: DataTypes.UUID,
@@ -30,84 +30,88 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
     },
-    { timestamps: false }
-);
+    { timestamps: false },
+  );
 
-// Configure the storage engine for user images
-const userStorage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'images/users', // Store user images in the 'images/users' folder
-    format: async (req, file) => 'jpg', // Specify the desired file format
-  },
-});
+  // Configure the storage engine for user images
+  const userStorage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: "/users",
+      format: async (req, file) => "jpg",
+      access_mode: "public",
+    },
+  });
 
-// Configure the storage engine for product images
-const productStorage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'images/products', // Store product images in the 'images/products' folder
-    format: async (req, file) => 'jpg', // Specify the desired file format
-  },
-});
+  // Configure the storage engine for product images
+  const productStorage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: "/products",
+      format: async (req, file) => "jpg",
+      access_mode: "public",
+    },
+  });
 
-// Create the multer instances for user and product image uploads
-const uploadUser = multer({ storage: userStorage }).single('image');
-const uploadProduct = multer({ storage: productStorage }).array('images', 3);
+  // Create the multer instances for user and product image uploads
+  const uploadUser = multer({ storage: userStorage }).single("image");
+  const uploadProduct = multer({ storage: productStorage }).array("images", 3);
 
-Image.uploadUser = async function (file) {
-  try {
-    const promise = new Promise((resolve, reject) => {
-      uploadUser(file, null, async (error) => {
-        if (error) {
-          reject(new Error('Image upload failed'));
-        } else {
-          const image = await Image.create({
-            url: file.secure_url,
+  Image.uploadUser = async function (file) {
+    try {
+      const promise = new Promise((resolve, reject) => {
+        uploadUser(file, null, async (error) => {
+          if (error) {
+            reject(new Error("Image upload failed"));
+          } else {
+            const image = await Image.create({
+              url: file.secure_url,
+            });
+            resolve(image);
+          }
+        });
+      });
+
+      return promise;
+    } catch (error) {
+      throw new Error("Image upload failed");
+    }
+  };
+
+  Image.uploadProduct = async function (images) {
+    try {
+      const uploadedImages = [];
+
+      for (const image of images) {
+        if (typeof image === "object" && image.url) {
+          // Image is provided as a text URL
+          const uploadedImage = await Image.create({
+            url: image.url,
+            caption: image.caption,
           });
-          resolve(image);
-        }
-      });
-    });
 
-    return promise;
-  } catch (error) {
-    throw new Error('Image upload failed');
-  }
-};
-
-Image.uploadProduct = async function (files) {
-  try {
-    const promise = new Promise((resolve, reject) => {
-      uploadProduct(files, null, async (error) => {
-        if (error) {
-          reject(new Error('Image upload failed'));
+          uploadedImages.push(uploadedImage);
         } else {
-          const uploadResults = files.map((file) => ({
-            url: file.secure_url,
-            caption: file.caption,
-          }));
-
-          const images = await Image.bulkCreate(uploadResults);
-          resolve(images);
+          // Image is uploaded as a file
+          const uploadResult = await Image.uploadUser(image);
+          uploadedImages.push(uploadResult);
         }
-      });
-    });
+      }
 
-    return promise;
-  } catch (error) {
-    throw new Error('Image upload failed');
-  }
-};
+      return uploadedImages;
+    } catch (error) {
+      throw new Error("Image upload failed");
+    }
+  };
 
   return Image;
 };
 
 // OLD MODEL, FOR ROLLBACKS
 
-// const { DataTypes } = require('sequelize');
-// const cloudinary = require('cloudinary').v2;
-// require('dotenv').config();
+// const { DataTypes } = require("sequelize");
+// const cloudinary = require("cloudinary").v2;
+// require("dotenv").config();
 
 // // Cloudinary configuration
 // cloudinary.config({
@@ -117,8 +121,8 @@ Image.uploadProduct = async function (files) {
 // });
 
 // module.exports = (sequelize) => {
-  
-//   const Image = sequelize.define('image', {
+
+//   const Image = sequelize.define("image", {
 
 //     imageId: {
 //       type: DataTypes.UUID,
@@ -138,7 +142,7 @@ Image.uploadProduct = async function (files) {
 //     },
 
 //   }, { timestamps: false });
-  
+
 //   Image.upload = async function (file) {
 //     try {
 //       const result = await cloudinary.uploader.upload(file.path); // Upload the image to Cloudinary
@@ -150,7 +154,7 @@ Image.uploadProduct = async function (files) {
 
 //       return image;
 //     } catch (error) {
-//       throw new Error('Image upload failed');
+//       throw new Error("Image upload failed");
 //     }
 //   };
 

@@ -1,35 +1,36 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  
-  sequelize.define('saleHistory', {
+  sequelize.define(
+    "saleHistory",
+    {
+      saleHistoryId: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
 
-    saleHistoryId: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      allowNull: false,
-      primaryKey: true,
-    },
+      priceAtSale: {
+        type: DataTypes.DECIMAL(10, 2),
+      },
 
-    priceAtSale: {
-      type: DataTypes.DECIMAL(10, 2),
-    },
+      discountAtSale: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
 
-    discountAtSale: {
-      type: DataTypes.INTEGER,
-      defaultValue: 0,
-    },
-    
-    quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 1,
-      validate: {
-        min: 1,
+      quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
+        validate: {
+          min: 1,
+        },
       },
     },
-    
-  }, { timestamps: true });
+    { timestamps: true }
+  );
 };
 
 // NOTE FOR FRONT-END IMPLEMENTATION:
