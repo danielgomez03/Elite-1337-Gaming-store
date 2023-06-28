@@ -1,6 +1,7 @@
 import{
   GET_PRODUCTS,
   GET_PRODUCT_BY_ID,
+  GET_PRODUCT_BY_NAME,
   GET_CATEGORIES,
   ORDERS,
   FILTERS,
@@ -12,6 +13,7 @@ import{
 const initialState = {
   page: 1,
   products: [],
+  productsbyName: [],
   detail: [],
   filters: [],
   categories: [],
@@ -28,6 +30,9 @@ switch(action.type){
         if(action.payload==='not found')
         return {...state}
         return { ...state, detail: action.payload };
+    case GET_PRODUCT_BY_NAME:
+      console.log(action.payload)
+        return { ...state, productsbyName: action.payload };
   
     
     case GET_CATEGORIES:

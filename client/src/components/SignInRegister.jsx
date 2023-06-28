@@ -17,7 +17,7 @@ function SignInRegister({ selectedButton, onClose }) {
       idNumber:'',
       email:'',
       password:'',
-      image:{},
+      image:'',
     })
 
     const imagesHandler = (event)=>{
@@ -56,31 +56,31 @@ function SignInRegister({ selectedButton, onClose }) {
         .catch(alert("error"))
      }     
   return (
-    <div>
-        <button onClick={onClose}>X</button>
+    <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50">
+        <button className="absolute top-2 right-4"onClick={onClose}>X</button>
         {
             selectedButton === "register" ? (
-                <form onSubmit={submitHandler}>
-                <div>
-                    <input onChange={changeHandler}name="firstName" value={input.firstName}type="name" placeholder='Name' />
-                    <input onChange={changeHandler}name="lastName"value={input.lastName}type="lastName" placeholder='lastName' />
-                    <input onChange={changeHandler}name="country"value={input.country}type="text" placeholder='country' />
-                    <input onChange={changeHandler}name="region"value={input.region}type="text" placeholder='region' />
-                    <input onChange={changeHandler}name="city"value={input.city}type="text" placeholder='city' />
-                    <input onChange={changeHandler}name="address"value={input.address}type="text" placeholder='address' />
-                    <input onChange={changeHandler}name="postalCode"value={input.postalCode}type="text" placeholder='postalCode' />
-                    <input onChange={changeHandler}name="birthDate"value={input.birthDate}type="date" placeholder='birthDate' />
-                    <input onChange={changeHandler}name="phoneNumber"value={input.phoneNumber}type="text" placeholder='phoneNumber' />
-                    <input onChange={changeHandler}name="idNumber"value={input.idNumber}type="text" placeholder='idNumber' />
-                    <input onChange={changeHandler}name="email"value={input.email}type="text" placeholder='email' />
-                    <input onChange={changeHandler}name="password"value={input.password}type="text" placeholder='password' />
+                <form className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50" onSubmit={submitHandler}>
+                <div className="w-10 relative h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-10">
+                    <input className="mb-4"onChange={changeHandler}name="firstName" value={input.firstName}type="name" placeholder='Name' />
+                    <input className="mb-4"onChange={changeHandler}name="lastName"value={input.lastName}type="lastName" placeholder='lastName' />
+                    <input className="mb-4"onChange={changeHandler}name="country"value={input.country}type="text" placeholder='country' />
+                    <input className="mb-4"onChange={changeHandler}name="region"value={input.region}type="text" placeholder='region' />
+                    <input className="mb-4"onChange={changeHandler}name="city"value={input.city}type="text" placeholder='city' />
+                    <input className="mb-4"onChange={changeHandler}name="address"value={input.address}type="text" placeholder='address' />
+                    <input className="mb-4"onChange={changeHandler}name="postalCode"value={input.postalCode}type="text" placeholder='postalCode' />
+                    <input className="mb-4"onChange={changeHandler}name="birthDate"value={input.birthDate}type="date" placeholder='birthDate' />
+                    <input className="mb-4"onChange={changeHandler}name="phoneNumber"value={input.phoneNumber}type="text" placeholder='phoneNumber' />
+                    <input className="mb-4"onChange={changeHandler}name="idNumber"value={input.idNumber}type="text" placeholder='idNumber' />
+                    <input className="mb-4"onChange={changeHandler}name="email"value={input.email}type="text" placeholder='email' />
+                    <input className="mb-4" onChange={changeHandler}name="password"value={input.password}type="text" placeholder='password' />
                     <label>Image:</label>
-                    <input onChange={imagesHandler}name="image"value={input.image}type="text" placeholder='enter url' />
+                    <input className="mb-4"onChange={imagesHandler}name="image"value={input.image}type="text" placeholder='enter url' />
                     <p>Review the <button>Terms && Conditions</button> of our services.</p>
                     <input type="checkbox" name="" id="" />
                     <p>I accept the Terms && Conditions.</p>
                     <button>reset password</button>
-                    <button  type='submit'>SUBMIT</button>
+                    <button  className="w-full px-4 mt-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600" type='submit'>SUBMIT</button>
                 </div>
                 </form>
             ) : (
