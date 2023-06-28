@@ -115,7 +115,7 @@ const postCreateUser = async (req, res) => {
     } else {
       // If neither file nor URL is provided, use the default image URL
       const defaultImageURL =
-        "https://asset.cloudinary.com/dwavcdgpu/2c3bbd3e727ac547f1a8a31f6a458ac5";
+        "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687509865/users/default-userImage_yqbaz3.png";
       userImage = await Image.create({ url: defaultImageURL });
     }
 
@@ -222,7 +222,7 @@ const putUpdateUser = async (req, res) => {
     } else {
       // If neither file nor URL is provided, use the default image URL
       const defaultImageURL =
-        "https://asset.cloudinary.com/dwavcdgpu/2c3bbd3e727ac547f1a8a31f6a458ac5";
+        "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687509865/users/default-userImage_yqbaz3.png";
       userImage = await Image.create({ url: defaultImageURL });
     }
 

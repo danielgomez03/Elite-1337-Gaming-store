@@ -14,7 +14,7 @@ const products = [
     images: [
       {
         imageId: "a7882b4c-5a50-431b-a621-d4a56561b0c7",
-        url: "https://asset.cloudinary.com/dwavcdgpu/bb438b548ad93614d2e5122e9908ba35",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687857911/products/amd_100_100000061wof_ryzen_9_5900x_3_7_1598373_pjo8ag.jpg",
         caption: "AMD Ryzen 9 5900X",
       },
     ],
@@ -43,7 +43,7 @@ const products = [
     images: [
       {
         imageId: "96828731-f3be-40be-b5eb-ac95a469975d",
-        url: "https://asset.cloudinary.com/dwavcdgpu/58d5c7042c9256391f282c9f587be43e",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687857911/products/ASUS_ROG_Strix_X570-E_Gaming_vo9nii.webp",
         caption: "ASUS ROG Strix X570-E Gaming",
       },
     ],
@@ -72,7 +72,7 @@ const products = [
     images: [
       {
         imageId: "845e6b22-f341-4ad5-849d-774e73a48cb4",
-        url: "https://asset.cloudinary.com/dwavcdgpu/dac7e668edeb09979c7d56df40ee6cb9",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858137/products/24-281-067-S01_xeq43c.jpg",
         caption: "ASUS TUF Gaming VG27AQL1A",
       },
     ],
@@ -101,7 +101,7 @@ const products = [
     images: [
       {
         imageId: "22951553-47de-4fc6-969e-cc54a33c02e0",
-        url: "https://asset.cloudinary.com/dwavcdgpu/f1c5a0dd717c5e429816bc9f8062deb4",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858232/products/81EEpt-xy0L_ot9lcr.jpg",
         caption: "Corsair Vengeance RGB Pro",
       },
     ],
@@ -133,7 +133,7 @@ const products = [
     images: [
       {
         imageId: "968d3468-8a19-44b1-b957-87d08f4d16c8",
-        url: "https://asset.cloudinary.com/dwavcdgpu/3e893b55e42d90ac3701ca759756dc23",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858400/products/719RpF3y6LL._AC_UF894_1000_QL80__imr4of.jpg",
         caption: "EVGA SuperNOVA 850 P2",
       },
     ],
@@ -165,7 +165,7 @@ const products = [
     images: [
       {
         imageId: "198bfc5b-d000-4833-9425-2d6d2105c7fd",
-        url: "https://asset.cloudinary.com/dwavcdgpu/1c353b165f2dd4e667fb9a5cfdd70c6d",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858569/products/kf-img_s4c3kg.png",
         caption: "GIGABYTE GeForce RTX 3080",
       },
     ],
@@ -194,7 +194,7 @@ const products = [
     images: [
       {
         imageId: "8d4bee20-4c47-4a9a-bfd7-4cfaf8eb8643",
-        url: "https://asset.cloudinary.com/dwavcdgpu/b51f92e1f689efd0f55c9d2fc400dcd3",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858569/products/D_NQ_NP_2X_656195-MLA43406757007_092020-F_fq29vg.webp",
         caption: "Intel Core i9-10900K",
       },
     ],
@@ -223,7 +223,7 @@ const products = [
     images: [
       {
         imageId: "328726bc-03f5-478a-bd00-6b35d3e47b54",
-        url: "https://asset.cloudinary.com/dwavcdgpu/e9054be9aa35ab2c9c189782ddf8a49c",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858568/products/D_NQ_NP_2X_681845-MLA70076079850_062023-F_fjjned.webp",
         caption: "Logitech G Pro X",
       },
     ],
@@ -252,7 +252,7 @@ const products = [
     images: [
       {
         imageId: "5f2801b0-12dd-4422-aba1-835c6b950cf4",
-        url: "https://asset.cloudinary.com/dwavcdgpu/c248c0f0b61f54c5c3ad275c7eb215ed",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858805/products/1615563443-h510-elite-white-black-kraken-x-system-purple-lighting-2_qheofl.avif",
         caption: "NZXT H510",
       },
     ],
@@ -284,7 +284,7 @@ const products = [
     images: [
       {
         imageId: "ec24f3a3-6fda-42f8-8630-695510d87aeb",
-        url: "https://asset.cloudinary.com/dwavcdgpu/4a9777ac7df2d7a4120bed8144b233d3",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858805/products/D_NQ_NP_2X_759999-MLA41816934384_052020-F_ryhlrq.webp",
         caption: "Razer DeathAdder V2",
       },
     ],
@@ -313,7 +313,7 @@ const products = [
     images: [
       {
         imageId: "7f899f4b-7e1c-41e7-a2fa-67eb3263773c",
-        url: "https://asset.cloudinary.com/dwavcdgpu/11db5ac2e7de71ed3fb657d9c019c8a8",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858805/products/D_NQ_NP_2X_652433-MLA40463778281_012020-F_y6tgp6.webp",
         caption: "Samsung 970 EVO Plus",
       },
     ],
@@ -345,7 +345,7 @@ const products = [
     images: [
       {
         imageId: "d0aab150-97ce-46d4-b8d0-dc5155e02022",
-        url: "https://asset.cloudinary.com/dwavcdgpu/1cf0b35bfb83dd9d3a54bc72965b4ad9",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858969/products/D_NQ_NP_2X_775863-MLA45480330977_042021-F_k4dvvf.webp",
         caption: "Seagate BarraCuda 2TB",
       },
     ],
@@ -377,7 +377,7 @@ const products = [
     images: [
       {
         imageId: "50ac4d6c-db7e-4ebe-80ec-b7d994d0aed0",
-        url: "https://asset.cloudinary.com/dwavcdgpu/c304d1c9723e024afd5f42ed337726ad",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858969/products/1200x_buy_qck-heavy_l_03.png__1920x1080_crop-fit_optimize_subsampling-2_axavcd.png",
         caption: "SteelSeries QcK",
       },
     ],

@@ -104,7 +104,7 @@ module.exports = (sequelize) => {
         type: DataTypes.ENUM(
           "Order placed",
           "Payment confirmed",
-          "Ready for pickup / delivery"
+          "Ready for pickup / delivery",
         ),
         allowNull: false,
         defaultValue: "Order placed",
@@ -115,6 +115,6 @@ module.exports = (sequelize) => {
         defaultValue: false,
       },
     },
-    { timestamps: true }
+    { timestamps: true },
   );
 };
