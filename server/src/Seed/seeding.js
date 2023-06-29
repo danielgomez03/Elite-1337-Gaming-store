@@ -1,4 +1,4 @@
-const { Product, Image, User, Category, Login } = require("../database");
+const { Product, Image, User, Category, Login, Cart } = require("../database");
 const products = require("../data/products");
 const users = require("../data/users");
 const categories = require("../data/categories");
@@ -52,6 +52,7 @@ const seedDatabase = async () => {
       const existingUser = await User.findOne({
         where: { userId: userData.userId },
         include: Login, // Include the Login model in the query
+        include: Cart,
       });
 
       if (existingUser) {
@@ -69,6 +70,13 @@ const seedDatabase = async () => {
         const createdLogin = await Login.create(loginData);
         await createdUser.setLogin(createdLogin); // Associate the login with the newly created user
       }
+
+      // if (userData.cart) {
+      //   // Create cart for the user
+      //   const cartData = userData.cart;
+      //   const createdCart = await Cart.create(cartData);
+      //   await createdUser.setCart(createdCart); // Associate the cart with the newly created user
+      // }
 
       if (userData.image) {
         // Create user image in the database
@@ -114,6 +122,14 @@ const seedDatabase = async () => {
       }));
 
       await Image.bulkCreate(images);
+
+      // // Create cart for the product
+      // const cartData = {
+      //   quantity: 0, // Set initial quantity to 0
+      // };
+
+      // const cart = await Cart.create(cartData);
+      // await cart.setProduct(product); // Associate the cart with the product
     }
 
     console.log("Seeding completed successfully.");

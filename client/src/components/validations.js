@@ -1,25 +1,25 @@
-const { Login } = require("../../../server/src/database");
+// const { Login } = require("../../../server/src/database");
 
 // Email validation pattern
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
+// THIS IS PREVENTING USER EDIT. FIX.
+// const isEmailDuplicate = async (email) => {
+//   try {
+//     const existingLogin = await Login.findOne({ where: { email } });
 
-const isEmailDuplicate = async (email) => {
-  try {
-    const existingLogin = await Login.findOne({ where: { email } });
+//     if (existingLogin) {
+//       throw new Error("Email already exists");
+//     }
 
-    if (existingLogin) {
-      throw new Error("Email already exists");
-    }
-
-    return false;
-  } catch (error) {
-    console.error("Error checking email duplication:", error);
-    throw error;
-  }
-};
+//     return false;
+//   } catch (error) {
+//     console.error("Error checking email duplication:", error);
+//     throw error;
+//   }
+// };
 
 // PRODUCT CREATION VALIDATIONS
 const productValidation = ({
@@ -221,17 +221,18 @@ const userValidation = async ({
     errors.email = ["Email can't be longer than 50 characters"];
   } else if (!isValidEmail(email)) {
     errors.email = ["Invalid email format"];
-  } else {
-    try {
-      const isDuplicate = await isEmailDuplicate(email);
-      if (isDuplicate) {
-        errors.email = ["Email already exists"];
-      }
-    } catch (error) {
-      console.error("Error checking email duplication:", error);
-      throw error;
-    }
   }
+  // else {
+  //   try {
+  //     const isDuplicate = await isEmailDuplicate(email);
+  //     if (isDuplicate) {
+  //       errors.email = ["Email already exists"];
+  //     }
+  //   } catch (error) {
+  //     console.error("Error checking email duplication:", error);
+  //     throw error;
+  //   }
+  // }
 
   // PASSWORD
   if (!password) {

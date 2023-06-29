@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   const Payment = sequelize.define(
-    "Payment",
+    "payment",
     {
       paymentId: {
         type: DataTypes.UUID,
@@ -33,7 +33,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     },
-    { timestamps: true }
+    { timestamps: true },
   );
 
   return Payment;

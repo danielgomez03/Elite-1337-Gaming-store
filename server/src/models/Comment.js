@@ -22,7 +22,7 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.NOW,
       },
     },
-    { timestamps: false }
+    { timestamps: false },
   );
 };
 

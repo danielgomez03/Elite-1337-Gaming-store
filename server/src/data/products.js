@@ -27,6 +27,19 @@ const products = [
         parent: null,
       },
     },
+    carts: [
+      {
+        cartId: "8a4f0a94-4a3c-4f1d-babc-298d079063d2",
+        quantity: 3,
+        userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+        productId: "263f0f02-99f4-4811-b886-f2c36c2cfc26",
+        user: {
+          userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+          firstName: "Ignacio",
+          lastName: "Fosco",
+        },
+      },
+    ],
   },
   {
     productId: "7d23e873-6bb8-4569-acf5-ebeef606afd6",

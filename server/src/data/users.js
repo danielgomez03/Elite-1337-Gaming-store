@@ -23,6 +23,16 @@ const users = [
       password: "$2b$10$dSCot.T1J1gIiPbL5YbHZuLm1F8.WosL7RzbfIBoVKajf.mVXk7HK",
       verify: false,
     },
+    cart: {
+      cartId: "8a4f0a94-4a3c-4f1d-babc-298d079063d2",
+      quantity: 3,
+      userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+      product: {
+        productId: "a84a2e6a-53ae-4ff4-a8e3-3212c60e2b91",
+        name: "Example Product",
+        price: 19.99,
+      },
+    },
   },
   {
     userId: "16f1052f-d83c-4c56-96f3-5199b501e3a1",

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Contact",
+    "contact",
     {
       contactId: {
         type: DataTypes.UUID,
@@ -45,6 +45,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     },
-    { timestamps: false }
+    { timestamps: false },
   );
 };

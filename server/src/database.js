@@ -77,8 +77,18 @@ Image.belongsTo(User, { foreignKey: "userId", allowNull: true });
 
 // ---> LOGIN
 // User one-to-one with Login
-User.hasOne(Login, { foreignKey: "userId" });
-Login.belongsTo(User, { foreignKey: "userId" });
+User.hasOne(Login, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
+
+// Login one-to-one with User
+Login.belongsTo(User, {
+  foreignKey: "userId",
+  onDelete: "NO ACTION",
+  onUpdate: "CASCADE",
+});
 
 // ---> COMMENT
 // User many-to-one with Comment
@@ -104,12 +114,16 @@ Product.belongsToMany(User, { through: Favorite, foreignKey: "productId" });
 User.belongsToMany(Product, { through: Favorite, foreignKey: "userId" });
 
 // ---> CART
-// User many-to-one with Cart
-User.hasMany(Cart, { foreignKey: "userId", onDelete: "CASCADE" });
+// User one-to-one with Cart
+User.hasOne(Cart, { foreignKey: "userId", onDelete: "CASCADE" });
 Cart.belongsTo(User, { foreignKey: "userId" });
 
-// Product many-to-one with Cart
-Product.hasMany(Cart, { foreignKey: "productId", onDelete: "CASCADE" });
+// Product one-to-many with Cart
+Product.hasMany(Cart, {
+  foreignKey: "productId",
+  as: "carts",
+  onDelete: "SET NULL",
+});
 Cart.belongsTo(Product, { foreignKey: "productId" });
 
 // ---> SALEHISTORY

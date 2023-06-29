@@ -1,4 +1,4 @@
-const { User, Image, Login } = require("../database");
+const { User, Image, Login, Cart } = require("../database");
 const { Op } = require("sequelize");
 
 const getAllUsers = async () => {

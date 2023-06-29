@@ -32,18 +32,11 @@ module.exports = (sequelize) => {
         defaultValue: false,
       },
     },
-    {
-      timestamps: true,
-      uniqueKeys: {
-        uniqueUserLoginKey: {
-          fields: ["userId", "loginId"],
-        },
-      },
-    }
+    { timestamps: true },
   );
 
-  // password hashing to encrypt data through bcrypt library, with error handling
-  Login.beforeCreate(async (login) => {
+  // password hashing to encrypt data through bcrypt library
+  const hashPassword = async (login) => {
     try {
       const hashedPassword = await hashSync(login.password, genSaltSync(10));
       login.password = hashedPassword;
@@ -51,7 +44,10 @@ module.exports = (sequelize) => {
       console.error("Error hashing password:", error);
       throw new Error("Failed to hash password");
     }
-  });
+  };
+  // hashes password on create and on modification
+  Login.beforeCreate(hashPassword);
+  Login.beforeUpdate(hashPassword);
 
   return Login;
 };
