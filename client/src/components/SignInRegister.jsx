@@ -7,7 +7,7 @@ function SignInRegister(/*{ selectedButton, onClose }*/) {
         return (
             <div>
                 {/* <button onClick={onClose}>X</button> */}
-                <img src={session.user.image} alt="" />
+                {/* <img src={session.user.image} alt="" /> */}
                 <p>{session.user.name}</p>
                 <button onClick={() => signOut()}>Sign out</button>
         {/* {
