@@ -1,13 +1,13 @@
-const { Image, User, Product } = require('../database');
-const { Op } = require('sequelize');
+const { Image, User, Product, Login } = require("../database");
+const { Op } = require("sequelize");
 
 const getAllImages = async () => {
   try {
     const images = await Image.findAll();
     return images;
   } catch (error) {
-    console.error('Error in getAllImages:', error);
-    throw new Error('An error occurred while retrieving all images');
+    console.error("Error in getAllImages:", error);
+    throw new Error("An error occurred while retrieving all images");
   }
 };
 
@@ -20,13 +20,13 @@ const getImageById = async (imageId) => {
     });
 
     if (!image) {
-      throw new Error('Image not found');
+      throw new Error("Image not found");
     }
 
     return image;
   } catch (error) {
-    console.error('Error in getImageById:', error);
-    throw new Error('An error occurred while retrieving the image by ID');
+    console.error("Error in getImageById:", error);
+    throw new Error("An error occurred while retrieving the image by ID");
   }
 };
 
@@ -42,8 +42,8 @@ const getImagesByCaptions = async () => {
 
     return images;
   } catch (error) {
-    console.error('Error in getImagesByCaptions:', error);
-    throw new Error('An error occurred while retrieving images with caption');
+    console.error("Error in getImagesByCaptions:", error);
+    throw new Error("An error occurred while retrieving images with caption");
   }
 };
 
@@ -53,7 +53,11 @@ const getImagesByUsers = async () => {
       include: [
         {
           model: User,
-          attributes: ['firstName', 'lastName'],
+          attributes: ["firstName", "lastName"],
+          include: {
+            model: Login,
+            attributes: ["email"],
+          },
           where: {
             userId: { [Op.not]: null },
           },
@@ -63,8 +67,8 @@ const getImagesByUsers = async () => {
 
     return images;
   } catch (error) {
-    console.error('Error in getImagesByUsers:', error);
-    throw new Error('An error occurred while retrieving user images');
+    console.error("Error in getImagesByUsers:", error);
+    throw new Error("An error occurred while retrieving user images");
   }
 };
 
@@ -74,7 +78,7 @@ const getImagesByProducts = async () => {
       include: [
         {
           model: Product,
-          attributes: ['name'],
+          attributes: ["name"],
           where: {
             productId: { [Op.not]: null },
           },
@@ -84,8 +88,8 @@ const getImagesByProducts = async () => {
 
     return images;
   } catch (error) {
-    console.error('Error in getImagesByProducts:', error);
-    throw new Error('An error occurred while retrieving product images');
+    console.error("Error in getImagesByProducts:", error);
+    throw new Error("An error occurred while retrieving product images");
   }
 };
 
