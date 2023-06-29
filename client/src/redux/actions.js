@@ -1,4 +1,5 @@
 import axios from "axios";
+export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART"
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
@@ -10,7 +11,11 @@ export const CLEAN = "CLEAN";
 
 
 
-
+export const addProductToCart = (product) => {
+  return function  (dispatch){
+    return dispatch({type: ADD_PRODUCT_TO_CART ,payload:product})
+  }
+}
 export const getProducts = () => {
   return async function (dispatch) {
     const response = await axios.get("http://localhost:3001/products");
