@@ -27,6 +27,7 @@
     "multer-storage-cloudinary": "^4.0.0",
     "pg": "^8.11.0",
     "sequelize": "^6.3.5",
+    "stripe": "^12.10.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
