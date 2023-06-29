@@ -1,24 +1,7 @@
-const { Login } = require("../../../server/src/database");
-
 // Email validation pattern
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
-};
-
-const isEmailDuplicate = async (email) => {
-  try {
-    const existingLogin = await Login.findOne({ where: { email } });
-
-    if (existingLogin) {
-      throw new Error("Email already exists");
-    }
-
-    return false;
-  } catch (error) {
-    console.error("Error checking email duplication:", error);
-    throw error;
-  }
 };
 
 // PRODUCT CREATION VALIDATIONS
@@ -39,42 +22,33 @@ const productValidation = ({
   // NAME
   if (!name) {
     errors.name = ["A name is required"];
-  } else if (name.length > 100) {
-    errors.name = ["Name can't be longer than 100 characters"];
+  } else if (name.length > 255) {
+    errors.name = ["Name can't be longer than 255 characters"];
   }
 
   // DESCRIPTION
-  if (description && description.length > 1000) {
-    errors.description = ["Description can't be longer than 1000 characters"];
+  if (description && description.length > 2000) {
+    errors.description = ["Description can't be longer than 2000 characters"];
   }
 
   // MANUFACTURER
-  if (manufacturer && manufacturer.length > 50) {
-    errors.manufacturer = ["Manufacturer can't be longer than 50 characters"];
+  if (manufacturer && manufacturer.length > 100) {
+    errors.manufacturer = ["Manufacturer can't be longer than 100 characters"];
   }
 
   // ORIGIN
-  if (origin && origin.length > 50) {
-    errors.origin = ["Origin can't be longer than 50 characters"];
+  if (origin && origin.length > 100) {
+    errors.origin = ["Origin can't be longer than 100 characters"];
   }
 
   // PRICE
   if (price && (!/^(\d{1,10}(\.\d{1,2})?)?$/.test(price) || price < 0)) {
-    errors.price = [
-      "Price must be a non-negative number with up to 10 digits and up to 2 decimal places",
-    ];
+    errors.price = ["Price must be a non-negative number with up to 10 digits and up to 2 decimal places"];
   }
 
   // DISCOUNT
-  if (
-    discount &&
-    (!/^(\d{1,2}(\.\d{1,2})?)?$/.test(discount) ||
-      discount < 0 ||
-      discount > 100)
-  ) {
-    errors.discount = [
-      "Discount must be a number between 0 and 100 with up to 1 decimal places",
-    ];
+  if (discount && (!/^(\d{1,2}(\.\d{1,2})?)?$/.test(discount) || discount < 0 || discount > 100)) {
+    errors.discount = ["Discount must be a number between 0 and 100 with up to 1 decimal places"];
   }
 
   // STOCK
@@ -102,26 +76,20 @@ const productValidation = ({
   } else if (images) {
     for (const image of images) {
       if (
-        (!image.url ||
-          typeof image.url !== "string" ||
-          !/^https?:\/\/.*\.(jpeg|jpg|gif|png|bmp)$/.test(image.url)) &&
+        (!image.url || typeof image.url !== "string" || !/^https?:\/\/.*\.(jpeg|jpg|gif|png|bmp)$/.test(image.url)) &&
         (!image.uploaded || typeof image.uploaded !== "boolean")
       ) {
         errors.images = ["Invalid image format"];
         break;
       }
-      if (image.caption && image.caption.length > 100) {
-        errors.images = ["Caption can't be longer than 100 characters"];
-        break;
-      }
     }
   }
-
+  console.log("Errors:", errors);
   return errors;
 };
 
 // USER CREATION VALIDATIONS
-const userValidation = async ({
+const userValidation = ({
   firstName,
   lastName,
   country,
@@ -141,8 +109,8 @@ const userValidation = async ({
   // FIRST NAME
   if (!firstName) {
     errors.firstName = ["First name is required"];
-  } else if (firstName.length > 50) {
-    errors.firstName = ["First name can't be longer than 50 characters"];
+  } else if (firstName.length > 100) {
+    errors.firstName = ["First name can't be longer than 100 characters"];
   } else if (/\d/.test(firstName)) {
     errors.firstName = ["First name should not contain numbers"];
   }
@@ -150,8 +118,8 @@ const userValidation = async ({
   // LAST NAME
   if (!lastName) {
     errors.lastName = ["Last name is required"];
-  } else if (lastName.length > 50) {
-    errors.lastName = ["Last name can't be longer than 50 characters"];
+  } else if (lastName.length > 100) {
+    errors.lastName = ["Last name can't be longer than 100 characters"];
   } else if (/\d/.test(lastName)) {
     errors.lastName = ["Last name should not contain numbers"];
   }
@@ -159,22 +127,22 @@ const userValidation = async ({
   // COUNTRY
   if (!country) {
     errors.country = ["Country is required"];
-  } else if (country.length > 50) {
-    errors.country = ["Country name can't be longer than 50 characters"];
+  } else if (country.length > 100) {
+    errors.country = ["Country name can't be longer than 100 characters"];
   } else if (/\d/.test(country)) {
     errors.country = ["Country name should not contain numbers"];
   }
 
   // REGION
-  if (region && region.length > 50) {
-    errors.region = ["Region name can't be longer than 50 characters"];
+  if (region && region.length > 100) {
+    errors.region = ["Region name can't be longer than 100 characters"];
   } else if (/\d/.test(region)) {
     errors.region = ["Region name should not contain numbers"];
   }
 
   // CITY
-  if (city && city.length > 50) {
-    errors.city = ["City name can't be longer than 50 characters"];
+  if (city && city.length > 100) {
+    errors.city = ["City name can't be longer than 100 characters"];
   } else if (/\d/.test(city)) {
     errors.city = ["City name should not contain numbers"];
   }
@@ -185,8 +153,8 @@ const userValidation = async ({
   }
 
   // POSTAL CODE
-  if (postalCode && postalCode.length > 50) {
-    errors.postalCode = ["Postal code can't be longer than 50 characters"];
+  if (postalCode && postalCode.length > 100) {
+    errors.postalCode = ["Postal code can't be longer than 100 characters"];
   }
 
   // BIRTH DATE
@@ -198,63 +166,45 @@ const userValidation = async ({
     if (selectedDate > currentDate) {
       errors.birthDate = ["Birth date can't be in the future"];
     } else if (selectedDate.getFullYear() < minValidYear) {
-      errors.birthDate = [
-        `Birth date year should be greater than ${minValidYear}`,
-      ];
+      errors.birthDate = [`Birth date year should be greater than ${minValidYear}`];
     }
   }
 
   // PHONE NUMBER
-  if (phoneNumber && phoneNumber.length > 50) {
-    errors.phoneNumber = ["Phone number can't be longer than 50 characters"];
+  if (phoneNumber && phoneNumber.length > 100) {
+    errors.phoneNumber = ["Phone number can't be longer than 100 characters"];
   }
 
   // ID NUMBER
-  if (idNumber && idNumber.length > 50) {
-    errors.idNumber = ["ID number can't be longer than 50 characters"];
+  if (idNumber && idNumber.length > 100) {
+    errors.idNumber = ["ID number can't be longer than 100 characters"];
   }
 
   // EMAIL
   if (!email) {
     errors.email = ["Email is required"];
-  } else if (email.length > 50) {
-    errors.email = ["Email can't be longer than 50 characters"];
+  } else if (email.length > 100) {
+    errors.email = ["Email can't be longer than 100 characters"];
   } else if (!isValidEmail(email)) {
     errors.email = ["Invalid email format"];
-  } else {
-    try {
-      const isDuplicate = await isEmailDuplicate(email);
-      if (isDuplicate) {
-        errors.email = ["Email already exists"];
-      }
-    } catch (error) {
-      console.error("Error checking email duplication:", error);
-      throw error;
-    }
   }
 
   // PASSWORD
   if (!password) {
     errors.password = ["Password is required"];
-  } else if (password.length < 6) {
-    errors.password = ["Password must be at least 6 characters long"];
-  } else if (password.length > 25) {
-    errors.password = ["Password can't be longer than 25 characters"];
+  } else if (password.length < 8) {
+    errors.password = ["Password must be at least 8 characters long"];
+  } else if (password.length > 100) {
+    errors.password = ["Password can't be longer than 100 characters"];
   }
 
   // IMAGE
-  if (
-    image &&
-    typeof image !== "string" &&
-    (!image.url ||
-      typeof image.url !== "string" ||
-      !/^https?:\/\/.*\.(jpeg|jpg|gif|png|bmp)$/.test(image.url))
-  ) {
+  if (image && typeof image !== "string" && (!image.url || typeof image.url !== "string" || !/^https?:\/\/.*\.(jpeg|jpg|gif|png|bmp)$/.test(image.url))) {
     errors.image = ["Invalid image format"];
   }
 
   return errors;
-};
+};  
 
 module.exports = { productValidation, userValidation };
 
@@ -291,7 +241,7 @@ module.exports = { productValidation, userValidation };
 
 //   // Rest of your component code
 
-//   //RENDERIZADO EN HTML DE NAME Y SU SPAN DE ERROR, POR EJEMPLO.
+//   //RENDERIZADO EN HTML DE NAME Y SU SPAN DE ERROR, POR EJEMPLO. 
 //   //MOSTRARA PRIMER ERROR. SI LO SOLUCIONA Y HAY OTRO, MOSTRARÁ ESE. NO MOSTRARÁ NADA SI NO HAY ERRORES.
 
 // <input
