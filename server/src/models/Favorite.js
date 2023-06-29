@@ -2,29 +2,23 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "rating",
+    "favorite",
     {
-      ratingId: {
+      favoriteId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
 
-      value: {
-        // a 0 to 5 stars rating system
-        type: DataTypes.INTEGER,
+      userId: {
+        type: DataTypes.UUID,
         allowNull: false,
-        validate: {
-          min: 0,
-          max: 5,
-        },
       },
 
-      createdAt: {
-        type: DataTypes.DATE,
+      productId: {
+        type: DataTypes.UUID,
         allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
     },
     { timestamps: false },

@@ -1,396 +1,409 @@
 const products = [
-	{
-		productId: '263f0f02-99f4-4811-b886-f2c36c2cfc26',
-		name: 'AMD Ryzen 9 5900X',
-		description: '12-Core 24-Thread Unlocked Desktop Processor',
-		manufacturer: 'AMD',
-		origin: 'USA',
-		price: '549.99',
-		discount: '10.0',
-		stock: 50,
-		createdAt: '2023-06-26T10:14:23.582Z',
-		isActive: true,
-		categoryId: 2,
-		images: [
-			{
-				imageId: 'a7882b4c-5a50-431b-a621-d4a56561b0c7',
-				url: 'https://example.com/ryzen5900x.jpg',
-				caption: 'AMD Ryzen 9 5900X'
-			}
-		],
-		category: {
-			categoryId: 2,
-			name: 'CPUs/Processors',
-			parent: {
-				categoryId: 1,
-				name: 'Hardware',
-				parent: null
-			}
-		}
-	},
-	{
-		productId: '7d23e873-6bb8-4569-acf5-ebeef606afd6',
-		name: 'ASUS ROG Strix X570-E Gaming',
-		description: 'ATX Gaming Motherboard',
-		manufacturer: 'ASUS',
-		origin: 'Taiwan',
-		price: '349.99',
-		discount: '5.0',
-		stock: 30,
-		createdAt: '2023-06-26T10:16:19.012Z',
-		isActive: true,
-		categoryId: 3,
-		images: [
-			{
-				imageId: '96828731-f3be-40be-b5eb-ac95a469975d',
-				url: 'https://example.com/rog-strix-x570e.jpg',
-				caption: 'ASUS ROG Strix X570-E Gaming'
-			}
-		],
-		category: {
-			categoryId: 3,
-			name: 'Motherboards',
-			parent: {
-				categoryId: 1,
-				name: 'Hardware',
-				parent: null
-			}
-		}
-	},
-	{
-		productId: '1c7047e0-6978-4e3b-811d-59dccb5e7637',
-		name: 'ASUS TUF Gaming VG27AQL1A',
-		description: '27-inch WQHD IPS Gaming Monitor',
-		manufacturer: 'ASUS',
-		origin: 'Taiwan',
-		price: '599.99',
-		discount: '0.0',
-		stock: 10,
-		createdAt: '2023-06-26T10:17:44.320Z',
-		isActive: true,
-		categoryId: 23,
-		images: [
-			{
-				imageId: '845e6b22-f341-4ad5-849d-774e73a48cb4',
-				url: 'https://example.com/asus-vg27aql1a.jpg',
-				caption: 'ASUS TUF Gaming VG27AQL1A'
-			}
-		],
-		category: {
-			categoryId: 23,
-			name: 'Standard Monitors',
-			parent: {
-				categoryId: 22,
-				name: 'Monitors',
-				parent: null
-			}
-		}
-	},
-	{
-		productId: 'c21f20e7-a050-4ce3-81ef-48ce70593f4d',
-		name: 'Corsair Vengeance RGB Pro',
-		description: '16GB (2 x 8GB) DDR4 RAM',
-		manufacturer: 'Corsair',
-		origin: 'USA',
-		price: '149.99',
-		discount: '0.0',
-		stock: 60,
-		createdAt: '2023-06-26T10:17:20.743Z',
-		isActive: true,
-		categoryId: 17,
-		images: [
-			{
-				imageId: '22951553-47de-4fc6-969e-cc54a33c02e0',
-				url: 'https://example.com/vengeance-rgb-pro.jpg',
-				caption: 'Corsair Vengeance RGB Pro'
-			}
-		],
-		category: {
-			categoryId: 17,
-			name: 'DIMM (DDR3, DDR4)',
-			parent: {
-				categoryId: 16,
-				name: 'RAM Memory',
-				parent: {
-					categoryId: 1,
-					name: 'Hardware'
-				}
-			}
-		}
-	},
-	{
-		productId: 'dd758a5a-e26a-4639-906c-f4bc3404180d',
-		name: 'EVGA SuperNOVA 850 P2',
-		description: '80+ Platinum Fully Modular Power Supply',
-		manufacturer: 'EVGA',
-		origin: 'USA',
-		price: '189.99',
-		discount: '0.0',
-		stock: 15,
-		createdAt: '2023-06-26T10:17:40.611Z',
-		isActive: true,
-		categoryId: 21,
-		images: [
-			{
-				imageId: '968d3468-8a19-44b1-b957-87d08f4d16c8',
-				url: 'https://example.com/evga-supernova-850.jpg',
-				caption: 'EVGA SuperNOVA 850 P2'
-			}
-		],
-		category: {
-			categoryId: 21,
-			name: 'Power Supplies',
-			parent: {
-				categoryId: 19,
-				name: 'Cases and Power Supplies',
-				parent: {
-					categoryId: 1,
-					name: 'Hardware'
-				}
-			}
-		}
-	},
-	{
-		productId: 'c3252677-6ad4-4512-8dbd-f6a5b19b6afe',
-		name: 'GIGABYTE GeForce RTX 3080',
-		description: 'Gaming OC Graphics Card',
-		manufacturer: 'GIGABYTE',
-		origin: 'Taiwan',
-		price: '1099.99',
-		discount: '15.0',
-		stock: 15,
-		createdAt: '2023-06-26T10:16:36.563Z',
-		isActive: true,
-		categoryId: 4,
-		images: [
-			{
-				imageId: '198bfc5b-d000-4833-9425-2d6d2105c7fd',
-				url: 'https://example.com/rtx-3080.jpg',
-				caption: 'GIGABYTE GeForce RTX 3080'
-			}
-		],
-		category: {
-			categoryId: 4,
-			name: 'Graphics/Video Cards',
-			parent: {
-				categoryId: 1,
-				name: 'Hardware',
-				parent: null
-			}
-		}
-	},
-	{
-		productId: 'e1090813-440f-4035-9367-8e84844f78a8',
-		name: 'Intel Core i9-10900K',
-		description: '10-Core 20-Thread Unlocked Desktop Processor',
-		manufacturer: 'Intel',
-		origin: 'USA',
-		price: '499.99',
-		discount: '0.0',
-		stock: 20,
-		createdAt: '2023-06-26T10:15:57.930Z',
-		isActive: true,
-		categoryId: 2,
-		images: [
-			{
-				imageId: '8d4bee20-4c47-4a9a-bfd7-4cfaf8eb8643',
-				url: 'https://example.com/i9-10900k.jpg',
-				caption: 'Intel Core i9-10900K'
-			}
-		],
-		category: {
-			categoryId: 2,
-			name: 'CPUs/Processors',
-			parent: {
-				categoryId: 1,
-				name: 'Hardware',
-				parent: null
-			}
-		}
-	},
-	{
-		productId: '760b8430-962f-45c2-9cc6-ba3512dbde6e',
-		name: 'Logitech G Pro X',
-		description: 'Wired Gaming Headset with Blue VO!CE Mic Technology',
-		manufacturer: 'Logitech',
-		origin: 'Switzerland',
-		price: '129.99',
-		discount: '0.0',
-		stock: 30,
-		createdAt: '2023-06-26T10:15:34.287Z',
-		isActive: true,
-		categoryId: 26,
-		images: [
-			{
-				imageId: '328726bc-03f5-478a-bd00-6b35d3e47b54',
-				url: 'https://example.com/logitech-gprox.jpg',
-				caption: 'Logitech G Pro X'
-			}
-		],
-		category: {
-			categoryId: 26,
-			name: 'Headphones',
-			parent: {
-				categoryId: 25,
-				name: 'Peripherals and Accessories',
-				parent: null
-			}
-		}
-	},
-	{
-		productId: '09e361ca-e3d4-4ff8-b335-7803f17ac69d',
-		name: 'NZXT H510',
-		description: 'Mid-Tower PC Gaming Case',
-		manufacturer: 'NZXT',
-		origin: 'Taiwan',
-		price: '79.99',
-		discount: '10.0',
-		stock: 25,
-		createdAt: '2023-06-26T10:17:32.636Z',
-		isActive: true,
-		categoryId: 20,
-		images: [
-			{
-				imageId: '5f2801b0-12dd-4422-aba1-835c6b950cf4',
-				url: 'https://example.com/nzxt-h510.jpg',
-				caption: 'NZXT H510'
-			}
-		],
-		category: {
-			categoryId: 20,
-			name: 'Cases',
-			parent: {
-				categoryId: 19,
-				name: 'Cases and Power Supplies',
-				parent: {
-					categoryId: 1,
-					name: 'Hardware'
-				}
-			}
-		}
-	},
-	{
-		productId: 'f0cc13fb-20c0-46b6-86ba-7095c637b193',
-		name: 'Razer DeathAdder V2',
-		description: 'Wired Gaming Mouse with 20K DPI Optical Sensor',
-		manufacturer: 'Razer',
-		origin: 'USA',
-		price: '69.99',
-		discount: '10.0',
-		stock: 40,
-		createdAt: '2023-06-26T10:15:12.433Z',
-		isActive: true,
-		categoryId: 29,
-		images: [
-			{
-				imageId: 'ec24f3a3-6fda-42f8-8630-695510d87aeb',
-				url: 'https://example.com/razer-deathadder-v2.jpg',
-				caption: 'Razer DeathAdder V2'
-			}
-		],
-		category: {
-			categoryId: 29,
-			name: 'Mouse',
-			parent: {
-				categoryId: 25,
-				name: 'Peripherals and Accessories',
-				parent: null
-			}
-		}
-	},
-	{
-		productId: '5a6285bc-f411-4b89-8b9e-04c1750d2ee2',
-		name: 'Samsung 970 EVO Plus',
-		description: '500GB NVMe M.2 Internal SSD',
-		manufacturer: 'Samsung',
-		origin: 'South Korea',
-		price: '99.99',
-		discount: '0.0',
-		stock: 100,
-		createdAt: '2023-06-26T10:16:49.743Z',
-		isActive: true,
-		categoryId: 8,
-		images: [
-			{
-				imageId: '7f899f4b-7e1c-41e7-a2fa-67eb3263773c',
-				url: 'https://example.com/samsung-970evo.jpg',
-				caption: 'Samsung 970 EVO Plus'
-			}
-		],
-		category: {
-			categoryId: 8,
-			name: 'Solid State Drives',
-			parent: {
-				categoryId: 5,
-				name: 'Storage',
-				parent: {
-					categoryId: 1,
-					name: 'Hardware'
-				}
-			}
-		}
-	},
-	{
-		productId: 'f0794545-1a2a-454e-aec5-1fbb5618319d',
-		name: 'Seagate BarraCuda 2TB',
-		description: '3.5-Inch Internal Hard Drive',
-		manufacturer: 'Seagate',
-		origin: 'USA',
-		price: '64.99',
-		discount: '20.0',
-		stock: 80,
-		createdAt: '2023-06-26T10:17:07.195Z',
-		isActive: true,
-		categoryId: 7,
-		images: [
-			{
-				imageId: 'd0aab150-97ce-46d4-b8d0-dc5155e02022',
-				url: 'https://example.com/seagate-barracuda.jpg',
-				caption: 'Seagate BarraCuda 2TB'
-			}
-		],
-		category: {
-			categoryId: 7,
-			name: 'Internal Hard Disk Drives',
-			parent: {
-				categoryId: 5,
-				name: 'Storage',
-				parent: {
-					categoryId: 1,
-					name: 'Hardware'
-				}
-			}
-		}
-	},
-	{
-		productId: 'f4467776-b7e9-4da8-babc-2a446c44fac3',
-		name: 'SteelSeries QcK',
-		description: 'Gaming Mouse Pad',
-		manufacturer: 'SteelSeries',
-		origin: 'Denmark',
-		price: '14.99',
-		discount: '0.0',
-		stock: 100,
-		createdAt: '2023-06-26T10:14:36.248Z',
-		isActive: true,
-		categoryId: 30,
-		images: [
-			{
-				imageId: '50ac4d6c-db7e-4ebe-80ec-b7d994d0aed0',
-				url: 'https://example.com/steelseries-qck.jpg',
-				caption: 'SteelSeries QcK'
-			}
-		],
-		category: {
-			categoryId: 30,
-			name: 'Mouse Pads',
-			parent: {
-				categoryId: 25,
-				name: 'Peripherals and Accessories',
-				parent: null
-			}
-		}
-	}
+  {
+    productId: "263f0f02-99f4-4811-b886-f2c36c2cfc26",
+    name: "AMD Ryzen 9 5900X",
+    description: "12-Core 24-Thread Unlocked Desktop Processor",
+    manufacturer: "AMD",
+    origin: "USA",
+    price: "549.99",
+    discount: "10.0",
+    stock: 50,
+    createdAt: "2023-06-26T10:14:23.582Z",
+    isActive: true,
+    categoryId: 2,
+    images: [
+      {
+        imageId: "a7882b4c-5a50-431b-a621-d4a56561b0c7",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687857911/products/amd_100_100000061wof_ryzen_9_5900x_3_7_1598373_pjo8ag.jpg",
+        caption: "AMD Ryzen 9 5900X",
+      },
+    ],
+    category: {
+      categoryId: 2,
+      name: "CPUs/Processors",
+      parent: {
+        categoryId: 1,
+        name: "Hardware",
+        parent: null,
+      },
+    },
+    carts: [
+      {
+        cartId: "8a4f0a94-4a3c-4f1d-babc-298d079063d2",
+        quantity: 3,
+        userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+        productId: "263f0f02-99f4-4811-b886-f2c36c2cfc26",
+        user: {
+          userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+          firstName: "Ignacio",
+          lastName: "Fosco",
+        },
+      },
+    ],
+  },
+  {
+    productId: "7d23e873-6bb8-4569-acf5-ebeef606afd6",
+    name: "ASUS ROG Strix X570-E Gaming",
+    description: "ATX Gaming Motherboard",
+    manufacturer: "ASUS",
+    origin: "Taiwan",
+    price: "349.99",
+    discount: "5.0",
+    stock: 30,
+    createdAt: "2023-06-26T10:16:19.012Z",
+    isActive: true,
+    categoryId: 3,
+    images: [
+      {
+        imageId: "96828731-f3be-40be-b5eb-ac95a469975d",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687857911/products/ASUS_ROG_Strix_X570-E_Gaming_vo9nii.webp",
+        caption: "ASUS ROG Strix X570-E Gaming",
+      },
+    ],
+    category: {
+      categoryId: 3,
+      name: "Motherboards",
+      parent: {
+        categoryId: 1,
+        name: "Hardware",
+        parent: null,
+      },
+    },
+  },
+  {
+    productId: "1c7047e0-6978-4e3b-811d-59dccb5e7637",
+    name: "ASUS TUF Gaming VG27AQL1A",
+    description: "27-inch WQHD IPS Gaming Monitor",
+    manufacturer: "ASUS",
+    origin: "Taiwan",
+    price: "599.99",
+    discount: "0.0",
+    stock: 10,
+    createdAt: "2023-06-26T10:17:44.320Z",
+    isActive: true,
+    categoryId: 23,
+    images: [
+      {
+        imageId: "845e6b22-f341-4ad5-849d-774e73a48cb4",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858137/products/24-281-067-S01_xeq43c.jpg",
+        caption: "ASUS TUF Gaming VG27AQL1A",
+      },
+    ],
+    category: {
+      categoryId: 23,
+      name: "Standard Monitors",
+      parent: {
+        categoryId: 22,
+        name: "Monitors",
+        parent: null,
+      },
+    },
+  },
+  {
+    productId: "c21f20e7-a050-4ce3-81ef-48ce70593f4d",
+    name: "Corsair Vengeance RGB Pro",
+    description: "16GB (2 x 8GB) DDR4 RAM",
+    manufacturer: "Corsair",
+    origin: "USA",
+    price: "149.99",
+    discount: "0.0",
+    stock: 60,
+    createdAt: "2023-06-26T10:17:20.743Z",
+    isActive: true,
+    categoryId: 17,
+    images: [
+      {
+        imageId: "22951553-47de-4fc6-969e-cc54a33c02e0",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858232/products/81EEpt-xy0L_ot9lcr.jpg",
+        caption: "Corsair Vengeance RGB Pro",
+      },
+    ],
+    category: {
+      categoryId: 17,
+      name: "DIMM (DDR3, DDR4)",
+      parent: {
+        categoryId: 16,
+        name: "RAM Memory",
+        parent: {
+          categoryId: 1,
+          name: "Hardware",
+        },
+      },
+    },
+  },
+  {
+    productId: "dd758a5a-e26a-4639-906c-f4bc3404180d",
+    name: "EVGA SuperNOVA 850 P2",
+    description: "80+ Platinum Fully Modular Power Supply",
+    manufacturer: "EVGA",
+    origin: "USA",
+    price: "189.99",
+    discount: "0.0",
+    stock: 15,
+    createdAt: "2023-06-26T10:17:40.611Z",
+    isActive: true,
+    categoryId: 21,
+    images: [
+      {
+        imageId: "968d3468-8a19-44b1-b957-87d08f4d16c8",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858400/products/719RpF3y6LL._AC_UF894_1000_QL80__imr4of.jpg",
+        caption: "EVGA SuperNOVA 850 P2",
+      },
+    ],
+    category: {
+      categoryId: 21,
+      name: "Power Supplies",
+      parent: {
+        categoryId: 19,
+        name: "Cases and Power Supplies",
+        parent: {
+          categoryId: 1,
+          name: "Hardware",
+        },
+      },
+    },
+  },
+  {
+    productId: "c3252677-6ad4-4512-8dbd-f6a5b19b6afe",
+    name: "GIGABYTE GeForce RTX 3080",
+    description: "Gaming OC Graphics Card",
+    manufacturer: "GIGABYTE",
+    origin: "Taiwan",
+    price: "1099.99",
+    discount: "15.0",
+    stock: 15,
+    createdAt: "2023-06-26T10:16:36.563Z",
+    isActive: true,
+    categoryId: 4,
+    images: [
+      {
+        imageId: "198bfc5b-d000-4833-9425-2d6d2105c7fd",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858569/products/kf-img_s4c3kg.png",
+        caption: "GIGABYTE GeForce RTX 3080",
+      },
+    ],
+    category: {
+      categoryId: 4,
+      name: "Graphics/Video Cards",
+      parent: {
+        categoryId: 1,
+        name: "Hardware",
+        parent: null,
+      },
+    },
+  },
+  {
+    productId: "e1090813-440f-4035-9367-8e84844f78a8",
+    name: "Intel Core i9-10900K",
+    description: "10-Core 20-Thread Unlocked Desktop Processor",
+    manufacturer: "Intel",
+    origin: "USA",
+    price: "499.99",
+    discount: "0.0",
+    stock: 20,
+    createdAt: "2023-06-26T10:15:57.930Z",
+    isActive: true,
+    categoryId: 2,
+    images: [
+      {
+        imageId: "8d4bee20-4c47-4a9a-bfd7-4cfaf8eb8643",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858569/products/D_NQ_NP_2X_656195-MLA43406757007_092020-F_fq29vg.webp",
+        caption: "Intel Core i9-10900K",
+      },
+    ],
+    category: {
+      categoryId: 2,
+      name: "CPUs/Processors",
+      parent: {
+        categoryId: 1,
+        name: "Hardware",
+        parent: null,
+      },
+    },
+  },
+  {
+    productId: "760b8430-962f-45c2-9cc6-ba3512dbde6e",
+    name: "Logitech G Pro X",
+    description: "Wired Gaming Headset with Blue VO!CE Mic Technology",
+    manufacturer: "Logitech",
+    origin: "Switzerland",
+    price: "129.99",
+    discount: "0.0",
+    stock: 30,
+    createdAt: "2023-06-26T10:15:34.287Z",
+    isActive: true,
+    categoryId: 26,
+    images: [
+      {
+        imageId: "328726bc-03f5-478a-bd00-6b35d3e47b54",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858568/products/D_NQ_NP_2X_681845-MLA70076079850_062023-F_fjjned.webp",
+        caption: "Logitech G Pro X",
+      },
+    ],
+    category: {
+      categoryId: 26,
+      name: "Headphones",
+      parent: {
+        categoryId: 25,
+        name: "Peripherals and Accessories",
+        parent: null,
+      },
+    },
+  },
+  {
+    productId: "09e361ca-e3d4-4ff8-b335-7803f17ac69d",
+    name: "NZXT H510",
+    description: "Mid-Tower PC Gaming Case",
+    manufacturer: "NZXT",
+    origin: "Taiwan",
+    price: "79.99",
+    discount: "10.0",
+    stock: 25,
+    createdAt: "2023-06-26T10:17:32.636Z",
+    isActive: true,
+    categoryId: 20,
+    images: [
+      {
+        imageId: "5f2801b0-12dd-4422-aba1-835c6b950cf4",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858805/products/1615563443-h510-elite-white-black-kraken-x-system-purple-lighting-2_qheofl.avif",
+        caption: "NZXT H510",
+      },
+    ],
+    category: {
+      categoryId: 20,
+      name: "Cases",
+      parent: {
+        categoryId: 19,
+        name: "Cases and Power Supplies",
+        parent: {
+          categoryId: 1,
+          name: "Hardware",
+        },
+      },
+    },
+  },
+  {
+    productId: "f0cc13fb-20c0-46b6-86ba-7095c637b193",
+    name: "Razer DeathAdder V2",
+    description: "Wired Gaming Mouse with 20K DPI Optical Sensor",
+    manufacturer: "Razer",
+    origin: "USA",
+    price: "69.99",
+    discount: "10.0",
+    stock: 40,
+    createdAt: "2023-06-26T10:15:12.433Z",
+    isActive: true,
+    categoryId: 29,
+    images: [
+      {
+        imageId: "ec24f3a3-6fda-42f8-8630-695510d87aeb",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858805/products/D_NQ_NP_2X_759999-MLA41816934384_052020-F_ryhlrq.webp",
+        caption: "Razer DeathAdder V2",
+      },
+    ],
+    category: {
+      categoryId: 29,
+      name: "Mouse",
+      parent: {
+        categoryId: 25,
+        name: "Peripherals and Accessories",
+        parent: null,
+      },
+    },
+  },
+  {
+    productId: "5a6285bc-f411-4b89-8b9e-04c1750d2ee2",
+    name: "Samsung 970 EVO Plus",
+    description: "500GB NVMe M.2 Internal SSD",
+    manufacturer: "Samsung",
+    origin: "South Korea",
+    price: "99.99",
+    discount: "0.0",
+    stock: 100,
+    createdAt: "2023-06-26T10:16:49.743Z",
+    isActive: true,
+    categoryId: 8,
+    images: [
+      {
+        imageId: "7f899f4b-7e1c-41e7-a2fa-67eb3263773c",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858805/products/D_NQ_NP_2X_652433-MLA40463778281_012020-F_y6tgp6.webp",
+        caption: "Samsung 970 EVO Plus",
+      },
+    ],
+    category: {
+      categoryId: 8,
+      name: "Solid State Drives",
+      parent: {
+        categoryId: 5,
+        name: "Storage",
+        parent: {
+          categoryId: 1,
+          name: "Hardware",
+        },
+      },
+    },
+  },
+  {
+    productId: "f0794545-1a2a-454e-aec5-1fbb5618319d",
+    name: "Seagate BarraCuda 2TB",
+    description: "3.5-Inch Internal Hard Drive",
+    manufacturer: "Seagate",
+    origin: "USA",
+    price: "64.99",
+    discount: "20.0",
+    stock: 80,
+    createdAt: "2023-06-26T10:17:07.195Z",
+    isActive: true,
+    categoryId: 7,
+    images: [
+      {
+        imageId: "d0aab150-97ce-46d4-b8d0-dc5155e02022",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858969/products/D_NQ_NP_2X_775863-MLA45480330977_042021-F_k4dvvf.webp",
+        caption: "Seagate BarraCuda 2TB",
+      },
+    ],
+    category: {
+      categoryId: 7,
+      name: "Internal Hard Disk Drives",
+      parent: {
+        categoryId: 5,
+        name: "Storage",
+        parent: {
+          categoryId: 1,
+          name: "Hardware",
+        },
+      },
+    },
+  },
+  {
+    productId: "f4467776-b7e9-4da8-babc-2a446c44fac3",
+    name: "SteelSeries QcK",
+    description: "Gaming Mouse Pad",
+    manufacturer: "SteelSeries",
+    origin: "Denmark",
+    price: "14.99",
+    discount: "0.0",
+    stock: 100,
+    createdAt: "2023-06-26T10:14:36.248Z",
+    isActive: true,
+    categoryId: 30,
+    images: [
+      {
+        imageId: "50ac4d6c-db7e-4ebe-80ec-b7d994d0aed0",
+        url: "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687858969/products/1200x_buy_qck-heavy_l_03.png__1920x1080_crop-fit_optimize_subsampling-2_axavcd.png",
+        caption: "SteelSeries QcK",
+      },
+    ],
+    category: {
+      categoryId: 30,
+      name: "Mouse Pads",
+      parent: {
+        categoryId: 25,
+        name: "Peripherals and Accessories",
+        parent: null,
+      },
+    },
+  },
 ];
 
-module.exports = products;  
+module.exports = products;

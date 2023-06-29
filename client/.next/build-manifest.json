@@ -27,10 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/Products": [
+    "/guest/Products": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/Products.js"
+      "static/chunks/pages/guest/Products.js"
     ]
   },
   "ampFirstPages": []
