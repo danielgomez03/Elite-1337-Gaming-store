@@ -11,9 +11,9 @@ const {
 
 const productsRoutes = Router();
 
-productsRoutes.get("/", getProducts);
+productsRoutes.get("/", getProducts); // <--- seach by name or if !name, get all
 productsRoutes.get("/id/:productId", getProductByIdHandler);
-productsRoutes.get("/description", getProductsByNameAndDescriptionHandler);
+productsRoutes.get("/description", getProductsByNameAndDescriptionHandler); // <--- search in name and description
 productsRoutes.get("/origin/:origin", getProductsByOriginHandler);
 productsRoutes.get(
   "/manufacturer/:manufacturer",
