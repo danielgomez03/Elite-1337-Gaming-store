@@ -1,10 +1,16 @@
 import React from 'react'
+import { useSession, signIn, signOut } from 'next-auth/react'
 
-function SignInRegister({ selectedButton, onClose }) {
-  return (
-    <div>
-        <button onClick={onClose}>X</button>
-        {
+function SignInRegister(/*{ selectedButton, onClose }*/) {
+    const { data: session } = useSession()
+    if (session) {
+        return (
+            <div>
+                {/* <button onClick={onClose}>X</button> */}
+                <img src={session.user.image} alt="" />
+                <p>{session.user.name}</p>
+                <button onClick={() => signOut()}>Sign out</button>
+        {/* {
             selectedButton === "register" ? (
                 <div>
                     <input type="name" placeholder='Name' />
@@ -30,9 +36,19 @@ function SignInRegister({ selectedButton, onClose }) {
             <button>{ selectedButton === "register" ? "Register" : "Sign In" }</button>
             <button>Sign In with Google</button>
             <button>Sign In with Facebook</button>
+        </div> */}
         </div>
-    </div>
-  )
+    
+    )
+    } else {
+        return (
+            <div>
+                <p>Not signed in</p>
+                <button onClick={() => signIn()}>Sign In</button>
+            </div>
+        )
+    }
+
 }
 
 export default SignInRegister

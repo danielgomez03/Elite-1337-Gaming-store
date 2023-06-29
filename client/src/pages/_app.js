@@ -7,10 +7,11 @@ import NavBarGuest from '@/components/NavBarGuest';
 import Footer from '../components/Footer';
 import Header from '@/components/Header';
 import 'tailwindcss/tailwind.css';
+import { SessionProvider } from 'next-auth/react';
 require('typeface-montserrat');
 require('typeface-roboto');
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps, session }) {
   const [typeUser, setTypeUser] = useState('guest');
   
   const handleUserChange = (event) => {
@@ -18,23 +19,25 @@ function App({ Component, pageProps }) {
   };
 
   return (
-    <Provider store={store}>
-      <div className="w-full font-montserrat mt-32">
-        <Header />
-        <select value={typeUser} onChange={handleUserChange}>
-          <option value="admin">Admin</option>
-          <option value="users">Users</option>
-          <option value="guest">Guest</option>
-        </select>
-        <div className='page-container min-h-[calc(100vh-378px)] flex flex-col justify-center items-center p-4'>
-          {typeUser === 'admin' && <NavBarAdmin />}
-          {typeUser === 'users' && <NavBarUsers />}
-          {typeUser === 'guest' && <NavBarGuest />}
-          <Component {...pageProps} />
+    <SessionProvider session={session}>
+      <Provider store={store}>
+        <div className="w-full font-montserrat mt-32">
+          <Header />
+          <select value={typeUser} onChange={handleUserChange}>
+            <option value="admin">Admin</option>
+            <option value="users">Users</option>
+            <option value="guest">Guest</option>
+          </select>
+          <div className='page-container min-h-[calc(100vh-378px)] flex flex-col justify-center items-center p-4'>
+            {typeUser === 'admin' && <NavBarAdmin />}
+            {typeUser === 'users' && <NavBarUsers />}
+            {typeUser === 'guest' && <NavBarGuest />}
+            <Component {...pageProps} />
+          </div>
+          <Footer className='mt-auto' />
         </div>
-        <Footer className='mt-auto' />
-      </div>
-    </Provider>
+      </Provider>
+    </SessionProvider>
   );
 }
 
