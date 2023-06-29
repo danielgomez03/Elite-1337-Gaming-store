@@ -5,19 +5,17 @@ import { getCategories } from '@/redux/actions';
 import { productValidation } from './validations';
 
 const CreateProduct = ({ onClose }) => {
-    
-    /* const dispatch = useDispatch();
 
-    
-            
+    const dispatch = useDispatch();
+
+    // PARA USO CON BACK
     useEffect(() => {
-    
-    (dispatch(getCategories()));
-      }, []);
-    const categories = useSelector(state=>state.categories) */
-    
+        (dispatch(getCategories()));
+    }, []);
+    const categories = useSelector(state => state.categories)
+
     // PARA USO LOCAL SIN BACK
-    const categories = [
+    /* const categories = [
         {
             "categoryId": 1,
             "name": "Hardware",
@@ -252,7 +250,7 @@ const CreateProduct = ({ onClose }) => {
             "isMainCategory": true,
             "parentId": null
         }
-    ]
+    ] */
 
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
@@ -320,10 +318,10 @@ const CreateProduct = ({ onClose }) => {
             ...prevForm,
             [name]: value,
         }));
-
-        setError(productValidation(form));
+        if (name !== "name") {
+            setError(productValidation(form));
+        }
     };
-
 
     const imagesHandler = (event) => {
         event.preventDefault();
@@ -345,46 +343,47 @@ const CreateProduct = ({ onClose }) => {
 
         const selectedImages = imagesArray.slice(0, 3);
 
-        const imageUrls = [];
+        const uploadedImages = [];
 
         selectedImages.forEach((imageFile) => {
-            const reader = new FileReader();
+            uploadedImages.push(imageFile);
 
-            reader.onload = (event) => {
-                const imageUrl = event.target.result;
-
-                imageUrls.push(imageUrl);
-
-                if (imageUrls.length === selectedImages.length) {
-                    setForm((prevForm) => ({
-                        ...prevForm,
-                        images: [...prevForm.images, ...imageUrls]
-                    }));
-                }
-            };
-
-            reader.readAsDataURL(imageFile);
+            if (uploadedImages.length === selectedImages.length) {
+                setForm((prevForm) => ({
+                    ...prevForm,
+                    images: [...prevForm.images, ...uploadedImages],
+                }));
+            }
         });
 
         setError(productValidation(form));
-    };
+    }; const imageUrls = form.images.map((image) => {
+        if (image instanceof File) {
+            return URL.createObjectURL(image);
+        } else {
+            return image;
+        }
+    });
 
     const removeImage = (index) => {
         setForm((prevForm) => {
             const updatedImages = [...prevForm.images];
             updatedImages.splice(index, 1);
+
+            URL.revokeObjectURL(prevForm.images[index]);
+
             return {
                 ...prevForm,
                 images: updatedImages
             };
-        });        
+        });
+
         setError(productValidation(form));
     };
 
     const [shouldSubmit, setShouldSubmit] = useState(false);
 
     const handleFormSubmit = () => {
-        console.log(form);
         setShouldSubmit(true);
     };
 
@@ -408,12 +407,10 @@ const CreateProduct = ({ onClose }) => {
         if (Object.keys(error).length) {
             return alert('missing info');
         }
-
-        console.log(form);
         setError(productValidation(form));
-
+        console.log("shouldSubmit", shouldSubmit)
+        console.log("error", error)
         if (shouldSubmit && !error) {
-            console.log(form);
             axios
                 .post(`http://localhost:3000/admin/products`, form)
                 .then((res) => {
@@ -425,6 +422,10 @@ const CreateProduct = ({ onClose }) => {
                 });
         }
     };
+
+    useEffect(() => {
+        console.log("form", form);
+    }, [form]);
 
     return (
         <form
@@ -673,9 +674,9 @@ const CreateProduct = ({ onClose }) => {
 
                     {/* Render the loaded images */}
                     <div className="flex items-center mb-4">
-                        {form.images.map((image, index) => (
+                        {imageUrls?.map((imageUrl, index) => (
                             <div key={index} className="flex items-center m-6">
-                                <img src={image} alt={`Image ${index + 1}`} className="w-16 h-16 object-cover rounded mr-2" />
+                                <img src={imageUrl} alt={`Image ${index + 1}`} className="w-16 h-16 object-cover rounded mr-2" />
                                 <button onClick={() => removeImage(index)} className="text-red-500 hover:text-red-700">
                                     Remove
                                 </button>
