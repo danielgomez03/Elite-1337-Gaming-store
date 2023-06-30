@@ -303,14 +303,26 @@ function NavBarGuest({ typeUser }) {
   const [activeItem, setActiveItem] = useState(null);
 
   return (
-    <nav aria-label="Top" className="bg-blue-950 text-white mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
+    <nav
+      aria-label="Top"
+      className="bg-blue-950 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
       {/* <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. --> */}
-      <button type="button" class="rounded-md bg-white p-2  lg:hidden">
+      <Link
+        href="/"
+        class="rounded-md bg-white p-2  lg:hidden">
         <span className="sr-only">Open menu</span>
-        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        <svg
+          className="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          aria-hidden="true">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
-      </button>
+      </Link>
 
       {/* <!-- Flyout menus --> */}
       <div className="hidden lg:block lg:self-stretch">
@@ -320,91 +332,126 @@ function NavBarGuest({ typeUser }) {
               key={index}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
-              className="relative group h-full "
+              className="relative group h-full"
             >
               {/* Categoría principal */}
-              <button type="button" className="flex items-center justify-center h-full w-full px-5 text-sm font-medium hover:bg-white hover:text-gray-900 focus:outline-none">
+              <Link
+                href={{
+                  pathname: `/${typeUser}/Products`,
+                  query: { category: category.name } // Pasar el dato de la categoría como parámetro de ruta
+                }}
+                className={`flex items-center justify-center h-full w-full px-5 text-sm text-white font-medium hover:bg-white hover:text-gray-900 focus:outline-none ${activeCategory === index ? 'bg-white text-gray-900' : ''
+                  }`}
+              >
                 {category.name}
-              </button>
+              </Link>
               <span className="h-px w-full bg-gray-200" aria-hidden="true" />
               {/* Subcategorías */}
               {activeCategory === index && category.subcategories.length > 0 && (
-                <div className="absolute top-full left-[-15px] right-auto px-2 sm:px-0 sm:w-56 lg:w-64 z-10 bg-blue-950 shadow-lg rounded-bl-md rounded-br-md border-t" onMouseEnter={() => handleMouseEnter(index)} onMouseLeave={handleMouseLeave}>
-                  <div className="py-1">
-                    {category.subcategories?.map((subcategory, subIndex) => (
-                      <div key={subIndex} onMouseEnter={() => handleMouseEnterSub(subIndex)} onMouseLeave={handleMouseLeaveSub}
-                        className=" relative block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900">
-
-                        <Link href={`/${category.name}/${subcategory.name}`}>
-                          {subcategory.name}
-                        </Link>
-                        {activeSubcategory === subIndex && subcategory.subcategories.length > 0 && (
-                          <div className="absolute left-full top-[-4px] px-2 sm:px-0 sm:w-56 lg:w-64 z-10 bg-blue-950 shadow-lg rounded-md" onMouseEnter={() => handleMouseEnterSub(subIndex)} onMouseLeave={handleMouseLeaveSub}>
-                            <div className="py-1">
-                              {subcategory.subcategories?.map((subSubCategory, subSubIndex) => (
-                                <Link key={subSubIndex} href={`/${category.name}/${subcategory.name}/${subSubCategory}`} className="block px-4 py-2 text-sm text-white hover:bg-gray-100 hover:text-gray-900">
-                                  {subSubCategory}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-
-                      </div>
-                    ))}
-                  </div>
+                <div
+                  className="absolute top-full px-2 py-1 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {category.subcategories?.map((subcategory, subIndex) => (
+                    <div
+                      key={subIndex}
+                      onMouseEnter={() => handleMouseEnterSub(subIndex)}
+                      onMouseLeave={handleMouseLeaveSub}
+                      className="relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                    >
+                      <Link
+                        href={{
+                          pathname: `/${typeUser}/Products`,
+                          query: { category: subcategory.name } // Pasar el dato de la categoría como parámetro de ruta
+                        }}>
+                        {subcategory.name}
+                      </Link>
+                      {activeSubcategory === subIndex && subcategory.subcategories.length > 0 && (
+                        <div
+                          className="absolute left-full top-[-4px] px-2 py-1 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-md"
+                          onMouseEnter={() => handleMouseEnterSub(subIndex)}
+                          onMouseLeave={handleMouseLeaveSub}
+                        >
+                          {subcategory.subcategories?.map((subSubCategory, subSubIndex) => (
+                            <Link
+                              key={subSubIndex}
+                              href={{
+                                pathname: `/${typeUser}/Products`,
+                                query: { category: subSubCategory } // Pasar el dato de la categoría como parámetro de ruta
+                              }}
+                              className="block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                            >
+                              {subSubCategory}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
           ))}
-          <span className="h-6 w-px mx-5 bg-gray-200" aria-hidden="true" />
+
+          <span
+            className="h-6 w-px mx-5 bg-gray-200"
+            aria-hidden="true" />
           {typeUser === "guest" && (
             <Link href="/guest/Products" className="flex h-full px-5 items-center text-sm font-medium hover:bg-white hover:text-gray-900">
               All Products
             </Link>
           )}
-          {typeUser === "guest" && (
-            <Link href="#" className="flex h-full px-5 items-center text-sm font-medium hover:bg-white hover:text-gray-900">
+
+            <Link
+              href="/Home"
+              className="flex h-full px-5 items-center text-sm text-white font-medium hover:bg-white hover:text-gray-900">
               Home
             </Link>
           )}
           {typeUser === "guest" && (
-            <Link href="#" className="flex h-full px-5 items-center text-sm font-medium hover:bg-white hover:text-gray-900">
+            <Link
+              href={`/about`}
+              className="flex h-full px-5 items-center text-sm text-white font-medium hover:bg-white hover:text-gray-900">
               Company
             </Link>
           )}
           <div className='relative h-full'>
-          {typeUser === "users" && (
-            <Link
-              href="#"
-              onMouseEnter={() => handleMouseEnter("My account")}
-              onMouseLeave={handleMouseLeave}
-              className="flex h-full px-5 items-center text-sm font-medium hover:bg-white hover:text-gray-900">
-              My account
-            </Link>
-          )}
-          {activeCategory === "My account" && (
-            <div className="absolute top-full left-[-15px] right-auto px-2 sm:px-0 sm:w-56 lg:w-64 z-10 bg-blue-950 shadow-lg rounded-bl-md rounded-br-md border-t" onMouseEnter={() => handleMouseEnter("My account")} onMouseLeave={handleMouseLeave}>
-              <Link href="#" 
-                className=" relative block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
-              >
-                My profile
-              </Link>
-              <Link href="#" 
-                className=" relative block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
-              >
-                My purchases
-              </Link>
-              <Link href="#" 
-                className=" relative block px-4 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 mb-1"
-              >
-                Invoices
-              </Link>
-            </div>
-          )}
+            {typeUser === "users" && (
+              <button
+                onMouseEnter={() => handleMouseEnter("My account")}
+                onMouseLeave={handleMouseLeave}
+                className={`flex h-full px-5 items-center text-sm font-medium hover:bg-white hover:text-gray-900 ${activeCategory === "My account" ? 'bg-white text-gray-900' : 'text-white'}`}>
+                My account
+              </button>
+            )}
+            {activeCategory === "My account" && (
+              <div
+                className="absolute top-full px-2 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
+                onMouseEnter={() => handleMouseEnter("My account")}
+                onMouseLeave={handleMouseLeave}>
+                <Link
+                  href={`/${typeUser}/Profile`}
+                  className=" relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900" >
+                  My profile
+                </Link>
+                <Link
+                  href={`/${typeUser}/Purchases`}
+                  className=" relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900" >
+                  My purchases
+                </Link>
+                <Link
+                  href={`/${typeUser}/Invoices`}
+                  className=" relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 mb-1" >
+                  Invoices
+                </Link>
+              </div>
+            )}
           </div>
           {typeUser === "users" && (
-            <Link href="#" className="group flex items-center h-full px-5 hover:bg-white">
+            <Link
+              href={`/${typeUser}/Notificacions`}
+              className="group flex items-center h-full px-5 hover:bg-white text-white">
               <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 notifications
               </span>
@@ -413,8 +460,10 @@ function NavBarGuest({ typeUser }) {
             </Link>
           )}
           {typeUser === "users" && (
-            <Link href="#" className="group flex items-center h-full px-5 hover:bg-white">
-              <span className="material-symbols-rounded w-full group-hover:text-gray-900 font-bold">
+            <Link
+              href={`/${typeUser}/Favorites`}
+              className="group flex items-center h-full px-5 hover:bg-white text-white">
+              <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 favorite
               </span>
               <span className="w-full ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
@@ -422,7 +471,9 @@ function NavBarGuest({ typeUser }) {
             </Link>
           )}
           {typeUser === "users" && (
-            <Link href="#" className="group flex items-center h-full px-5 hover:bg-white">
+            <Link
+              href={`/${typeUser}/ShopCart`}
+              className="group flex items-center h-full px-5 hover:bg-white text-white">
               <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 shopping_cart
               </span>
