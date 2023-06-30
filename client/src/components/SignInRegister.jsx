@@ -5,6 +5,7 @@ import { signIn, useSession } from 'next-auth/react'
 
 function SignInRegister({ selectedButton, onClose }) {
     const { data: session, status } = useSession()
+    console.log(session, status);
     
     const [error,setError]=useState({})
     const [input,setInput]=useState({
@@ -59,7 +60,7 @@ function SignInRegister({ selectedButton, onClose }) {
         .catch(alert("error"))
      }
 
-     if(session) {
+    
         return (
             <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50">
                 <button className="absolute top-2 right-4"onClick={onClose}>X</button>
@@ -81,6 +82,7 @@ function SignInRegister({ selectedButton, onClose }) {
                             <input className="mb-4" onChange={changeHandler}name="password"value={input.password}type="text" placeholder='password' />
                             <label>Image:</label>
                             <input className="mb-4"onChange={imagesHandler}name="image"value={input.image}type="text" placeholder='enter url' />
+                            <button onClick={() => signIn()}>Sign In with Google</button>
                             <p>Review the <button>Terms && Conditions</button> of our services.</p>
                             <input type="checkbox" name="" id="" />
                             <p>I accept the Terms && Conditions.</p>
@@ -103,8 +105,8 @@ function SignInRegister({ selectedButton, onClose }) {
                     {/* <button>Sign In with Facebook</button> */}
                 </div>
             </div>
-          )
-    } 
+        )
+     
 }   
      
   
