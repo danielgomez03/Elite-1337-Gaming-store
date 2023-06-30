@@ -1,5 +1,5 @@
-import { getCartByIdUser ,clean } from '@/redux/actions';
-import React , { useEffect }from 'react';
+import { getCartByIdUser ,clean, modifyQuantity ,deleteProduct} from '@/redux/actions';
+import React , { useEffect, useState }from 'react';
 import { useSelector , useDispatch} from 'react-redux';
 
 
@@ -39,6 +39,7 @@ function  ShopCart() {
     }
     return totalPrice.toFixed(2);
   };
+ 
   return (
     <div className="border border-gray-300 rounded">
   {cart.length === 0 ? (
@@ -63,7 +64,13 @@ function  ShopCart() {
                   id={`quantity-${product.cartId}`}
                   className="border border-gray-300 rounded px-2 py-1"
                   value={product.quantity}
-                  onChange={(e) => handleQuantityChange(product.cartId, e.target.value)}
+                  onChange={(e) => (
+                    dispatch(modifyQuantity({
+                    userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+                    productId: product.productId,
+                    quantity: e.target.value
+                  }))
+      )}
                 >
                   {[...Array(product.product.stock)].map((_, index) => (
                     <option key={index} value={index + 1}>
@@ -73,6 +80,14 @@ function  ShopCart() {
                 </select>
               </div>
               <span className="font-bold">${product.product.price}</span>
+              <button onClick={()=>{ dispatch(deleteProduct({
+	userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+	productId: product.productId
+})).then(() => {
+  dispatch(getCartByIdUser(id));
+})
+
+}}>delete</button>
             </div>
           </div>
         </li>

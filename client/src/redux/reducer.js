@@ -5,9 +5,11 @@ import{
   GET_CATEGORIES,
   SORT_PRODUCTS,
   FILTER_PRODUCTS_BY_PRICE,
+  MODIFY_QUANTITY,
   ADD_PRODUCT_TO_CART,
   GET_CART_BY_ID_USER,
   TOTAL_PRODUCTS,
+  DELETE_PRODUCT,
   PAGE,
   CLEAN,
   
@@ -29,6 +31,11 @@ const initialState = {
 
 const rootReducer= (state=initialState,action)=>{
 switch(action.type){
+  case DELETE_PRODUCT:
+    return{...state}
+  case MODIFY_QUANTITY:
+    
+    return{...state}
   case GET_CART_BY_ID_USER:
     return { ...state, cartUser: action.payload };
   case TOTAL_PRODUCTS:
