@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { addProductToCart } from "@/redux/actions";
+import { addProductToCart, countCart } from "@/redux/actions";
 
 const Card = (props) => {
   const dispatch = useDispatch();
@@ -51,7 +51,8 @@ const Card = (props) => {
 
               <button className="text-sm" disabled={props.stock === 0}
               onClick={()=>
-                {dispatch(addProductToCart(props.id))}
+                {dispatch(addProductToCart(props.id))
+                 dispatch(countCart())}
               }
               >Add to cart</button>
             </div>
