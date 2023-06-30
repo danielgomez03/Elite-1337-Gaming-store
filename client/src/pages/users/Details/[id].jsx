@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getProductById, clean , addProductToCart } from '../../../redux/actions';
+import { getProductById, clean , addProductToCart , countCart} from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -65,7 +65,9 @@ export default function Detail() {
 <div className="flex justify-end space-x-4">
 <button className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded " disabled={detail.stock === 0}
 onClick={()=>
-  {dispatch(addProductToCart(id))}
+  {dispatch(addProductToCart(id))
+    dispatch(countCart())}
+
 }
 >
 

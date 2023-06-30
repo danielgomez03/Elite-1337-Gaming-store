@@ -6,6 +6,7 @@ import{
   SORT_PRODUCTS,
   FILTER_PRODUCTS_BY_PRICE,
   ADD_PRODUCT_TO_CART,
+  GET_CART_BY_ID_USER,
   TOTAL_PRODUCTS,
   PAGE,
   CLEAN,
@@ -21,12 +22,15 @@ const initialState = {
   detail: [],
   categories: [],
   cart:[],
-  totalProducts:0
+  totalProducts:0,
+  cartUser:[]
 
 };
 
 const rootReducer= (state=initialState,action)=>{
 switch(action.type){
+  case GET_CART_BY_ID_USER:
+    return { ...state, cartUser: action.payload };
   case TOTAL_PRODUCTS:
     
     return { ...state, totalProducts: state.totalProducts+1 };
