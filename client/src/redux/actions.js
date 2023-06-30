@@ -9,12 +9,24 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const PAGE = "PAGE";
 export const CLEAN = "CLEAN";
 
+// -----------actions cart----------------------------------------------------------------------------------------
 
 
-export const addProductToCart = (product) => {
-  return function  (dispatch){
-    return dispatch({type: ADD_PRODUCT_TO_CART ,payload:product})
+// ---------------------------------------------------------------------------------------------------------------
+export const addProductToCart = (id) => {
+  const product={
+    "userId": "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+    productId: "7d23e873-6bb8-4569-acf5-ebeef606afd6",
+    "quantity": 5
   }
+  
+  return async function (dispatch) {
+    const response = await axios.post("http://localhost:3001/carts/add",product);
+   
+    const cart = response.data
+  
+    dispatch({type: ADD_PRODUCT_TO_CART ,payload:cart})
+  };
 }
 export const getProducts = () => {
   return async function (dispatch) {

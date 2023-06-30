@@ -1,9 +1,15 @@
 import React from "react";
+import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { addProductToCart } from "@/redux/actions";
 
 const Card = (props) => {
+  const dispatch = useDispatch();
+  console.log(props)
   return (
     <div>
       <article className="w-1.5/2 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300">
+      <Link href={`../users/Details/${props.id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
           <img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Product Photo" />
           <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
@@ -18,7 +24,7 @@ const Card = (props) => {
             <span className="ml-1 text-sm text-slate-400">5.0</span>
           </div>
         </div>
-
+        </Link>
         <div className="mt-1 p-2">
           <h2 className="text-slate-700">{props.name}</h2>
           <p className="mt-1 text-sm text-slate-400">{props.stock}</p>
@@ -43,7 +49,11 @@ const Card = (props) => {
                 />
               </svg>
 
-              <button className="text-sm">Add to cart</button>
+              <button className="text-sm" disabled={props.stock === 0}
+              onClick={()=>
+                {dispatch(addProductToCart(props.id))}
+              }
+              >Add to cart</button>
             </div>
           </div>
         </div>

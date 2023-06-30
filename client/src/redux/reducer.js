@@ -19,33 +19,34 @@ const initialState = {
   sortOrder: '', 
   detail: [],
   categories: [],
-  cart:[{productId:'263f0f02-99f4-4811-b886-f2c36c2cfc26',quantity:1},]
+  cart:[]
 };
 
 const rootReducer= (state=initialState,action)=>{
 switch(action.type){
   case ADD_PRODUCT_TO_CART:
-  const existingProduct = state.cart.find(item => item.productId === action.payload);
-console.log(state.cart)
-  if (existingProduct) {
+    return { ...state, cart: action.payload };
+//   const existingProduct = state.cart.find(item => item.productId === action.payload);
+// console.log(state.cart)
+//   if (existingProduct) {
   
-    existingProduct.quantity++;
-    return {
-      ...state,
-      cart: [...state.cart]
-    };
-  } else {
-    // Si el producto no existe 
-    const newProduct = {
-      productId: action.payload,
-      quantity: 1
-    };
+//     existingProduct.quantity++;
+//     return {
+//       ...state,
+//       cart: [...state.cart]
+//     };
+//   } else {
+//     // Si el producto no existe 
+//     const newProduct = {
+//       productId: action.payload,
+//       quantity: 1
+//     };
 
-    return {
-      ...state,
-      cart: [...state.cart, newProduct]
-    };
-  }
+//     return {
+//       ...state,
+//       cart: [...state.cart, newProduct]
+//     };
+//   }
 
 
 
