@@ -49,7 +49,7 @@ function SignInRegister({ selectedButton, onClose }) {
     } 
     const submitHandler=(e)=>{
         e.preventDefault();
-        console.log(input)
+       
         // if(Object.keys(error).length)
         //   return alert('missing info')
           
@@ -57,7 +57,7 @@ function SignInRegister({ selectedButton, onClose }) {
         
         axios.post("http://localhost:3001/users/register",input)
         .then(res=>alert(res.data))
-        .catch(alert("error"))
+        .catch(alert("error of post"))
      }
 
     
@@ -78,8 +78,8 @@ function SignInRegister({ selectedButton, onClose }) {
                             <input className="mb-4"onChange={changeHandler}name="birthDate"value={input.birthDate}type="date" placeholder='birthDate' />
                             <input className="mb-4"onChange={changeHandler}name="phoneNumber"value={input.phoneNumber}type="text" placeholder='phoneNumber' />
                             <input className="mb-4"onChange={changeHandler}name="idNumber"value={input.idNumber}type="text" placeholder='idNumber' />
-                            <input className="mb-4"onChange={changeHandler}name="email"value={input.email}type="text" placeholder='email' />
-                            <input className="mb-4" onChange={changeHandler}name="password"value={input.password}type="text" placeholder='password' />
+                            <input className="mb-4"onChange={changeHandler}name="email"value={input.email}type="email" placeholder='email' />
+                            <input className="mb-4" onChange={changeHandler}name="password"value={input.password}type="password" placeholder='password' />
                             <label>Image:</label>
                             <input className="mb-4"onChange={imagesHandler}name="image"value={input.image}type="text" placeholder='enter url' />
                             <button onClick={() => signIn()}>Sign In with Google</button>
