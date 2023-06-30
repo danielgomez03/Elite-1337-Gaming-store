@@ -359,6 +359,11 @@ function NavBarGuest({ typeUser }) {
           ))}
           <span className="h-6 w-px mx-5 bg-gray-200" aria-hidden="true" />
           {typeUser === "guest" && (
+            <Link href="/guest/Products" className="flex h-full px-5 items-center text-sm font-medium hover:bg-white hover:text-gray-900">
+              All Products
+            </Link>
+          )}
+          {typeUser === "guest" && (
             <Link href="#" className="flex h-full px-5 items-center text-sm font-medium hover:bg-white hover:text-gray-900">
               Home
             </Link>
