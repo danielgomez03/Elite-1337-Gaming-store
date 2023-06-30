@@ -409,7 +409,6 @@ function NavBarGuest({ typeUser }) {
               className="flex h-full px-5 items-center text-sm text-white font-medium hover:bg-white hover:text-gray-900">
               Home
             </Link>
-          )}
           {typeUser === "guest" && (
             <Link
               href={`/about`}
