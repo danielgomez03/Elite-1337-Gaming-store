@@ -22,10 +22,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/users/Details/[id]": [
+    "/users/StripePay": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/users/Details/[id].js"
+      "static/chunks/pages/users/StripePay.js"
     ]
   },
   "ampFirstPages": []

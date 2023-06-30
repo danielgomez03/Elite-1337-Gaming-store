@@ -2,5 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/users/Details/[id]": "pages/users/Details/[id].js"
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/users/StripePay": "pages/users/StripePay.js"
 }

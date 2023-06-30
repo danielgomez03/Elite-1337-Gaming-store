@@ -9,7 +9,7 @@ import{
   TOTAL_PRODUCTS,
   PAGE,
   CLEAN,
-  
+  CREATE_PAY,
 } from './actions'
 
 const initialState = {
@@ -21,7 +21,8 @@ const initialState = {
   detail: [],
   categories: [],
   cart:[],
-  totalProducts:0
+  totalProducts:0,
+  paymentIntent: null,
 
 };
 
@@ -108,6 +109,11 @@ switch(action.type){
       return{
           ...state,page: action.payload
       }
+    case CREATE_PAY:
+      return {
+        ...state,
+        paymentIntent: action.payload,
+      };
   default: return {...state}
 }
 
