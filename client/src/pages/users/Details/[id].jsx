@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getProductById, clean } from '../../../redux/actions';
+import { getProductById, clean , addProductToCart } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+
+
+
 
 export default function Detail() {
   const dispatch = useDispatch();
@@ -17,7 +20,7 @@ export default function Detail() {
     }
    dispatch(clean())
   }, [dispatch, id]);
-
+  
   const detail = useSelector(state => state.detail);
   console.log(detail);
 
@@ -60,7 +63,12 @@ export default function Detail() {
   </p>
 
 <div className="flex justify-end space-x-4">
-<button className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded " disabled={detail.stock === 0}>
+<button className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded " disabled={detail.stock === 0}
+onClick={()=>
+  {dispatch(addProductToCart(id))}
+}
+>
+
       ADD TO CART
     </button>
     <button className="bg-[#FF5F00] hover:bg-[#FF8129] text-white px-4 py-2 rounded" disabled={detail.stock === 0}>

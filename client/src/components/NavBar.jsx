@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCategories } from '@/redux/actions';
 
 function NavBarGuest({ typeUser }) {
+  const totalProducts=useSelector(state=>state.totalProducts)
   // PARA USO CON BACK
   /* useEffect(() => {
     (dispatch(getCategories()));
@@ -473,6 +474,15 @@ function NavBarGuest({ typeUser }) {
                 shopping_cart
               </span>
               <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
+              <span className="sr-only">items in cart, view bag</span>
+            </Link>
+          )}
+          {typeUser === "users"||"guest" && (
+            <Link href="../users/ShopCart" className="group flex items-center h-full px-5 hover:bg-white">
+              <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
+                shopping_cart
+              </span>
+              <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts}</span>
               <span className="sr-only">items in cart, view bag</span>
             </Link>
           )}

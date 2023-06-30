@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { userValidation } from './validations.js'
 import Link from 'next/link';
+import { signIn, useSession } from 'next-auth/react'
 
 function SignInRegister({ selectedButton, onClose }) {
+    const { data: session, status } = useSession()
+    console.log(session, status);
     const [error, setError] = useState({})
     const [input, setInput] = useState({
         firstName: '',
@@ -285,7 +288,7 @@ function SignInRegister({ selectedButton, onClose }) {
 
                 <div className='w-full flex flex-col justify-center items-center'>
                     <div className='flex' >
-                        <button>Sign In with Google</button>
+                        <button onClick={() => signIn()}>Sign In with Google</button>
                         <button>Sign In with Facebook</button>
                     </div>
                     <p>Don't have an account yet?</p>

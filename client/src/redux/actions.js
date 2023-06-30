@@ -1,4 +1,5 @@
 import axios from "axios";
+export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART"
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
@@ -7,10 +8,32 @@ export const SORT_PRODUCTS = "SORT_PRODUCTS";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const PAGE = "PAGE";
 export const CLEAN = "CLEAN";
+export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS"
 
-
-
-
+// -----------actions cart----------------------------------------------------------------------------------------
+export const countCart =()=>{
+  
+  return function  (dispatch){
+  return dispatch({type: TOTAL_PRODUCTS });   
+  }
+}
+export const addProductToCart = (id) => {
+  const product={
+    userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+    productId: id,
+    quantity: 1
+  }
+  
+  return async function (dispatch) {
+    const response = await axios.post("http://localhost:3001/carts/add",product);
+    
+    const cart = response.data
+    console.log(cart
+      )
+      dispatch({type: ADD_PRODUCT_TO_CART ,payload:cart})
+    };
+  }
+  // ---------------------------------------------------------------------------------------------------------------
 export const getProducts = () => {
   return async function (dispatch) {
     const response = await axios.get("http://localhost:3001/products");
