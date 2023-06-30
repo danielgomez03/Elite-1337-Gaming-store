@@ -5,19 +5,16 @@ import { getCategories } from '@/redux/actions';
 import { productValidation } from './validations';
 
 const CreateProduct = ({ onClose }) => {
-    
-    /* const dispatch = useDispatch();
 
-    
-            
+    const dispatch = useDispatch();
+
     useEffect(() => {
-    
-    (dispatch(getCategories()));
-      }, []);
-    const categories = useSelector(state=>state.categories) */
-    
+        (dispatch(getCategories()));
+    }, []);
+    const categories = useSelector(state => state.categories)
+
     // PARA USO LOCAL SIN BACK
-    const categories = [
+    /* const categories = [
         {
             "categoryId": 1,
             "name": "Hardware",
@@ -252,7 +249,7 @@ const CreateProduct = ({ onClose }) => {
             "isMainCategory": true,
             "parentId": null
         }
-    ]
+    ] */
 
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
@@ -377,7 +374,7 @@ const CreateProduct = ({ onClose }) => {
                 ...prevForm,
                 images: updatedImages
             };
-        });        
+        });
         setError(productValidation(form));
     };
 
