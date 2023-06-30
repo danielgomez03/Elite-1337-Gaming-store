@@ -2,8 +2,14 @@ import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getCategories } from '@/redux/actions';
+import { useRouter } from 'next/router';
+
 
 function NavBarGuest({ typeUser }) {
+  const router = useRouter()
+  const currentLocation = router.asPath
+  console.log(currentLocation)
+  const linkToCart = currentLocation==="/guest/Products"?"../users/ShopCart":"/users/ShopCart"
   const totalProducts=useSelector(state=>state.totalProducts)
   // PARA USO CON BACK
   /* useEffect(() => {
@@ -473,12 +479,13 @@ function NavBarGuest({ typeUser }) {
               <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 shopping_cart
               </span>
-              <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
+              <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts}</span>
               <span className="sr-only">items in cart, view bag</span>
             </Link>
           )}
-          {typeUser === "users"||"guest" && (
-            <Link href="../users/ShopCart" className="group flex items-center h-full px-5 hover:bg-white">
+          
+          {typeUser === "guest" && (
+            <Link href={linkToCart} className="group flex items-center h-full px-5 hover:bg-white">
               <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 shopping_cart
               </span>

@@ -5,7 +5,7 @@ import { addProductToCart, countCart } from "@/redux/actions";
 
 const Card = (props) => {
   const dispatch = useDispatch();
-  console.log(props)
+ 
   return (
     <div>
       <article className="w-1.5/2 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300">
