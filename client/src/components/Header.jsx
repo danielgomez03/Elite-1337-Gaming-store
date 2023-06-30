@@ -36,9 +36,9 @@ function Header() {
         </div>
       ) : (
         <div className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-6">
-          <button href="#" onClick={() => openSignInRegister('register')} className="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</button>
+          <button href="#" onClick={() => openSignInRegister('signIn')} className="text-sm font-medium text-gray-700 hover:text-gray-800">Sign in</button>
           <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-          <button href="#" onClick={() => openSignInRegister('signIn')} className="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</button>
+          <button href="#" onClick={() => openSignInRegister('register')} className="text-sm font-medium text-gray-700 hover:text-gray-800">Create account</button>
         </div>
       )}
       {showSignInRegister && (
