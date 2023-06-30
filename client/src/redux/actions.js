@@ -9,9 +9,30 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_CART_BY_ID_USER = "GET_CART_BY_ID_USER";
 export const PAGE = "PAGE";
 export const CLEAN = "CLEAN";
-export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS"
+export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS";
+export const MODIFY_QUANTITY = "MODIFY_QUANTITY";
+export const DELETE_PRODUCT = "DELETE_PRODUCT"
 
 // -----------actions cart----------------------------------------------------------------------------------------
+export const deleteProduct = (product) =>{
+  console.log(product)
+  return async function (dispatch) {
+    const response = await axios.delete("http://localhost:3001/carts/remove", {data:product});
+    const cart = response.data;
+    console.log(cart)
+    dispatch({ type: DELETE_PRODUCT, payload: cart });
+  };
+}
+
+export const modifyQuantity = (product) =>{
+ console.log(product)
+  return async function (dispatch) {
+    const response = await axios.patch("http://localhost:3001/carts/edit", product);
+    const cart = response.data;
+    console.log(cart)
+    dispatch({ type: MODIFY_QUANTITY, payload: cart });
+  };
+}
 export const getCartByIdUser = (id) =>{
   return async function (dispatch) {
     const response = await axios.get(`http://localhost:3001/carts/user/${id}`);
@@ -33,6 +54,7 @@ export const addProductToCart = (id) => {
   }
   
   return async function (dispatch) {
+   
     const response = await axios.post("http://localhost:3001/carts/add",product);
     
     const cart = response.data
