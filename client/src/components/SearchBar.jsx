@@ -30,7 +30,7 @@ export default function SearchBar() {
     return (
         <div>
             <input
-                class='inputs'
+                className="my-input"
                 type='text'
                 value={name}
                 placeholder='Search Product...'
