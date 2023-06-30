@@ -90,6 +90,7 @@ const Products = () => {
                 discount={product.discount}
                 stock={product.stock}
                 categoryId={product.categoryId}
+                image={product.images[0].url}
               />
             );
           })}
