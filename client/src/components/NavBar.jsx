@@ -4,9 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getCategories } from '@/redux/actions';
 
 function NavBarGuest({ typeUser }) {
-  const cart = useSelector(state=>state.cart)
-  console.log(cart) 
-  const totalProducts = cart.quantity;
+  const totalProducts=useSelector(state=>state.totalProducts)
   // PARA USO CON BACK
   /* useEffect(() => {
     (dispatch(getCategories()));

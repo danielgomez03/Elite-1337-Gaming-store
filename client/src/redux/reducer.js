@@ -6,6 +6,7 @@ import{
   SORT_PRODUCTS,
   FILTER_PRODUCTS_BY_PRICE,
   ADD_PRODUCT_TO_CART,
+  TOTAL_PRODUCTS,
   PAGE,
   CLEAN,
   
@@ -19,11 +20,16 @@ const initialState = {
   sortOrder: '', 
   detail: [],
   categories: [],
-  cart:[]
+  cart:[],
+  totalProducts:0
+
 };
 
 const rootReducer= (state=initialState,action)=>{
 switch(action.type){
+  case TOTAL_PRODUCTS:
+    
+    return { ...state, totalProducts: state.totalProducts+1 };
   case ADD_PRODUCT_TO_CART:
     return { ...state, cart: action.payload };
 //   const existingProduct = state.cart.find(item => item.productId === action.payload);

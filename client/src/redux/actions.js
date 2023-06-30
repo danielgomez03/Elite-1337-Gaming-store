@@ -8,26 +8,32 @@ export const SORT_PRODUCTS = "SORT_PRODUCTS";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const PAGE = "PAGE";
 export const CLEAN = "CLEAN";
+export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS"
 
 // -----------actions cart----------------------------------------------------------------------------------------
-
-
-// ---------------------------------------------------------------------------------------------------------------
+export const countCart =()=>{
+  
+  return function  (dispatch){
+  return dispatch({type: TOTAL_PRODUCTS });   
+  }
+}
 export const addProductToCart = (id) => {
   const product={
-    "userId": "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
-    productId: "7d23e873-6bb8-4569-acf5-ebeef606afd6",
-    "quantity": 5
+    userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
+    productId: id,
+    quantity: 1
   }
   
   return async function (dispatch) {
     const response = await axios.post("http://localhost:3001/carts/add",product);
-   
+    
     const cart = response.data
-  
-    dispatch({type: ADD_PRODUCT_TO_CART ,payload:cart})
-  };
-}
+    console.log(cart
+      )
+      dispatch({type: ADD_PRODUCT_TO_CART ,payload:cart})
+    };
+  }
+  // ---------------------------------------------------------------------------------------------------------------
 export const getProducts = () => {
   return async function (dispatch) {
     const response = await axios.get("http://localhost:3001/products");
