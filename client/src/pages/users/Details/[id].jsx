@@ -20,7 +20,7 @@ export default function Detail() {
     }
    dispatch(clean())
   }, [dispatch, id]);
-
+  
   const detail = useSelector(state => state.detail);
   console.log(detail);
 
@@ -65,7 +65,7 @@ export default function Detail() {
 <div className="flex justify-end space-x-4">
 <button className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded " disabled={detail.stock === 0}
 onClick={()=>
-  {dispatch(addProductToCart(detail.productId))}
+  {dispatch(addProductToCart(id))}
 }
 >
 
