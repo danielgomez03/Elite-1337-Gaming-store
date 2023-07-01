@@ -5,13 +5,13 @@ import { getCategories } from '@/redux/actions';
 
 function NavBarGuest({ typeUser }) {
   // PARA USO CON BACK
-  useEffect(() => {
+    /*useEffect(() => {
     (dispatch(getCategories()));
   }, []);
-  const categories = useSelector(state => state.categories)
+  const categories = useSelector(state => state.categories) */
 
   // PARA USO LOCAL SIN BACK
-  /* const categories = [
+const categories = [
     {
       "categoryId": 1,
       "name": "Hardware",
@@ -246,7 +246,7 @@ function NavBarGuest({ typeUser }) {
       "isMainCategory": true,
       "parentId": null
     }
-  ] */
+  ]
 
   function convertCategories() {
     const newCategories = [];
@@ -303,14 +303,6 @@ function NavBarGuest({ typeUser }) {
       setActiveSubcategory(null);
     }
   }
-
-  useEffect(() => {
-    console.log("activeCategory", activeCategory);
-  }, [activeCategory]);
-
-  useEffect(() => {
-    console.log("activeSubcategory", activeSubcategory);
-  }, [activeSubcategory]);
 
   const [activeItem, setActiveItem] = useState(null);
 
