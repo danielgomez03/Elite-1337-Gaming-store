@@ -12,13 +12,13 @@ function NavBarGuest({ typeUser }) {
   const linkToCart = currentLocation==="/guest/Products"?"../users/ShopCart":"/users/ShopCart"
   const totalProducts=useSelector(state=>state.totalProducts)
   // PARA USO CON BACK
-  /* useEffect(() => {
+    /*useEffect(() => {
     (dispatch(getCategories()));
   }, []);
-  const categories = useSelector(state => state.categories)
- */
+  const categories = useSelector(state => state.categories) */
+
   // PARA USO LOCAL SIN BACK
-  const categories = [
+const categories = [
     {
       "categoryId": 1,
       "name": "Hardware",
@@ -291,20 +291,26 @@ function NavBarGuest({ typeUser }) {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState(null);
 
-  function handleMouseEnter(index) {
+  function handleMouseEnter(index) {  // index
     setActiveCategory(index);
-  }
+  }  
 
   function handleMouseLeave() {
-    setActiveCategory(null);
+    if (activeSubcategory) {
+      setActiveCategory(null);
+    } else if (activeCategory && !activeSubcategory) {
+      setActiveCategory(null);
+    }
   }
 
-  function handleMouseEnterSub(subIndex) {
+  function handleMouseEnterSub(subIndex) { // subindex
     setActiveSubcategory(subIndex);
   }
 
   function handleMouseLeaveSub() {
-    setActiveSubcategory(null);
+    if (!activeSubcategory) {
+      setActiveSubcategory(null);
+    }
   }
 
   const [activeItem, setActiveItem] = useState(null);
@@ -312,14 +318,14 @@ function NavBarGuest({ typeUser }) {
   return (
     <nav
       aria-label="Top"
-      className="bg-blue-950 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
+      className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
       {/* <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. --> */}
       <Link
         href="/"
-        class="rounded-md bg-white p-2  lg:hidden">
+        className="rounded-md bg-blue-950 p-2  lg:hidden">
         <span className="sr-only">Open menu</span>
         <svg
-          className="h-6 w-6"
+          className="h-6 w-6 text-white "
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="1.5"
@@ -347,7 +353,7 @@ function NavBarGuest({ typeUser }) {
                   pathname: `/${typeUser}/Products`,
                   query: { category: category.name } // Pasar el dato de la categoría como parámetro de ruta
                 }}
-                className={`flex items-center justify-center h-full w-full px-5 text-sm text-white font-medium hover:bg-white hover:text-gray-900 focus:outline-none ${activeCategory === index ? 'bg-white text-gray-900' : ''
+                className={`flex items-center justify-center h-full w-full px-5 text-sm font-medium hover:bg-white hover:text-gray-900 focus:outline-none ${activeCategory === index ? 'bg-white text-gray-900' : 'text-white'
                   }`}
               >
                 {category.name}
@@ -473,26 +479,14 @@ function NavBarGuest({ typeUser }) {
             </Link>
           )}
           {typeUser === "users" && (
-            <Link
-              href={`/${typeUser}/ShopCart`}
-              className="group flex items-center h-full px-5 hover:bg-white text-white">
+            <Link href={linkToCart} className="group flex items-center h-full px-5 hover:bg-white text-white">
               <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 shopping_cart
               </span>
               <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts}</span>
               <span className="sr-only">items in cart, view bag</span>
             </Link>
-          )}
-          
-          {typeUser === "guest" && (
-            <Link href={linkToCart} className="group flex items-center h-full px-5 hover:bg-white">
-              <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
-                shopping_cart
-              </span>
-              <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts}</span>
-              <span className="sr-only">items in cart, view bag</span>
-            </Link>
-          )}
+          )}
         </div>
       </div>
     </nav>
