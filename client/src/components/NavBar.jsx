@@ -286,10 +286,12 @@ const categories = [
 
   function handleMouseEnter(index) {  // index
     setActiveCategory(index);
-  }
+  }  
 
   function handleMouseLeave() {
     if (activeSubcategory) {
+      setActiveCategory(null);
+    } else if (activeCategory && !activeSubcategory) {
       setActiveCategory(null);
     }
   }
