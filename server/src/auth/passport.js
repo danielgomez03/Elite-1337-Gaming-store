@@ -10,22 +10,28 @@ passport.use(
     async (email, password, done) => {
       try {
         const login = await Login.findOne({ where: { email } });
+
         if (!login) {
-          return done(null, false, { message: "Incorrect email." });
+          return done(null, false, { message: "Incorrect email or password." });
         }
 
         const isValidPassword = login.validatePassword(password);
         if (!isValidPassword) {
-          return done(null, false, { message: "Incorrect password." });
+          return done(null, false, { message: "Incorrect email or password." });
         }
 
         const user = await User.findOne({ where: { userId: login.userId } });
+
         if (!user) {
           return done(null, false, { message: "User not found." });
         }
 
+        // Set the 'verify' property to true for the logged-in user
+        await login.update({ verify: true });
+
         return done(null, user);
       } catch (error) {
+        console.error("Passport local strategy error:", error);
         return done(error);
       }
     },
@@ -33,24 +39,20 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, {
-    userId: user.userId,
-    loginId: user.loginId,
-  });
+  done(null, user.userId);
 });
 
-passport.deserializeUser(async (data, done) => {
+passport.deserializeUser(async (userId, done) => {
   try {
-    const user = await User.findByPk(data.userId, {
-      include: [
-        {
-          model: Login,
-          where: { loginId: data.loginId }, // be careful with this line
-        },
-      ],
-    });
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return done(null, false, { message: "User not found." });
+    }
+
     done(null, user);
   } catch (error) {
+    console.error("Error deserializing user:", error);
     done(error);
   }
 });
