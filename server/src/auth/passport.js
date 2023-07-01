@@ -33,12 +33,22 @@ passport.use(
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.userId);
+  done(null, {
+    userId: user.userId,
+    loginId: user.loginId,
+  });
 });
 
-passport.deserializeUser(async (userId, done) => {
+passport.deserializeUser(async (data, done) => {
   try {
-    const user = await User.findOne({ where: { userId } });
+    const user = await User.findByPk(data.userId, {
+      include: [
+        {
+          model: Login,
+          where: { loginId: data.loginId }, // be careful with this line
+        },
+      ],
+    });
     done(null, user);
   } catch (error) {
     done(error);
