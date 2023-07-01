@@ -9,7 +9,7 @@ const {
   addProductToCartHandler,
   removeProductFromCartHandler,
   editCartProductQuantityHandler,
-} = require("../handlers/cartHandlers");
+} = require("../handlers/cartHandler");
 
 const cartsRouter = Router();
 

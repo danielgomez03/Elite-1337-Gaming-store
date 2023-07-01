@@ -3,8 +3,10 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
-
 require("./database.js");
+
+const passport = require("./auth/passport.js");
+const session = require("express-session");
 
 const server = express();
 
@@ -19,11 +21,22 @@ server.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
+
+server.use(
+  session({
+    secret: "cat",
+    resave: false,
+    saveUninitialized: false,
+  }),
+);
+
+server.use(passport.initialize());
+server.use(passport.session());
 
 server.use("/", routes);
 

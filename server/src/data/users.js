@@ -20,18 +20,8 @@ const users = [
     login: {
       loginId: "e8dfc4b2-858d-45f2-947a-bc3e67c5e6f4",
       email: "ignaciofosco@example.com",
-      password: "$2b$10$dSCot.T1J1gIiPbL5YbHZuLm1F8.WosL7RzbfIBoVKajf.mVXk7HK",
+      password: "asd123",
       verify: false,
-    },
-    cart: {
-      cartId: "8a4f0a94-4a3c-4f1d-babc-298d079063d2",
-      quantity: 3,
-      userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
-      product: {
-        productId: "a84a2e6a-53ae-4ff4-a8e3-3212c60e2b91",
-        name: "Example Product",
-        price: 19.99,
-      },
     },
   },
   {
