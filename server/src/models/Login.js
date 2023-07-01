@@ -1,18 +1,16 @@
 const { DataTypes } = require("sequelize");
-const { hashSync, genSaltSync } = require("bcrypt");
+const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 
 module.exports = (sequelize) => {
   const Login = sequelize.define(
     "login",
     {
       loginId: {
-        // naming it like this is less confusing when interacting with other id fields
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
-
       email: {
         type: DataTypes.STRING,
         unique: true,
@@ -21,12 +19,10 @@ module.exports = (sequelize) => {
           isEmail: true,
         },
       },
-
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-
       verify: {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
@@ -35,19 +31,25 @@ module.exports = (sequelize) => {
     { timestamps: true },
   );
 
-  // password hashing to encrypt data through bcrypt library
-  const hashPassword = async (login) => {
-    try {
-      const hashedPassword = await hashSync(login.password, genSaltSync(10));
-      login.password = hashedPassword;
-    } catch (error) {
-      console.error("Error hashing password:", error);
-      throw new Error("Failed to hash password");
-    }
+  // Instance method to validate the password
+  Login.prototype.validatePassword = function (password) {
+    return compareSync(password, this.password);
   };
-  // hashes password on create and on modification
-  Login.beforeCreate(hashPassword);
-  Login.beforeUpdate(hashPassword);
+
+  // Hash the password before saving
+  Login.beforeCreate(async (login) => {
+    const salt = genSaltSync(10);
+    const hashedPassword = await hashSync(login.password, salt);
+    login.password = hashedPassword;
+  });
+
+  Login.beforeUpdate(async (login) => {
+    if (login.changed("password")) {
+      const salt = genSaltSync(10);
+      const hashedPassword = await hashSync(login.password, salt);
+      login.password = hashedPassword;
+    }
+  });
 
   return Login;
 };

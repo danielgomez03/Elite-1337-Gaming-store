@@ -3,8 +3,12 @@ const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const routes = require("./routes/index.js");
-
 require("./database.js");
+
+const passport = require("./auth/passport.js");
+const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const { conn } = require("./database");
 
 const server = express();
 
@@ -19,17 +23,37 @@ server.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
 
+const sessionStore = new SequelizeStore({
+  db: conn,
+});
+
+server.use(
+  session({
+    secret: "pfhenry37bg12",
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
+    cookie: {
+      maxAge: 2 * 60 * 60 * 1000, // 2 hours in milliseconds
+    },
+  }),
+);
+
+server.use(passport.initialize());
+server.use(passport.session());
+
+sessionStore.sync();
+
 server.use("/", routes);
 
 // Error catching endware.
 server.use((err, req, res, next) => {
-  // eslint-disable-line no-unused-vars
   const status = err.status || 500;
   const message = err.message || err;
   console.error(err);
