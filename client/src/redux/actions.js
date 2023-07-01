@@ -9,7 +9,6 @@ export const GET_CATEGORIES = "GET_CATEGORIES";
 export const PAGE = "PAGE";
 export const CLEAN = "CLEAN";
 export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS"
-export const CREATE_PAY = "CREATE_PAY";
 
 // -----------actions cart----------------------------------------------------------------------------------------
 export const countCart =()=>{
@@ -113,20 +112,4 @@ export const getProductById = (id) => {
      type: CLEAN
     }
   
-  };
-
-  export const createPaymentIntent = (paymentData) => {
-    return async (dispatch) => {
-      try {
-        const response = await axios.post(`http://localhost:3001/stripe/process-payment`, paymentData);
-        const createdPay = response.data;
-  
-        dispatch({
-          type: CREATE_PAY,
-          payload: createdPay,
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
   };

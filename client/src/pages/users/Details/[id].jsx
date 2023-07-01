@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getProductById, clean , addProductToCart } from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 
 
@@ -71,9 +72,23 @@ onClick={()=>
 
       ADD TO CART
     </button>
+    <Link
+  href={{
+    pathname: '/users/StripePay',
+    query: {
+      productId: id,
+      productName: detail.name,
+      productPrice: discountedPrice.toFixed(2),
+      productDescription: detail.description,
+      productImage: detail.images?.[0]?.url  // Aquí se pasa la URL de la primera imagen del producto
+    }
+  }}
+  passHref
+>
     <button className="bg-[#FF5F00] hover:bg-[#FF8129] text-white px-4 py-2 rounded" disabled={detail.stock === 0}>
       BUY
     </button>
+    </Link>
     {detail.stock === 0 && (
     <p className="absolute top-full left-0 text-red-500">out of stock</p>
   )}

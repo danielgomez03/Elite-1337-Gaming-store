@@ -3,15 +3,14 @@ const { STRIPE_SECRECT_KEY } = process.env;
 
 const stripe = new Stripe(STRIPE_SECRECT_KEY);
 
-const processPayment = async (amount, currency, paymentMethodId, description, customerId) => {
+const processPayment = async (amount, id) => {
     try {
       // Crear un pago utilizando la biblioteca de Stripe
       const paymentIntent = await stripe.paymentIntents.create({
         amount,
-        currency,
-        payment_method: paymentMethodId,
-        description,
-        customer: customerId,
+        currency: "USD",
+        description: "Network",
+        payment_method: id,
         confirm: true,
       });
   
