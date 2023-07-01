@@ -478,7 +478,7 @@ const categories = [
               <span className="sr-only">items in favorites, view bag</span>
             </Link>
           )}
-          {typeUser === "guest" && (
+          {typeUser === "users" && (
             <Link href={linkToCart} className="group flex items-center h-full px-5 hover:bg-white text-white">
               <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 shopping_cart
