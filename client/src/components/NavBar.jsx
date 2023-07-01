@@ -318,7 +318,7 @@ const categories = [
   return (
     <nav
       aria-label="Top"
-      className="bg-blue-950 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
+      className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
       {/* <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. --> */}
       <Link
         href="/"
