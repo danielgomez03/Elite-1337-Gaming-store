@@ -23,7 +23,12 @@ module.exports = (sequelize) => {
       },
 
       method: {
-        type: DataTypes.ENUM("MercadoPago", "PayPal"),
+        type: DataTypes.ENUM(
+          "Credit or Debit Card",
+          "Digital Wallet",
+          "Bank Transfer",
+          "Other",
+        ),
         allowNull: false,
       },
 
