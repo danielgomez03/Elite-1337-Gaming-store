@@ -5,13 +5,13 @@ import { addProductToCart, countCart } from "@/redux/actions";
 
 const Card = (props) => {
   const dispatch = useDispatch();
-  console.log(props)
+ 
   return (
     <div>
-      <article className="w-1.5/2 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300">
-      <Link href={`../users/Details/${props.id}`}>
-        <div className="relative flex items-end overflow-hidden rounded-xl">
-          <img src="https://images.unsplash.com/photo-1511556532299-8f662fc26c06?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="Product Photo" />
+<article className="w-1.5/2 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300">
+        <Link href={`../users/Details/${props.id}`}>
+          <div className="relative flex items-end overflow-hidden rounded-xl">
+            <img src={props.image} alt="Product Photo" className="w-1.5/2 h-60 object-cover" />
           <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
             <svg
               xmlns="http://www.w3.org/2000/svg"
