@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getProductById, clean , addProductToCart , countCart} from '../../../redux/actions';
+import { getProductById, clean , addProductToCart , getCartByIdUser} from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const userId = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
   const { id } = router.query;
   console.log(id);
 
@@ -66,7 +67,9 @@ export default function Detail() {
 <button className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded " disabled={detail.stock === 0}
 onClick={()=>
   {dispatch(addProductToCart(id))
-    dispatch(countCart())}
+    .then(() => {
+      dispatch(getCartByIdUser(userId));
+    })}
 
 }
 >
