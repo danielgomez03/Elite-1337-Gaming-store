@@ -9,16 +9,16 @@ function NavBarGuest({ typeUser }) {
   const router = useRouter()
   const currentLocation = router.asPath
   console.log(currentLocation)
-  const linkToCart = currentLocation==="/guest/Products"?"../users/ShopCart":"/users/ShopCart"
-  const totalProducts=useSelector(state=>state.totalProducts)
+  const linkToCart = currentLocation === "/guest/Products" ? "../users/ShopCart" : "/users/ShopCart"
+  const totalProducts = useSelector(state => state.totalProducts)
   // PARA USO CON BACK
-    /*useEffect(() => {
-    (dispatch(getCategories()));
-  }, []);
-  const categories = useSelector(state => state.categories) */
+  /*useEffect(() => {
+  (dispatch(getCategories()));
+}, []);
+const categories = useSelector(state => state.categories) */
 
   // PARA USO LOCAL SIN BACK
-const categories = [
+  const categories = [
     {
       "categoryId": 1,
       "name": "Hardware",
@@ -293,7 +293,7 @@ const categories = [
 
   function handleMouseEnter(index) {  // index
     setActiveCategory(index);
-  }  
+  }
 
   function handleMouseLeave() {
     if (activeSubcategory) {
@@ -313,16 +313,16 @@ const categories = [
     }
   }
 
-  const [activeItem, setActiveItem] = useState(null);
+  const [view, setView] = useState(true);
 
   return (
     <nav
       aria-label="Top"
-      className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
+      className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900 mx-auto lg:px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center sm:flex-col lg:fixed top-16 left-0 z-10 absolute">
       {/* <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. --> */}
-      <Link
-        href="/"
-        className="rounded-md bg-blue-950 p-2  lg:hidden">
+      <button
+        onClick={() => setView(!view)}
+        className="w-full flex justify-center rounded-md lg:hidden px-4">
         <span className="sr-only">Open menu</span>
         <svg
           className="h-6 w-6 text-white "
@@ -335,159 +335,157 @@ const categories = [
             strokeLinecap="round"
             strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
-      </Link>
+      </button>
 
       {/* <!-- Flyout menus --> */}
-      <div className="hidden lg:block lg:self-stretch">
-        <div className="flex h-full flex items-center">
-          {newCategories.map((category, index) => (
-            <div
-              key={index}
-              onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
-              className="relative group h-full"
+      <div className={`${view ? "hidden" : ""} absolute h-full w-full lg:flex items-center justify-center lg:mt-0 mt-32`}>
+        {newCategories.map((category, index) => (
+          <div
+            key={index}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={handleMouseLeave}
+            className="relative group h-full lg:w-auto w-full"
+          >
+            {/* Categoría principal */}
+            <Link
+              href={{
+                pathname: `/${typeUser}/Products`,
+                query: { category: category.name } // Pasar el dato de la categoría como parámetro de ruta
+              }}
+              className={`flex items-center justify-center h-full w-full px-5 text-sm font-medium lg:bg-transparent bg-white text-gray-900 hover:bg-white hover:text-gray-900 focus:outline-none ${activeCategory === index ? 'lg:bg-white lg:text-gray-900' : 'lg:text-white'
+                }`}
             >
-              {/* Categoría principal */}
-              <Link
-                href={{
-                  pathname: `/${typeUser}/Products`,
-                  query: { category: category.name } // Pasar el dato de la categoría como parámetro de ruta
-                }}
-                className={`flex items-center justify-center h-full w-full px-5 text-sm font-medium hover:bg-white hover:text-gray-900 focus:outline-none ${activeCategory === index ? 'bg-white text-gray-900' : 'text-white'
-                  }`}
-              >
-                {category.name}
-              </Link>
-              <span className="h-px w-full bg-gray-200" aria-hidden="true" />
-              {/* Subcategorías */}
-              {activeCategory === index && category.subcategories.length > 0 && (
-                <div
-                  className="absolute top-full px-2 py-1 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
-                  onMouseEnter={() => handleMouseEnter(index)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  {category.subcategories?.map((subcategory, subIndex) => (
-                    <div
-                      key={subIndex}
-                      onMouseEnter={() => handleMouseEnterSub(subIndex)}
-                      onMouseLeave={handleMouseLeaveSub}
-                      className="relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
-                    >
-                      <Link
-                        href={{
-                          pathname: `/${typeUser}/Products`,
-                          query: { category: subcategory.name } // Pasar el dato de la categoría como parámetro de ruta
-                        }}>
-                        {subcategory.name}
-                      </Link>
-                      {activeSubcategory === subIndex && subcategory.subcategories.length > 0 && (
-                        <div
-                          className="absolute left-full top-[-4px] px-2 py-1 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-md"
-                          onMouseEnter={() => handleMouseEnterSub(subIndex)}
-                          onMouseLeave={handleMouseLeaveSub}
-                        >
-                          {subcategory.subcategories?.map((subSubCategory, subSubIndex) => (
-                            <Link
-                              key={subSubIndex}
-                              href={{
-                                pathname: `/${typeUser}/Products`,
-                                query: { category: subSubCategory } // Pasar el dato de la categoría como parámetro de ruta
-                              }}
-                              className="block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
-                            >
-                              {subSubCategory}
-                            </Link>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-
-          <span
-            className="h-6 w-px mx-5 bg-gray-200"
-            aria-hidden="true" />
-          {typeUser === "guest" && (
-            <Link
-              href="/Home"
-              className="flex h-full px-5 items-center text-sm text-white font-medium hover:bg-white hover:text-gray-900">
-              Home
+              {category.name}
             </Link>
-          )}
-          {typeUser === "guest" && (
-            <Link
-              href={`/about`}
-              className="flex h-full px-5 items-center text-sm text-white font-medium hover:bg-white hover:text-gray-900">
-              Company
-            </Link>
-          )}
-          <div className='relative h-full'>
-            {typeUser === "users" && (
-              <button
-                onMouseEnter={() => handleMouseEnter("My account")}
-                onMouseLeave={handleMouseLeave}
-                className={`flex h-full px-5 items-center text-sm font-medium hover:bg-white hover:text-gray-900 ${activeCategory === "My account" ? 'bg-white text-gray-900' : 'text-white'}`}>
-                My account
-              </button>
-            )}
-            {activeCategory === "My account" && (
+            <span className="h-px w-full bg-gray-200" aria-hidden="true" />
+            {/* Subcategorías */}
+            {activeCategory === index && category.subcategories.length > 0 && (
               <div
-                className="absolute top-full px-2 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
-                onMouseEnter={() => handleMouseEnter("My account")}
-                onMouseLeave={handleMouseLeave}>
-                <Link
-                  href={`/${typeUser}/Profile`}
-                  className=" relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900" >
-                  My profile
-                </Link>
-                <Link
-                  href={`/${typeUser}/Purchases`}
-                  className=" relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900" >
-                  My purchases
-                </Link>
-                <Link
-                  href={`/${typeUser}/Invoices`}
-                  className=" relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900 mb-1" >
-                  Invoices
-                </Link>
+                className="hidden lg:block absolute top-full px-2 py-1 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={handleMouseLeave}
+              >
+                {category.subcategories?.map((subcategory, subIndex) => (
+                  <div
+                    key={subIndex}
+                    onMouseEnter={() => handleMouseEnterSub(subIndex)}
+                    onMouseLeave={handleMouseLeaveSub}
+                    className="relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                  >
+                    <Link
+                      href={{
+                        pathname: `/${typeUser}/Products`,
+                        query: { category: subcategory.name }
+                      }}>
+                      {subcategory.name}
+                    </Link>
+                    {activeSubcategory === subIndex && subcategory.subcategories.length > 0 && (
+                      <div
+                        className="absolute left-full top-[-4px] px-2 py-1 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-md"
+                        onMouseEnter={() => handleMouseEnterSub(subIndex)}
+                        onMouseLeave={handleMouseLeaveSub}
+                      >
+                        {subcategory.subcategories?.map((subSubCategory, subSubIndex) => (
+                          <Link
+                            key={subSubIndex}
+                            href={{
+                              pathname: `/${typeUser}/Products`,
+                              query: { category: subSubCategory }
+                            }}
+                            className="block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                          >
+                            {subSubCategory}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
             )}
           </div>
+        ))}
+
+        <span
+          className="hidden lg:block lg:h-6 w-px mx-5 bg-gray-200"
+          aria-hidden="true" />
+        {typeUser === "guest" && (
+          <Link
+            href="/Home"
+            className="flex h-full px-5 items-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
+            Home
+          </Link>
+        )}
+        {typeUser === "guest" && (
+          <Link
+            href={`/about`}
+            className="flex h-full px-5 items-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
+            Company
+          </Link>
+        )}
+        <div className='relative h-full'>
           {typeUser === "users" && (
-            <Link
-              href={`/${typeUser}/Notificacions`}
-              className="group flex items-center h-full px-5 hover:bg-white text-white">
-              <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
-                notifications
-              </span>
-              <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
-              <span className="sr-only">view notifications</span>
-            </Link>
+            <button
+              onMouseEnter={() => handleMouseEnter("My account")}
+              onMouseLeave={handleMouseLeave}
+              className={`flex w-full h-full px-5 items-center justify-center text-sm font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900 ${activeCategory === "My account" ? 'lg:bg-white text-gray-900' : 'lg:text-white'}`}>
+              My account
+            </button>
           )}
-          {typeUser === "users" && (
-            <Link
-              href={`/${typeUser}/Favorites`}
-              className="group flex items-center h-full px-5 hover:bg-white text-white">
-              <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
-                favorite
-              </span>
-              <span className="w-full ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
-              <span className="sr-only">items in favorites, view bag</span>
-            </Link>
+          {activeCategory === "My account" && (
+            <div
+              className="hidden lg:block absolute top-full px-2 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
+              onMouseEnter={() => handleMouseEnter("My account")}
+              onMouseLeave={handleMouseLeave}>
+              <Link
+                href={`/${typeUser}/Profile`}
+                className=" relative block px-6 py-2 text-sm hover:bg-gray-100 lg:bg-transparent bg-white hover:text-gray-900" >
+                My profile
+              </Link>
+              <Link
+                href={`/${typeUser}/Purchases`}
+                className=" relative block px-6 py-2 text-sm hover:bg-gray-100 lg:bg-transparent bg-white hover:text-gray-900" >
+                My purchases
+              </Link>
+              <Link
+                href={`/${typeUser}/Invoices`}
+                className=" relative block px-6 py-2 text-sm hover:bg-gray-100 lg:bg-transparent bg-white hover:text-gray-900 mb-1" >
+                Invoices
+              </Link>
+            </div>
           )}
-          {typeUser === "users" && (
-            <Link href={linkToCart} className="group flex items-center h-full px-5 hover:bg-white text-white">
-              <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
-                shopping_cart
-              </span>
-              <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts}</span>
-              <span className="sr-only">items in cart, view bag</span>
-            </Link>
-          )}
         </div>
+        {typeUser === "users" && (
+          <Link
+            href={`/${typeUser}/Notificacions`}
+            className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
+            <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
+              notifications
+            </span>
+            <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
+            <span className="sr-only">view notifications</span>
+          </Link>
+        )}
+        {typeUser === "users" && (
+          <Link
+            href={`/${typeUser}/Favorites`}
+            className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
+            <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
+              favorite
+            </span>
+            <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
+            <span className="sr-only">items in favorites, view bag</span>
+          </Link>
+        )}
+        {typeUser === "users" && (
+          <Link href={linkToCart} className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
+            <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
+              shopping_cart
+            </span>
+            <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts}</span>
+            <span className="sr-only">items in cart, view bag</span>
+          </Link>
+        )}
       </div>
     </nav>
   );

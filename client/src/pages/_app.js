@@ -20,14 +20,14 @@ function App({ Component, pageProps, session }) {
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        <div className="w-full font-montserrat mt-32 bg-gray-100">
+        <div className="w-full font-montserrat mt-32 bg-gray-100 text-sm tracking-wider">
           <Header />
             <select value={typeUser} onChange={handleUserChange}>
               <option value="admin">Admin</option>
               <option value="users">Users</option>
               <option value="guest">Guest</option>
             </select>
-          <div className='page-container w-full min-h-[calc(100vh-378px)] flex flex-col justify-center items-center p-4'>
+          <div className='page-container w-full min-h-[calc(100vh-378px)] flex flex-col justify-center items-center'>
             {typeUser === 'admin' && <NavBarAdmin />}
             {(typeUser === 'users' || typeUser === 'guest') && <NavBar typeUser={typeUser}/>}
             <Component {...pageProps} />
