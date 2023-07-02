@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { getProductById, clean , addProductToCart , countCart} from '../../../redux/actions';
+import { getProductById, clean , addProductToCart , getCartByIdUser} from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Link from 'next/link';
 
 
 
@@ -9,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const userId = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
   const { id } = router.query;
   console.log(id);
 
@@ -66,16 +68,32 @@ export default function Detail() {
 <button className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded " disabled={detail.stock === 0}
 onClick={()=>
   {dispatch(addProductToCart(id))
-    dispatch(countCart())}
+    .then(() => {
+      dispatch(getCartByIdUser(userId));
+    })}
 
 }
 >
 
       ADD TO CART
     </button>
+    <Link
+  href={{
+    pathname: '/users/StripePay',
+    query: {
+      productId: id,
+      productName: detail.name,
+      productPrice: discountedPrice.toFixed(2),
+      productDescription: detail.description,
+      productImage: detail.images?.[0]?.url  // Aquí se pasa la URL de la primera imagen del producto
+    }
+  }}
+  passHref
+>
     <button className="bg-[#FF5F00] hover:bg-[#FF8129] text-white px-4 py-2 rounded" disabled={detail.stock === 0}>
       BUY
     </button>
+    </Link>
     {detail.stock === 0 && (
     <p className="absolute top-full left-0 text-red-500">out of stock</p>
   )}

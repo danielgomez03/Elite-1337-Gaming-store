@@ -8,10 +8,10 @@ const Footer = () => {
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
           <img src="#" class="mr-5 h-6 sm:h-9" alt="logo" />
-            <p class="max-w-xs mt-4 text-sm text-gray-600">
+            <p class="max-w-xs mt-4 text-sm ">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
             </p>
-            <div class="flex mt-8 space-x-6 text-gray-600">
+            <div class="flex mt-8 space-x-6 ">
               <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
                 <span class="sr-only"> Facebook </span>
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

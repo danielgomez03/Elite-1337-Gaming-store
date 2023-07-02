@@ -8,7 +8,7 @@ const {
   addProductToCart,
   removeProductFromCart,
   editCartProductQuantity,
-} = require("../controllers/cartControllers");
+} = require("../controllers/cartController");
 
 const getCartByUserIdHandler = async (req, res) => {
   const { userId } = req.params;
@@ -66,11 +66,9 @@ const getCartsByProductNameHandler = async (req, res) => {
     res.json(carts);
   } catch (error) {
     console.error("Error in getCartsByProductNameHandler:", error);
-    res
-      .status(500)
-      .json({
-        error: "Failed to retrieve the carts for the given product name",
-      });
+    res.status(500).json({
+      error: "Failed to retrieve the carts for the given product name",
+    });
   }
 };
 

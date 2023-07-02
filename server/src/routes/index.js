@@ -5,6 +5,7 @@ const usersRoutes = require("./usersRoutes");
 const imagesRoutes = require("./imagesRoutes");
 const cartRoutes = require("./cartRoutes");
 const stripeRoutes = require("./stripeRoutes");
+const loginRoutes = require("./loginRoutes");
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use("/users", usersRoutes);
 router.use("/carts", cartRoutes);
 router.use("/images", imagesRoutes);
 router.use("/stripe", stripeRoutes);
+router.use("/login", loginRoutes);
 
 module.exports = router;

@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
       },
 
       tokenType: {
-        type: DataTypes.ENUM("Auth0", "Google"),
+        type: DataTypes.ENUM("Passport", "Google"),
         allowNull: false,
       },
 

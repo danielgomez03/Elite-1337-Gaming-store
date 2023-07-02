@@ -89,6 +89,7 @@ function NavBarGuest({ typeUser }) {
     }
   }
 
+
   return (
     <nav aria-label="Top" className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
       <Link href="/" className="rounded-md bg-blue-950 p-2 lg:hidden">
@@ -96,7 +97,7 @@ function NavBarGuest({ typeUser }) {
         <svg className="h-6 w-6 text-white " fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
         </svg>
-      </Link>
+      </button>
 
       <div className="hidden lg:block lg:self-stretch">
         <div className="flex h-full flex items-center">
@@ -248,7 +249,39 @@ function NavBarGuest({ typeUser }) {
               <span className="sr-only">items in cart, view bag</span>
             </Link>
           )}
+
         </div>
+        {typeUser === "users" && (
+          <Link
+            href={`/${typeUser}/Notificacions`}
+            className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
+            <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
+              notifications
+            </span>
+            <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
+            <span className="sr-only">view notifications</span>
+          </Link>
+        )}
+        {typeUser === "users" && (
+          <Link
+            href={`/${typeUser}/Favorites`}
+            className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
+            <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
+              favorite
+            </span>
+            <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
+            <span className="sr-only">items in favorites, view bag</span>
+          </Link>
+        )}
+        {typeUser === "guest" && (
+          <Link href={linkToCart} className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
+            <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
+              shopping_cart
+            </span>
+            <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts()}</span>
+            <span className="sr-only">items in cart, view bag</span>
+          </Link>
+        )}
       </div>
     </nav>
   );
