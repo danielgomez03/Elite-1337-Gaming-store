@@ -412,14 +412,14 @@ const categories = useSelector(state => state.categories) */
         {typeUser === "guest" && (
           <Link
             href="/Home"
-            className="flex h-full px-5 items-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
+            className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
             Home
           </Link>
         )}
         {typeUser === "guest" && (
           <Link
             href={`/about`}
-            className="flex h-full px-5 items-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
+            className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
             Company
           </Link>
         )}
