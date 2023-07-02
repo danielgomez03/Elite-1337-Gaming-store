@@ -1,15 +1,12 @@
 const { processPayment } = require("../controllers/stripeControllers");
 
 const processPaymentHandler = async (req, res) => {
-    const { amount, currency, paymentMethodId, description, customerId } = req.body;
+    const { amount, id } = req.body;
   
     try {
       const paymentIntent = await processPayment(
         amount,
-        currency,
-        paymentMethodId,
-        description,
-        customerId
+        id,
       );
   
       // Si el pago es exitoso, devuelve una respuesta al cliente
