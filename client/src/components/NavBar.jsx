@@ -10,7 +10,15 @@ function NavBarGuest({ typeUser }) {
   const currentLocation = router.asPath
   console.log(currentLocation)
   const linkToCart = currentLocation === "/guest/Products" ? "../users/ShopCart" : "/users/ShopCart"
-  const totalProducts = useSelector(state => state.totalProducts)
+  const arr = useSelector(state => state.cartUser)
+  const totalProducts = ()=>{
+    let total = 0;
+  for (let i = 0; i < arr.length; i++) {
+    total += arr[i].quantity;
+  }
+  return total;
+  }
+  console.log(totalProducts())
   // PARA USO CON BACK
   /*useEffect(() => {
   (dispatch(getCategories()));
@@ -477,12 +485,12 @@ const categories = useSelector(state => state.categories) */
             <span className="sr-only">items in favorites, view bag</span>
           </Link>
         )}
-        {typeUser === "users" && (
+        {typeUser === "guest" && (
           <Link href={linkToCart} className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
             <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
               shopping_cart
             </span>
-            <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts}</span>
+            <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts()}</span>
             <span className="sr-only">items in cart, view bag</span>
           </Link>
         )}
