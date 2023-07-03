@@ -3,6 +3,8 @@ import { filterProductsByPrice, sortProducts } from '../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Filters() {
+  const dispatch = useDispatch(); // Agrega esta línea para obtener la función dispatch
+
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
