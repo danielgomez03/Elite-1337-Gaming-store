@@ -12,7 +12,14 @@ function NavBarGuest({ typeUser }) {
   const linkToCart = currentLocation === "/guest/Products" ? "../users/ShopCart" : "/users/ShopCart";
   
   const { category } = router.query;
-
+  const arr = useSelector(state => state.cartUser)  
+  const totalProducts = ()=>{
+    let total = 0;
+  for (let i = 0; i < arr.length; i++) {
+    total += arr[i].quantity;
+  }
+  return total;
+  }
   const categories = useSelector(state => state.categories);
   const [newCategories, setNewCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
@@ -32,14 +39,7 @@ function NavBarGuest({ typeUser }) {
   useEffect(() => {
     setNewCategories(convertCategories());
   }, [categories]);
-  const arr = useSelector(state => state.cartUser)
-  const totalProducts = ()=>{
-    let total = 0;
-  for (let i = 0; i < arr.length; i++) {
-    total += arr[i].quantity;
-  }
-  return total;
-  }
+
 
   function convertCategories() {
     const newCategories = [];
@@ -247,7 +247,7 @@ function NavBarGuest({ typeUser }) {
             </Link>
           )}
 
-          {typeUser === "guest" && (
+          {typeUser === "users" && (
             <Link href={linkToCart} className="group flex items-center h-full px-5 hover:bg-white text-white">
               <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 shopping_cart
