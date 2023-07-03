@@ -28,7 +28,7 @@ const CheckoutForm = () => {
     if(!error) {
       const { id } = paymentMethod;
       try {
-        const { data } = await axios.post("https://ft37bpfgrupo12-production.up.railway.app/stripe/process-payment", {
+        const { data } = await axios.post("http://localhost:3001/stripe/process-payment", {
           id,
           amount: Math.round(parseFloat(productPrice) * 100)
         });
