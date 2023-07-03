@@ -18,7 +18,7 @@ function  ShopCart() {
     }
     async function fetchImages() {
       try {
-        const response = await axios.get("http://localhost:3001/images/products");
+        const response = await axios.get("https://ft37bpfgrupo12-production.up.railway.app/images/products");
         setImagesArray(response.data);
       } catch (error) {
         console.log(error);

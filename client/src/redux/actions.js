@@ -19,7 +19,7 @@ export const ACTION_BYNAME = "ACTION_BYNAME"
 export const deleteProduct = (product) =>{
   console.log(product)
   return async function (dispatch) {
-    const response = await axios.delete("http://localhost:3001/carts/remove", {data:product});
+    const response = await axios.delete("https://ft37bpfgrupo12-production.up.railway.app/carts/remove", {data:product});
     const cart = response.data;
     console.log(cart)
     dispatch({ type: DELETE_PRODUCT, payload: cart });
@@ -29,7 +29,7 @@ export const deleteProduct = (product) =>{
 export const modifyQuantity = (product) =>{
  console.log(product)
   return async function (dispatch) {
-    const response = await axios.patch("http://localhost:3001/carts/edit", product);
+    const response = await axios.patch("https://ft37bpfgrupo12-production.up.railway.app/carts/edit", product);
     const cart = response.data;
     console.log(cart)
     dispatch({ type: MODIFY_QUANTITY, payload: cart });
@@ -37,7 +37,7 @@ export const modifyQuantity = (product) =>{
 }
 export const getCartByIdUser = (id) =>{
   return async function (dispatch) {
-    const response = await axios.get(`http://localhost:3001/carts/user/${id}`);
+    const response = await axios.get(`https://ft37bpfgrupo12-production.up.railway.app/carts/user/${id}`);
     const cart = response.data;
     dispatch({ type: GET_CART_BY_ID_USER, payload: cart });
   };
@@ -57,7 +57,7 @@ export const addProductToCart = (id) => {
   
   return async function (dispatch) {
    
-    const response = await axios.post("http://localhost:3001/carts/add",product);
+    const response = await axios.post("https://ft37bpfgrupo12-production.up.railway.app/carts/add",product);
     
     const cart = response.data
     console.log(cart
@@ -69,7 +69,7 @@ export const addProductToCart = (id) => {
 
   export const getProducts = () => {
   return async function (dispatch) {
-    const response = await axios.get("http://localhost:3001/products");
+    const response = await axios.get("https://ft37bpfgrupo12-production.up.railway.app/products");
     const products = response.data;
     dispatch({ type: GET_PRODUCTS, payload: products });
   };
@@ -77,7 +77,7 @@ export const addProductToCart = (id) => {
 
 export const getProductByName = (name) => {
   return async function (dispatch) {
-    const bd = await axios.get(`http://localhost:3001/products?name=${name}`);
+    const bd = await axios.get(`https://ft37bpfgrupo12-production.up.railway.app/products?name=${name}`);
     const product = bd.data
     dispatch({ type: GET_PRODUCT_BY_NAME, payload:product }); 
   };
@@ -85,7 +85,7 @@ export const getProductByName = (name) => {
 
 export const getProductById = (id) => {
     return async function (dispatch) {
-      const bd = await axios.get(`http://localhost:3001/products/id/${id}`);
+      const bd = await axios.get(`https://ft37bpfgrupo12-production.up.railway.app/products/id/${id}`);
       const detail = bd.data
       dispatch({ type: GET_PRODUCT_BY_ID, payload:detail }); 
     };
@@ -94,7 +94,7 @@ export const getProductById = (id) => {
 
   export const getCategories = () => {
     return async function (dispatch) {
-      const bd = await axios.get("http://localhost:3001/categories");
+      const bd = await axios.get("https://ft37bpfgrupo12-production.up.railway.app/categories");
       const categories = bd.data
       dispatch({ type: GET_CATEGORIES, payload: categories });
     };
