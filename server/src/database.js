@@ -186,9 +186,19 @@ Payment.belongsTo(User, { foreignKey: "userId" });
 Login.hasMany(Payment, { foreignKey: "loginId" });
 Payment.belongsTo(Login, { foreignKey: "loginId" });
 
+// Product many-to-many with Payment through a junction table
+Product.belongsToMany(Payment, {
+  through: "PaymentProduct",
+  foreignKey: "productId",
+});
+Payment.belongsToMany(Product, {
+  through: "PaymentProduct",
+  foreignKey: "paymentId",
+});
+
 // ---> NEWSLETTER
-// User has many-to-one with Newsletter
-User.hasMany(Newsletter, {
+// User has one-to-one with Newsletter
+User.hasOne(Newsletter, {
   foreignKey: {
     name: "userId",
     allowNull: true,

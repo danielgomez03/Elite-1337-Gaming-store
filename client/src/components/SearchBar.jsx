@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { getProductByName } from '../redux/actions';
+import { actionByName, getProductByName } from '../redux/actions';
 
 
 export default function SearchBar() {
@@ -19,6 +19,7 @@ export default function SearchBar() {
         if (name) {
             event.preventDefault();
             dispatch(getProductByName(name))
+            dispatch(actionByName())
             setName('');
 
 

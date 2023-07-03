@@ -11,6 +11,7 @@ import{
   GET_CART_BY_ID_USER,
   TOTAL_PRODUCTS,
   DELETE_PRODUCT,
+  ACTION_BYNAME,
   PAGE,
   CLEAN,
   
@@ -27,12 +28,15 @@ const initialState = {
   categories: [],
   cart:[],
   totalProducts:0,
+  actionByName:false,
   cartUser:[]
 
 };
 
 const rootReducer= (state=initialState,action)=>{
 switch(action.type){
+  case ACTION_BYNAME:
+    return {...state,actionByName:true}
   case DELETE_PRODUCT:
     return{...state}
   case MODIFY_QUANTITY:
@@ -73,6 +77,7 @@ switch(action.type){
   case GET_PRODUCTS:
     return {
       ...state,
+      actionByName:false,
       products: [...action.payload],
       filteredProducts: [...action.payload]
     };
@@ -143,6 +148,7 @@ switch(action.type){
     case CLEAN:
         return{
             ...state,
+            // actionByName:false,
             detail:[]
           }
     case PAGE:
