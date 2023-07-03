@@ -48,9 +48,15 @@ function SignInRegister({ selectedButton, onClose }) {
         if (Object.keys(error).length)
             return alert('missing info') */
 
-        axios.post("http://localhost:3001/users/register", input)
-            .then(res => alert(res.data))
-            .catch(alert("error"))
+        if (selectedButton === "register") {
+            axios.post("http://localhost:3001/users/register", input)
+                .then(res => alert(res.data))
+                .catch(alert("error"))
+        } else if (selectedButton === "signIn") {
+            axios.post("http://localhost:3001/users/singin", input)
+                .then(res => alert(res.data))
+                .catch(alert("error"))
+        }
     }
 
     return (

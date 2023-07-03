@@ -14,7 +14,6 @@ function NavBar({ typeUser }) {
   const [newCategories, setNewCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState(null);
-  const [activeSubSubcategory, setActiveSubSubcategory] = useState(null);
   const cart = useSelector(state => state.cartUser)
   const totalProducts = () => {
     let total = 0;
@@ -23,6 +22,34 @@ function NavBar({ typeUser }) {
     };
     return total;
   };
+
+  const [typeUser, setTypeUser] = useState("guest");
+
+    useEffect(() => {
+      const fetchData = () => {
+        axios.get("http://localhost:3001/login/session")
+          .then(response => {
+            if (response.data?.passport?.user) {
+              setTypeUser("users");
+            } else {
+              setTypeUser("guests");
+            }
+          })
+          .catch(error => {
+            console.error(error);
+            alert("Error fetching data");
+          });
+      };
+
+      fetchData();
+
+      const intervalId = setInterval(fetchData, 5000);
+
+      return () => {
+        clearInterval(intervalId);
+      };
+    }, []);
+
 
   // PARA USO LOCAL SIN BACK
   /* const categories = [
