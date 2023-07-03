@@ -240,4 +240,20 @@ const userValidation = async ({
   return errors;
 };
 
-module.exports = { productValidation, userValidation };
+// NEWSLETTER SUBSCRIPTION VALIDATION
+const newsletterValidation = ({ email }) => {
+  const errors = {};
+
+  // EMAIL
+  if (!email) {
+    errors.email = ["Email is required"];
+  } else if (email.length > 50) {
+    errors.email = ["Email can't be longer than 50 characters"];
+  } else if (!isValidEmail(email)) {
+    errors.email = ["Invalid email format"];
+  }
+
+  return errors;
+};
+
+module.exports = { productValidation, userValidation, newsletterValidation };

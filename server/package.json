@@ -34,11 +34,6 @@
     "passport-local": "^1.0.0",
     "pg": "^8.11.0",
     "sequelize": "^6.3.5",
-    "socket.io": "^4.7.1",
-<<<<<<< Updated upstream
-    "socket.io-client": "^4.7.1",
-=======
->>>>>>> Stashed changes
     "stripe": "^12.10.0",
     "uuid": "^9.0.0"
   },
