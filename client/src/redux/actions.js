@@ -4,6 +4,7 @@ export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
 export const FILTER_PRODUCTS_BY_PRICE = "FILTER_PRODUCTS_BY_PRICE";
+export const FILTER_PRODUCTS_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
 export const SORT_PRODUCTS = "SORT_PRODUCTS";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_CART_BY_ID_USER = "GET_CART_BY_ID_USER";
@@ -114,6 +115,13 @@ export const getProductById = (id) => {
   };
 
 
+  export const filterProductsByCategory = (category) => {
+    return function (dispatch) {
+      dispatch({ type: FILTER_PRODUCTS_BY_CATEGORY, payload: { category } });
+    };
+  };
+
+
   export const sortProducts = (order) => {
     return function (dispatch, getState) {
       const { filteredProducts } = getState();
@@ -143,6 +151,7 @@ export const getProductById = (id) => {
     }
   
   };
+  
 
 
 

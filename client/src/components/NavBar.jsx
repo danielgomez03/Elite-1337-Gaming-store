@@ -12,14 +12,16 @@ function NavBarGuest({ typeUser }) {
   const linkToCart = currentLocation === "/guest/Products" ? "../users/ShopCart" : "/users/ShopCart";
   
   const { category } = router.query;
-  const arr = useSelector(state => state.cartUser)  
+
+  const cart = useSelector(state => state.cartUser)  
   const totalProducts = ()=>{
     let total = 0;
-  for (let i = 0; i < arr.length; i++) {
-    total += arr[i].quantity;
+  for (let i = 0; i < cart.length; i++) {
+    total += cart[i].quantity;
   }
   return total;
   }
+
   const categories = useSelector(state => state.categories);
   const [newCategories, setNewCategories] = useState([]);
   const [activeCategory, setActiveCategory] = useState(null);
@@ -252,7 +254,10 @@ function NavBarGuest({ typeUser }) {
               <span className="material-symbols-rounded group-hover:text-gray-900 font-bold">
                 shopping_cart
               </span>
+
               <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts()}</span>
+
+
               <span className="sr-only">items in cart, view bag</span>
             </Link>
           )}
@@ -295,3 +300,4 @@ function NavBarGuest({ typeUser }) {
 }
 
 export default NavBarGuest;
+
