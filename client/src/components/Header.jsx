@@ -3,8 +3,11 @@ import Link from "next/link";
 import SearchBar from "../components/SearchBar";
 import SignInRegister from "./SignInRegister";
 import LoginPassport from "./LoginPassport";
+import { useDispatch} from 'react-redux';
+import { getProducts } from "@/redux/actions";
 
 function Header() {
+  const dispatch = useDispatch()
   const [selectedButton, setSelectedButton] = useState(null);
   const [showSignInRegister, setShowSignInRegister] = useState(false);
   const logIn = false; // Se debe modificar según datos del Back
@@ -23,7 +26,7 @@ function Header() {
     <div className="bg-white fixed top-0 left-0 right-0 h-16 text-lg  z-50 flex justify-between p-4 space-x-10 overflow-hidden mx-10">
 
       <Link href="/" className="flex items-center">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR25N_XsuWimAwTQXj2bQuoZkVVBJEPlfXVLsLQHEgv9eeeIu2VsY3mt7ic33eSUAqXdHI&usqp=CAU" alt="logo" />
+        <img onClick={()=>{dispatch(getProducts())}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR25N_XsuWimAwTQXj2bQuoZkVVBJEPlfXVLsLQHEgv9eeeIu2VsY3mt7ic33eSUAqXdHI&usqp=CAU" alt="logo" />
       </Link>
 
       <SearchBar />
