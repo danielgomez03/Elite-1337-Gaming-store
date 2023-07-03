@@ -8,10 +8,14 @@ const Footer = () => {
       <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
-
-          <img src="#" class="mr-5 h-6 sm:h-9" alt="logo" />
+            <img
+              className="h-8 w-auto"
+              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+              alt=""
+            />
             <p class="max-w-xs mt-4 text-sm ">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
+              Unleash Your Gaming Potential with 1337 HARDWARE - Your Gateway to
+              Elite Gaming!
             </p>
             <div class="flex mt-8 space-x-6 ">
               <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
