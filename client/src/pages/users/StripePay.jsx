@@ -3,7 +3,7 @@ import { CardElement, Elements, useElements, useStripe } from "@stripe/react-str
 import "bootswatch/dist/lux/bootstrap.min.css";
 import axios from "axios"
 import { useState } from "react";
-import { useRouter } from "next/router"; 
+import { useRouter } from "next/router";
 
 const stripePromise = loadStripe("pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri");
 
@@ -36,14 +36,24 @@ const CheckoutForm = () => {
   
         elements.getElement(CardElement).clear();
         console.log("Payment processed successfully");
+        
+        router.push({
+          pathname: "/users/stripe/success",
+          query: { success: true },
+        });
+
       } catch (error) {
         console.log(error);
       }
 
       setLoading(false)
-
-    };
-
+    } else {
+      console.log("Payment failed!");
+      router.push({
+        pathname: "/users/stripe/cancel",
+        query: { success: false },
+      });
+    }
   };
 
   return (
