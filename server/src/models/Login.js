@@ -51,5 +51,18 @@ module.exports = (sequelize) => {
     }
   });
 
+  // Hook to prevent duplicate email registration
+  Login.beforeValidate(async (login) => {
+    if (login.changed("email")) {
+      const existingLogin = await Login.findOne({
+        where: { email: login.email },
+      });
+
+      if (existingLogin) {
+        throw new Error("Email already exists");
+      }
+    }
+  });
+
   return Login;
 };

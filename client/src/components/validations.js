@@ -1,25 +1,8 @@
-// const { Login } = require("../../../server/src/database");
-
 // Email validation pattern
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
-// THIS IS PREVENTING USER EDIT. FIX.
-// const isEmailDuplicate = async (email) => {
-//   try {
-//     const existingLogin = await Login.findOne({ where: { email } });
-
-//     if (existingLogin) {
-//       throw new Error("Email already exists");
-//     }
-
-//     return false;
-//   } catch (error) {
-//     console.error("Error checking email duplication:", error);
-//     throw error;
-//   }
-// };
 
 // PRODUCT CREATION VALIDATIONS
 const productValidation = ({
@@ -257,83 +240,20 @@ const userValidation = async ({
   return errors;
 };
 
-module.exports = { productValidation, userValidation };
+// NEWSLETTER SUBSCRIPTION VALIDATION
+const newsletterValidation = ({ email }) => {
+  const errors = {};
 
-// // EJEMPLO DE IMPLEMENTACIÓN FRONT
+  // EMAIL
+  if (!email) {
+    errors.email = ["Email is required"];
+  } else if (email.length > 50) {
+    errors.email = ["Email can't be longer than 50 characters"];
+  } else if (!isValidEmail(email)) {
+    errors.email = ["Invalid email format"];
+  }
 
-// // EL OBJETO DE ERRORES GENERADO LUCIRÍA ASÍ:
-//     const errors = {
-//         name: ["Name can't be longer than 255 characters"],
-//         category: ["Please select at least one category"],
-//     };
+  return errors;
+};
 
-// // ASÍ LUCIRÍA LA IMPORTACIÓN Y SU IMPLEMENTACIÓN
-
-// import React, { useState } from 'react';
-// import productValidations from './validations'
-
-// const ProductForm = () => {
-//   const [form, setForm] = useState({
-//     // Initial form state
-//   });
-//   const [error, setError] = useState({});
-
-//   const handleFormSubmit = (event) => {
-//     event.preventDefault();
-
-//     // Perform form validations
-//     const validationErrors = productValidations(form);
-
-//     // Update the error state
-//     setError(validationErrors);
-
-//     // Continue with form submission or handle errors
-//   };
-
-//   // Rest of your component code
-
-//   //RENDERIZADO EN HTML DE NAME Y SU SPAN DE ERROR, POR EJEMPLO.
-//   //MOSTRARA PRIMER ERROR. SI LO SOLUCIONA Y HAY OTRO, MOSTRARÁ ESE. NO MOSTRARÁ NADA SI NO HAY ERRORES.
-
-// <input
-//     type="text"
-//     placeholder="Name"
-//     value={form.name}
-//     name="name"
-//     onChange={(event) => handleChange(event)}
-//     required
-// />
-// {error.name && error.name[0] && (
-//   <span className={styles.formError}>
-//     *{error.name[0]}
-//   </span>
-// )}
-
-// // PARA REFERENCIA: UN USUARIO CREADO SE GUARDARÁ ASÍ:
-// [
-// 	{
-// 		"userId": "2e1aaa03-d795-4e7f-a4fd-bb0bcb611e22",
-// 		"firstName": "Jahn",
-// 		"lastName": "Doe",
-// 		"country": "United States",
-// 		"region": "California",
-// 		"city": "Los Angeles",
-// 		"address": "123 Main St",
-// 		"postalCode": "12345",
-// 		"birthDate": "1990-01-01",
-// 		"phoneNumber": "1234567890",
-// 		"idNumber": "123456789",
-// 		"userRole": "common",
-// 		"isActive": true,
-// 		"image": {
-// 			"imageId": "450d7098-b295-4a00-ad5b-60fb6a568349",
-// 			"url": "https://example.com/profile.jpg"
-// 		},
-// 		"login": {
-// 			"loginId": "d2d6becc-81c8-4208-a6f4-cd0f43973de5",
-// 			"email": "jahndae@example.com",
-// 			"password": "$2b$10$HTDSTDl.ErjHR383H.XIt.uXjN3g/SHyJOpPdfqo12DoEZtA8AWgG",
-// 			"verify": false
-// 		}
-// 	}
-// ]
+module.exports = { productValidation, userValidation, newsletterValidation };

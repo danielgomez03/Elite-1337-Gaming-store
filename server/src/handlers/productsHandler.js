@@ -317,28 +317,3 @@ module.exports = {
   postCreateProduct,
   putUpdateProduct,
 };
-
-// ROLLBACK PROTECTION! :D
-// // Upload and associate the images with the product using Cloudinary
-// const uploadedImages = [];
-
-// for (const image of images) {
-//   const { url, caption } = image;
-
-//   if (url.startsWith('http')) {
-//     // URL image
-//     const urlImage = await Image.create({
-//       url,
-//       caption,
-//     });
-
-//     await product.addImages(urlImage);
-//     uploadedImages.push({ url, caption });
-//   } else {
-//     // Local file upload
-//     const cloudinaryImage = await Image.upload(image); // Upload image to Cloudinary
-
-//     await product.addImages(cloudinaryImage);
-//     uploadedImages.push({ url: cloudinaryImage.url, caption });
-//   }
-// }

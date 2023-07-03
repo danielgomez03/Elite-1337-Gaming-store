@@ -53,6 +53,7 @@ const {
   Order,
   Payment,
   PriceHistory,
+  Newsletter,
 } = sequelize.models;
 
 // Establish associations between models
@@ -184,6 +185,22 @@ Payment.belongsTo(User, { foreignKey: "userId" });
 // Login has many-to-one with Payment
 Login.hasMany(Payment, { foreignKey: "loginId" });
 Payment.belongsTo(Login, { foreignKey: "loginId" });
+
+// ---> NEWSLETTER
+// User has many-to-one with Newsletter
+User.hasMany(Newsletter, {
+  foreignKey: {
+    name: "userId",
+    allowNull: true,
+  },
+});
+
+Newsletter.belongsTo(User, {
+  foreignKey: {
+    name: "userId",
+    allowNull: true,
+  },
+});
 
 // // ---> PRICEHISTORY
 // // Product one-to-one with PriceHistory

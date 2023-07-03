@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define(
+  const SaleHistory = sequelize.define(
     "saleHistory",
     {
       saleHistoryId: {
@@ -31,6 +31,36 @@ module.exports = (sequelize) => {
     },
     { timestamps: true },
   );
+
+  SaleHistory.afterCreate(async (saleHistory, options) => {
+    const Order = sequelize.models.order;
+    const Product = sequelize.models.product;
+
+    try {
+      // Find the corresponding Order for the saleHistory
+      const order = await Order.findOne({
+        where: { saleHistoryId: saleHistory.saleHistoryId },
+      });
+
+      if (order) {
+        const product = await Product.findByPk(order.productId);
+
+        if (product) {
+          // Set the product values in the saleHistory
+          saleHistory.priceAtSale = product.price;
+          saleHistory.discountAtSale = product.discount;
+          // QUANTITY?!
+
+          // Save the updated saleHistory
+          await saleHistory.save({ transaction: options.transaction });
+        }
+      }
+    } catch (error) {
+      console.error("Error setting product values in saleHistory:", error);
+    }
+  });
+
+  return SaleHistory;
 };
 
 // NOTE FOR FRONT-END IMPLEMENTATION:
