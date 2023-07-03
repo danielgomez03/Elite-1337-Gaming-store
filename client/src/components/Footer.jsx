@@ -9,9 +9,9 @@ const Footer = () => {
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
 
-          <img src="#" class="mr-5 h-6 sm:h-9" alt="logo" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR25N_XsuWimAwTQXj2bQuoZkVVBJEPlfXVLsLQHEgv9eeeIu2VsY3mt7ic33eSUAqXdHI&usqp=CAU" alt="logo" />
             <p class="max-w-xs mt-4 text-sm ">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
+            Unleash Your Gaming Potential and Experience Excellence with 1337 HARDWARE - Your Gateway to Elite Gaming!
             </p>
             <div class="flex mt-8 space-x-6 ">
               <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
@@ -76,39 +76,15 @@ const Footer = () => {
             <div>
               <p class="font-medium">Company</p>
               <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  About{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Meet the Team{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  History{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Careers{" "}
-                </a>
-              </nav>
-            </div>
-            <div>
-              <p class="font-medium">Services</p>
-              <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  1on1 Coaching{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Company Review{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Accounts Review{" "}
-                </a>
+              <Link href="/guest/About" class="hover:opacity-75">
+                  About
+                </Link>
+                <Link href="/guest/Team" class="hover:opacity-75">
+                  Meet the Team
+                </Link>
+                <Link href="/guest/Tech" class="hover:opacity-75">
+                  Tech
+                </Link>
               </nav>
             </div>
             <div>
@@ -118,31 +94,29 @@ const Footer = () => {
                   {" "}
                   Contact{" "}
                 </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  FAQs{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Live Chat{" "}
-                </a>
+                <Link href="/guest/Faq" class="hover:opacity-75">
+                  FAQ
+                </Link>
+                <Link href="/guest/History" class="hover:opacity-75">
+                  History
+                </Link>
               </nav>
             </div>
             <div>
               <p class="font-medium">Legal</p>
               <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Privacy Policy{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Terms &amp; Conditions{" "}
-                </a>
-                <a class="hover:opacity-75" href>
-                  {" "}
-                  Returns Policy{" "}
-                </a>
+              <Link href="/guest/Policy" class="hover:opacity-75">
+                  Privacy Policy
+                </Link>
+                <Link href="/guest/TermsConditions" class="hover:opacity-75">
+                  Terms & Condition
+                </Link>
+                <Link href="/guest/ReturnPolicy" class="hover:opacity-75">
+                  Returns Policy
+                </Link>
+                <Link href="/guest/Copyright" class="hover:opacity-75">
+                Copyright
+                </Link>
               </nav>
             </div>
           </div>
