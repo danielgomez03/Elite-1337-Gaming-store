@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts, clean, filterProductsByPrice, sortProducts, getCartByIdUser } from '../../redux/actions';
+import { getProducts, clean, filterProductsByPrice, sortProducts, getCartByIdUser} from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/components/card';
 import Filters from '../../components/Filters';
@@ -11,18 +11,22 @@ const Products = () => {
   useEffect(() => {
     dispatch(getCartByIdUser(id));
     dispatch(getProducts());
+
     return () => {
       dispatch(clean());
+      
     };
   }, [dispatch]);
-
-  const products = useSelector(state => state.filteredProducts);
+  const productsbyName = useSelector(state => state.productsbyName)
+  const filteredProducts = useSelector(state => state.filteredProducts);
+  const actionByName = useSelector(state => state.actionByName)
+  const products = actionByName?productsbyName:filteredProducts
 
   return (
     <div>
       <Filters />
       <div className="px-56 grid gap-4 p-4 grid-cols-4">
-        {products.map((product, index) => {
+        {products?.map((product, index) => {
           return (
             <Card
               key={product.productId}

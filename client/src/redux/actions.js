@@ -13,6 +13,7 @@ export const CLEAN = "CLEAN";
 export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS";
 export const MODIFY_QUANTITY = "MODIFY_QUANTITY";
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
+export const ACTION_BYNAME = "ACTION_BYNAME"
 
 // -----------actions cart----------------------------------------------------------------------------------------
 export const deleteProduct = (product) =>{
@@ -65,7 +66,8 @@ export const addProductToCart = (id) => {
     };
   }
   // ---------------------------------------------------------------------------------------------------------------
-export const getProducts = () => {
+
+  export const getProducts = () => {
   return async function (dispatch) {
     const response = await axios.get("http://localhost:3001/products");
     const products = response.data;
@@ -134,7 +136,11 @@ export const getProductById = (id) => {
       dispatch({ type: SORT_PRODUCTS, payload: sortedProducts });
     };
   };
-  
+  export const actionByName = ()=> {
+    return{
+      type: ACTION_BYNAME
+    }
+  }
     
   export const page = (page) =>{
     console.log(page)
