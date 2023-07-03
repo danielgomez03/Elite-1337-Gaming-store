@@ -2,8 +2,5 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/guest/Products": "pages/guest/Products.js",
-  "/users/ShopCart": "pages/users/ShopCart.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
   "/": "pages/index.js"
 }

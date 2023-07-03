@@ -20,19 +20,14 @@ function Header() {
   };
 
   return (
-    <div className="bg-white fixed top-0 left-0 right-0 h-16  z-50 flex justify-between p-4 space-x-10">
-      <div className="ml-4 flex lg:ml-0">
-        <Link href="/" className="ml-10">
-          <span className="sr-only">Name Company</span>
-          <img
-            className="h-8 w-auto"
-            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-            alt=""
-          />
-        </Link>
-      </div>
+    <div className="bg-white fixed top-0 left-0 right-0 h-16 text-lg  z-50 flex justify-between p-4 space-x-10 overflow-hidden mx-10">
+
+      <Link href="/" className="flex items-center">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR25N_XsuWimAwTQXj2bQuoZkVVBJEPlfXVLsLQHEgv9eeeIu2VsY3mt7ic33eSUAqXdHI&usqp=CAU" alt="logo" />
+      </Link>
+
       <SearchBar />
-      <LoginPassport />
+      {/* <LoginPassport /> */}
       {logIn ? (
         <div className="flex justify-between space-x-10">
           <img src="" alt="" />
