@@ -5,6 +5,7 @@ import{
   GET_CATEGORIES,
   SORT_PRODUCTS,
   FILTER_PRODUCTS_BY_PRICE,
+  FILTER_PRODUCTS_BY_CATEGORY,
   MODIFY_QUANTITY,
   ADD_PRODUCT_TO_CART,
   GET_CART_BY_ID_USER,
@@ -20,6 +21,7 @@ const initialState = {
   page: 1,
   products: [],
   filteredProducts: [],
+  selectedCategory: "",
   sortOrder: '', 
   detail: [],
   categories: [],
@@ -71,8 +73,8 @@ switch(action.type){
   case GET_PRODUCTS:
     return {
       ...state,
-      products: [...state.products, ...action.payload],
-      filteredProducts: [...state.products, ...action.payload]
+      products: [...action.payload],
+      filteredProducts: [...action.payload]
     };
     case GET_PRODUCT_BY_NAME:
       console.log(action.payload)
@@ -88,6 +90,35 @@ switch(action.type){
       return {
         ...state,
         filteredProducts: filteredProducts,
+      };
+
+      case FILTER_PRODUCTS_BY_CATEGORY:
+        const { category } = action.payload;
+        const filteredByCategory = [];
+      
+        state.products.forEach((product) => {
+          if (
+            product.category.name === category ||
+            product.category.parent.name === category ||
+            product.category.parent.parent?.name === category
+          ) {
+            // Verificar si el producto ya existe en el nuevo array antes de agregarlo
+            if (!filteredByCategory.some((p) => p.productId === product.productId)) {
+              filteredByCategory.push(product);
+            }
+          }
+        });
+      
+        console.log({
+          ...state,
+          filteredProducts: filteredByCategory,
+          selectedCategory: category,
+      });
+      
+        return {
+          ...state,
+          filteredProducts: filteredByCategory,
+          selectedCategory: category,
       };
 
       case SORT_PRODUCTS:

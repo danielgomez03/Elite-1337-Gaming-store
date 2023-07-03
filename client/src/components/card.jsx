@@ -1,11 +1,11 @@
 import React from "react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { addProductToCart, countCart } from "@/redux/actions";
+import { addProductToCart, getCartByIdUser } from "@/redux/actions";
 
 const Card = (props) => {
   const dispatch = useDispatch();
- 
+  const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
   return (
     <div>
 <article className="w-1.5/2 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-105 duration-300">
@@ -52,7 +52,9 @@ const Card = (props) => {
               <button className="text-sm" disabled={props.stock === 0}
               onClick={()=>
                 {dispatch(addProductToCart(props.id))
-                 dispatch(countCart())}
+                  .then(() => {
+                    dispatch(getCartByIdUser(id));
+                  })}
               }
               >Add to cart</button>
             </div>

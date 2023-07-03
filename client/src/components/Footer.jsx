@@ -4,16 +4,16 @@ import SubscriptionBox from "./SubscriptionBox";
 
 const Footer = () => {
   return (
-    <footer class="bg-gradient-to-r from-gray-100 via-[#bce1ff] to-gray-100">
+    <footer class="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900">
       <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
-            <img src="#" class="mr-5 h-6 sm:h-9" alt="logo" />
-            <p class="max-w-xs mt-4 text-sm text-gray-600">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas,
-              accusantium.
+
+          <img src="#" class="mr-5 h-6 sm:h-9" alt="logo" />
+            <p class="max-w-xs mt-4 text-sm ">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, accusantium.
             </p>
-            <div class="flex mt-8 space-x-6 text-gray-600">
+            <div class="flex mt-8 space-x-6 ">
               <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
                 <span class="sr-only"> Facebook </span>
                 <svg
