@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import SearchBar from "../components/SearchBar";
 import SignInRegister from "./SignInRegister";
-import LoginPassport from "./LoginPassport";
 
 function Header() {
   const [selectedButton, setSelectedButton] = useState(null);
@@ -23,7 +22,7 @@ function Header() {
     <div className="bg-white fixed top-0 left-0 right-0 h-16  z-50 flex justify-between p-4 space-x-10">
       <div className="ml-4 flex lg:ml-0">
         <Link href="/" className="ml-10">
-          <span className="sr-only">Name Company</span>
+          <span className="sr-only">1337 Hardware</span>
           <img
             className="h-8 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
@@ -32,7 +31,6 @@ function Header() {
         </Link>
       </div>
       <SearchBar />
-      <LoginPassport />
       {logIn ? (
         <div className="flex justify-between space-x-10">
           <img src="" alt="" />
