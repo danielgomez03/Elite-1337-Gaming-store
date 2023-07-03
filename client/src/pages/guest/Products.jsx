@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts, clean, filterProductsByPrice, sortProducts ,getCartByIdUser} from '../../redux/actions';
+import { getProducts, clean, filterProductsByPrice, sortProducts, getCartByIdUser } from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/components/card';
+import Filters from '../../components/Filters';
 
 const Products = () => {
   const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
   const dispatch = useDispatch();
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
 
   useEffect(() => {
     dispatch(getCartByIdUser(id));
@@ -18,85 +17,29 @@ const Products = () => {
   }, [dispatch]);
 
   const products = useSelector(state => state.filteredProducts);
-  const [sortOrder, setSortOrder] = useState('');
-
-  const handleFilter = () => {
-    dispatch(filterProductsByPrice(minPrice, maxPrice));
-  };
-
-  const handleSortOrderChange = (e) => {
-    const order = e.target.value;
-    dispatch(sortProducts(order));
-    setSortOrder(order);
-  };
 
   return (
-    <div className="p-4">
-      <div className="flex flex-col mb-4">
-        <label htmlFor="minPrice" className="text-gray-700">
-          Min Price:
-        </label>
-        <input
-          type="number"
-          id="minPrice"
-          value={minPrice}
-          onChange={e => setMinPrice(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
-        />
+    <div>
+      <Filters />
+      <div className="px-56 grid gap-4 p-4 grid-cols-4">
+        {products.map((product, index) => {
+          return (
+            <Card
+              key={product.productId}
+              id={product.productId}
+              name={product.name}
+              description={product.description}
+              manufacture={product.manufacturer}
+              origin={product.origin}
+              price={product.price}
+              discount={product.discount}
+              stock={product.stock}
+              categoryId={product.categoryId}
+              image={product.images[0].url}
+            />
+          );
+        })}
       </div>
-      <div className="flex flex-col mb-4">
-        <label htmlFor="maxPrice" className="text-gray-700">
-          Max Price:
-        </label>
-        <input
-          type="number"
-          id="maxPrice"
-          value={maxPrice}
-          onChange={e => setMaxPrice(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
-        />
-      </div>
-      <button
-        onClick={handleFilter}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Filter
-      </button>
-      
-      <div className="flex flex-col mt-4">
-        <label htmlFor="sortOrder" className="text-gray-700">
-          Sort Order:
-        </label>
-        <select
-  id="sortOrder"
-  value={sortOrder}
-  onChange={handleSortOrderChange}
-  className="border border-gray-300 rounded px-2 py-1"
->
-  <option value="">Sort Order</option>
-  <option value="ascending">Ascending</option>
-  <option value="descending">Descending</option>
-</select>   
-      </div>
-      <div className="grid gap-4 mt-4 grid-cols-4">
-    {products.map((product, index) => {
-            return (
-              <Card
-                key={product.productId}
-                id={product.productId}
-                name={product.name}
-                description={product.description}
-                manufacture={product.manufacturer}
-                origin={product.origin}
-                price={product.price}
-                discount={product.discount}
-                stock={product.stock}
-                categoryId={product.categoryId}
-                image={product.images[0].url}
-              />
-            );
-          })}
-  </div>
     </div>
   );
 };
