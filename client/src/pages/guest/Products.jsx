@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts, clean, filterProductsByPrice, sortProducts } from '../../redux/actions';
+import { getProducts, clean, filterProductsByPrice, sortProducts ,getCartByIdUser} from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/components/card';
 
 const Products = () => {
+  const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
   const dispatch = useDispatch();
   const [minPrice, setMinPrice] = useState('');
   const [maxPrice, setMaxPrice] = useState('');
 
   useEffect(() => {
+    dispatch(getCartByIdUser(id));
     dispatch(getProducts());
     return () => {
       dispatch(clean());

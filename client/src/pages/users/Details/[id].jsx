@@ -16,9 +16,12 @@ export default function Detail() {
 
   useEffect(() => {
     
+      dispatch(getCartByIdUser(userId));
+     
+    
     if (id) {
       dispatch(getProductById(id));
-     
+      
     }
    dispatch(clean())
   }, [dispatch, id]);
@@ -36,11 +39,12 @@ export default function Detail() {
     <div className="bg-white p-4 rounded-lg shadow-md flex">
   {detail && detail.images?.map((image, index) => (
   <div key={index}>
-    <img src={image.url} alt={image.caption} />
+    <img className="w-60 h-60 object-contain mr-4"
+         src={image.url} alt={image.caption} />
   </div>
 ))}
  <div className="container mx-auto bg-white rounded-lg p-4 relative">
-  {detail.discount && (
+  {detail.discount > 0.0 && (
     <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-2">
       <div className="bg-[#FF5F00] text-white px-2 py-1 rounded-full flex items-center">
         <span className="text-xs font-bold">{detail.discount}% off</span>
@@ -48,21 +52,26 @@ export default function Detail() {
       </div>
     </div>
   )}
-<p className="mb-2 font-bold font-montserrat">{detail.name}</p>
+<p className="mb-6 font-bold font-montserrat text-xl">{detail.name}</p>
 <p className="mb-2 font-roboto">description: {detail.description}</p>
 <p className="mb-2 font-roboto">{detail?.category?.name} ---- {detail?.category?.parent.name}</p>
 <p className="mb-2 font-roboto">manufacturer: {detail.manufacturer}</p>
 <p className="mb-2 font-roboto">origin: {detail.origin}</p>
 
 
-<p className="mb-2 font-roboto">
+{detail.discount > 0.0? <p className="mb-2 font-roboto">
    before:
   <span className="line-through">{detail.price}</span> 
   <span className="text-red-500">({detail.discount}% off)</span>
   <br/>
-  now 
-  <span className="text-red-500"> ${discountedPrice.toFixed(2)}</span>
+  now! 
+  <span className="text-red-500 text-xl"> ${discountedPrice.toFixed(2)}</span>
   </p>
+  :<p>
+  <span>list price</span>
+  <span className="font-bold text-xl"> ${detail.price}</span>
+  </p>
+}
 
 <div className="flex justify-end space-x-4">
 <button className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded " disabled={detail.stock === 0}
@@ -91,7 +100,7 @@ onClick={()=>
   passHref
 >
     <button className="bg-[#FF5F00] hover:bg-[#FF8129] text-white px-4 py-2 rounded" disabled={detail.stock === 0}>
-      BUY
+      BUY NOW
     </button>
     </Link>
     {detail.stock === 0 && (
