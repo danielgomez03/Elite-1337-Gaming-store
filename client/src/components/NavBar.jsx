@@ -1,32 +1,31 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCategories } from '@/redux/actions';
+import { getCategories, filterProductsByCategory } from '@/redux/actions';
 import { useRouter } from 'next/router';
 
+function NavBar({ typeUser }) {
 
-function NavBarGuest({ typeUser }) {
-  const router = useRouter()
-  const currentLocation = router.asPath
-  console.log(currentLocation)
-  const linkToCart = currentLocation === "/guest/Products" ? "../users/ShopCart" : "/users/ShopCart"
-  const arr = useSelector(state => state.cartUser)
-  const totalProducts = ()=>{
+  const router = useRouter();
+  const currentLocation = router.asPath;
+  const dispatch = useDispatch();
+  const linkToCart = currentLocation === "/users/Products" ? "../users/ShopCart" : "/users/ShopCart";
+  const { category } = router.query;
+  const [newCategories, setNewCategories] = useState([]);
+  const [activeCategory, setActiveCategory] = useState(null);
+  const [activeSubcategory, setActiveSubcategory] = useState(null);
+  const [activeSubSubcategory, setActiveSubSubcategory] = useState(null);
+  const cart = useSelector(state => state.cartUser)
+  const totalProducts = () => {
     let total = 0;
-  for (let i = 0; i < arr.length; i++) {
-    total += arr[i].quantity;
-  }
-  return total;
-  }
-  console.log(totalProducts())
-  // PARA USO CON BACK
-  /*useEffect(() => {
-  (dispatch(getCategories()));
-}, []);
-const categories = useSelector(state => state.categories) */
+    for (let i = 0; i < cart.length; i++) {
+      total += cart[i].quantity;
+    };
+    return total;
+  };
 
   // PARA USO LOCAL SIN BACK
-  const categories = [
+  /* const categories = [
     {
       "categoryId": 1,
       "name": "Hardware",
@@ -261,73 +260,104 @@ const categories = useSelector(state => state.categories) */
       "isMainCategory": true,
       "parentId": null
     }
-  ]
+  ] */
+
+  // PARA USO CON BACK
+
+  const categories = useSelector(state => state.categories);
+  useEffect(() => {
+    dispatch(getCategories());
+  }, []);
+
+  useEffect(() => {
+    if (category) {
+      console.log(category)
+      dispatch(filterProductsByCategory(category));
+    }
+  }, [category]);
+  ////////////////////////////////////////
+
+  useEffect(() => {
+    setNewCategories(convertCategories());
+  }, [categories]);
+
 
   function convertCategories() {
     const newCategories = [];
-    const mainCategories = categories.filter((category) => category.parentId === null);
-    mainCategories.forEach((mainCategory) => {
+    const mainCategories = categories.filter(category => category.parentId === null);
+
+    mainCategories.forEach(mainCategory => {
       const category = {
         name: mainCategory.name,
         subcategories: [],
       };
-      const subCategories = categories.filter((category) => category.parentId === mainCategory.categoryId);
-      subCategories.forEach((subCategory) => {
+
+      const subCategories = categories.filter(category => category.parentId === mainCategory.categoryId);
+
+      subCategories.forEach(subCategory => {
         const subcategory = {
           name: subCategory.name,
           subcategories: [],
         };
-        const subSubCategories = categories.filter((category) => category.parentId === subCategory.categoryId);
 
-        subSubCategories.forEach((subSubCategory) => {
+        const subSubCategories = categories.filter(category => category.parentId === subCategory.categoryId);
+
+        subSubCategories.forEach(subSubCategory => {
           subcategory.subcategories.push(subSubCategory.name);
         });
+
         category.subcategories.push(subcategory);
       });
+
       newCategories.push(category);
     });
 
     return newCategories;
   }
 
-  const [newCategories, setNewCategories] = useState([]);
-
-  useEffect(() => {
-    setNewCategories(convertCategories());
-  }, []);
-
-  const [activeCategory, setActiveCategory] = useState(null);
-  const [activeSubcategory, setActiveSubcategory] = useState(null);
-
-  function handleMouseEnter(index) {  // index
+  const handleMouseEnter = (index) => {
     setActiveCategory(index);
-  }
+  };
 
-  function handleMouseLeave() {
-    if (activeSubcategory) {
-      setActiveCategory(null);
-    } else if (activeCategory && !activeSubcategory) {
-      setActiveCategory(null);
+  // Función para desactivar la categoría
+  const handleMouseLeave = () => {
+    setActiveCategory(null);
+    setActiveSubcategory(null);
+  };
+
+  // Función para activar la subcategoría
+  const handleMouseEnterSub = (subIndex) => {
+    // Verificar si hay una sub-subcategoría activa
+    if (activeSubcategory === null) {
+      setActiveSubcategory(subIndex);
     }
-  }
+  };
 
-  function handleMouseEnterSub(subIndex) { // subindex
-    setActiveSubcategory(subIndex);
-  }
-
-  function handleMouseLeaveSub() {
-    if (!activeSubcategory) {
+  // Función para desactivar la subcategoría
+  const handleMouseLeaveSub = () => {
+    if (!activeCategory && !activeSubSubcategory) {
       setActiveSubcategory(null);
     }
-  }
+  };
+
+  // Función para activar la subcategoría
+  const handleMouseEnterSubSub = (subIndex) => {
+    setActiveSubSubcategory(subIndex);
+  };
+
+  // Función para desactivar la subcategoría
+  const handleMouseLeaveSubSub = () => {
+    setActiveSubSubcategory(null);
+  };
+
 
   const [view, setView] = useState(true);
 
   return (
     <nav
       aria-label="Top"
-      className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900 mx-auto lg:px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center sm:flex-col lg:fixed top-16 left-0 z-10 absolute">
-      {/* <!-- Mobile menu toggle, controls the 'mobileMenuOpen' state. --> */}
+      className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10">
+      {/* <!-- Mobile menu toggle --> */}
       <button
         onClick={() => setView(!view)}
         className="w-full flex justify-center rounded-md lg:hidden px-4">
@@ -354,22 +384,20 @@ const categories = useSelector(state => state.categories) */
             onMouseLeave={handleMouseLeave}
             className="relative group h-full lg:w-auto w-full"
           >
-            {/* Categoría principal */}
             <Link
               href={{
                 pathname: `/${typeUser}/Products`,
-                query: { category: category.name } // Pasar el dato de la categoría como parámetro de ruta
+                query: { category: category.name },
               }}
-              className={`flex items-center justify-center h-full w-full px-5 text-sm font-medium lg:bg-transparent bg-white text-gray-900 hover:bg-white hover:text-gray-900 focus:outline-none ${activeCategory === index ? 'lg:bg-white lg:text-gray-900' : 'lg:text-white'
-                }`}
+              className={`flex items-center justify-center h-full w-full px-5 text-sm font-medium lg:bg-transparent bg-white text-gray-900 hover:bg-white hover:text-gray-900 focus:outline-none ${activeCategory === index ? 'lg:bg-white lg:text-gray-900' : 'lg:text-white'}`}
             >
               {category.name}
             </Link>
             <span className="h-px w-full bg-gray-200" aria-hidden="true" />
-            {/* Subcategorías */}
+
             {activeCategory === index && category.subcategories.length > 0 && (
               <div
-                className="hidden lg:block absolute top-full px-2 py-1 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
+                className="hidden lg:block absolute top-full py-1 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={handleMouseLeave}
               >
@@ -378,29 +406,33 @@ const categories = useSelector(state => state.categories) */
                     key={subIndex}
                     onMouseEnter={() => handleMouseEnterSub(subIndex)}
                     onMouseLeave={handleMouseLeaveSub}
-                    className="relative block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                    className="relative flex items-center justify-between px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
                   >
                     <Link
                       href={{
                         pathname: `/${typeUser}/Products`,
-                        query: { category: subcategory.name }
-                      }}>
+                        query: { category: subcategory.name },
+                      }}
+                    >
                       {subcategory.name}
                     </Link>
+                    <span class={`material-symbols-rounded text-lg text-gray-300 ${subcategory.subcategories.length > 0 ? '' : 'hidden'}`}>
+                      read_more
+                    </span>
                     {activeSubcategory === subIndex && subcategory.subcategories.length > 0 && (
                       <div
-                        className="absolute left-full top-[-4px] px-2 py-1 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-md"
-                        onMouseEnter={() => handleMouseEnterSub(subIndex)}
-                        onMouseLeave={handleMouseLeaveSub}
+                        className="absolute left-full top-[-4px] py-1 lg:w-64 z-10 bg-white shadow-lg rounded-md"
+                        onMouseEnter={() => handleMouseEnterSubSub(subIndex)}
+                        onMouseLeave={handleMouseLeaveSubSub}
                       >
                         {subcategory.subcategories?.map((subSubCategory, subSubIndex) => (
                           <Link
                             key={subSubIndex}
                             href={{
                               pathname: `/${typeUser}/Products`,
-                              query: { category: subSubCategory }
+                              query: { category: subSubCategory },
                             }}
-                            className="block px-6 py-2 text-sm hover:bg-gray-100 hover:text-gray-900"
+                            className="block px-6 py-3 text-sm hover:bg-gray-100 hover:text-gray-900"
                           >
                             {subSubCategory}
                           </Link>
@@ -414,9 +446,8 @@ const categories = useSelector(state => state.categories) */
           </div>
         ))}
 
-        <span
-          className="hidden lg:block lg:h-6 w-px mx-5 bg-gray-200"
-          aria-hidden="true" />
+        <span className="lg:block lg:h-6 lg:w-px mx-5 bg-gray-200 block h-px w-full" aria-hidden="true" />
+
         {typeUser === "guest" && (
           <Link
             href="/Home"
@@ -424,6 +455,7 @@ const categories = useSelector(state => state.categories) */
             Home
           </Link>
         )}
+
         {typeUser === "guest" && (
           <Link
             href={`/about`}
@@ -431,6 +463,7 @@ const categories = useSelector(state => state.categories) */
             Company
           </Link>
         )}
+
         <div className='relative h-full'>
           {typeUser === "users" && (
             <button
@@ -442,7 +475,7 @@ const categories = useSelector(state => state.categories) */
           )}
           {activeCategory === "My account" && (
             <div
-              className="hidden lg:block absolute top-full px-2 sm:px-0 sm:w-56 lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
+              className="hidden lg:block absolute top-full lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
               onMouseEnter={() => handleMouseEnter("My account")}
               onMouseLeave={handleMouseLeave}>
               <Link
@@ -463,6 +496,7 @@ const categories = useSelector(state => state.categories) */
             </div>
           )}
         </div>
+
         {typeUser === "users" && (
           <Link
             href={`/${typeUser}/Notificacions`}
@@ -474,6 +508,7 @@ const categories = useSelector(state => state.categories) */
             <span className="sr-only">view notifications</span>
           </Link>
         )}
+
         {typeUser === "users" && (
           <Link
             href={`/${typeUser}/Favorites`}
@@ -485,7 +520,8 @@ const categories = useSelector(state => state.categories) */
             <span className="sr-only">items in favorites, view bag</span>
           </Link>
         )}
-        {typeUser === "guest" && (
+
+        {typeUser === "users" && (
           <Link href={linkToCart} className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
             <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
               shopping_cart
@@ -499,4 +535,4 @@ const categories = useSelector(state => state.categories) */
   );
 }
 
-export default NavBarGuest;
+export default NavBar;
