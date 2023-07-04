@@ -54,7 +54,7 @@ const CheckoutForm = () => {
         try {
           const { data } = await axios.post("http://localhost:3001/stripe/process-payment", {
             id,
-            amount: Math.round(parseFloat(productPrice) * 100),
+            amount: Math.round(parseFloat(totalPrice) * 100),
           });
           console.log(data);
 
