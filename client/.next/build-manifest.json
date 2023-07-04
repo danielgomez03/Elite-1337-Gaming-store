@@ -22,6 +22,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/users/Payment/StripeCart": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/users/Payment/StripeCart.js"
+    ],
     "/users/ShopCart": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

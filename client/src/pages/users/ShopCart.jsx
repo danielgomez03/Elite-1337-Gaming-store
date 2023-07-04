@@ -165,10 +165,8 @@ return (
               href={{
               pathname: '/users/Payment/StripeCart',
               query: {
-                image: encodeURIComponent(cart[0].product.image),
-                price: cart[0].product.price,
-                name: encodeURIComponent(cart[0].product.name),
-                quantity: cart[0].quantity,
+                totalPrice: calculateTotalPrice(cart),
+                totalProducts: calculateTotalProducts(cart),
               }
          }}
            passHref

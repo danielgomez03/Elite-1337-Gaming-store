@@ -13,7 +13,7 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
-  const {  image, price, name, quantity } = router.query;
+  const {  totalProducts, totalPrice, } = router.query;
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -89,11 +89,9 @@ const CheckoutForm = () => {
   return (
     <div className="container payment-container">
       <div className="row">
-        <div className="col-md-6">
-          {image && <img src={image} alt="Product" className="payment-image" />}
-          <h3 className="payment-title">{name}</h3>
-          <p className="payment-description">{quantity}</p>
-          <h4 className="payment-price">Price: {price}</h4>
+      <div className="col-md-6">
+          <h4 className="payment-price">Total Products: {totalProducts}</h4> 
+          <h4 className="payment-price">Total Price: {totalPrice}</h4>
         </div>
         <div className="col-md-6">
           <form onSubmit={formik.handleSubmit} className="payment-form">
