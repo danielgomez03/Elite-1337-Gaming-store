@@ -2,6 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/users/stripe/cancel": "pages/users/stripe/cancel.js",
+  "/users/ShopCart": "pages/users/ShopCart.js",
   "/users/StripePay": "pages/users/StripePay.js"
 }

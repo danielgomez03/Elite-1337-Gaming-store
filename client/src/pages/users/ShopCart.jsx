@@ -161,9 +161,22 @@ return (
               <span className='text-xl'>${calculateTotalPrice(cart)}</span>
             </div>
           </div>
+          <Link
+              href={{
+              pathname: '/users/StripePay',
+              query: {
+                image: encodeURIComponent(cart[0].product.image),
+                price: cart[0].product.price,
+                name: encodeURIComponent(cart[0].product.name),
+                quantity: cart[0].quantity,
+              }
+         }}
+           passHref
+           >
           <button className="bg-[#FF5F00] hover:bg-[#FF8129] text-white px-4 py-2 rounded self-start text-xl">
             BUY SHOPPING CART NOW
           </button>
+          </Link>
         </div>
       </div>
     )}
