@@ -26,11 +26,6 @@
       "static/chunks/webpack.js",
       "static/chunks/main.js",
       "static/chunks/pages/users/ShopCart.js"
-    ],
-    "/users/StripePay": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/users/StripePay.js"
     ]
   },
   "ampFirstPages": []

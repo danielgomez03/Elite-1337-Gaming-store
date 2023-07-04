@@ -7,13 +7,13 @@ import { useRouter } from "next/router";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const stripePromise = loadStripe("pk_test_...");
+const stripePromise = loadStripe("pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri");
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
-  const { productId, productName, productPrice, productDescription, productImage } = router.query;
+  const {  image, price, name, quantity } = router.query;
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -90,10 +90,10 @@ const CheckoutForm = () => {
     <div className="container payment-container">
       <div className="row">
         <div className="col-md-6">
-          {productImage && <img src={productImage} alt="Product" className="payment-image" />}
-          <h3 className="payment-title">{productName}</h3>
-          <p className="payment-description">{productDescription}</p>
-          <h4 className="payment-price">Price: {productPrice}</h4>
+          {image && <img src={image} alt="Product" className="payment-image" />}
+          <h3 className="payment-title">{name}</h3>
+          <p className="payment-description">{quantity}</p>
+          <h4 className="payment-price">Price: {price}</h4>
         </div>
         <div className="col-md-6">
           <form onSubmit={formik.handleSubmit} className="payment-form">
@@ -162,7 +162,7 @@ const CheckoutForm = () => {
   );
 };
 
-function StripePay() {
+function StripeCart() {
   return (
     <Elements stripe={stripePromise}>
       <div className="container p-4">
@@ -176,4 +176,4 @@ function StripePay() {
   );
 }
 
-export default StripePay;
+export default StripeCart;

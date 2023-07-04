@@ -163,7 +163,7 @@ return (
           </div>
           <Link
               href={{
-              pathname: '/users/StripePay',
+              pathname: '/users/Payment/StripeCart',
               query: {
                 image: encodeURIComponent(cart[0].product.image),
                 price: cart[0].product.price,
