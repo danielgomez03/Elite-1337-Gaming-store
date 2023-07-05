@@ -1,4 +1,5 @@
 const { Router } = require("express");
+
 const productsRoutes = require("./productsRoutes");
 const usersRoutes = require("./usersRoutes");
 const categoriesRoutes = require("./categoriesRoutes");
@@ -7,6 +8,8 @@ const cartRoutes = require("./cartRoutes");
 const stripeRoutes = require("./stripeRoutes");
 const loginRoutes = require("./loginRoutes");
 const newsletterRoutes = require("./newsletterRoutes");
+const ordersRoutes = require("./orderRoutes");
+const ratingsRoutes = require("./ratingRoutes");
 
 const router = Router();
 
@@ -18,5 +21,7 @@ router.use("/images", imagesRoutes);
 router.use("/stripe", stripeRoutes);
 router.use("/login", loginRoutes);
 router.use("/newsletter", newsletterRoutes);
+router.use("/orders", ordersRoutes);
+router.use("/ratings", ratingsRoutes);
 
 module.exports = router;
