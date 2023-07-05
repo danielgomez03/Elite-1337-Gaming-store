@@ -3,8 +3,9 @@ import Link from "next/link";
 import SearchBar from "../components/SearchBar";
 import SignInRegister from "./SignInRegister";
 import LoginPassport from "./LoginPassport";
-import { useDispatch} from 'react-redux';
-import { getProducts } from "@/redux/actions";
+import { useDispatch } from 'react-redux';
+import { getProducts } from "../redux/actions";
+import { useSession, signOut } from "next-auth/react"
 
 
 function Header() {
@@ -12,16 +13,20 @@ function Header() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [showSignInRegister, setShowSignInRegister] = useState(false);
   const logIn = false; // Se debe modificar según datos del Back
+  const { data: session, status } = useSession()
 
   const openSignInRegister = (button) => {
     setSelectedButton(button);
     setShowSignInRegister(true);
   };
 
+
   const closeSignInRegister = () => {
     setSelectedButton(null);
     setShowSignInRegister(false);
   };
+
+  
 
   return (
 
@@ -31,7 +36,7 @@ function Header() {
         <Link href="/" className="ml-10">
           <span className="sr-only">1337 Hardware</span>
           <img
-            onClick={()=>{dispatch(getProducts())}}
+            onClick={() => { dispatch(getProducts()) }}
             className="h-8 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt=""
@@ -41,11 +46,12 @@ function Header() {
 
       <SearchBar />
       {logIn ? (
-        <div className="flex justify-between space-x-10">
-          <img src="" alt="" />
-          <h3>{user.name}</h3>
-          <button>Log out</button>
-        </div>
+          <div className="flex justify-between space-x-10">
+            <img src="" alt="" />
+            <h3>{user.name}</h3>
+          <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+            <button signOut={() => signOut()} >Log out</button>
+          </div>
       ) : (
         <div className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-6">
           <button

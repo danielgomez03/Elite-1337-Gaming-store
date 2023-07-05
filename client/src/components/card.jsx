@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
-import { addProductToCart, getCartByIdUser } from "@/redux/actions";
+import { addProductToCart, getCartByIdUser } from "../redux/actions";
 
 const Card = (props) => {
   const dispatch = useDispatch();

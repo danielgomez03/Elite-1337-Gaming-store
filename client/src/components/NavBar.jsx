@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCategories, filterProductsByCategory } from '@/redux/actions';
+import { getCategories, filterProductsByCategory } from '../redux/actions';
 import { useRouter } from 'next/router';
 
 function NavBar({ typeUser }) {
@@ -405,7 +405,7 @@ function NavBar({ typeUser }) {
                     >
                       {subcategory.name}
                     </Link>
-                    <span class={`material-symbols-rounded text-lg text-gray-300 ${subcategory.subcategories.length > 0 ? '' : 'hidden'}`}>
+                    <span className={`material-symbols-rounded text-lg text-gray-300 ${subcategory.subcategories.length > 0 ? '' : 'hidden'}`}>
                       read_more
                     </span>
                     {activeSubcategory === subIndex && subcategory.subcategories.length > 0 && (

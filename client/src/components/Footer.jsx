@@ -4,20 +4,20 @@ import SubscriptionBox from "./SubscriptionBox";
 
 const Footer = () => {
   return (
-    <footer class="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900">
-      <div class="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+    <footer className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900">
+      <div className="max-w-screen-xl px-4 py-16 mx-auto sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           <div>
 
           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR25N_XsuWimAwTQXj2bQuoZkVVBJEPlfXVLsLQHEgv9eeeIu2VsY3mt7ic33eSUAqXdHI&usqp=CAU" alt="logo" />
-            <p class="max-w-xs mt-4 text-sm ">
+            <p className="max-w-xs mt-4 text-sm ">
             Unleash Your Gaming Potential and Experience Excellence with 1337 HARDWARE - Your Gateway to Elite Gaming!
             </p>
-            <div class="flex mt-8 space-x-6 ">
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> Facebook </span>
+            <div className="flex mt-8 space-x-6 ">
+              <a className="hover:opacity-75" href="_blank" rel="noreferrer">
+                <span className="sr-only"> Facebook </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -29,10 +29,10 @@ const Footer = () => {
                   />
                 </svg>
               </a>
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> Instagram </span>
+              <a className="hover:opacity-75" href="_blank" rel="noreferrer">
+                <span className="sr-only"> Instagram </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -44,10 +44,10 @@ const Footer = () => {
                   />
                 </svg>
               </a>
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> Twitter </span>
+              <a className="hover:opacity-75" href="_blank" rel="noreferrer">
+                <span className="sr-only"> Twitter </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -55,10 +55,10 @@ const Footer = () => {
                   <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
                 </svg>
               </a>
-              <a class="hover:opacity-75" href target="_blank" rel="noreferrer">
-                <span class="sr-only"> Dribbble </span>
+              <a className="hover:opacity-75" href="_blank" rel="noreferrer">
+                <span className="sr-only"> Dribbble </span>
                 <svg
-                  class="w-6 h-6"
+                  className="w-6 h-6"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                   aria-hidden="true"
@@ -72,49 +72,49 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <div class="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-4">
             <div>
-              <p class="font-medium">Company</p>
-              <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-              <Link href="/guest/About" class="hover:opacity-75">
+              <p className="font-medium">Company</p>
+              <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
+              <Link href="/guest/About" className="hover:opacity-75">
                   About
                 </Link>
-                <Link href="/guest/Team" class="hover:opacity-75">
+                <Link href="/guest/Team" className="hover:opacity-75">
                   Meet the Team
                 </Link>
-                <Link href="/guest/Tech" class="hover:opacity-75">
+                <Link href="/guest/Tech" className="hover:opacity-75">
                   Tech
                 </Link>
               </nav>
             </div>
             <div>
-              <p class="font-medium">Helpful Links</p>
-              <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-                <a class="hover:opacity-75" href>
+              <p className="font-medium">Helpful Links</p>
+              <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
+                <a className="hover:opacity-75" href="_blank">
                   {" "}
                   Contact{" "}
                 </a>
-                <Link href="/guest/Faq" class="hover:opacity-75">
+                <Link href="/guest/Faq" className="hover:opacity-75">
                   FAQ
                 </Link>
-                <Link href="/guest/History" class="hover:opacity-75">
+                <Link href="/guest/History" className="hover:opacity-75">
                   History
                 </Link>
               </nav>
             </div>
             <div>
-              <p class="font-medium">Legal</p>
-              <nav class="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-              <Link href="/guest/Policy" class="hover:opacity-75">
+              <p className="font-medium">Legal</p>
+              <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
+              <Link href="/guest/Policy" className="hover:opacity-75">
                   Privacy Policy
                 </Link>
-                <Link href="/guest/TermsConditions" class="hover:opacity-75">
+                <Link href="/guest/TermsConditions" className="hover:opacity-75">
                   Terms & Condition
                 </Link>
-                <Link href="/guest/ReturnPolicy" class="hover:opacity-75">
+                <Link href="/guest/ReturnPolicy" className="hover:opacity-75">
                   Returns Policy
                 </Link>
-                <Link href="/guest/Copyright" class="hover:opacity-75">
+                <Link href="/guest/Copyright" className="hover:opacity-75">
                 Copyright
                 </Link>
               </nav>
@@ -124,7 +124,7 @@ const Footer = () => {
             <SubscriptionBox />
           </div>
         </div>
-        <p class="mt-8 text-xs text-gray-800">© 2023 1337 Hardware</p>
+        <p className="mt-8 text-xs text-gray-800">© 2023 1337 Hardware</p>
       </div>
     </footer>
   );

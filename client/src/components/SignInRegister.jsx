@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { userValidation } from "./validations.js";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 
 function SignInRegister({ selectedButton, onClose }) {
-  const { data: session, status } = useSession();
-  console.log(session, status);
+ /*  const { data: session, status } = useSession();
+  console.log("status", status);
+ */
+
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+  })
+
   const [error, setError] = useState({});
   const [input, setInput] = useState({
     firstName: "",
@@ -26,6 +33,10 @@ function SignInRegister({ selectedButton, onClose }) {
 
   const changeHandler = (e) => {
     e.preventDefault();
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    })
     setError(
       userValidation({
         ...input,
@@ -44,6 +55,38 @@ function SignInRegister({ selectedButton, onClose }) {
     setIsChecked(e.target.checked);
   };
 
+
+  const [session, setSession] = useState(null);
+  useEffect(() => {
+    const fetchSession = async () => {
+      try {
+        // Realizar la solicitud al backend para obtener la sesión
+        const response = await axios.get('http://localhost:3001/login/session');
+
+        console.log("getsession", session)
+        // Obtener los datos de la sesión desde la respuesta del backend
+        const sessionData = response.data;
+
+        // Guardar los datos de la sesión en el estado del componente
+        setSession(sessionData);
+      } catch (error) {
+        console.error('Error al obtener la sesión:', error);
+      }
+    };
+
+    fetchSession();
+  }, [credentials]);
+
+  const submitLogin = async (e) => {
+    e.preventDefault()
+    try {
+    const response = await axios.post("http://localhost:3001/login/signin", credentials)
+    console.log("response", response.data)
+    } catch (error) {
+      console.error('Error al iniciar la sesión:', error);
+    }
+  }
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log(input); /* 
@@ -61,7 +104,7 @@ function SignInRegister({ selectedButton, onClose }) {
       action="/products"
       method={selectedButton === "register" ? "POST" : "GET"}
       encType="multipart/form-data"
-      onSubmit={submitHandler}
+      onSubmit={selectedButton === "register" ? submitHandler : submitLogin}
       className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50"
     >
       <div className="w-10 relative h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-10">
@@ -210,9 +253,8 @@ function SignInRegister({ selectedButton, onClose }) {
           ) : null}
 
           <div
-            className={`mb-4 ${
-              selectedButton === "register" ? "w-1/3" : "w-full"
-            } pr-2`}
+            className={`mb-4 ${selectedButton === "register" ? "w-1/3" : "w-full"
+              } pr-2`}
           >
             <label htmlFor="email" className="block mb-2">
               E-mail *
@@ -275,9 +317,8 @@ function SignInRegister({ selectedButton, onClose }) {
           ) : null}
 
           <div
-            className={`mb-4 ${
-              selectedButton === "register" ? "w-1/2" : "w-full"
-            } pr-2`}
+            className={`mb-4 ${selectedButton === "register" ? "w-1/2" : "w-full"
+              } pr-2`}
           >
             <label htmlFor="password" className="block mb-2">
               Password *
@@ -366,7 +407,7 @@ function SignInRegister({ selectedButton, onClose }) {
             <button onClick={() => signIn()}>Sign In with Google</button>
           </div>
           <div>
-            <p>Don't have an account yet?</p>
+            <p>Do you have an account ?</p>
           </div>
           <button className="w-1/6 px-2 mt-2 py-1 bg-indigo-500 text-white font-sm rounded-md hover:bg-indigo-600">
             {selectedButton === "register" ? "Sign In" : "Register"}

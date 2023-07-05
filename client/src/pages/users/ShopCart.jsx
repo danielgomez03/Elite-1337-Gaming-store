@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getCartByIdUser ,clean, modifyQuantity ,deleteProduct} from '@/redux/actions';
+import { getCartByIdUser ,clean, modifyQuantity ,deleteProduct} from '../../redux/actions';
 import React , { useEffect, useState }from 'react';
 import { useSelector , useDispatch} from 'react-redux';
 import Link from 'next/link';

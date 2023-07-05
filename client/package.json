@@ -9,12 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/sequelize-adapter": "^1.0.1",
     "@stripe/react-stripe-js": "^2.1.1",
     "@stripe/stripe-js": "^1.54.1",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
     "bootswatch": "^5.3.0",
+    "jsonwebtoken": "^9.0.0",
     "next": "13.4.7",
     "next-auth": "^4.22.1",
     "postcss": "8.4.24",
@@ -26,8 +28,13 @@
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.4.2",
+    "sequelize": "^6.32.1",
     "tailwindcss": "3.3.2",
     "typeface-montserrat": "^1.1.13",
     "typeface-roboto": "^1.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "20.3.3",
+    "typescript": "5.1.6"
   }
 }
