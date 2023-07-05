@@ -36,7 +36,7 @@ async function login(req, res, next) {
         );
       } catch (error) {
         console.error("Error updating login:", error);
-        return res.status(500).send("Error updating login");
+        return res.status(500).json("Error updating login");
       }
 
       console.log("Login successful");
@@ -52,7 +52,7 @@ async function logout(req, res) {
 
   // Check if the user is logged in
   if (!userId) {
-    return res.status(401).send("Unauthorized");
+    return res.status(401).json("Unauthorized");
   }
 
   // Update the verify field to false for users logging out
@@ -60,26 +60,26 @@ async function logout(req, res) {
     await Login.update({ verify: false }, { where: { userId } });
   } catch (error) {
     console.error("Error updating login:", error);
-    return res.status(500).send("Error updating login");
+    return res.status(500).json("Error updating login");
   }
 
   // Destroy the session
   req.session.destroy((err) => {
     if (err) {
       console.error("Error destroying session:", err);
-      return res.status(500).send("Error destroying session");
+      return res.status(500).json("Error destroying session");
     }
 
     res.clearCookie("connect.sid"); // Clear the session cookie
     console.log("Logout successful");
-    res.send("Logout successful");
+    res.json("Logout successful");
   });
 }
 
 // Get session handler
 function getSession(req, res) {
   console.log(req.session);
-  res.send("Session information logged");
+  res.json("Session information logged");
 }
 
 module.exports = {
