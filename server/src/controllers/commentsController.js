@@ -52,8 +52,8 @@ const addCommentToProduct= async (userId, productId, content) => {
   }
   const getUserComments= async (userId) => {
     try {
-        const comments = await Rating.findAll({
-          attributes: ["ratingId", "productId", "content", "createdAt"],
+        const comments = await Comment.findAll({
+          attributes: ["commentId", "productId", "content", "createdAt"],
           where: { userId },
         });
     
@@ -62,9 +62,25 @@ const addCommentToProduct= async (userId, productId, content) => {
         throw error;
       }
   }
+  const deleteComment = async (userId,productId) => {
+    try {
+        const comment = await Comment.findOne({
+        where: { userId, productId },
+      });
+  
+      if (!comment) {
+        throw new Error("not found");
+      }
+      return await comment.destroy();
+     
+    } catch (error) {
+      throw error;
+    }
+  }
   module.exports = {
     getAllCommentsProducts,
     addCommentToProduct,
     getProductComments,
     getUserComments,
+    deleteComment,
   };

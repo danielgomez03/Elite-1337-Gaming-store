@@ -1,9 +1,9 @@
-const { conn, Product, Image, Category } = require("../database");
 const {
     getAllCommentsProducts,
     addCommentToProduct,
     getProductComments,
     getUserComments,
+    deleteComment,
 } = require("../controllers/commentsController");
 
 const addCommentHandler = async (req, res) => {
@@ -48,7 +48,13 @@ const getUserCommentsHandler = async (req,res) => {
 }
 
 const deleteCommentHandler = async (req,res) => {
-
+  try {
+    const { userId, productId } = req.body;
+    await deleteComment(userId, productId);
+    res.status(200).json({message:"comment deleted"});
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 }
   module.exports = {
     getCommentsAllProductsHandler,
