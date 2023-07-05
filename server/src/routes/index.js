@@ -7,7 +7,7 @@ const imagesRoutes = require("./imagesRoutes");
 const cartRoutes = require("./cartRoutes");
 const stripeRoutes = require("./stripeRoutes");
 const loginRoutes = require("./loginRoutes");
-const newsletterRoutes = require("./newsletterRoutes");
+const mailingRoutes = require("./mailingRoutes");
 const ordersRoutes = require("./orderRoutes");
 const ratingsRoutes = require("./ratingRoutes");
 
@@ -20,7 +20,7 @@ router.use("/carts", cartRoutes);
 router.use("/images", imagesRoutes);
 router.use("/stripe", stripeRoutes);
 router.use("/login", loginRoutes);
-router.use("/newsletter", newsletterRoutes);
+router.use("/mailing", mailingRoutes);
 router.use("/orders", ordersRoutes);
 router.use("/ratings", ratingsRoutes);
 

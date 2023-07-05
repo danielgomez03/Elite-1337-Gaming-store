@@ -8,9 +8,7 @@ const {
   getProductsByOrigin,
 } = require("../controllers/productsController");
 const { getParentCategories } = require("../controllers/categoriesController");
-const {
-  productValidation,
-} = require("../../../client/src/components/validations");
+const { productValidation } = require("./validations");
 
 const getProducts = async (req, res) => {
   const { name } = req.query;

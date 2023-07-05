@@ -205,6 +205,17 @@ const userValidation = async ({
   } else if (!isValidEmail(email)) {
     errors.email = ["Invalid email format"];
   }
+  // else {
+  //   try {
+  //     const isDuplicate = await isEmailDuplicate(email);
+  //     if (isDuplicate) {
+  //       errors.email = ["Email already exists"];
+  //     }
+  //   } catch (error) {
+  //     console.error("Error checking email duplication:", error);
+  //     throw error;
+  //   }
+  // }
 
   // PASSWORD
   if (!password) {
@@ -229,7 +240,7 @@ const userValidation = async ({
   return errors;
 };
 
-// MAIL VALIDATION -> FOR USER UPDATE, NEWSLETTER
+// NEWSLETTER SUBSCRIPTION VALIDATION
 const mailValidation = ({ email }) => {
   const errors = {};
 
