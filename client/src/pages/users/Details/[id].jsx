@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { getProductById, clean , addProductToCart , getCartByIdUser} from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
+import Rating from '@/components/Rating';
 
 
 
@@ -53,6 +54,7 @@ export default function Detail() {
           </div>
         )}
         <p className="mb-6 font-bold font-montserrat text-xl">{detail.name}</p>
+        <Rating objProduct={id} />
         <p className="mb-2 font-roboto">Description: {detail.description}</p>
         <p className="mb-2 font-roboto">{detail?.category?.name} ---- {detail?.category?.parent.name}</p>
         <p className="mb-2 font-roboto">manufacturer: <span className='font-bold'>{detail.manufacturer}</span></p>
