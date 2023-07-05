@@ -14,6 +14,9 @@ export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS";
 export const MODIFY_QUANTITY = "MODIFY_QUANTITY";
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const ACTION_BYNAME = "ACTION_BYNAME"
+export const GET_RATINGS ="GET_RATINGS";
+export const GET_RATINGS_ERROR ="GET_RATINGS_ERROR";
+
 
 // -----------actions cart----------------------------------------------------------------------------------------
 export const deleteProduct = (product) =>{
@@ -141,6 +144,18 @@ export const getProductById = (id) => {
       type: ACTION_BYNAME
     }
   }
+
+  export const getRatings = () => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.get('http://localhost:3001/ratings/products');
+        const data = response.data.products;
+        dispatch({ type: 'GET_RATINGS', payload: data });
+      } catch (error) {
+        dispatch({ type: 'GET_RATINGS_ERROR', payload: error });
+      }
+    };
+  };
     
   export const page = (page) =>{
     console.log(page)

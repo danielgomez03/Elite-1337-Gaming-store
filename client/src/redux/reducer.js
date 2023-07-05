@@ -3,6 +3,8 @@ import{
   GET_PRODUCT_BY_NAME,
   GET_PRODUCT_BY_ID,
   GET_CATEGORIES,
+  GET_RATINGS,
+  GET_RATINGS_ERROR,
   SORT_PRODUCTS,
   FILTER_PRODUCTS_BY_PRICE,
   FILTER_PRODUCTS_BY_CATEGORY,
@@ -29,7 +31,9 @@ const initialState = {
   cart:[],
   totalProducts:0,
   actionByName:false,
-  cartUser:[]
+  cartUser:[],
+  ratings: [],
+  error: null,
 
 };
 
@@ -151,6 +155,20 @@ switch(action.type){
             // actionByName:false,
             detail:[]
           }
+
+      case GET_RATINGS:
+            return {
+              ...state,
+              ratings: action.payload,
+              error: null,
+            };
+
+      case GET_RATINGS_ERROR:
+            return {
+              ...state,
+              error: action.payload,
+            };
+            
     case PAGE:
       
       return{
