@@ -18,11 +18,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      status: {
-        type: DataTypes.ENUM("Pending", "Completed", "Failed"),
-        allowNull: false,
-      },
-
       method: {
         type: DataTypes.ENUM(
           "Credit or Debit Card",
@@ -33,7 +28,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      transactionId: {
+      transactionData: {
         // id received from payment service
         type: DataTypes.STRING,
         allowNull: false,
