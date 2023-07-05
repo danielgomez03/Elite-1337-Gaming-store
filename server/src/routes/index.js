@@ -1,5 +1,7 @@
 const { Router } = require("express");
 
+const commentsRoutes = require("./commentsRoutes")
+
 const productsRoutes = require("./productsRoutes");
 const usersRoutes = require("./usersRoutes");
 const categoriesRoutes = require("./categoriesRoutes");
@@ -12,7 +14,7 @@ const ordersRoutes = require("./orderRoutes");
 const ratingsRoutes = require("./ratingRoutes");
 
 const router = Router();
-
+router.use("/comments",commentsRoutes)
 router.use("/products", productsRoutes);
 router.use("/users", usersRoutes);
 router.use("/categories", categoriesRoutes);
