@@ -24,8 +24,6 @@ function Header() {
   };
 
   return (
-
-
     <div className="bg-white fixed top-0 left-0 right-0 h-16  z-50 flex justify-between p-4 space-x-10">
       <div className="ml-4 flex lg:ml-0">
         <Link href="/" className="ml-10">
