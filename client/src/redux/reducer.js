@@ -18,11 +18,13 @@ import{
   PAGE,
   CLEAN,
   ADD_FAVORITE,
-  ADD_FAVORITE_ERROR
-  
+  ADD_FAVORITE_ERROR,
+  GET_COMMENTS_BY_PRODUCT,
+
 } from './actions'
 
 const initialState = {
+  commentsByProduct:[],
   productsbyName:[],
   page: 1,
   products: [],
@@ -43,6 +45,9 @@ const initialState = {
 
 const rootReducer= (state=initialState,action)=>{
 switch(action.type){
+  case GET_COMMENTS_BY_PRODUCT:
+    return {...state,commentsByProduct:action.payload}
+    
   case ACTION_BYNAME:
     return {...state,actionByName:true}
   case DELETE_PRODUCT:
@@ -57,6 +62,7 @@ switch(action.type){
     return { ...state, totalProducts: state.totalProducts+1 };
   case ADD_PRODUCT_TO_CART:
     return { ...state, cart: action.payload };
+
 //   const existingProduct = state.cart.find(item => item.productId === action.payload);
 // console.log(state.cart)
 //   if (existingProduct) {

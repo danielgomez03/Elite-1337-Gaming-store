@@ -24,7 +24,7 @@ function App({ Component, pageProps, session }) {
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        <div className="w-full font-montserrat mt-32 bg-gray-100 text-sm tracking-wider relative">
+        <div className="w-full font-montserrat pt-32 bg-gray-100 text-sm tracking-wider relative">
           <Header />
           <select value={typeUser} onChange={handleUserChange} className='absolute'>
             <option value="admin">Admin</option>

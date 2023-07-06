@@ -19,11 +19,15 @@ export const FILTER_PRODUCTS_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
 //---------Rating types----/
 export const GET_RATINGS ="GET_RATINGS";
 export const GET_RATINGS_ERROR ="GET_RATINGS_ERROR";
+
+export const GET_COMMENTS_BY_PRODUCT = "GET_COMMENTS_BY_PRODUCT";
+
 export const ADD_RATING = 'ADD_RATING';
 //---------Favorites types----/
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const ADD_FAVORITE_ERROR = 'ADD_FAVORITE_ERROR';
 //---------other types----/
+
 
 
 
@@ -79,6 +83,15 @@ export const addProductToCart = (id) => {
   }
 //---------------------------------------------------------------------//
 //Get Products actions---------------------------------//
+
+export const getCommentsByProduc = (id) =>{
+  return async function (dispatch) {
+    const response = await axios.get(`http://localhost:3001/comments/product/${id}`);
+    const comments = response.data;
+    dispatch({ type: GET_COMMENTS_BY_PRODUCT, payload: comments });
+  };
+}
+
   export const getProducts = () => {
   return async function (dispatch) {
     const response = await axios.get("http://localhost:3001/products");

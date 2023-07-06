@@ -15,12 +15,12 @@ function Products() {
 
   return (
     <div>
-      <button onClick={ openCreateProduct }>Add Product</button>
       {selectedButton && (
         <CreateProduct 
           onClose={closeCreateProduct}
         />
       )}
+      <button onClick={ openCreateProduct }>Add Product</button>
     </div>
   )
 }
