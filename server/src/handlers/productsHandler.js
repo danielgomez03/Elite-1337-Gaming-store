@@ -76,7 +76,6 @@ const getProductsByManufacturerHandler = async (req, res) => {
 
 const getProductsByOriginHandler = async (req, res) => {
   const { origin } = req.params;
-  console.log("Origin:", origin); // Add this line for debugging
 
   try {
     const products = await getProductsByOrigin(origin);
