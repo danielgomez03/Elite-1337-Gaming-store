@@ -17,6 +17,8 @@ import{
   ACTION_BYNAME,
   PAGE,
   CLEAN,
+  ADD_FAVORITE,
+  ADD_FAVORITE_ERROR
   
 } from './actions'
 
@@ -34,6 +36,7 @@ const initialState = {
   actionByName:false,
   cartUser:[],
   ratings: [],
+  favorites: [],
   error: null,
 
 };
@@ -77,7 +80,8 @@ switch(action.type){
 //   }
 
 
-
+//---------------------------------------------------------------------//
+//Get Products cases---------------------------------//
 
   case GET_PRODUCTS:
     return {
@@ -90,17 +94,8 @@ switch(action.type){
       console.log(action.payload)
         return { ...state, productsbyName: action.payload };
 
-    case FILTER_PRODUCTS_BY_PRICE:
-      const { minPrice, maxPrice } = action.payload;
-      const filteredProducts = state.products.filter(
-        (product) =>
-          parseFloat(product.price) >= parseFloat(minPrice) &&
-          parseFloat(product.price) <= parseFloat(maxPrice)
-      );
-      return {
-        ...state,
-        filteredProducts: filteredProducts,
-      };
+//---------------------------------------------------------------------//
+//Categories filters cases---------------------------------//
 
       case FILTER_PRODUCTS_BY_CATEGORY:
         const { category } = action.payload;
@@ -131,41 +126,46 @@ switch(action.type){
           selectedCategory: category,
       };
 
-      case SORT_PRODUCTS:
-        return {
-          ...state,
-          filteredProducts: action.payload,
-          sortOrder: action.payload.length > 0 ? state.sortOrder : '', // Restablece el sortOrder si no hay productos filtrados
-        };
-
+    case GET_CATEGORIES:
+        return { ...state, categories: action.payload };
 
     case GET_PRODUCT_BY_ID:
       
         if(action.payload==='not found')
         return {...state}
         return { ...state, detail: action.payload };
-  
-    
-    case GET_CATEGORIES:
-        return { ...state, categories: action.payload };
-     
-      
-    case CLEAN:
-        return{
-            ...state,
-            // actionByName:false,
-            detail:[]
-          }
 
-      case GET_RATINGS:
+//---------------------------------------------------------------------//
+//Price Filters cases---------------------------------//
+    case FILTER_PRODUCTS_BY_PRICE:
+      const { minPrice, maxPrice } = action.payload;
+      const filteredProducts = state.products.filter(
+        (product) =>
+          parseFloat(product.price) >= parseFloat(minPrice) &&
+          parseFloat(product.price) <= parseFloat(maxPrice)
+      );
+      return {
+        ...state,
+        filteredProducts: filteredProducts,
+      };
+  
+//---------------------------------------------------------------------//
+//Ordenamientos cases---------------------------------//
+    case SORT_PRODUCTS:
+        return {
+          ...state,
+          filteredProducts: action.payload,
+          sortOrder: action.payload.length > 0 ? state.sortOrder : '', // Restablece el sortOrder si no hay productos filtrados
+        };
+//---------------------------------------------------------------------//
+//Rating cases---------------------------------//   
+    case GET_RATINGS:
             return {
               ...state,
               ratings: action.payload,
               error: null,
-            };
-
-                
-      case ADD_RATING:
+            };         
+    case ADD_RATING:
                   const newRating = action.payload;
                   const updatedRatings = [...state.ratings, newRating];
                   
@@ -173,13 +173,32 @@ switch(action.type){
                     ...state,
                     ratings: updatedRatings,
                   };
-
-      case GET_RATINGS_ERROR:
+    case GET_RATINGS_ERROR:
             return {
               ...state,
               error: action.payload,
             };
-            
+//---------------------------------------------------------------------//
+//Favorites cases---------------------------------//
+    case ADD_FAVORITE:
+        return {
+        ...state,
+        favorites: [...state.favorites, action.favorite],
+        error: null
+      };
+    case ADD_FAVORITE_ERROR:
+      return {
+        ...state,
+        error: action.error
+      };
+//---------------------------------------------------------------------//
+//other cases---------------------------------//  
+    case CLEAN:
+        return{
+            ...state,
+            // actionByName:false,
+            detail:[]
+          }          
     case PAGE:
       
       return{

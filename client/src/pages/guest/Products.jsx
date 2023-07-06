@@ -3,7 +3,7 @@ import { getProducts, clean, filterProductsByPrice, sortProducts, getCartByIdUse
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/components/card';
 import Filters from '../../components/Filters';
-import AddingRating from '@/components/addingRating';
+import MyComponent from '@/components/myComponent';
 
 
 const Products = () => {
@@ -27,6 +27,7 @@ const Products = () => {
   return (
     <div>
       <Filters />
+      <MyComponent/>
       <div className="px-56 grid gap-4 p-4 grid-cols-4">
         {products?.map((product, index) => {
           return (

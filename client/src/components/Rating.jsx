@@ -2,14 +2,19 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getRatings } from '@/redux/actions';
 
+// Selector para filtrar las calificaciones por ID de producto
+export const getFilteredRatings = (state, productId) => {
+  const { ratings } = state;
+  return ratings.filter((product) => product.productId === productId);
+};
+
 const Rating = (productId) => {
-  const ratings = useSelector((state) => state.ratings);
-  const productsfilter = ratings.filter((product) => product.productId === productId.objProduct);
+  const ratings = useSelector((state) => getFilteredRatings(state, productId.objProduct));
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getRatings());
-  }, [dispatch]);
+  }, []);
 
   // Función para generar las estrellas
   const renderStars = (value) => {
@@ -19,9 +24,13 @@ const Rating = (productId) => {
     return filledStars + emptyStars;
   };
 
+  if (ratings.length === 0) {
+    return <p>No hay calificaciones disponibles.</p>;
+  }
+
   return (
     <div>
-      {productsfilter.map((product) => (
+      {ratings.map((product) => (
         <div key={product.productId}>
           {product.ratings.map((rating) => (
             <div key={rating.userId}>
