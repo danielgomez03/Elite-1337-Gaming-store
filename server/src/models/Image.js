@@ -38,7 +38,7 @@ module.exports = (sequelize) => {
     cloudinary: cloudinary,
     params: {
       folder: "/users",
-      format: async (req, file) => "jpg",
+      // format: async (req, file) => "jpg",
       access_mode: "public",
     },
   });
@@ -48,7 +48,7 @@ module.exports = (sequelize) => {
     cloudinary: cloudinary,
     params: {
       folder: "/products",
-      format: async (req, file) => "jpg",
+      // format: async (req, file) => "jpg",
       access_mode: "public",
     },
   });
@@ -57,48 +57,54 @@ module.exports = (sequelize) => {
   const uploadUser = multer({ storage: userStorage }).single("image");
   const uploadProduct = multer({ storage: productStorage }).array("images", 3);
 
-  Image.uploadUser = async function (file) {
+  Image.uploadUser = async function (req, res) {
     try {
-      const promise = new Promise((resolve, reject) => {
-        uploadUser(file, null, async (error) => {
+      return new Promise((resolve, reject) => {
+        uploadUser(req, res, async (error) => {
           if (error) {
             reject(new Error("Image upload failed"));
           } else {
-            const image = await Image.create({
-              url: file.secure_url,
-            });
-            resolve(image);
+            try {
+              const image = await Image.create({
+                url: req.file.secure_url,
+              });
+              resolve(image);
+            } catch (error) {
+              reject(new Error("Image creation failed"));
+            }
           }
         });
       });
-
-      return promise;
     } catch (error) {
       throw new Error("Image upload failed");
     }
   };
 
-  Image.uploadProduct = async function (images) {
+  Image.uploadProduct = async function (req, res) {
     try {
-      const uploadedImages = [];
+      return new Promise((resolve, reject) => {
+        uploadProduct(req, res, async (error) => {
+          if (error) {
+            reject(new Error("Image upload failed"));
+          } else {
+            try {
+              const uploadedImages = [];
 
-      for (const image of images) {
-        if (typeof image === "object" && image.url) {
-          // Image is provided as a text URL
-          const uploadedImage = await Image.create({
-            url: image.url,
-            caption: image.caption,
-          });
+              for (const file of req.files) {
+                const uploadedImage = await Image.create({
+                  url: file.secure_url,
+                  caption: file.caption,
+                });
+                uploadedImages.push(uploadedImage);
+              }
 
-          uploadedImages.push(uploadedImage);
-        } else {
-          // Image is uploaded as a file
-          const uploadResult = await Image.uploadUser(image);
-          uploadedImages.push(uploadResult);
-        }
-      }
-
-      return uploadedImages;
+              resolve(uploadedImages);
+            } catch (error) {
+              reject(new Error("Image creation failed"));
+            }
+          }
+        });
+      });
     } catch (error) {
       throw new Error("Image upload failed");
     }

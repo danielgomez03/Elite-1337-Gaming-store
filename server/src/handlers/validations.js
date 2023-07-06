@@ -79,6 +79,27 @@ const productValidation = ({
     errors.category = ["Please provide a valid category"];
   }
 
+  // IMAGES
+  if (images && !Array.isArray(images)) {
+    errors.images = ["Images must be provided as an array"];
+  } else if (images) {
+    for (const image of images) {
+      if (
+        (!image.url ||
+          typeof image.url !== "string" ||
+          !/^https?:\/\/.*\.(jpeg|jpg|gif|png|bmp)$/.test(image.url)) &&
+        (!image.uploaded || typeof image.uploaded !== "boolean")
+      ) {
+        errors.images = ["Invalid image format"];
+        break;
+      }
+      if (image.caption && image.caption.length > 100) {
+        errors.images = ["Caption can't be longer than 100 characters"];
+        break;
+      }
+    }
+  }
+
   return errors;
 };
 
@@ -184,6 +205,17 @@ const userValidation = async ({
   } else if (!isValidEmail(email)) {
     errors.email = ["Invalid email format"];
   }
+  // else {
+  //   try {
+  //     const isDuplicate = await isEmailDuplicate(email);
+  //     if (isDuplicate) {
+  //       errors.email = ["Email already exists"];
+  //     }
+  //   } catch (error) {
+  //     console.error("Error checking email duplication:", error);
+  //     throw error;
+  //   }
+  // }
 
   // PASSWORD
   if (!password) {
@@ -208,7 +240,7 @@ const userValidation = async ({
   return errors;
 };
 
-// MAIL VALIDATION -> FOR USER UPDATE, NEWSLETTER
+// NEWSLETTER SUBSCRIPTION VALIDATION
 const mailValidation = ({ email }) => {
   const errors = {};
 

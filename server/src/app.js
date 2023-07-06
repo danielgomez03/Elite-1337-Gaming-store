@@ -25,7 +25,10 @@ server.use((req, res, next) => {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept",
   );
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE, PATCH");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, DELETE, PATCH",
+  );
   next();
 });
 
@@ -49,6 +52,19 @@ server.use(passport.initialize());
 server.use(passport.session());
 
 sessionStore.sync();
+
+// Check permissions of uploads directory
+const fs = require("fs");
+const path = require("path");
+const directoryPath = path.join(__dirname, "uploads");
+
+fs.access(directoryPath, fs.constants.W_OK, (error) => {
+  if (error) {
+    console.error("Uploads directory does not have write permissions.");
+  } else {
+    console.log("Uploads directory has write permissions.");
+  }
+});
 
 server.use("/", routes);
 

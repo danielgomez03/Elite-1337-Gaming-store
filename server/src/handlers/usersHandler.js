@@ -1,12 +1,15 @@
-const { conn, User, Login, Image } = require("../database");
+const { User, Login, Image } = require("../database");
 const {
   getAllUsers,
   getUsersByName,
   getUserById,
 } = require("../controllers/usersController");
+const { userValidation } = require("./validations");
 const {
-  userValidation,
-} = require("../../../client/src/components/validations");
+  sendWelcomeEmailHandler,
+  sendEmailUpdateEmailHandler,
+  sendPasswordUpdateEmailHandler,
+} = require("./mailingHandler");
 
 const getUsers = async (req, res) => {
   const { name } = req.query;
@@ -138,6 +141,10 @@ const postCreateUser = async (req, res) => {
       ],
     });
 
+    // Send the welcome email
+    // UNCOMMENT THIS LINE!!!
+    // await sendWelcomeEmailHandler(email, firstName);
+
     res.status(200).json({ message: "User created successfully", createdUser });
   } catch (error) {
     console.error("Error in postCreateUser:", error);
@@ -159,8 +166,6 @@ const putUpdateUser = async (req, res) => {
       birthDate,
       phoneNumber,
       idNumber,
-      email,
-      password,
       image,
     } = req.body;
 
@@ -176,8 +181,6 @@ const putUpdateUser = async (req, res) => {
       birthDate,
       phoneNumber,
       idNumber,
-      email,
-      password,
       image,
     });
 
@@ -205,10 +208,6 @@ const putUpdateUser = async (req, res) => {
       phoneNumber,
       idNumber,
     });
-
-    // Update the login credentials
-    const login = await user.getLogin();
-    await login.update({ email, password });
 
     let userImage;
 
@@ -245,11 +244,174 @@ const putUpdateUser = async (req, res) => {
       ],
     });
 
+    res.status(200).json({
+      message: "User updated successfully",
+      updatedUser,
+    });
+  } catch (error) {
+    console.error("Error in putUpdateUser:", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const patchUpdateEmail = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    const { email, newEmail, confirmNewEmail } = req.body;
+
+    // Find the user to update
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const login = await user.getLogin();
+
+    // Validate and update email
+    if (newEmail && confirmNewEmail) {
+      if (email !== login.email) {
+        return res.status(400).json({ message: "Invalid email" });
+      }
+
+      if (newEmail !== confirmNewEmail) {
+        return res.status(400).json({ message: "Emails do not match" });
+      }
+
+      const emailValidationErrors = userValidation({ email: newEmail });
+      if (Object.keys(emailValidationErrors).length > 0) {
+        return res.status(400).json({
+          message: "Email validation failed",
+          errors: emailValidationErrors,
+        });
+      }
+
+      await login.update({ email: newEmail });
+
+      // UNCOMMENT THIS LINE!!!
+      // Send email with updated credentials
+      // await sendEmailUpdateEmailHandler(login.email, newEmail);
+    }
+
+    res.status(200).json({ message: "Email updated successfully", login });
+  } catch (error) {
+    console.error("Error in patchUpdateEmail:", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const patchUpdatePassword = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { oldPassword, newPassword, confirmNewPassword } = req.body;
+
+    // Find the user to update
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the login credentials based on the provided changes
+    const login = await user.getLogin();
+
+    // Validate and update password if requested
+    if (oldPassword && newPassword && confirmNewPassword) {
+      if (!(await login.validatePassword(oldPassword))) {
+        return res.status(400).json({ message: "Invalid old password" });
+      }
+
+      if (newPassword !== confirmNewPassword) {
+        return res.status(400).json({ message: "Passwords do not match" });
+      }
+
+      const passwordValidationErrors = userValidation({
+        password: newPassword,
+      });
+      if (Object.keys(passwordValidationErrors).length > 0) {
+        return res.status(400).json({
+          message: "Password validation failed",
+          errors: passwordValidationErrors,
+        });
+      }
+      // UNCOMMENT THIS LINE!!!
+      // Send password before hashing
+      // await sendPasswordUpdateEmailHandler(login.email, newPassword);
+
+      await login.update({ password: newPassword });
+    }
+
+    res.status(200).json({ message: "Password updated successfully", login });
+  } catch (error) {
+    console.error("Error in patchUpdatePassword:", error);
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// FIX NEEDED! CHECK IF IMAGE IS UPLOADED CORRECTLY
+const patchUpdateUserImage = async (req, res) => {
+  try {
+    console.log("Request body:", req.body);
+    console.log("Request file:", req.file);
+
+    const userId = req.params.userId;
+    const { image } = req.body;
+
+    // Validate the input data using the existing userValidation
+    const errors = userValidation({ image });
+
+    // Check if there are any validation errors
+    if (Object.keys(errors).length > 0) {
+      console.log("Validation errors:", errors);
+      return res.status(400).json({ errors });
+    }
+
+    // Find the user to update
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    let userImage;
+
+    // Check if an image URL is provided
+    if (image) {
+      // If an image URL is provided, create a new image record
+      userImage = await Image.create({ url: image });
+      console.log("User image created with URL:", image);
+    } else if (req.file) {
+      // If an image file was uploaded, upload the file and create a new image record
+      console.log("Uploaded file:", req.file);
+
+      userImage = await Image.uploadUser(req.file);
+      console.log("User image uploaded and created:", userImage);
+    }
+
+    await user.setImage(userImage);
+
+    const updatedUser = await User.findByPk(userId, {
+      include: [
+        {
+          model: Login,
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "userId"],
+          },
+        },
+        {
+          model: Image,
+          attributes: {
+            exclude: ["caption", "productId", "userId"],
+          },
+        },
+      ],
+    });
+
+    console.log("Updated user:", updatedUser);
+
     res
       .status(200)
-      .json({ message: "User profile updated successfully", updatedUser });
+      .json({ message: "User image updated successfully", updatedUser });
   } catch (error) {
-    console.error("Error in putUpdateUserProfile:", error);
+    console.error("Error in patchUpdateUserImage:", error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -259,4 +421,7 @@ module.exports = {
   getUserByIdHandler,
   postCreateUser,
   putUpdateUser,
+  patchUpdateEmail,
+  patchUpdatePassword,
+  patchUpdateUserImage,
 };

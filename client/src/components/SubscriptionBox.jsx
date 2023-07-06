@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { newsletterValidation } from "./validations";
+import { mailValidation } from "./validations";
 
 const SubscriptionBox = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +10,7 @@ const SubscriptionBox = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const errors = newsletterValidation({ email });
+    const errors = mailValidation({ email });
 
     if (Object.keys(errors).length > 0) {
       setError(errors.email[0]);
@@ -18,7 +18,10 @@ const SubscriptionBox = () => {
     }
 
     axios
-      .post("https://ft37bpfgrupo12-production.up.railway.app/newsletter/subscribe", { email })
+      .post(
+        "https://ft37bpfgrupo12-production.up.railway.app/mailing/newsletter/subscribe",
+        { email },
+      )
       .then((response) => {
         setMessage(response.data.message);
         setError("");
