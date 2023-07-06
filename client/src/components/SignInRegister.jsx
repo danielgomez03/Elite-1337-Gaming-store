@@ -63,42 +63,96 @@ function SignInRegister({ selectedButton, onClose }) {
     }
   };
 
-  return (
-    <form
-      action="/products"
-      method={selectedButton === "register" ? "POST" : "GET"}
-      encType="multipart/form-data"
-      onSubmit={submitHandler}
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50"
-    >
-      <div className="w-10 relative h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-10">
-        <button className="absolute top-2 right-4" onClick={onClose}>
-          X
-        </button>
-        <div className="w-full flex flex-row flex-wrap justify-between">
-          {selectedButton === "register" ? (
-            <div className="w-full flex flex-row flex-wrap justify-between">
-              <p className="mb-2 w-full text-xs">
-                Fields marked with * are required
-              </p>
-              <div className="mb-4 w-1/2 pr-2">
-                <label htmlFor="firstName" className="block mb-2">
-                  First Names *
-                </label>
-                <input
-                  id="firstName"
-                  onChange={changeHandler}
-                  name="firstName"
-                  value={input.firstName}
-                  type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
-                />
-                {error.firstName ? (
-                  <p className="text-red-500 text-sm">{error.firstName}</p>
-                ) : (
-                  ""
-                )}
-              </div>
+    return (
+        <form
+            action="/products"
+            method={selectedButton === "register" ? "POST" : "GET"}
+            encType="multipart/form-data"
+            onSubmit={submitHandler}
+            className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50"
+        >
+            <div className="w-10 relative h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-8">
+                <button
+                    className="absolute top-2 right-4"
+                    onClick={onClose}>
+                    X
+                </button>
+                <div className="w-full flex flex-row flex-wrap justify-between" >
+                    {selectedButton === "register" ? (
+                        <div className="w-full flex flex-row flex-wrap justify-between" >
+                            <p className="mb-2 w-full text-xs" >
+                                Fields marked with * are required
+                            </p>
+                            <div className="mb-4 w-1/2 pr-2">
+                                <label htmlFor="firstName" className="block mb-2">
+                                    First Names *
+                                </label>
+                                <input
+                                    id='firstName'
+                                    onChange={changeHandler}
+                                    name="firstName"
+                                    value={input.firstName}
+                                    type="text"
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" />
+                                {error.firstName ? <p className="text-red-500 text-sm">{error.firstName}</p> : ""}
+                            </div>
+
+                            <div className="mb-4 w-1/2 pl-2">
+                                <label htmlFor="lastName" className="block mb-2">
+                                    Last Name *
+                                </label>
+                                <input
+                                    id='lastName'
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                                    onChange={changeHandler}
+                                    name="lastName"
+                                    value={input.lastName}
+                                    type="text" />
+                                {error.lastName ? <p className="text-red-500 text-sm">{error.lastName}</p> : ""}
+                            </div>
+
+                            <div className="mb-4 w-1/3 pr-2">
+                                <label htmlFor="country" className="block mb-2">
+                                    Country *
+                                </label>
+                                <input
+                                    id='country'
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                                    onChange={changeHandler}
+                                    name="country"
+                                    value={input.country}
+                                    type="text" />
+                                {error.country ? <p className="text-red-500 text-sm">{error.country}</p> : ""}
+                            </div>
+
+                            <div className="mb-4 w-1/3 px-2">
+                                <label htmlFor="region" className="block mb-2">
+                                    Region
+                                </label>
+                                <input
+                                    id='region'
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                                    onChange={changeHandler}
+                                    name="region"
+                                    value={input.region}
+                                    type="text"
+                                />
+                                {error.region ? <p className="text-red-500 text-sm">{error.region}</p> : ""}
+                            </div>
+
+                            <div className="mb-4 w-1/3 pl-2">
+                                <label htmlFor="city" className="block mb-2">
+                                    City
+                                </label>
+                                <input
+                                    id='city'
+                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                                    onChange={changeHandler}
+                                    name="city"
+                                    value={input.city}
+                                    type="text" />
+                                {error.city ? <p className="text-red-500 text-sm">{error.city}</p> : ""}
+                            </div>
 
               <div className="mb-4 w-1/2 pl-2">
                 <label htmlFor="lastName" className="block mb-2">

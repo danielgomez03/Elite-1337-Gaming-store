@@ -9,249 +9,10 @@ const CreateProduct = ({ onClose }) => {
 
     const dispatch = useDispatch();
 
-    // PARA USO CON BACK
-    /* useEffect(() => {
+    useEffect(() => {
         (dispatch(getCategories()));
     }, []);
-    const categories = useSelector(state => state.categories) */
-
-    // PARA USO LOCAL SIN BACK
-    const categories = [
-        {
-            "categoryId": 1,
-            "name": "Hardware",
-            "isMainCategory": true,
-            "parentId": null
-        },
-        {
-            "categoryId": 2,
-            "name": "CPUs/Processors",
-            "isMainCategory": false,
-            "parentId": 1
-        },
-        {
-            "categoryId": 3,
-            "name": "Motherboards",
-            "isMainCategory": false,
-            "parentId": 1
-        },
-        {
-            "categoryId": 4,
-            "name": "Graphics/Video Cards",
-            "isMainCategory": false,
-            "parentId": 1
-        },
-        {
-            "categoryId": 5,
-            "name": "Storage",
-            "isMainCategory": false,
-            "parentId": 1
-        },
-        {
-            "categoryId": 6,
-            "name": "External Hard Disk Drives",
-            "isMainCategory": false,
-            "parentId": 5
-        },
-        {
-            "categoryId": 7,
-            "name": "Internal Hard Disk Drives",
-            "isMainCategory": false,
-            "parentId": 5
-        },
-        {
-            "categoryId": 8,
-            "name": "Solid State Drives",
-            "isMainCategory": false,
-            "parentId": 5
-        },
-        {
-            "categoryId": 9,
-            "name": "DVD/Blu-Ray",
-            "isMainCategory": false,
-            "parentId": 5
-        },
-        {
-            "categoryId": 10,
-            "name": "USB Drives",
-            "isMainCategory": false,
-            "parentId": 5
-        },
-        {
-            "categoryId": 11,
-            "name": "MicroSD",
-            "isMainCategory": false,
-            "parentId": 5
-        },
-        {
-            "categoryId": 12,
-            "name": "Cooling",
-            "isMainCategory": false,
-            "parentId": 1
-        },
-        {
-            "categoryId": 13,
-            "name": "CPU Coolers",
-            "isMainCategory": false,
-            "parentId": 12
-        },
-        {
-            "categoryId": 14,
-            "name": "Case Fans",
-            "isMainCategory": false,
-            "parentId": 12
-        },
-        {
-            "categoryId": 15,
-            "name": "Thermal Pastes",
-            "isMainCategory": false,
-            "parentId": 12
-        },
-        {
-            "categoryId": 16,
-            "name": "RAM Memory",
-            "isMainCategory": false,
-            "parentId": 1
-        },
-        {
-            "categoryId": 17,
-            "name": "DIMM (DDR3, DDR4)",
-            "isMainCategory": false,
-            "parentId": 16
-        },
-        {
-            "categoryId": 18,
-            "name": "SO-DIMM",
-            "isMainCategory": false,
-            "parentId": 16
-        },
-        {
-            "categoryId": 19,
-            "name": "Cases and Power Supplies",
-            "isMainCategory": false,
-            "parentId": 1
-        },
-        {
-            "categoryId": 20,
-            "name": "Cases",
-            "isMainCategory": false,
-            "parentId": 19
-        },
-        {
-            "categoryId": 21,
-            "name": "Power Supplies",
-            "isMainCategory": false,
-            "parentId": 19
-        },
-        {
-            "categoryId": 22,
-            "name": "Monitors",
-            "isMainCategory": true,
-            "parentId": null
-        },
-        {
-            "categoryId": 23,
-            "name": "Standard Monitors",
-            "isMainCategory": false,
-            "parentId": 22
-        },
-        {
-            "categoryId": 24,
-            "name": "Gaming Monitors",
-            "isMainCategory": false,
-            "parentId": 22
-        },
-        {
-            "categoryId": 25,
-            "name": "Peripherals and Accessories",
-            "isMainCategory": true,
-            "parentId": null
-        },
-        {
-            "categoryId": 26,
-            "name": "Headphones",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 27,
-            "name": "Keyboard/Mouse Kits",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 28,
-            "name": "Keyboards",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 29,
-            "name": "Mouse",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 30,
-            "name": "Mouse Pads",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 31,
-            "name": "Microphones",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 32,
-            "name": "Speakers",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 33,
-            "name": "Joysticks",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 34,
-            "name": "Webcams",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 35,
-            "name": "Connectivity",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 36,
-            "name": "Graphic Tablets",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 37,
-            "name": "Gaming Chairs",
-            "isMainCategory": false,
-            "parentId": 25
-        },
-        {
-            "categoryId": 38,
-            "name": "Laptops/Tablets",
-            "isMainCategory": true,
-            "parentId": null
-        },
-        {
-            "categoryId": 39,
-            "name": "On Sale",
-            "isMainCategory": true,
-            "parentId": null
-        }
-    ]
+    const categories = useSelector(state => state.categories)
 
     const [selectedCategory, setSelectedCategory] = useState('');
     const [selectedSubcategory, setSelectedSubcategory] = useState('');
@@ -272,16 +33,14 @@ const CreateProduct = ({ onClose }) => {
         discount: 0,
         stock: 0,
         isActive: false,
-        category: 150,
+        category: 100,
+        subcategory: 100,
+        subsubcategory: 100,
         image: "",
-        images: []
+        images: [],
     });
 
     const [error, setError] = useState({})
-
-    /* useEffect(() => {
-        setError(productValidation(form));
-    }, [form]); */
 
     const categoryHandler = (selectedOption) => {
         setSelectedCategory(selectedOption);
@@ -313,16 +72,37 @@ const CreateProduct = ({ onClose }) => {
         }));
     };
 
-
     const onChangeHandler = (e) => {
         let { name, value } = e.target;
         value === "true" ? value = true : value === "false" ? value = false : null;
+
+        if (name === "stock" && value.length > 3) {
+            e.preventDefault();
+            return;
+        }
+
+        if (name === "price") {
+            if (value !== "" && (typeof value === "string" && !/^\d+([.,]?\d{0,2})?$/.test(value.replace(",", ".")))) {
+                return;
+            }
+        }
+
         setForm((prevForm) => ({
             ...prevForm,
             [name]: value,
         }));
+
         if (name !== "name") {
             setError(productValidation(form));
+        }
+    };
+
+    const onKeyPressHandler = (e) => {
+        const { name, value } = e.target;
+
+        if (name === "stock" && (e.key === "." || e.key === ",")) {
+            e.preventDefault();
+            value.replace(/[.,]/g, "");
         }
     };
 
@@ -338,6 +118,7 @@ const CreateProduct = ({ onClose }) => {
         { value: true, label: 'Active' },
         { value: false, label: 'Inactive' },
     ];
+
     const onChangeActive = (selectedOption) => {
         setForm((prevForm) => ({
             ...prevForm,
@@ -348,18 +129,24 @@ const CreateProduct = ({ onClose }) => {
     const imagesHandler = (event) => {
         event.preventDefault();
         const url = form.image.trim();
-        if (url !== "") {
+        if (url !== "" && isValidUrl(url)) {
             setForm((prevForm) => ({
                 ...prevForm,
                 images: [...prevForm.images, url],
                 image: ""
             }));
+            setError({});
+        } else {
+            setError({ images: 'Invalid URLs' });
         }
-
-        setError(productValidation(form));
     };
 
-    const handleImageUpload = (event) => {
+    function isValidUrl(url) {
+        const urlPattern = /^(https?:\/\/)?([\w.-]+)\.([a-z]{2,})(\/\S*)?$/i;
+        return urlPattern.test(url);
+    }
+
+    const handleImageUpload = async (event) => {
         const files = event.target.files;
         const imagesArray = Array.from(files);
 
@@ -367,18 +154,14 @@ const CreateProduct = ({ onClose }) => {
 
         const uploadedImages = [];
 
-        selectedImages.forEach((imageFile) => {
+        for (const imageFile of selectedImages) {
             uploadedImages.push(imageFile);
+        }
 
-            if (uploadedImages.length === selectedImages.length) {
-                setForm((prevForm) => ({
-                    ...prevForm,
-                    images: [...prevForm.images, ...uploadedImages],
-                }));
-            }
-        });
-
-        setError(productValidation(form));
+        setForm((prevForm) => ({
+            ...prevForm,
+            images: [...prevForm.images, ...uploadedImages],
+        }));
     };
 
     const imageUrls = form.images.map((image) => {
@@ -402,27 +185,7 @@ const CreateProduct = ({ onClose }) => {
         setError(productValidation(form));
     };
 
-    const [shouldSubmit, setShouldSubmit] = useState(false);
-
-    const handleFormSubmit = () => {
-        console.log(form);
-        setShouldSubmit(true);
-    };
-
     const [discount, setDiscount] = useState('');
-    const [isFocused, setIsFocused] = useState(false);
-
-    const handleFocus = () => {
-        setIsFocused(true);
-    };
-
-    const handleBlur = () => {
-        setIsFocused(false);
-    };
-
-    const handleSelectOption = () => {
-        setIsFocused(false);
-    };
 
     const onSubmithandler = (event) => {
         event.preventDefault();
@@ -430,13 +193,11 @@ const CreateProduct = ({ onClose }) => {
             return alert('missing info');
         }
         setError(productValidation(form));
-        console.log("shouldSubmit", shouldSubmit)
-        console.log("error", error)
-        if (shouldSubmit && !error) {
+        if (error !== null) {
             axios
-                .post(`http://localhost:3001/admin/products`, form)
+                .post(`http://localhost:3001/products/create`, form)
                 .then((res) => {
-                    console.log(res.data);
+                    console.log("resCreateProduct",res.data);
                     onClose();
                 })
                 .catch((error) => {
@@ -507,6 +268,10 @@ const CreateProduct = ({ onClose }) => {
         console.log("form", form);
     }, [form]);
 
+    useEffect(() => {
+        console.log("error", error);
+    }, [error]);
+
     const optionsDiscount = Array.from({ length: 20 }, (_, index) => ({ value: index * 5, label: `${index * 5}` }));
 
     const customStyles = {
@@ -527,6 +292,7 @@ const CreateProduct = ({ onClose }) => {
             ...provided,
             padding: '0.75rem', // px-4 py-2
             cursor: 'pointer',
+            color: "#000000",
             backgroundColor: state.isFocused ? '#F3F4F6' : 'transparent', // hover:bg-gray-200
         }),
         menu: (provided, state) => ({
@@ -537,7 +303,6 @@ const CreateProduct = ({ onClose }) => {
         menuList: (provided, state) => ({
             ...provided,
             padding: 0,
-            color: "#000000",
             '&::-webkit-scrollbar': {
                 width: '5px', // Ancho de la barra de desplazamiento
             },
@@ -545,8 +310,8 @@ const CreateProduct = ({ onClose }) => {
                 backgroundColor: '#A5B4FC',
                 borderRadius: '5px',
             },
-        }),/* 
-        indicatorSeparator: () => ({
+        }),
+        /* indicatorSeparator: () => ({
             display: 'none', // Remove the indicator separator
         }), */
     };
@@ -559,29 +324,30 @@ const CreateProduct = ({ onClose }) => {
             onSubmit={onSubmithandler}
             className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50"
         >
-            <div className="lg:w-1/3 lg:h-2/3 h-full w-full relative h-auto lg:min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center px-8 py-4">
+            <div className="relative w-10/10 max-w-2xl bg-white rounded-lg flex flex-col justify-start items-center p-8">
                 <button className="hidden lg:block absolute lg:top-2 lg:right-4" onClick={onClose}>
                     x
                 </button>
                 {/* <h2 className='text-lg'>Create Product</h2> */}
                 <div className="w-full flex flex-row flex-wrap justify-between" >
-                    <div className="mb-4 w-3/4 pr-2">
+                    <div className="mb-4 w-3/4 pr-2 relative">
                         <label htmlFor="name" className="block mb-2">
                             Name Product
                         </label>
                         <input
                             id="name"
                             type="text"
+                            autoFocus
                             value={form.name}
                             onChange={onChangeHandler}
                             name="name"
                             required
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                         />
-                        {error.name ? <p className="text-red-500 text-sm">{error.name}</p> : ""}
+                        {error.name ? <p className="absolute text-red-500 text-xs">{error.name}</p> : ""}
                     </div>
 
-                    <div className="mb-2 w-1/4 pl-1">
+                    <div className="mb-2 w-1/4 pl-1 relative">
                         <label htmlFor="isActive" className="block mb-2">
                             Active
                         </label>
@@ -592,29 +358,32 @@ const CreateProduct = ({ onClose }) => {
                             classNamePrefix="custom-select"
                             styles={customStyles}
                         />
-                        {error.isActive && <p className="text-red-500 text-sm">{error.isActive}</p>}
+                        {error.isActive && <p className="absolute text-red-500 text-xs">{error.isActive}</p>}
                     </div>
 
-                    <div className="mb-2 w-1/2 pr-1">
+                    <div className="mb-2 w-1/2 pr-1 relative">
                         <label htmlFor="price" className="block mb-2">
                             Price
                         </label>
                         <input
                             id="price"
                             type="number"
-                            value={form.price}
+                            value={form.price !== 0 ? form.price : ""}
+                            placeholder="0"
                             onChange={onChangeHandler}
                             name="price"
+                            min={0}
+                            required
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                         />
-                        {error.price ? <p className="text-red-500 text-sm">{error.price}</p> : ""}
+                        {error.price ? <p className="absolute text-red-500 text-xs">{error.price}</p> : ""}
                     </div>
 
-                    <div className="mb-2 w-1/4 px-2">
-                        <label htmlFor="discount" className="block mb-2">
-                            Discount (%)
+                    <div className="mb-2 w-1/4 px-2 relative">
+                        <label htmlFor="discount" className="block mb-2 overflow-hidden">
+                            <span className="whitespace-nowrap">Discount (%)</span>
                         </label>
-                        <div className={`relative ${isFocused ? 'focus' : ''}`}>
+                        <div>
                             <Select
                                 id="discount"
                                 value={options.find((option) => option.value === discount)}
@@ -624,25 +393,30 @@ const CreateProduct = ({ onClose }) => {
                                 styles={customStyles}
                             />
                         </div>
-                        {error.discount ? <p className="text-red-500 text-sm">{error.discount}</p> : ""}
+                        {error.discount ? <p className="absolute text-red-500 text-xs">{error.discount}</p> : ""}
                     </div>
 
-                    <div className="mb-2 w-1/4 pl-1">
+                    <div className="mb-2 w-1/4 pl-1 relative">
                         <label htmlFor="stock" className="block mb-2">
                             Stock
                         </label>
                         <input
                             id="stock"
                             type="number"
-                            value={form.stock}
+                            placeholder="0"
+                            value={form.stock !== 0 ? form.stock : ""}
+                            onKeyPress={onKeyPressHandler}
                             onChange={onChangeHandler}
                             name="stock"
+                            min={0}
+                            max={999}
+                            required
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                         />
-                        {error.stock ? <p className="text-red-500 text-sm">{error.stock}</p> : ""}
+                        {error.stock ? <p className="absolute text-red-500 text-xs">{error.stock}</p> : ""}
                     </div>
 
-                    <div className="mb-2 w-full">
+                    <div className="mb-2 w-full relative">
                         <label htmlFor="description" className="block mb-2">
                             Description
                         </label>
@@ -651,14 +425,15 @@ const CreateProduct = ({ onClose }) => {
                             value={form.description}
                             onChange={onChangeHandler}
                             name="description"
+                            required
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 resize-y"
                         />
                         {error.description ? (
-                            <p className="text-red-500 text-sm">{error.description}</p>
+                            <p className="absolute text-red-500 text-xs">{error.description}</p>
                         ) : ""}
                     </div>
 
-                    <div className="mb-2 w-1/2 pr-1">
+                    <div className="mb-2 w-1/2 pr-1 relative">
                         <label htmlFor="manufacturer" className="block mb-2">
                             Manufacturer
                         </label>
@@ -671,12 +446,12 @@ const CreateProduct = ({ onClose }) => {
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                         />
                         {error.manufacturer ? (
-                            <p className="text-red-500 text-sm">
+                            <p className="absolute text-red-500 text-xs">
                                 {error.manufacturer}
                             </p>
                         ) : ""}
                     </div>
-                    <div className="mb-2 w-1/2 pl-2">
+                    <div className="mb-2 w-1/2 pl-2 relative">
                         <label htmlFor="origin" className="block mb-2">
                             Origin
                         </label>
@@ -692,50 +467,52 @@ const CreateProduct = ({ onClose }) => {
                                 isClearable
                             />
                         </div>
-                        {error.origin ? <p className="text-red-500 text-sm">{error.origin}</p> : ""}
+                        {error.origin ? <p className="absolute text-red-500 text-xs">{error.origin}</p> : ""}
                     </div>
 
-                    <div className="mb-2 w-1/3 pr-1">
+                    <div className="mb-2 w-1/3 pr-1 relative">
                         <label htmlFor="category" className="block mb-2">
                             Category
                         </label>
                         <Select
                             classNamePrefix="custom-select"
+                            required
                             styles={customStyles}
                             value={selectedCategory}
                             onChange={categoryHandler}
-                            options={mainCategories.map((category) => ({
+                            options={mainCategories?.map((category) => ({
                                 value: category.name,
                                 label: category.name,
                             }))}
                         />
                         {error.category ? (
-                            <p className="text-red-500 text-sm">{error.category}</p>
+                            <p className="absolute text-red-500 text-xs">{error.category}</p>
                         ) : (
                             ""
                         )}
                     </div>
 
-                    <div className="mb-2 w-1/3 px-2">
+                    <div className="mb-2 w-1/3 px-2 relative">
                         <label htmlFor="subcategory" className="block mb-2">
                             Subcategory
                         </label>
                         <Select
                             classNamePrefix="custom-select"
+                            required
                             styles={customStyles}
                             value={selectedSubcategory}
                             disabled={!selectedCategory}
                             onChange={handleSubcategory}
-                            options={selectedCategory && listSubCategories?.map((subcategory) => ({
+                            options={selectedCategory && listSubCategories ? (listSubCategories.map((subcategory) => ({
                                 value: subcategory.name,
                                 label: subcategory.name,
-                            }))}
+                            }))) : []}
                         />
                     </div>
 
-                    <div className="mb-2 w-1/3 pl-1">
-                        <label htmlFor="subSubCategory" className="block mb-2">
-                            Sub-Subcategory
+                    <div className="mb-2 w-1/3 pl-1 relative">
+                        <label htmlFor="subSubCategory" className="flex mb-2 overflow-hidden">
+                            <span className="whitespace-nowrap">Sub-Subcategory</span>
                         </label>
                         <Select
                             classNamePrefix="custom-select"
@@ -743,26 +520,47 @@ const CreateProduct = ({ onClose }) => {
                             value={selectedSubSubcategory}
                             disabled={!selectedSubcategory}
                             onChange={handleSubSubcategory}
-                            options={selectedCategory && selectedSubcategory && listSubSubCategories?.map((subsubcategory) => ({
+                            options={selectedCategory && selectedSubcategory && listSubSubCategories ? (listSubSubCategories.map((subsubcategory) => ({
                                 value: subsubcategory.name,
                                 label: subsubcategory.name,
-                            }))}
+                            }))) : []}
                         />
                     </div>
 
-                    <div className="mb-2 w-full">
-                        <label htmlFor="images" className="block">
+                    <div className="mb-2 w-full ">
+                        <label htmlFor="images" className="flex items-center">
                             Images:
                             <span className="ml-2">(
                                 {form.images.length} {form.images.length === 1 ? "image" : "images"} loaded)
                             </span>
+                            {error.images ? <p className="ml-10 text-red-500 text-xs">{error.images}</p> : ""}
                         </label>
-                        {error.images ? <p className="text-red-500 text-sm">{error.images}</p> : ""}
                         <div className='flex justify-center ' >
-                            <input type="checkbox" name="file" id="file" checked={isChecked === "file"} onChange={handleCheckboxChange} className="ml-4" />
-                            <label htmlFor="file" onChange={handleCheckboxChange} className='mr-16 p-4 pl-2' >File</label>
-                            <input type="checkbox" name="url" id="url" checked={isChecked === "url"} onChange={handleCheckboxChange} />
-                            <label htmlFor="url" onChange={handleCheckboxChange} className=' p-4 pl-2' >URL</label>
+                            <input
+                                type="checkbox"
+                                name="file"
+                                id="file"
+                                checked={isChecked === "file"}
+                                onChange={handleCheckboxChange}
+                                className="ml-4" />
+                            <label
+                                htmlFor="file"
+                                onChange={handleCheckboxChange}
+                                className='mr-16 p-4 pl-2' >
+                                File
+                            </label>
+                            <input
+                                type="checkbox"
+                                name="url"
+                                id="url"
+                                checked={isChecked === "url"}
+                                onChange={handleCheckboxChange} />
+                            <label
+                                htmlFor="url"
+                                onChange={handleCheckboxChange}
+                                className=' p-4 pl-2' >
+                                URL
+                            </label>
                         </div>
                         <div className="flex flex-col items-center">
                             {isChecked === "url" ? (
@@ -806,12 +604,12 @@ const CreateProduct = ({ onClose }) => {
                             )}
 
                             {/* Render the loaded images */}
-                            <div className="flex items-center">
+                            <div className="flex items-center m-4 gap-10">
                                 {imageUrls?.map((imageUrl, index) => (
-                                    <div key={index} className="flex items-center m-6">
-                                        <img src={imageUrl} alt={`Image ${index + 1}`} className="w-16 h-16 object-cover rounded mr-2" />
-                                        <button onClick={() => removeImage(index)} className="text-red-500 hover:text-red-700">
-                                            <span className="material-symbols-rounded">
+                                    <div key={index} className="relative flex items-center">
+                                        <img src={imageUrl} alt={`Image ${index + 1}`} className="w-16 h-16 object-cover rounded" />
+                                        <button onClick={() => removeImage(index)} className="absolute w-full h-full rounded text-transparent hover:bg-black hover:bg-opacity-50 hover:text-white">
+                                            <span className="material-symbols-rounded font-thin text-x-2">
                                                 delete
                                             </span>
                                         </button>
@@ -823,10 +621,9 @@ const CreateProduct = ({ onClose }) => {
                 </div>
                 <div className="w-full" >
                     <button
-                        type="button"
-                        onClick={handleFormSubmit}
-                        disabled={error}
-                        className="w-full px-4 mt-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 font-bold tracking-wider"
+                        type="submit"
+                        disabled={Object.keys(error).length > 0}
+                        className="w-full px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 font-bold tracking-wider"
                     >
                         Create Product
                     </button>
