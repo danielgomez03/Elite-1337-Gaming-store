@@ -1,89 +1,112 @@
 const passport = require("passport");
-const { Login } = require("../database");
+const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
+const { User, Login, Token } = require("../database");
+const jwt = require("jsonwebtoken");
+
+const jwtSecret = "pfhenry37bg12"; // Replace with your own secret key
+
+// Configure the JWT strategy
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: jwtSecret,
+};
+
+const strategy = new JwtStrategy(jwtOptions, async (payload, done) => {
+  try {
+    // Here, you can verify the payload and find the user based on the token
+    // For example, you can look up the user in your database and pass it to the 'done' callback
+    const user = await User.findOne({
+      where: { userId: payload.userId },
+      include: [Login],
+    });
+
+    if (user) {
+      return done(null, user);
+    } else {
+      return done(null, false);
+    }
+  } catch (err) {
+    return done(err, false);
+  }
+});
+
+passport.use(strategy);
 
 // Login handler
 async function login(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.status(403).json({ message: "User is already logged in." });
-  }
-
-  console.log("Login request received");
-
-  passport.authenticate("local", async (err, user, info) => {
-    console.log("Passport authentication callback");
-
-    if (err) {
-      console.error("Passport authentication error:", err);
-      return next(err);
-    }
-
-    if (!user) {
-      console.log("Authentication failed:", info.message);
-      return res.status(401).json({ message: "Authentication failed" });
-    }
-
-    req.login(user, async (err) => {
-      if (err) {
-        console.error("Error during login:", err);
-        return next(err);
-      }
-
-      // Update the verify field to true for the logged-in user
+  passport.authenticate(
+    "jwt",
+    { session: false },
+    async (err, authenticatedUser, info) => {
       try {
-        await Login.update(
-          { verify: true },
-          { where: { userId: user.userId } },
+        if (err) {
+          console.error("Error during login:", err);
+          return next(err);
+        }
+
+        if (authenticatedUser) {
+          console.log("User is already logged in.");
+          return res
+            .status(403)
+            .json({ message: "User is already logged in." });
+        }
+
+        const { email, password } = req.body;
+
+        // Find the login record for the provided email
+        const login = await Login.findOne({ where: { email } });
+
+        if (!login) {
+          console.log("Authentication failed");
+          return res.status(401).json({ message: "Authentication failed" });
+        }
+
+        // Validate the password
+        const isValidPassword = login.validatePassword(password);
+        if (!isValidPassword) {
+          console.log("Authentication failed");
+          return res.status(401).json({ message: "Authentication failed" });
+        }
+
+        // Retrieve the associated user record
+        const user = await User.findOne({ where: { userId: login.userId } });
+
+        if (!user) {
+          console.log("Authentication failed");
+          return res.status(401).json({ message: "Authentication failed" });
+        }
+
+        // Generate the JWT token
+        const token = jwt.sign(
+          {
+            userId: user.userId,
+            email: login.email,
+          },
+          jwtSecret,
+          { expiresIn: "2h" },
         );
+
+        console.log("Generated Token:", token);
+
+        // Insert token into the Token table
+        await Token.create({
+          tokenValue: token,
+          tokenType: "Passport",
+          userId: user.userId,
+          loginId: login.loginId,
+        });
+
+        console.log("Login successful");
+
+        return res.json({ message: "Login successful", token });
       } catch (error) {
-        console.error("Error updating login:", error);
-        return res.status(500).send("Error updating login");
+        console.error("Error during login:", error);
+        return next(error);
       }
-
-      console.log("Login successful");
-
-      return res.json({ message: "Login successful" });
-    });
-  })(req, res, next);
-}
-
-// Logout handler
-async function logout(req, res) {
-  const userId = req.user && req.user.userId;
-
-  // Check if the user is logged in
-  if (!userId) {
-    return res.status(401).send("Unauthorized");
-  }
-
-  // Update the verify field to false for users logging out
-  try {
-    await Login.update({ verify: false }, { where: { userId } });
-  } catch (error) {
-    console.error("Error updating login:", error);
-    return res.status(500).send("Error updating login");
-  }
-
-  // Destroy the session
-  req.session.destroy((err) => {
-    if (err) {
-      console.error("Error destroying session:", err);
-      return res.status(500).send("Error destroying session");
-    }
-
-    res.clearCookie("connect.sid"); // Clear the session cookie
-    console.log("Logout successful");
-    res.send("Logout successful");
-  });
-}
-
-// Get session handler
-function getSession(req, res) {
-  console.log(req.session);
-  res.send("Session information logged");
+    },
+  )(req, res, next);
 }
 
 module.exports = {
   login,
-  logout,
-  getSession,
 };

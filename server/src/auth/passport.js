@@ -1,60 +1,60 @@
-const passport = require("passport");
-const LocalStrategy = require("passport-local").Strategy;
-const { User, Login } = require("../database");
+// const passport = require("passport");
+// const JwtStrategy = require("passport-jwt").Strategy;
+// const { ExtractJwt } = require("passport-jwt");
+// const { User, Login } = require("../database");
 
-passport.use(
-  new LocalStrategy(
-    {
-      usernameField: "email",
-    },
-    async (email, password, done) => {
-      try {
-        const login = await Login.findOne({ where: { email } });
+// const jwtSecret = "pfhenry37bg12";
 
-        if (!login) {
-          return done(null, false, { message: "Incorrect email or password." });
-        }
+// const jwtOptions = {
+//   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//   secretOrKey: jwtSecret,
+// };
 
-        const isValidPassword = login.validatePassword(password);
-        if (!isValidPassword) {
-          return done(null, false, { message: "Incorrect email or password." });
-        }
+// passport.use(
+//   new JwtStrategy(jwtOptions, async (payload, done) => {
+//     try {
+//       const login = await Login.findOne({ where: { email: payload.email } });
 
-        const user = await User.findOne({ where: { userId: login.userId } });
+//       if (!login) {
+//         return done(null, false, { message: "Incorrect email or password." });
+//       }
 
-        if (!user) {
-          return done(null, false, { message: "User not found." });
-        }
+//       const isValidPassword = login.validatePassword(payload.password);
+//       if (!isValidPassword) {
+//         return done(null, false, { message: "Incorrect email or password." });
+//       }
 
-        // Set the 'verify' property to true for the logged-in user
-        await login.update({ verify: true });
+//       const user = await User.findOne({ where: { userId: login.userId } });
 
-        return done(null, user);
-      } catch (error) {
-        console.error("Passport local strategy error:", error);
-        return done(error);
-      }
-    },
-  ),
-);
+//       if (!user) {
+//         return done(null, false, { message: "User not found." });
+//       }
 
-passport.serializeUser((user, done) => {
-  done(null, user.userId);
-});
+//       return done(null, user);
+//     } catch (error) {
+//       console.error("JWT authentication error:", error);
+//       return done(error);
+//     }
+//   }),
+// );
 
-passport.deserializeUser(async (userId, done) => {
-  try {
-    const user = await User.findByPk(userId);
+// passport.serializeUser((user, done) => {
+//   done(null, user.userId);
+// });
 
-    if (!user) {
-      return done(null, false, { message: "User not found." });
-    }
+// passport.deserializeUser(async (userId, done) => {
+//   try {
+//     const user = await User.findByPk(userId);
 
-    done(null, user);
-  } catch (error) {
-    console.error("Error deserializing user:", error);
-    done(error);
-  }
-});
+//     if (!user) {
+//       return done(null, false, { message: "User not found." });
+//     }
 
-module.exports = passport;
+//     done(null, user);
+//   } catch (error) {
+//     console.error("Error deserializing user:", error);
+//     done(error);
+//   }
+// });
+
+// module.exports = passport;
