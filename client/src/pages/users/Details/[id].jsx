@@ -7,7 +7,6 @@ import Rating from '@/components/Rating';
 
 
 
-
 export default function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
