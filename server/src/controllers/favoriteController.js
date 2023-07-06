@@ -14,6 +14,11 @@ async function addFavorite(req, res) {
       return res.status(409).json({ message: "El producto ya está en favoritos" });
     }
 
+    // Validar si userId y productId son valores válidos
+    if (!userId || !productId) {
+      return res.status(400).json({ message: "Datos de usuario o producto inválidos" });
+    }
+
     // Crear un nuevo registro de favorito
     const newFavorite = await Favorite.create({ userId, productId });
 
