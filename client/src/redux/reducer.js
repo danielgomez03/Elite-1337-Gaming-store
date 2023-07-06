@@ -5,6 +5,7 @@ import{
   GET_CATEGORIES,
   GET_RATINGS,
   GET_RATINGS_ERROR,
+  ADD_RATING,
   SORT_PRODUCTS,
   FILTER_PRODUCTS_BY_PRICE,
   FILTER_PRODUCTS_BY_CATEGORY,
@@ -143,6 +144,16 @@ switch(action.type){
               ratings: action.payload,
               error: null,
             };
+
+                
+      case ADD_RATING:
+                  const newRating = action.payload;
+                  const updatedRatings = [...state.ratings, newRating];
+                  
+                  return {
+                    ...state,
+                    ratings: updatedRatings,
+                  };
 
       case GET_RATINGS_ERROR:
             return {

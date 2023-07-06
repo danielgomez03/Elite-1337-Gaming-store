@@ -16,7 +16,11 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const ACTION_BYNAME = "ACTION_BYNAME"
 export const GET_RATINGS ="GET_RATINGS";
 export const GET_RATINGS_ERROR ="GET_RATINGS_ERROR";
+
 export const GET_COMMENTS_BY_PRODUCT = "GET_COMMENTS_BY_PRODUCT";
+
+export const ADD_RATING = 'ADD_RATING';
+
 
 
 // -----------actions cart----------------------------------------------------------------------------------------
@@ -161,6 +165,24 @@ export const getProductById = (id) => {
         dispatch({ type: 'GET_RATINGS', payload: data });
       } catch (error) {
         dispatch({ type: 'GET_RATINGS_ERROR', payload: error });
+      }
+    };
+  };
+
+
+  export const addRating = (ratingData) => {
+    return async (dispatch) => {
+      try {
+        const response = await axios.post('http://localhost:3001/ratings/add', ratingData);
+        const newRating = response.data;
+        
+        dispatch({
+          type: ADD_RATING,
+          payload: newRating,
+        });
+      } catch (error) {
+        // Manejar errores en caso de que la solicitud falle
+        console.log('Error al agregar el rating:', error);
       }
     };
   };

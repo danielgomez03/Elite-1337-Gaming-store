@@ -8,7 +8,6 @@ import axios from 'axios';
 
 
 
-
 export default function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
