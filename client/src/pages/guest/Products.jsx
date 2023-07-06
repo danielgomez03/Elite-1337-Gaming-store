@@ -27,7 +27,6 @@ const Products = () => {
   return (
     <div>
       <Filters />
-      <MyComponent/>
       <div className="px-56 grid gap-4 p-4 grid-cols-4">
         {products?.map((product, index) => {
           return (

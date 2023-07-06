@@ -3,9 +3,6 @@ export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART"
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
-export const FILTER_PRODUCTS_BY_PRICE = "FILTER_PRODUCTS_BY_PRICE";
-export const FILTER_PRODUCTS_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
-export const SORT_PRODUCTS = "SORT_PRODUCTS";
 export const GET_CATEGORIES = "GET_CATEGORIES";
 export const GET_CART_BY_ID_USER = "GET_CART_BY_ID_USER";
 export const PAGE = "PAGE";
@@ -14,7 +11,11 @@ export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS";
 export const MODIFY_QUANTITY = "MODIFY_QUANTITY";
 export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const ACTION_BYNAME = "ACTION_BYNAME"
-
+//---------Sort types----/
+export const SORT_PRODUCTS = "SORT_PRODUCTS";
+//---------Filters types----/
+export const FILTER_PRODUCTS_BY_PRICE = "FILTER_PRODUCTS_BY_PRICE";
+export const FILTER_PRODUCTS_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
 //---------Rating types----/
 export const GET_RATINGS ="GET_RATINGS";
 export const GET_RATINGS_ERROR ="GET_RATINGS_ERROR";
@@ -22,6 +23,8 @@ export const ADD_RATING = 'ADD_RATING';
 //---------Favorites types----/
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const ADD_FAVORITE_ERROR = 'ADD_FAVORITE_ERROR';
+//---------other types----/
+
 
 
 // -----------actions cart----------------------------------------------------------------------------------------
