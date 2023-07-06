@@ -3,7 +3,7 @@ import { getProducts, clean, filterProductsByPrice, sortProducts, getCartByIdUse
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/components/card';
 import Filters from '../../components/Filters';
-import MyComponent from '@/components/myComponent';
+import FavoritesByUserId from '@/components/FavoritesByUserId';
 
 
 const Products = () => {
@@ -27,6 +27,7 @@ const Products = () => {
   return (
     <div>
       <Filters />
+      <FavoritesByUserId/>
       <div className="px-auto grid lg:grid-cols-5 md:grid-cols-2 xs:grid-cols-1 gap-3 p-4 ">
         {products?.map((product, index) => {
           return (

@@ -20,6 +20,10 @@ import{
   ADD_FAVORITE,
   ADD_FAVORITE_ERROR,
   GET_COMMENTS_BY_PRODUCT,
+  DELETE_FAVORITE, 
+  DELETE_FAVORITE_ERROR,
+  GET_FAVORITES_SUCCESS,
+  GET_FAVORITES_FAILURE
 
 } from './actions'
 
@@ -197,6 +201,29 @@ switch(action.type){
         ...state,
         error: action.error
       };
+
+    case DELETE_FAVORITE:
+        // Filtrar el producto favorito eliminado del state
+        return state.filter((favorite) => !(favorite.userId === action.userId && favorite.productId === action.productId));
+
+    case DELETE_FAVORITE_ERROR:
+        // Manejar el error y posiblemente actualizar el estado o mostrar un mensaje de error
+        console.error(action.error);
+        return state;
+
+    case GET_FAVORITES_SUCCESS:
+          return {
+            ...state,
+            favorites: action.favorites,
+            error: null,
+          };
+          
+    case GET_FAVORITES_FAILURE:
+          return {
+            ...state,
+            favorites: [],
+            error: action.error,
+          };
 //---------------------------------------------------------------------//
 //other cases---------------------------------//  
     case CLEAN:
