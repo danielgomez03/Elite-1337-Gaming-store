@@ -16,6 +16,7 @@ export const DELETE_PRODUCT = "DELETE_PRODUCT"
 export const ACTION_BYNAME = "ACTION_BYNAME"
 export const GET_RATINGS ="GET_RATINGS";
 export const GET_RATINGS_ERROR ="GET_RATINGS_ERROR";
+export const GET_COMMENTS_BY_PRODUCT = "GET_COMMENTS_BY_PRODUCT";
 
 
 // -----------actions cart----------------------------------------------------------------------------------------
@@ -69,6 +70,13 @@ export const addProductToCart = (id) => {
     };
   }
   // ---------------------------------------------------------------------------------------------------------------
+export const getCommentsByProduc = (id) =>{
+  return async function (dispatch) {
+    const response = await axios.get(`http://localhost:3001/comments/product/${id}`);
+    const comments = response.data;
+    dispatch({ type: GET_COMMENTS_BY_PRODUCT, payload: comments });
+  };
+}
 
   export const getProducts = () => {
   return async function (dispatch) {
