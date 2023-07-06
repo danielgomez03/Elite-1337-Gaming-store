@@ -6,8 +6,6 @@ import Rating from '@/components/Rating';
 
 const Card = (props) => {
   const dispatch = useDispatch();
-  console.log(props.objProduct)
-  console.log()
   const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
   return (
     <article className="h-96 w-52 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
