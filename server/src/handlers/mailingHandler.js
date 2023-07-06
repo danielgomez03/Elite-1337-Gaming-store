@@ -1,7 +1,6 @@
 const nodemailer = require("nodemailer");
 const { Newsletter, User } = require("../database");
 const { Op } = require("sequelize");
-const { mailValidations } = require("./validations");
 
 // Create the transporter object
 const transporter = nodemailer.createTransport({
@@ -12,9 +11,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendEmailUpdateEmailHandler = async (email, newEmail) => {
-  const homeLink = "https://ft37b-pf-grupo12.vercel.app/";
+const homeLink = "https://ft37b-pf-grupo12.vercel.app/";
 
+const sendEmailUpdateEmailHandler = async (email, newEmail) => {
   const mailOptions = {
     from: "1337 HARDWARE <newsletter@1337hardware.com>",
     to: email,
@@ -49,8 +48,6 @@ const sendEmailUpdateEmailHandler = async (email, newEmail) => {
 };
 
 const sendPasswordUpdateEmailHandler = async (email, newPassword) => {
-  const homeLink = "https://ft37b-pf-grupo12.vercel.app/";
-
   const mailOptions = {
     from: "1337 HARDWARE <newsletter@1337hardware.com>",
     to: email,
@@ -85,8 +82,7 @@ const sendPasswordUpdateEmailHandler = async (email, newPassword) => {
 };
 
 const sendWelcomeEmailHandler = async (email, firstName) => {
-  // Update with the correct URLs
-  const homeLink = "https://ft37b-pf-grupo12.vercel.app/";
+  // Update with the correct URL
   const loginLink = "https://ft37b-pf-grupo12.vercel.app/login";
 
   const mailOptions = {
@@ -124,6 +120,37 @@ const sendWelcomeEmailHandler = async (email, firstName) => {
           The <span style="font-weight: bold;">1337 HARDWARE Team</span>
         </p>
         <p style="text-align: center;">
+        <a href="${homeLink}" style="display: inline-block;">
+          <img src="https://content.ibuypower.com//Images/en-US/Lobby/TvWall/katapult-TVWall-Mobile.jpg" alt="Welcome Image" style="display: block; margin: 0 auto;">
+        </a>
+      </p>
+    `,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+const sendUserDisabledEmailHandler = async (email, firstName) => {
+  const mailOptions = {
+    from: "1337 HARDWARE <newsletter@1337hardware.com>",
+    to: email,
+    subject: "Your account has been disabled",
+    html: `
+      <h1>Your account has been disabled</h1>
+      <p>
+        Dear ${firstName},
+      </p>
+      <p>
+        We regret to inform you that your account on the <span style="font-weight: bold;">1337 HARDWARE</span> platform has been disabled by the administrator. As a result, you will no longer be able to access your account or use our services.
+      </p>
+      <p>
+        If you believe this is an error or have any concerns, please contact our support team for further assistance.
+      </p>
+      <p style="text-align: right;">
+        <span style="font-weight: bold;">Best regards,</span><br>
+        The <span style="font-weight: bold;">1337 HARDWARE Team</span>
+      </p>
+      <p style="text-align: center;">
         <a href="${homeLink}" style="display: inline-block;">
           <img src="https://content.ibuypower.com//Images/en-US/Lobby/TvWall/katapult-TVWall-Mobile.jpg" alt="Welcome Image" style="display: block; margin: 0 auto;">
         </a>
@@ -179,9 +206,6 @@ const postSubscriptionHandler = async (req, res, next) => {
 
     // Create a new newsletter entry with the userId from the session
     await Newsletter.create({ newsletterEmail: email, userId });
-
-    // Send the welcome email
-    const homeLink = "https://ft37b-pf-grupo12.vercel.app/";
 
     const mailOptions = {
       from: "1337 HARDWARE <newsletter@1337hardware.com>",
@@ -342,4 +366,5 @@ module.exports = {
   sendWelcomeEmailHandler,
   sendEmailUpdateEmailHandler,
   sendPasswordUpdateEmailHandler,
+  sendUserDisabledEmailHandler,
 };

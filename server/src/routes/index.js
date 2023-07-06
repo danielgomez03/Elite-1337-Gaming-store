@@ -10,6 +10,7 @@ const loginRoutes = require("./loginRoutes");
 const mailingRoutes = require("./mailingRoutes");
 const ordersRoutes = require("./orderRoutes");
 const ratingsRoutes = require("./ratingRoutes");
+const adminRoutes = require("./adminRoutes");
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.use("/login", loginRoutes);
 router.use("/mailing", mailingRoutes);
 router.use("/orders", ordersRoutes);
 router.use("/ratings", ratingsRoutes);
+router.use("/admin", adminRoutes);
 
 module.exports = router;
