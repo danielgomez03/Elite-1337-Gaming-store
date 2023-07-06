@@ -26,33 +26,6 @@ function NavBar() {
 
   const [typeUser, setTypeUser] = useState("guest");
 
-  // useEffect(() => {
-  //   const fetchData = () => {
-  //     axios.get("http://localhost:3001/login/session")
-  //       .then(response => {
-  //         if (response.data?.passport?.user) {
-  //           console.log(response.data?.passport?.user)
-  //           setTypeUser("users");
-  //         } else {
-  //           setTypeUser("guests");
-  //         }
-  //       })
-  //       .catch(error => {
-  //         console.error(error);
-  //         alert("Error fetching data");
-  //       });
-  //   };
-
-  //   fetchData();
-
-  //   const intervalId = setInterval(fetchData, 5000);
-
-  //   return () => {
-  //     clearInterval(intervalId);
-  //   };
-  // }, []);
-
-
   const categories = useSelector(state => state.categories);
   useEffect(() => {
     dispatch(getCategories());
@@ -64,7 +37,6 @@ function NavBar() {
       dispatch(filterProductsByCategory(category));
     }
   }, [category]);
-  ////////////////////////////////////////
 
   useEffect(() => {
     setNewCategories(convertCategories());
@@ -194,7 +166,7 @@ function NavBar() {
                     >
                       {subcategory.name}
                     </Link>
-                    <span class={`material-symbols-rounded text-lg text-gray-300 ${subcategory.subcategories.length > 0 ? '' : 'hidden'}`}>
+                    <span className={`material-symbols-rounded text-lg text-gray-300 ${subcategory.subcategories.length > 0 ? '' : 'hidden'}`}>
                       read_more
                     </span>
                     {activeSubcategory === subIndex && subcategory.subcategories.length > 0 && (

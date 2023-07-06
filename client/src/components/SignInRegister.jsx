@@ -67,7 +67,7 @@ function SignInRegister({ selectedButton, onClose }) {
             onSubmit={submitHandler}
             className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50"
         >
-            <div className="w-10 relative h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-10">
+            <div className="w-10 relative h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-8">
                 <button
                     className="absolute top-2 right-4"
                     onClick={onClose}>
