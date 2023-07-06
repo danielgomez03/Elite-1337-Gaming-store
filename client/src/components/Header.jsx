@@ -5,7 +5,7 @@ import SignInRegister from "./SignInRegister";
 import LoginPassport from "./LoginPassport";
 import { useDispatch } from 'react-redux';
 import { getProducts } from "../redux/actions";
-import { useSession, signOut } from "next-auth/react"
+/* import { useSession, signOut } from "next-auth/react" */
 
 
 function Header() {
@@ -13,7 +13,7 @@ function Header() {
   const [selectedButton, setSelectedButton] = useState(null);
   const [showSignInRegister, setShowSignInRegister] = useState(false);
   const logIn = false; // Se debe modificar según datos del Back
-  const { data: session, status } = useSession()
+/*   const { data: session, status } = useSession() */
 
   const openSignInRegister = (button) => {
     setSelectedButton(button);
@@ -50,7 +50,7 @@ function Header() {
             <img src="" alt="" />
             <h3>{user.name}</h3>
           <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-            <button signOut={() => signOut()} >Log out</button>
+            <button /* signOut={() => signOut()}  */>Log out</button>
           </div>
       ) : (
         <div className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-6">

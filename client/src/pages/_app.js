@@ -20,7 +20,7 @@ function App({ Component, pageProps: { session, ...pageProps }}) {
   };
 
   return (
-    <SessionProvider session={session} basePath="http://localhost:3001/login">
+    
       <Provider store={store}>
         <div className="w-full font-montserrat mt-32 bg-gray-100 text-sm tracking-wider relative">
           <Header />
@@ -39,7 +39,7 @@ function App({ Component, pageProps: { session, ...pageProps }}) {
           <Footer className='mt-auto' />
         </div>
       </Provider>
-    </SessionProvider>
+   
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Products from './guest/Products'
-import { useSession, signIn, signOut } from "next-auth/react"
+/* import { useSession, signIn, signOut } from "next-auth/react" */
 import axios from 'axios';
 
 
