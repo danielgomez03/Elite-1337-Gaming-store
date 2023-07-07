@@ -27,7 +27,6 @@ const Products = () => {
   return (
     <div>
       <Filters />
-      <FavoritesByUserId/>
       <div className="px-auto grid lg:grid-cols-5 md:grid-cols-2 xs:grid-cols-1 gap-3 p-4 ">
         {products?.map((product, index) => {
           return (
