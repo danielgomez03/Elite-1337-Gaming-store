@@ -45,6 +45,9 @@ const getOrdersByUserId = async (req, res) => {
 
 const postCreateOrder = async (req, res) => {
   try {
+    if (!req.session.passport || !req.session.passport.user) {
+      throw new Error("User not authenticated");
+    }
     // Retrieve userId from session and its associated loginId
     const userId = req.session.passport.user;
     const user = await User.findOne({
