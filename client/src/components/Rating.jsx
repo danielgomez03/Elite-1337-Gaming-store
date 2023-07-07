@@ -25,7 +25,7 @@ const Rating = (productId) => {
   };
 
   if (ratings.length === 0) {
-    return <p>No hay calificaciones disponibles.</p>;
+    return <p></p>;
   }
 
   return (

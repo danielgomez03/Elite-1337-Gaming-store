@@ -3,7 +3,7 @@ import { getProducts, clean, filterProductsByPrice, sortProducts, getCartByIdUse
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/components/card';
 import Filters from '../../components/Filters';
-import MyComponent from '@/components/myComponent';
+import FavoritesByUserId from '@/components/FavoritesByUserId';
 
 
 const Products = () => {

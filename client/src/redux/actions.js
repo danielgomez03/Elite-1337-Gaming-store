@@ -9,8 +9,12 @@ export const PAGE = "PAGE";
 export const CLEAN = "CLEAN";
 export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS";
 export const MODIFY_QUANTITY = "MODIFY_QUANTITY";
-export const DELETE_PRODUCT = "DELETE_PRODUCT"
-export const ACTION_BYNAME = "ACTION_BYNAME"
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const ACTION_BYNAME = "ACTION_BYNAME";
+//---------User's types----/
+export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
+export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
+export const FETCH_USER_BY_ID = 'FETCH_USER_BY_ID';
 //---------Sort types----/
 export const SORT_PRODUCTS = "SORT_PRODUCTS";
 //---------Filters types----/
@@ -19,13 +23,16 @@ export const FILTER_PRODUCTS_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
 //---------Rating types----/
 export const GET_RATINGS ="GET_RATINGS";
 export const GET_RATINGS_ERROR ="GET_RATINGS_ERROR";
-
-export const GET_COMMENTS_BY_PRODUCT = "GET_COMMENTS_BY_PRODUCT";
-
 export const ADD_RATING = 'ADD_RATING';
+//---------Comments types----/
+export const GET_COMMENTS_BY_PRODUCT = "GET_COMMENTS_BY_PRODUCT";
 //---------Favorites types----/
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const ADD_FAVORITE_ERROR = 'ADD_FAVORITE_ERROR';
+export const DELETE_FAVORITE = 'DELETE_FAVORITE';
+export const DELETE_FAVORITE_ERROR = 'DELETE_FAVORITE_ERROR';
+export const GET_FAVORITES_SUCCESS = 'GET_FAVORITES_SUCCESS';
+export const GET_FAVORITES_FAILURE = 'GET_FAVORITES_FAILURE';
 //---------other types----/
 
 
@@ -81,16 +88,36 @@ export const addProductToCart = (id) => {
       dispatch({type: ADD_PRODUCT_TO_CART ,payload:cart})
     };
   }
+
+//---------------------------------------------------------------------//
+//User's actions---------------------------------//
+
+export const fetchUsers = () => async (dispatch) => {
+  try {
+    const response = await axios.get('http://localhost:3001/users/');
+    const users = response.data;
+    dispatch({ type: FETCH_USERS_SUCCESS, payload: users });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    dispatch({ type: FETCH_USERS_FAILURE, payload: error.message });
+  }
+};
+
+export const fetchUserById = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/users/id/${userId}`);
+      dispatch({ type: FETCH_USER_BY_ID, payload: response.data });
+    } catch (error) {
+      console.error('Error in fetchUserById:', error);
+      dispatch({ type: FETCH_USER_BY_ID, payload: null });
+    }
+  };
+};
+
+
 //---------------------------------------------------------------------//
 //Get Products actions---------------------------------//
-
-export const getCommentsByProduc = (id) =>{
-  return async function (dispatch) {
-    const response = await axios.get(`http://localhost:3001/comments/product/${id}`);
-    const comments = response.data;
-    dispatch({ type: GET_COMMENTS_BY_PRODUCT, payload: comments });
-  };
-}
 
   export const getProducts = () => {
   return async function (dispatch) {
@@ -172,6 +199,17 @@ export const getProductById = (id) => {
     }
   }
 
+//---------------------------------------------------------------------//
+//Comments actions---------------------------------//
+
+  export const getCommentsByProduc = (id) =>{
+  return async function (dispatch) {
+    const response = await axios.get(`http://localhost:3001/comments/product/${id}`);
+    const comments = response.data;
+    dispatch({ type: GET_COMMENTS_BY_PRODUCT, payload: comments });
+  };
+}
+
 
 //---------------------------------------------------------------------//
 //Ratings actions---------------------------------//
@@ -217,34 +255,72 @@ export const addFavorite = (userId, productId) => {
 
       if (response.status === 200) {
         const favorite = response.data;
-
-        if (favorite.message) {
-          // Si la respuesta contiene un mensaje, significa que el producto ya está en favoritos
-          dispatch({
-            type: ADD_FAVORITE_ERROR,
-            error: favorite.message
-          });
-        } else {
-          // Si no hay mensaje, el favorito se agregó correctamente
-          dispatch({
-            type: ADD_FAVORITE,
-            favorite
-          });
-        }
-      } else {
         dispatch({
-          type: ADD_FAVORITE_ERROR,
-          error: 'Error al agregar el favorito'
+          type: ADD_FAVORITE,
+          favorite
         });
+      } else {
+        throw new Error('Error al agregar el favorito');
       }
     } catch (error) {
+      let errorMessage = 'Error de conexión';
+
+      if (error.response && error.response.data && error.response.data.message) {
+        errorMessage = error.response.data.message;
+      }
+
       dispatch({
         type: ADD_FAVORITE_ERROR,
-        error: 'Error de conexión'
+        error: errorMessage
       });
     }
   };
 };
+
+
+export const deleteFavorite = (userId, productId) => {
+  return async (dispatch) => {
+    try {
+      // Hacer la solicitud DELETE al backend
+      await axios.delete(`http://localhost:3001/favorites/delete/${userId}/${productId}`);
+
+      // Dispatch de la acción para eliminar el producto favorito del state
+      dispatch({
+        type: DELETE_FAVORITE,
+        userId,
+        productId
+      });
+    } catch (error) {
+      console.error(error);
+      // Manejar el error en caso de fallo en la solicitud
+      dispatch({
+        type: DELETE_FAVORITE_ERROR,
+        error: 'Error al eliminar el producto favorito'
+      });
+    }
+  };
+};
+
+export const getFavoritesByUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/favorites/${userId}`);
+      const favorites = response.data;
+
+      dispatch({
+        type: GET_FAVORITES_SUCCESS,
+        favorites: favorites,
+      });
+    } catch (error) {
+      console.error(error);
+      dispatch({
+        type: GET_FAVORITES_FAILURE,
+        error: "Error al obtener los productos favoritos",
+      });
+    }
+  };
+};
+
 
 //---------------------------------------------------------------------//
 //Other actions---------------------------------//

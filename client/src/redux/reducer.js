@@ -20,27 +20,36 @@ import{
   ADD_FAVORITE,
   ADD_FAVORITE_ERROR,
   GET_COMMENTS_BY_PRODUCT,
+  DELETE_FAVORITE, 
+  DELETE_FAVORITE_ERROR,
+  GET_FAVORITES_SUCCESS,
+  GET_FAVORITES_FAILURE,
+  FETCH_USERS_SUCCESS,
+  FETCH_USERS_FAILURE,
+  FETCH_USER_BY_ID
 
 } from './actions'
 
 const initialState = {
-  commentsByProduct:[],
-  productsbyName:[],
+  commentsByProduct: [],
+  productsbyName: [],
   page: 1,
   products: [],
   filteredProducts: [],
   selectedCategory: "",
-  sortOrder: '', 
+  sortOrder: '',
   detail: [],
   categories: [],
-  cart:[],
-  totalProducts:0,
-  actionByName:false,
-  cartUser:[],
+  cart: [],
+  totalProducts: 0,
+  actionByName: false,
+  cartUser: [],
   ratings: [],
   favorites: [],
-  error: null,
-
+  error: null, 
+  users: [],
+  user: [],
+  loading: false, 
 };
 
 const rootReducer= (state=initialState,action)=>{
@@ -85,6 +94,31 @@ switch(action.type){
 //     };
 //   }
 
+//---------------------------------------------------------------------//
+//User´s cases---------------------------------//
+
+case FETCH_USERS_SUCCESS:
+  return {
+    ...state,
+    users: action.payload,
+    loading: false,
+    error: null,
+  };
+
+case FETCH_USERS_FAILURE:
+  return {
+    ...state,
+    loading: false,
+    error: action.payload,
+  };
+
+  case FETCH_USER_BY_ID:
+    return {
+      ...state,
+      loading: false,
+      user: action.payload,
+      error: action.payload ? null : 'An error occurred while retrieving the user by ID'
+    };
 
 //---------------------------------------------------------------------//
 //Get Products cases---------------------------------//
@@ -197,6 +231,29 @@ switch(action.type){
         ...state,
         error: action.error
       };
+
+    case DELETE_FAVORITE:
+        // Filtrar el producto favorito eliminado del state
+        return state.filter((favorite) => !(favorite.userId === action.userId && favorite.productId === action.productId));
+
+    case DELETE_FAVORITE_ERROR:
+        // Manejar el error y posiblemente actualizar el estado o mostrar un mensaje de error
+        console.error(action.error);
+        return state;
+
+    case GET_FAVORITES_SUCCESS:
+          return {
+            ...state,
+            favorites: action.favorites,
+            error: null,
+          };
+          
+    case GET_FAVORITES_FAILURE:
+          return {
+            ...state,
+            favorites: [],
+            error: action.error,
+          };
 //---------------------------------------------------------------------//
 //other cases---------------------------------//  
     case CLEAN:
