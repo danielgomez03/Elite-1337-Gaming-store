@@ -16,6 +16,7 @@ const productValidation = ({
   isActive,
   category,
   images,
+  caption,
 }) => {
   const errors = {};
 
@@ -56,7 +57,7 @@ const productValidation = ({
       discount > 100)
   ) {
     errors.discount = [
-      "Discount must be a number between 0 and 100 with up to 1 decimal places",
+      "Discount must be a number between 0 and 100 with up to 1 decimal place",
     ];
   }
 
@@ -65,14 +66,10 @@ const productValidation = ({
     errors.stock = ["Stock must be a non-negative integer"];
   }
 
-  // IS ACTIVE
-  if (
-    isActive === undefined ||
-    (typeof isActive !== "boolean" &&
-      !(Array.isArray(isActive) && isActive.includes(true)))
-  ) {
-    errors.isActive = ["Please select at least one option for isActive"];
-  }
+  // // IS ACTIVE
+  // if (isActive !== true && isActive !== false) {
+  //   errors.isActive = ["isActive must be either true or false"];
+  // }
 
   // CATEGORY
   if (!category || isNaN(Number(category))) {
@@ -80,24 +77,20 @@ const productValidation = ({
   }
 
   // IMAGES
-  if (images && !Array.isArray(images)) {
-    errors.images = ["Images must be provided as an array"];
-  } else if (images) {
-    for (const image of images) {
-      if (
-        (!image.url ||
-          typeof image.url !== "string" ||
-          !/^https?:\/\/.*\.(jpeg|jpg|gif|png|bmp)$/.test(image.url)) &&
-        (!image.uploaded || typeof image.uploaded !== "boolean")
-      ) {
-        errors.images = ["Invalid image format"];
-        break;
-      }
-      if (image.caption && image.caption.length > 100) {
-        errors.images = ["Caption can't be longer than 100 characters"];
-        break;
-      }
-    }
+  if (
+    images &&
+    !(
+      typeof images === "string" ||
+      (Array.isArray(images) &&
+        images.every((image) => typeof image === "string"))
+    )
+  ) {
+    errors.images = ["Invalid image format"];
+  }
+
+  // CAPTION
+  if (caption && caption.length > 50) {
+    errors.caption = ["Caption can't be longer than 50 characters"];
   }
 
   return errors;

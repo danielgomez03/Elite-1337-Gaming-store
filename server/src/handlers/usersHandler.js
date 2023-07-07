@@ -108,13 +108,13 @@ const postCreateUser = async (req, res) => {
 
     let userImage;
 
-    // Check if an image URL is provided
-    if (image) {
+    if (req.file) {
+      // If an image file was uploaded, create a new image record
+      const imageUrl = req.file.path;
+      userImage = await Image.create({ url: imageUrl });
+    } else if (image) {
       // If an image URL is provided, create a new image record
       userImage = await Image.create({ url: image });
-    } else if (req.file) {
-      // If an image file was uploaded, upload the file and create a new image record
-      userImage = await Image.uploadUser(req.file);
     } else {
       // If neither file nor URL is provided, use the default image URL
       const defaultImageURL =
@@ -211,13 +211,13 @@ const putUpdateUser = async (req, res) => {
 
     let userImage;
 
-    // Check if an image URL is provided
-    if (image) {
+    if (req.file) {
+      // If an image file was uploaded, create a new image record
+      const imageUrl = req.file.path;
+      userImage = await Image.create({ url: imageUrl });
+    } else if (image) {
       // If an image URL is provided, create a new image record
       userImage = await Image.create({ url: image });
-    } else if (req.file) {
-      // If an image file was uploaded, upload the file and create a new image record
-      userImage = await Image.uploadUser(req.file);
     } else {
       // If neither file nor URL is provided, use the default image URL
       const defaultImageURL =
@@ -347,12 +347,8 @@ const patchUpdatePassword = async (req, res) => {
   }
 };
 
-// FIX NEEDED! CHECK IF IMAGE IS UPLOADED CORRECTLY
 const patchUpdateUserImage = async (req, res) => {
   try {
-    console.log("Request body:", req.body);
-    console.log("Request file:", req.file);
-
     const userId = req.params.userId;
     const { image } = req.body;
 
@@ -361,7 +357,6 @@ const patchUpdateUserImage = async (req, res) => {
 
     // Check if there are any validation errors
     if (Object.keys(errors).length > 0) {
-      console.log("Validation errors:", errors);
       return res.status(400).json({ errors });
     }
 
@@ -377,17 +372,18 @@ const patchUpdateUserImage = async (req, res) => {
     if (image) {
       // If an image URL is provided, create a new image record
       userImage = await Image.create({ url: image });
-      console.log("User image created with URL:", image);
     } else if (req.file) {
-      // If an image file was uploaded, upload the file and create a new image record
-      console.log("Uploaded file:", req.file);
-
-      userImage = await Image.uploadUser(req.file);
-      console.log("User image uploaded and created:", userImage);
+      // If an image file was uploaded, create a new image record
+      const imageUrl = req.file.path;
+      userImage = await Image.create({ url: imageUrl });
     }
 
-    await user.setImage(userImage);
+    // Update the user's image if a new image record was created
+    if (userImage) {
+      await user.setImage(userImage);
+    }
 
+    // Retrieve the updated user with associated Image model
     const updatedUser = await User.findByPk(userId, {
       include: [
         {
@@ -404,8 +400,6 @@ const patchUpdateUserImage = async (req, res) => {
         },
       ],
     });
-
-    console.log("Updated user:", updatedUser);
 
     res
       .status(200)

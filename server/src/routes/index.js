@@ -11,8 +11,8 @@ const mailingRoutes = require("./mailingRoutes");
 const ordersRoutes = require("./orderRoutes");
 const ratingsRoutes = require("./ratingRoutes");
 const adminRoutes = require("./adminRoutes");
-const commentsRoutes = require("./commentsRoutes")
-const favoritesRoutes = require("./favoritesRoutes")
+const commentsRoutes = require("./commentsRoutes");
+const favoritesRoutes = require("./favoritesRoutes");
 
 const router = Router();
 
@@ -27,7 +27,7 @@ router.use("/mailing", mailingRoutes);
 router.use("/orders", ordersRoutes);
 router.use("/ratings", ratingsRoutes);
 router.use("/admin", adminRoutes);
-router.use("/comments",commentsRoutes)
+router.use("/comments", commentsRoutes);
 router.use("/favorites", favoritesRoutes);
 
 module.exports = router;
