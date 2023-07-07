@@ -5,7 +5,7 @@ import { getCategories, filterProductsByCategory } from '@/redux/actions';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 
-function NavBar() {
+function NavBar({ typeUser }) {
 
   const router = useRouter();
   const currentLocation = router.asPath;
@@ -23,8 +23,6 @@ function NavBar() {
     };
     return total;
   };
-
-  const [typeUser, setTypeUser] = useState("guest");
 
   const categories = useSelector(state => state.categories);
   useEffect(() => {

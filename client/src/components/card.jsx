@@ -8,22 +8,22 @@ const Card = (props) => {
   const dispatch = useDispatch();
   const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
   return (
-    <article className="h-96 w-52 rounded-xl bg-white p-3 shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
+    <article className="h-96 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
       <Link href={`../users/Details/${props.id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
-          <img src={props.image} alt="Product Photo" className="w-full h-44 object-contain" />
+          <img src={props.image} alt="Product Photo" className="w-full h-44 p-3 object-contain" />
           <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
             <Rating objProduct={props.objProduct} />
           </div>
         </div>
-        <div className="mt-1 p-2 flex-col justify-between items-between flex flex-col h-44">
-          <h2 className="text-slate-700 font-bold">{props.name}</h2>
-          <p className="mt-1 text-xs text-slate-400">Stock: {props.stock}</p>
-          <p className="mt-1 text-xs text-slate-400">Made in {props.origin}</p>
+        <div className="mt-1 pb-0 flex-col justify-between items-between flex flex-col h-48 gap-auto">
+          <h2 className="h-10 text-slate-700 px-5 font-bold">{props.name}</h2>
+          <p className="h-6 mt-1 px-5 text-xs text-slate-400">Stock: {props.stock}</p>
+          <p className="h-6 mt-1 px-5 text-xs text-slate-400">Made in {props.origin}</p>
 
-          <div className="flex mt-3 items-center justify-center gap-3 ">
-            <p className="text-lg font-bold text-blue-500">{props.price}</p>
-            <div className="w-1/2">
+          <div className="mt-3 flex items-center justify-between">
+            <p className="w-1/2 text-[17px] text-center font-bold text-blue-500">$ {props.price}</p>
+            <div className="w-1/2 pr-3">
               <button
                 className="flex items-center justify-center rounded-lg border border-indigo-500 w-full py-1 text-indigo-500 duration-100 hover:bg-blue-600 flex-grow text-sm" 
                 disabled={props.stock === 0}
