@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { productUploads } = require("../config/multer");
 const {
   getProducts,
   getProductByIdHandler,
@@ -20,7 +21,15 @@ productsRoutes.get(
   getProductsByManufacturerHandler,
 );
 
-productsRoutes.post("/create", postCreateProduct);
-productsRoutes.put("/edit/:productId", putUpdateProduct);
+productsRoutes.post(
+  "/create",
+  productUploads.array("images", 3),
+  postCreateProduct,
+);
+productsRoutes.put(
+  "/edit/:productId",
+  productUploads.array("images", 3),
+  putUpdateProduct,
+);
 
 module.exports = productsRoutes;

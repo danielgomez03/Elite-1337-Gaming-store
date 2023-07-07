@@ -53,19 +53,6 @@ server.use(passport.session());
 
 sessionStore.sync();
 
-// Check permissions of uploads directory
-const fs = require("fs");
-const path = require("path");
-const directoryPath = path.join(__dirname, "uploads");
-
-fs.access(directoryPath, fs.constants.W_OK, (error) => {
-  if (error) {
-    console.error("Uploads directory does not have write permissions.");
-  } else {
-    console.log("Uploads directory has write permissions.");
-  }
-});
-
 server.use("/", routes);
 
 // Error catching endware.
