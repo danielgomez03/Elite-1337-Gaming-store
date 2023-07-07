@@ -9,8 +9,12 @@ export const PAGE = "PAGE";
 export const CLEAN = "CLEAN";
 export const TOTAL_PRODUCTS= "TOTAL_PRODUCTS";
 export const MODIFY_QUANTITY = "MODIFY_QUANTITY";
-export const DELETE_PRODUCT = "DELETE_PRODUCT"
-export const ACTION_BYNAME = "ACTION_BYNAME"
+export const DELETE_PRODUCT = "DELETE_PRODUCT";
+export const ACTION_BYNAME = "ACTION_BYNAME";
+//---------User's types----/
+export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
+export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
+export const FETCH_USER_BY_ID = 'FETCH_USER_BY_ID';
 //---------Sort types----/
 export const SORT_PRODUCTS = "SORT_PRODUCTS";
 //---------Filters types----/
@@ -84,6 +88,34 @@ export const addProductToCart = (id) => {
       dispatch({type: ADD_PRODUCT_TO_CART ,payload:cart})
     };
   }
+
+//---------------------------------------------------------------------//
+//User's actions---------------------------------//
+
+export const fetchUsers = () => async (dispatch) => {
+  try {
+    const response = await axios.get('http://localhost:3001/users/');
+    const users = response.data;
+    dispatch({ type: FETCH_USERS_SUCCESS, payload: users });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    dispatch({ type: FETCH_USERS_FAILURE, payload: error.message });
+  }
+};
+
+export const fetchUserById = (userId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`http://localhost:3001/users/id/${userId}`);
+      dispatch({ type: FETCH_USER_BY_ID, payload: response.data });
+    } catch (error) {
+      console.error('Error in fetchUserById:', error);
+      dispatch({ type: FETCH_USER_BY_ID, payload: null });
+    }
+  };
+};
+
+
 //---------------------------------------------------------------------//
 //Get Products actions---------------------------------//
 
