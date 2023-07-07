@@ -100,12 +100,9 @@ const postCreateProduct = async (req, res) => {
       stock,
       isActive,
       category,
+      images,
+      caption,
     } = req.body;
-
-    const images = req.body.images || [];
-    const captions = req.body.images.map((image) => image.caption);
-    // Convert the category value to a number if it's a string
-    const categoryId = parseInt(category, 10); // Convert category to a number if it's a string
 
     // Validate the input data
     const errors = productValidation({
@@ -117,9 +114,9 @@ const postCreateProduct = async (req, res) => {
       discount,
       stock,
       isActive,
-      category: categoryId,
+      category,
       images,
-      captions,
+      caption,
     });
 
     // Check if there are any validation errors
@@ -134,7 +131,7 @@ const postCreateProduct = async (req, res) => {
 
     // Find the selected category and its subcategories
     const selectedCategory = categories.find(
-      (c) => c.categoryId === categoryId,
+      (c) => c.categoryId === parseInt(category, 10),
     );
 
     // Associate the product with the selected category
@@ -152,42 +149,18 @@ const postCreateProduct = async (req, res) => {
 
     await product.setCategory(selectedCategory);
 
-    // Upload and associate the images with the product using Cloudinary and Multer
-    const uploadedImages = [];
+    let uploadedImage;
 
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-      const caption = captions[i];
-
-      if (image.url) {
-        // Image provided as a text URL
-        const uploadedImage = await Image.create({
-          url: image.url,
-          caption,
-        });
-
-        await product.addImages(uploadedImage);
-        uploadedImages.push({ url: image.url, caption });
-      } else {
-        // Image uploaded as a file
-        const uploadResults = await Image.uploadProduct([image]);
-
-        for (const uploadResult of uploadResults) {
-          const { url, caption } = uploadResult;
-
-          const uploadedImage = await Image.create({
-            url,
-            caption,
-          });
-
-          await product.addImages(uploadedImage);
-          uploadedImages.push({ url, caption });
-        }
-      }
+    if (req.file) {
+      // If an image file was uploaded, create a new image record
+      const imageUrl = req.file.path;
+      uploadedImage = await Image.create({ url: imageUrl, caption });
+      await product.addImages(uploadedImage);
+    } else if (images) {
+      // If an image URL is provided, create a new image record
+      uploadedImage = await Image.create({ url: images, caption });
+      await product.addImages(uploadedImage);
     }
-
-    // Add the uploadedImages array to the req.body
-    req.body.images = uploadedImages;
 
     // Return the created product with category and its parent categories
     const createdProduct = await Product.findByPk(product.productId, {
@@ -210,6 +183,7 @@ const postCreateProduct = async (req, res) => {
       .status(200)
       .json({ message: "Product created successfully", createdProduct });
   } catch (error) {
+    console.error("Error in postCreateProduct:", error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -227,6 +201,8 @@ const putUpdateProduct = async (req, res) => {
       stock,
       isActive,
       category,
+      images,
+      caption,
     } = req.body;
 
     // Validate the input data
@@ -278,6 +254,19 @@ const putUpdateProduct = async (req, res) => {
       return res.status(404).json({ message: "Category not found" });
     }
     await product.setCategory(selectedCategory);
+
+    let uploadedImage;
+
+    if (req.file) {
+      // If an image file was uploaded, create a new image record
+      const imageUrl = req.file.path;
+      uploadedImage = await Image.create({ url: imageUrl, caption });
+      await product.setImages([uploadedImage]);
+    } else if (images) {
+      // If an image URL is provided, create a new image record
+      uploadedImage = await Image.create({ url: images, caption });
+      await product.setImages([uploadedImage]);
+    }
 
     // Return the updated product
     const updatedProduct = await Product.findByPk(productId, {

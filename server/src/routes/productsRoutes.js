@@ -23,12 +23,12 @@ productsRoutes.get(
 
 productsRoutes.post(
   "/create",
-  productUploads.array("images", 3),
+  productUploads.single("images"),
   postCreateProduct,
 );
 productsRoutes.put(
   "/edit/:productId",
-  productUploads.array("images", 3),
+  productUploads.single("images"),
   putUpdateProduct,
 );
 

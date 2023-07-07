@@ -17,7 +17,7 @@ const productStorage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "products",
-    // format: async (req, file) => "jpg",
+    format: async (req, file) => "jpg",
     access_mode: "public",
   },
 });
