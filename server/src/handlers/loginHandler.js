@@ -2,6 +2,7 @@ const passport = require("passport");
 const { Strategy: JwtStrategy, ExtractJwt } = require("passport-jwt");
 const { User, Login, Token } = require("../database");
 const jwt = require("jsonwebtoken");
+const { Op } = require("sequelize");
 
 const jwtSecret = "pfhenry37bg12"; // Replace with your own secret key
 
@@ -39,6 +40,10 @@ async function login(req, res, next) {
     { session: false },
     async (err, authenticatedUser, info) => {
       try {
+        console.log("Error:", err); // Log the error, if any
+        console.log("Authenticated User:", authenticatedUser); // Log the authenticated user object
+        console.log("Info:", info); // Log the info object
+
         if (err) {
           console.error("Error during login:", err);
           return next(err);
@@ -88,17 +93,40 @@ async function login(req, res, next) {
 
         console.log("Generated Token:", token);
 
+        const ipAddress = req.ip;
+
+        // Calculate the expiration date
+        const expiresIn = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+        const expiresAt = new Date(Date.now() + expiresIn);
+
+        // Delete all tokens except the new one
+        await Token.destroy({
+          where: {
+            userId: user.userId,
+            tokenValue: {
+              [Op.not]: token,
+            },
+          },
+        });
+
         // Insert token into the Token table
-        await Token.create({
+        const createdToken = await Token.create({
           tokenValue: token,
           tokenType: "Passport",
           userId: user.userId,
           loginId: login.loginId,
+          ipAddress: ipAddress,
+          expiresAt: expiresAt,
         });
 
         console.log("Login successful");
 
-        return res.json({ message: "Login successful", token });
+        // Include the generated token and created token in the response
+        return res.json({
+          message: "Login successful",
+          generatedToken: token,
+          createdToken,
+        });
       } catch (error) {
         console.error("Error during login:", error);
         return next(error);
@@ -107,6 +135,40 @@ async function login(req, res, next) {
   )(req, res, next);
 }
 
+async function getAllTokens(req, res, next) {
+  try {
+    // Retrieve all generated tokens from the Token table
+    const tokens = await Token.findAll();
+
+    return res.json(tokens);
+  } catch (error) {
+    console.error("Error retrieving tokens:", error);
+    return next(error);
+  }
+}
+
+// Logout handler
+async function logout(req, res, next) {
+  try {
+    const { userId } = req.body;
+
+    // Delete all tokens associated with the user
+    const result = await Token.destroy({ where: { userId } });
+
+    if (result === 0) {
+      // No tokens found for the user
+      return res.status(403).json({ message: "User is already logged out" });
+    }
+
+    return res.json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Error during logout:", error);
+    return next(error);
+  }
+}
+
 module.exports = {
   login,
+  getAllTokens,
+  logout,
 };

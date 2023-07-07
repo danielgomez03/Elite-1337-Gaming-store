@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
         allowNull: true,
       },
     },
-    { timestamps: true },
+    { timestamps: true, updatedAt: false },
   );
 
   return Token;
