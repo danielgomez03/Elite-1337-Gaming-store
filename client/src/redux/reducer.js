@@ -31,26 +31,25 @@ import{
 } from './actions'
 
 const initialState = {
-  commentsByProduct:[],
-  productsbyName:[],
+  commentsByProduct: [],
+  productsbyName: [],
   page: 1,
   products: [],
   filteredProducts: [],
   selectedCategory: "",
-  sortOrder: '', 
+  sortOrder: '',
   detail: [],
   categories: [],
-  cart:[],
-  totalProducts:0,
-  actionByName:false,
-  cartUser:[],
+  cart: [],
+  totalProducts: 0,
+  actionByName: false,
+  cartUser: [],
   ratings: [],
   favorites: [],
-  error: null,
-  user: null,
-  loading: false,
-  error: null
-
+  error: null, 
+  users: [],
+  user: [],
+  loading: false, 
 };
 
 const rootReducer= (state=initialState,action)=>{
@@ -105,6 +104,7 @@ case FETCH_USERS_SUCCESS:
     loading: false,
     error: null,
   };
+
 case FETCH_USERS_FAILURE:
   return {
     ...state,

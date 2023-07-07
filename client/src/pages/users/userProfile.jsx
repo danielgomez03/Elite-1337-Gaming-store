@@ -8,7 +8,7 @@ const userProfile = () => {
     <div>
       <h1>¡Mi aplicación de React!</h1>
       <AllUsers/>
-
+      <UserById/>
     </div>
   );
 }

@@ -27,7 +27,6 @@ const allUsers = () => {
       {users.map((user) => (
         <div key={user.userId}>
           <p>Nombre: {user.firstName} {user.lastName}</p>
-          {/* Mostrar otros detalles del usuario aquí */}
         </div>
       ))}
     </div>
