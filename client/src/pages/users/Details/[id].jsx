@@ -4,6 +4,7 @@ import { getProductById, clean , addProductToCart , getCartByIdUser , getComment
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Rating from '@/components/Rating';
+import Comments from '@/components/Comments';
 import axios from 'axios';
 
 
@@ -140,54 +141,7 @@ export default function Detail() {
   </div>
   </div>
   </div>
-  <div>
-  <div className="max-h-50 overflow-y-scroll mt-4">
-  <h2 className="mb-2">Reviews:</h2>
-  <ul className="bg-gray-100 p-4 rounded-lg">
-    {comments?.map((comment) => (
-      <li key={comment.commentId} className="mb-4 p-2 border border-gray-300 rounded-lg">
-        <p className="text-gray-800">{comment.content}</p>
-        {/* Otros elementos y estilos para cada comentario, como autor, fecha, etc. */}
-      </li>
-    ))}
-  </ul>
-</div>
-  {purchased &&
-   <form onSubmit={onSubmitComment}>
-   <div className="comment-form" style={{ maxWidth: '500px', margin: '0 auto' }}>
-    
-     <textarea
-       onChange={onChange}
-       value={content}
-       placeholder="Enter your comment"
-       className="comment-input"
-       style={{
-         width: '100%',
-         height: '100px',
-         padding: '8px',
-         border: '1px solid #ccc',
-         borderRadius: '4px',
-         resize: 'vertical',
-       }}
-     />
-     <button
-       type="submit"
-       className="comment-submit"
-       style={{
-         backgroundColor: '#007bff',
-         color: '#fff',
-         padding: '8px 16px',
-         border: 'none',
-         borderRadius: '4px',
-         cursor: 'pointer',
-       }}
-     >
-       Send
-     </button>
-   </div>
- </form>
-  }
-    </div>
+  <Comments id={id}/>
 </div>
   );
 }
