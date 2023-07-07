@@ -169,7 +169,7 @@ function ShopCart() {
             </div>
             <Link
               href={{
-                pathname: '/users/Payment/StripeCart',  
+                pathname: '/users/checkout/checkCart',  
                 query: {
                   totalPrice: calculateTotalPrice(cart),
                   totalProducts: calculateTotalProducts(cart),

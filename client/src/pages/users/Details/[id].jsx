@@ -119,7 +119,7 @@ export default function Detail() {
           </button>
     <Link
   href={{
-    pathname: '/users/Payment/StripePay',
+    pathname: '/users/checkout/checkPay',
     query: {
       productId: id,
       productName: detail.name,
