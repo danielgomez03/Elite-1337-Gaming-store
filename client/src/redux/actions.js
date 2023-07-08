@@ -15,6 +15,7 @@ export const ACTION_BYNAME = "ACTION_BYNAME";
 export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
 export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
 export const FETCH_USER_BY_ID = 'FETCH_USER_BY_ID';
+export const MODIFY_ISACTIVE_USER = "MODIFI_ISACTIVE_USER"
 //---------Sort types----/
 export const SORT_PRODUCTS = "SORT_PRODUCTS";
 //---------Filters types----/
@@ -91,7 +92,19 @@ export const addProductToCart = (id) => {
 
 //---------------------------------------------------------------------//
 //User's actions---------------------------------//
-
+export const modifyIsActiveUser = (userId,status) =>{
+  console.log(status,userId)
+  if(status){
+   return async function (dispatch) {
+     await axios.patch("http://localhost:3001/admin/user/disable", {userId});
+     dispatch({ type: MODIFY_ISACTIVE_USER });
+   }
+  }else{
+   return async function (dispatch) {
+    await axios.patch("http://localhost:3001/admin/user/enable", {userId});
+    dispatch({ type: MODIFY_ISACTIVE_USER });
+  }}
+ }
 export const fetchUsers = () => async (dispatch) => {
   try {
     const response = await axios.get('http://localhost:3001/users/');

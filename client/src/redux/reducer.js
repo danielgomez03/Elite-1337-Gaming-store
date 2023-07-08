@@ -26,7 +26,8 @@ import{
   GET_FAVORITES_FAILURE,
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
-  FETCH_USER_BY_ID
+  FETCH_USER_BY_ID,
+  MODIFI_ISACTIVE_USER
 
 } from './actions'
 
@@ -72,27 +73,9 @@ switch(action.type){
   case ADD_PRODUCT_TO_CART:
     return { ...state, cart: action.payload };
 
-//   const existingProduct = state.cart.find(item => item.productId === action.payload);
-// console.log(state.cart)
-//   if (existingProduct) {
-  
-//     existingProduct.quantity++;
-//     return {
-//       ...state,
-//       cart: [...state.cart]
-//     };
-//   } else {
-//     // Si el producto no existe 
-//     const newProduct = {
-//       productId: action.payload,
-//       quantity: 1
-//     };
+  case MODIFI_ISACTIVE_USER:
+    return {...state}
 
-//     return {
-//       ...state,
-//       cart: [...state.cart, newProduct]
-//     };
-//   }
 
 //---------------------------------------------------------------------//
 //User´s cases---------------------------------//
