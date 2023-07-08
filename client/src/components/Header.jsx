@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import Link from "next/link";
 import SearchBar from "../components/SearchBar";
 import SignInRegister from "./SignInRegister";
-import LoginPassport from "./LoginPassport";
-import { useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 import { getProducts } from "@/redux/actions";
 
-
 function Header() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [selectedButton, setSelectedButton] = useState(null);
   const [showSignInRegister, setShowSignInRegister] = useState(false);
   const logIn = false; // Se debe modificar según datos del Back
@@ -29,7 +27,9 @@ function Header() {
         <Link href="/" className="ml-10">
           <span className="sr-only">1337 Hardware</span>
           <img
-            onClick={()=>{dispatch(getProducts())}}
+            onClick={() => {
+              dispatch(getProducts());
+            }}
             className="h-8 w-auto"
             src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
             alt=""
