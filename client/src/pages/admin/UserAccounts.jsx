@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 function UserAccounts() {
   const dispatch = useDispatch();
   const users = useSelector(state=>state.users)
+  console.log(users)
   useEffect(()=>{
  dispatch(fetchUsers())
 
@@ -20,27 +21,53 @@ function UserAccounts() {
   };
   return (
     
-    <div className='user-list'>UserAccounts
+    <div className='user-list'>
 <style>
   {`
-      .user-list {
-        width: 100%;
-        max-width: 600px; /* Ajusta el ancho máximo del contenedor principal */
-        margin: 0 auto;
-      }
+     .user-list {
+      width: 100%;
+      max-width: 600px; /* Ajusta el ancho máximo del contenedor principal */
+      margin: 0 auto;
+      margin-top: 2rem;
+    }
+    
+    .table-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem;
+      border-bottom: 1px solid #ccc;
+      font-weight: bold;
+    }
+    
     .user-item {
       display: flex;
       align-items: center;
-      width: 100%;
-      margin-bottom: 1cm;
+      justify-content: space-between;
+      padding: 0.5rem;
+      border-bottom: 1px solid #ccc;
     }
-
+    
+    .column {
+      display: flex;
+      align-items: center;
+    }
+    
     .user-avatar {
       width: 50px;
       height: 50px;
-      object-fit: cover;
       border-radius: 50%;
-      margin-right: 1cm;
+    }
+    
+    .user-name {
+      margin-left: rem;
+    }
+    
+    .user-email {
+      margin: 0 1rem;
+      white-space: nowrap; /* Evita que el texto se ajuste automáticamente */
+      overflow: hidden; /* Oculta el contenido adicional */
+      text-overflow: ellipsis; /* Agrega puntos suspensivos (...) si el contenido es demasiado largo */
     }
 
     .user-info {
@@ -68,32 +95,45 @@ function UserAccounts() {
     }
 
     .user-status.active {
-      background-color: green;
+      background-color:  #FF5F00;
     }
 
     .user-status.inactive {
-      background-color: red;
+      background-color: #C0C0C0;
     }
   `}
 </style>
-        <div>
-        {users.map((user) => (
-  <div key={user.userId} className="user-item">
-    <img src={user.image.url} alt="User Avatar" className="user-avatar" />
-    <div className="user-info">
-      <span className="user-name">{`${user.firstName} ${user.lastName}`}</span>
-      <span>{`${user.firstName} ${user.lastName}`}</span>
+
+  <div className="table-header">
+    <span className="column">Image</span>
+    <span className="column">Name</span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span className="column">Email</span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span className="column">Status</span>
+    <span></span>
+  </div>
+  {users.map((user) => (
+    <div key={user.userId} className="user-item">
+      <img src={user.image.url} alt="User Image" className="user-avatar column" />
+      <span className="user-name column">{`${user.firstName} ${user.lastName}`}</span>
+      <span className="user-email column">{user.login.email}</span>
+      <span></span>
       <button
-        className={`user-status ${user.isActive ? 'active' : 'inactive'}`}
+        className={`user-status ${user.isActive ? 'active' : 'inactive'} column`}
         onClick={() => handleClick(user.userId, user.isActive)}
       >
-        {user.isActive ? 'Activo' : 'Inactivo'}
+        {user.isActive ? 'Active' : 'disable'}
       </button>
     </div>
-  </div>
-))}
-    </div>
-    </div>
+  ))}
+</div>
+
   )
 }
 
