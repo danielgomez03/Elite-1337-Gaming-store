@@ -30,7 +30,7 @@ import {
   POST_LOGIN,
   POST_LOGOUT,
   CONFIRM_SESSION,
-
+  CHANGE_USER,
 } from './actions'
 
 const initialState = {
@@ -67,6 +67,8 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, token: action.payload, typeUser: "guest" }
     case CONFIRM_SESSION:
       return action.payload === state.token ? { ...state, token: action.payload, session: true } : { ...state, session: false, token: "" };
+    case CHANGE_USER:
+      return { ...state, typeUser: action.payload }
     //--------------------------/
     case GET_COMMENTS_BY_PRODUCT:
       return { ...state, commentsByProduct: action.payload }

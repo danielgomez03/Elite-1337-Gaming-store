@@ -37,6 +37,7 @@ export const GET_FAVORITES_FAILURE = 'GET_FAVORITES_FAILURE';
 export const POST_LOGIN = "POST_LOGIN";
 export const POST_LOGOUT = "POST_LOGOUT";
 export const CONFIRM_SESSION = "CONFIRM_SESSION";
+export const CHANGE_USER = "CHANGE_USER";
 //---------other types----/
 
 
@@ -107,6 +108,10 @@ export const postLogout = (tokenRedux) => {
       console.error("Error during logout:", error);
     }
   };
+};
+
+export const changeUser = (typeUser) => {
+  dispatch({ type: CHANGE_USER, payload: typeUser });
 };
 
 // -----------actions cart----------------------------------------------------------------------------------------
