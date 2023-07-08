@@ -64,7 +64,7 @@ const rootReducer = (state = initialState, action) => {
     case POST_LOGIN:
       return { ...state, token: action.payload }
     case POST_LOGOUT:
-      return { ...state, token: action.payload }
+      return { ...state, token: action.payload, typeUser: "guest" }
     case CONFIRM_SESSION:
       return action.payload === state.token ? { ...state, token: action.payload, session: true } : { ...state, session: false, token: "" };
     //--------------------------/
