@@ -53,28 +53,30 @@ const SubscriptionBox = () => {
   };
 
   return (
-    <div className="w-72 mx-4 bg-gray-200 py-2 px-4">
-      <h2 className="text-2xl font-bold mb-4 text-right">Subscribe to Our Newsletter</h2>
-      <form onSubmit={handleSubmit} className="flex justify-end">
+    <div className="w-70 mx-2 bg-indigo-800 py-4 px-4 rounded">
+      <h2 className="text-1xl font-bold mb-4 text-center text-gray-200">
+        Subscribe to Our Newsletter
+      </h2>
+      <form onSubmit={handleSubmit} className="flex justify-center">
         <input
           type="email"
           value={email}
           onChange={handleChange}
-          className={`w-36 py-2 px-4 border rounded-l ${error ? "border-red-500" : "border-gray-300"
-            } focus:outline-none focus:border-indigo-500`}
+          className={`w-40 py-2 px-4 rounded-l text-gray-600 ${
+            error ? "border-red-500" : "border-gray-300"
+          }`}
           placeholder="Enter your email"
         />
         <button
           type="submit"
-          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-2.5 rounded-r"
+          className="bg-indigo-500 hover:bg-indigo-600 text-gray-200 py-2 px-3 rounded-r"
         >
           Subscribe
         </button>
       </form>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-      {message && <p className="text-green-500 mt-2">{message}</p>}
+      {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
+      {message && <p className="text-green-500 mt-2 text-center">{message}</p>}
     </div>
-
   );
 };
 
