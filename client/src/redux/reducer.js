@@ -27,10 +27,15 @@ import {
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
   FETCH_USER_BY_ID,
+
   POST_LOGIN,
   POST_LOGOUT,
   CONFIRM_SESSION,
   CHANGE_USER,
+
+  MODIFI_ISACTIVE_USER
+
+
 } from './actions'
 
 const initialState = {
@@ -95,6 +100,7 @@ const rootReducer = (state = initialState, action) => {
     case ADD_PRODUCT_TO_CART:
       return { ...state, cart: action.payload };
 
+
     //   const existingProduct = state.cart.find(item => item.productId === action.payload);
     // console.log(state.cart)
     //   if (existingProduct) {
@@ -110,6 +116,11 @@ const rootReducer = (state = initialState, action) => {
     //       productId: action.payload,
     //       quantity: 1
     //     };
+
+  case MODIFI_ISACTIVE_USER:
+    return {...state}
+
+
 
     //     return {
     //       ...state,
