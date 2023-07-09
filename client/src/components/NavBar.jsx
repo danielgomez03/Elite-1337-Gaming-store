@@ -198,7 +198,7 @@ function NavBar({ typeUser }) {
 
         {typeUser === "guest" && (
           <Link
-            href="/Home"
+            href="/"
             className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
             Home
           </Link>
@@ -206,7 +206,7 @@ function NavBar({ typeUser }) {
 
         {typeUser === "guest" && (
           <Link
-            href={`/about`}
+            href={`/About`}
             className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
             Company
           </Link>
