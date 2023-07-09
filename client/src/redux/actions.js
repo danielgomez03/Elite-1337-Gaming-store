@@ -45,7 +45,7 @@ export const CHANGE_USER = "CHANGE_USER";
 
 
 // -----------actions session----------------------------------------------------------------------------------------
-export const confirmSession = (tokenRedux) => {
+export const confirmSession = (tokenRedux, userId) => {
   return async function (dispatch) {
     try {
       const response = await axios.get("http://localhost:3001/login/tokens", {
@@ -55,28 +55,30 @@ export const confirmSession = (tokenRedux) => {
       });
 
       const { data } = response;
-      if (data && data.length > 0 && data[0] === tokenRedux) {
-        console.log("token", data[0]);
-        dispatch({ type: CONFIRM_SESSION, payload: data[0] });
+      console.log("confirmSession", data);
+      if (data && data.message === "Session persisted") {
+        dispatch({ type: CONFIRM_SESSION, payload: { token: tokenRedux, userId } });
+        console.log("Session confirmed");
       } else {
-        console.log("Not session initialized");
-      };
+        console.log("Not session persisted");
+      }
     } catch (error) {
-      console.error("Error during login:", error);
-      // Aquí puedes lanzar una acción adicional para manejar el estado de error si es necesario
-    };
+      console.log("Error during session confirmation:", error);
+    }
   };
 };
 
-export const postLogin = (tokenRedux, credentials) => {
+
+export const postLogin = (tokenRedux, credentials, userId) => {
   return async function (dispatch) {
     try {
-      if (tokenRedux === "") {
+      if (tokenRedux === "" && userId === "") {
         const response = await axios.post("http://localhost:3001/login/signin", credentials);
-        const token = response.data;
-        if (token) {
-          console.log("token", token);
-          dispatch({ type: POST_LOGIN, payload: token });
+        const token = response.data.generatedToken;
+        const userId = response.data.userId;
+        if (token && userId) {
+          console.log("LoginAction", response.data.message);
+          dispatch({ type: POST_LOGIN, payload: { token, userId } });
         } else {
           console.log("Login failed");
         }
@@ -85,33 +87,28 @@ export const postLogin = (tokenRedux, credentials) => {
       }
     } catch (error) {
       console.error("Error during login:", error);
+      dispatch({ type: POST_LOGIN, payload: { error } });
     }
   };
 };
 
-export const postLogout = (tokenRedux) => {
+export const postLogout = (userId) => {
   return async function (dispatch) {
     try {
-      const response = await axios.post("http://localhost:3001/login/signout", null, {
-        headers: {
-          Authorization: `Bearer ${tokenRedux}`,
-        },
-      });
-
-      if (response.data === "Logout Succesful") {
-        const token = "";
-        dispatch({ type: POST_LOGOUT, payload: token });
-      } else {
-        console.log("Logout failed");
-      }
+      const data = { userId: userId };
+      const response = await axios.post("http://localhost:3001/login/signout", data);
+      dispatch({ type: POST_LOGOUT, payload: "" });
     } catch (error) {
       console.error("Error during logout:", error);
+      dispatch({ type: POST_LOGOUT, payload: "" });
     }
   };
 };
 
 export const changeUser = (typeUser) => {
-  dispatch({ type: CHANGE_USER, payload: typeUser });
+  return function (dispatch) {
+    return dispatch({ type: CHANGE_USER, payload: typeUser });
+  }
 };
 
 // -----------actions cart----------------------------------------------------------------------------------------
