@@ -1,12 +1,16 @@
-import React from 'react'
-import Products from './guest/Products'
 
-function Home() {
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Products from './guest/Products';
+import CardContainer from '../components/cardsContainer';
+
+function Index() {
+
   return (
     <div>
-      <Products/>
+      <CardContainer />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Index;

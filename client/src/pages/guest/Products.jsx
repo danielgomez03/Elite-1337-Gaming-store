@@ -12,7 +12,6 @@ const Products = () => {
 
   useEffect(() => {
     dispatch(getCartByIdUser(id));
-    dispatch(getProducts());
 
     return () => {
       dispatch(clean());
