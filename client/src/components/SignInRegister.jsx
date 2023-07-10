@@ -256,7 +256,7 @@ function SignInRegister({ selectedButton, onClose }) {
     }
   };
 
-const submitLogin = async (e) => {
+  const submitLogin = async (e) => {
     e.preventDefault();
     await dispatch(postLogin(tokenRedux, credentials, userId));
     typeUser !== "guest" && onClose();
@@ -275,14 +275,14 @@ const submitLogin = async (e) => {
       method={selectedButton === "register" ? "POST" : "GET"}
       encType="multipart/form-data"
       onSubmit={selectedButton === "register" ? submitRegister : submitLogin}
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50 "
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50 ml-0"
     >
       <div className="w-10 relative h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-8">
         <button
-          className="absolute top-2 right-4 px-3 mt-2 py-1 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 mb-3 font-bold"
+          className="absolute top-2 right-4 px-3 mt-2 py-1"
           onClick={onClose}
         >
-          X
+          x
         </button>
         <div className="w-full flex flex-row flex-wrap justify-between">
           {selectedButton === "register" ? (
@@ -310,7 +310,7 @@ const submitLogin = async (e) => {
                 {error.firstName ? <p className="text-red-500 text-sm">{error.firstName}</p> : ""}
               </div>
 
-              <div className="mb-4 w-1/2 pr-2">
+              <div className="mb-4 w-1/2">
                 <label htmlFor="lastName" className="block mb-2 font-bold">
                   Last Name <span className="font-bold text-red-500"> *</span>
                 </label>
@@ -323,6 +323,7 @@ const submitLogin = async (e) => {
                   type="text" />
                 {error.lastName ? <p className="text-red-500 text-sm">{error.lastName}</p> : ""}
               </div>
+
               <div className="mb-4 w-1/3 pr-2">
                 <label htmlFor="country" className="block mb-2 font-bold">
                   Country
@@ -342,8 +343,8 @@ const submitLogin = async (e) => {
                 ) : (
                   ""
                 )}
-
               </div>
+
               <div className="mb-4 w-1/3 pr-2">
                 <label htmlFor="region" className="block mb-2 font-bold">
                   Region
@@ -359,7 +360,7 @@ const submitLogin = async (e) => {
                 {error.region ? <p className="text-red-500 text-sm">{error.region}</p> : ""}
               </div>
 
-              <div className="mb-4 w-1/3 pr-2">
+              <div className="mb-4 w-1/3">
                 <label htmlFor="city" className="block mb-2 font-bold">
                   City
                 </label>
@@ -387,7 +388,7 @@ const submitLogin = async (e) => {
                 {error.adress ? <p className="text-red-500 text-sm">{error.adress}</p> : ""}
 
               </div>
-              <div className="mb-4 w-1/5 pr-2">
+              <div className="mb-4 w-1/5">
                 <label htmlFor="postalCode" className="block mb-2 font-bold">
                   Postal Code
                 </label>
@@ -400,6 +401,7 @@ const submitLogin = async (e) => {
                   type="text" />
                 {error.postalCode ? <p className="text-red-500 text-sm">{error.postalCode}</p> : ""}
               </div>
+
               <div className="mb-4 w-1/3 pr-2">
                 <label htmlFor="phoneNumber" className="block mb-2 font-bold">
                   Phone Number
@@ -433,7 +435,7 @@ const submitLogin = async (e) => {
                 )}
               </div>
 
-              <div className="mb-4 w-1/3 pr-2">
+              <div className="mb-4 w-1/3">
                 <label htmlFor="birthDate" className="block mb-2 font-bold">
                   Birth Date
                 </label>
@@ -450,7 +452,7 @@ const submitLogin = async (e) => {
             </div>
           ) : null}
 
-          <div className="mb-4 w-full pr-2">
+          <div className="mb-4 w-full">
             <label htmlFor="email" className="block mb-2 font-bold">
               E-mail
               <span className="font-bold text-red-500"> * </span>
@@ -470,7 +472,7 @@ const submitLogin = async (e) => {
             )}
           </div>
 
-          <div className="mb-4 w-1/2 pr-2">
+          <div className={`mb-4 ${selectedButton === "register" ? "w-1/2" : "w-full" } pr-2`} >
             <label htmlFor="password" className="block mb-2 font-bold">
               Password
               <span className="font-bold text-red-500"> * </span>
@@ -484,7 +486,7 @@ const submitLogin = async (e) => {
               type="password"
             />
             {selectedButton === "signIn" ? (
-              <button className="absolute right-10 mt-0 text-sm text-center font-bold w-1/6 px-2 py-1 bg-indigo-500 text-white font-sm rounded-md hover:bg-indigo-600 justify">
+              <button className="absolute right-12 mt-10  text-xs">
                 Reset Password
               </button>
             ) : (
@@ -498,7 +500,7 @@ const submitLogin = async (e) => {
           </div>
 
           {selectedButton === "register" ? (
-            <div className="mb-4 w-1/2 pr-2">
+            <div className="mb-4 w-1/2">
               <label htmlFor="repeatPassword" className="block mb-2 font-bold">
                 Repeat Password
                 <span className="font-bold text-red-500"> * </span>
@@ -647,26 +649,22 @@ const submitLogin = async (e) => {
           </div>
         ) : null}
         <button
-
           className="w-full px-4 mt-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
           type='submit'
           disabled={selectedButton === "register" && error !== null && !isChecked}>
           {selectedButton === "register" ? "Register" : "Sign In"}
         </button>
+        <button
+          className="w-full px-4 mt-4 py-2 border rounded-md"
+          onClick={() => signIn()}>Sign In with Google</button>
 
-        <div className='w-full flex flex-col justify-center items-center'>
-          <div className='flex' >
-            <button onClick={() => signIn()}>Sign In with Google</button>
-            <button>Sign In with Facebook</button>
-          </div>
+
+        <div className='w-full flex flex-col justify-center items-center mt-2'>
           <p>Don't have an account yet?</p>
           <button
-            className="w-1/6 px-2 mt-2 py-1 bg-indigo-500 text-white font-sm rounded-md hover:bg-indigo-600" >
+            className="w-1/6 px-1 mt-2 py-1 bg-indigo-500 text-white font-sm rounded-md hover:bg-indigo-600" >
             {selectedButton === "register" ? "Sign In" : "Register"}
           </button>
-          <div className="flex font-bold">
-            <button onClick={() => signIn()}>Sign In with Google</button>
-          </div>
         </div>
       </div>
     </form >
