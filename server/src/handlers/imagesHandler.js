@@ -68,10 +68,26 @@ const getImagesByProductsHandler = async (req, res) => {
   }
 };
 
+const postImageUploadHandler = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No image file provided" });
+    }
+
+    const imageUrl = req.file.path; // Access the uploaded image URL
+
+    res.status(200).json({ imageUrl });
+  } catch (error) {
+    console.error("Error uploading image:", error);
+    res.status(500).json({ message: "Image upload failed" });
+  }
+};
+
 module.exports = {
   getAllImagesHandler,
   getImageByIdHandler,
   getImagesByCaptionsHandler,
   getImagesByUsersHandler,
   getImagesByProductsHandler,
+  postImageUploadHandler,
 };

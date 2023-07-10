@@ -203,31 +203,31 @@ function NavBar() {
 
             <span className="lg:block lg:h-6 lg:w-px mx-5 bg-gray-200 block h-px w-full" aria-hidden="true" />
 
-            {typeUser === "guest" && (
-              <Link
-                href="/Home"
-                className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
-                Home
-              </Link>
-            )}
+        {typeUser === "guest" && (
+          <Link
+            href="/"
+            className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
+            Home
+          </Link>
+        )}
 
-            {typeUser === "guest" && (
-              <Link
-                href={`/about`}
-                className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
-                Company
-              </Link>
-            )}
+        {typeUser === "guest" && (
+          <Link
+            href={`/About`}
+            className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
+            Company
+          </Link>
+        )}
 
-            <div className='relative h-full'>
-              {typeUser === "users" && (
-                <button
-                  onMouseEnter={() => handleMouseEnter("My account")}
-                  onMouseLeave={handleMouseLeave}
-                  className={`flex w-full h-full px-5 items-center justify-center text-sm font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900 ${activeCategory === "My account" ? 'lg:bg-white text-gray-900' : 'lg:text-white'}`}>
-                  My account
-                </button>
-              )}
+        <div className='relative h-full'>
+          {typeUser === "users" && (
+            <button
+              onMouseEnter={() => handleMouseEnter("My account")}
+              onMouseLeave={handleMouseLeave}
+              className={`flex w-full h-full px-5 items-center justify-center text-sm font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900 ${activeCategory === "My account" ? 'lg:bg-white text-gray-900' : 'lg:text-white'}`}>
+              My account
+            </button>
+          )}
               {activeCategory === "My account" && (
                 <div
                   className="hidden lg:block absolute top-full lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"

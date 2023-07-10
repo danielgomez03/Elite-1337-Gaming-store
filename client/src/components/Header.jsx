@@ -6,13 +6,13 @@ import LoginPassport from "./LoginPassport";
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts, postLogout } from "@/redux/actions";
 
-
 function Header() {
   const dispatch = useDispatch()
 
   const user = useSelector((state) => state.user);
   const typeUser = useSelector(state => state.typeUser);
   const userId = useSelector(state => state.userId);
+
   const [selectedButton, setSelectedButton] = useState(null);
   const [showSignInRegister, setShowSignInRegister] = useState(false);
 

@@ -118,25 +118,24 @@ const postCreateUser = async (req, res) => {
     } else {
       // If neither file nor URL is provided, use the default image URL
       const defaultImageURL =
-        "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687509865/users/default-userImage_yqbaz3.png";
+        "https://res.cloudinary.com/pf-henry-37b-g12/image/upload/v1687509865/users/defaultUserImage.png";
       userImage = await Image.create({ url: defaultImageURL });
     }
 
     await user.setImage(userImage);
 
     const createdUser = await User.findByPk(user.userId, {
+      attributes: {
+        exclude: ["userRole", "isActive", "createdAt", "updatedAt"],
+      },
       include: [
         {
           model: Login,
-          attributes: {
-            exclude: ["createdAt", "updatedAt", "userId"],
-          },
+          attributes: ["email", "password"],
         },
         {
           model: Image,
-          attributes: {
-            exclude: ["caption", "productId", "userId"],
-          },
+          attributes: ["url"],
         },
       ],
     });
