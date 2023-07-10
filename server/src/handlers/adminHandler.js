@@ -1,5 +1,6 @@
-const { User, Login } = require("../database");
+const { User, Login ,Product} = require("../database");
 const { sendUserDisabledEmailHandler } = require("../handlers/mailingHandler");
+const { editProduct } = require("../controllers/adminControllers")
 
 const getDisabledUsersHandler = async (req, res) => {
   try {
@@ -67,8 +68,49 @@ const patchEnableUserHandler = async (req, res) => {
   }
 };
 
+
+const patchProductStatusHandler = async (req, res) => {
+  const { productId } = req.body;
+
+  try {
+    const product = await Product.findByPk(productId);
+
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    product.isActive = !product.isActive;
+    await product.save();
+
+    const message = product.isActive ? "Product enabled" : "Product disabled";
+    res.json({ message });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to update product status" });
+  }
+};
+
+
+
+const patchProductHandler = async (req, res) => {
+  const { productId, updates } = req.body;
+  try {
+    const product = await editProduct(productId, updates);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+    res.json(product);
+  } catch (error) {
+    console.error("Error in patchProductHandler:", error);
+    res.status(500).json({ error: "Failed to edit the product" });
+  }
+};
+
 module.exports = {
   getDisabledUsersHandler,
   patchDisableUserHandler,
   patchEnableUserHandler,
+  patchProductHandler,
+  patchProductStatusHandler,
+  
 };

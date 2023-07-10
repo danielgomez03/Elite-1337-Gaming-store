@@ -9,9 +9,10 @@ const Card = (props) => {
   const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
   return (
     <article className="h-96 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
-      <Link href={`../users/Details/${props.id}`}>
         <div className="relative flex items-end overflow-hidden rounded-xl">
+      <Link href={`../users/Details/${props.id}`}>
           <img src={props.image} alt="Product Photo" className="w-full h-44 p-3 object-contain" />
+          </Link>
           <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
             <Rating objProduct={props.objProduct} />
           </div>
@@ -60,7 +61,7 @@ const Card = (props) => {
             </div>
           </div>
         </div>
-      </Link>
+      
     </article>
   );
 };

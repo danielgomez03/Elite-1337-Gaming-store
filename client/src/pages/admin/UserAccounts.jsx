@@ -4,23 +4,68 @@ import { useDispatch, useSelector } from 'react-redux'
 function UserAccounts() {
   const dispatch = useDispatch();
   const users = useSelector(state=>state.users)
-  console.log(users)
+  const [name, setName] = useState('');
+  const [filteredUsers , setFilteredUsers] = useState([]);
   useEffect(()=>{
- dispatch(fetchUsers())
-
-  },[])
-
+    dispatch(fetchUsers())
+    
+    
+  },[dispatch])
+  
   const handleClick = (userId,isActive) => {
     
-   
-      dispatch(modifyIsActiveUser(userId,isActive)).then(()=>{
-        dispatch(fetchUsers())
-      })
-   
+    
+    dispatch(modifyIsActiveUser(userId,isActive)).then(()=>{
+      dispatch(fetchUsers())
+    })
+    
     
   };
+ 
+  const handleFilterChange = (e) => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
+
+  const typeAdmin = (e)=>{
+    e.preventDefault();
+  if(e.target.value ==="common")
+   return setFilteredUsers( users.filter((user) => user.userRole === "common"))
+   return setFilteredUsers( users.filter((user) => user.userRole === "super"))
+  }
+  const handleSubmit = () => {
+    setFilteredUsers ( users.filter((user) =>
+    user.firstName.toLowerCase().includes(name.toLowerCase()))
+  );
+  }
   return (
-    
+    <div><div>
+       <button
+                class='button'
+                onClick={()=>{setFilteredUsers(users)
+                }}>
+                Rest
+            </button>
+       <input
+        type="text"
+        placeholder="Search User"
+        value={name}
+        onChange={handleFilterChange}
+      />
+       <button
+                class='button'
+                type='submit'
+                onClick={()=>{handleSubmit()
+                  setName('')}}>
+                Search
+            </button>
+      </div>
+         <select className='button'onChange={typeAdmin} name="" id="">
+         <option  value=""selected='selected'>TypeUser:</option>
+        <option value="common">TypeUser: User</option>
+        <option value="super">TypeUser: Admin</option>
+        
+      </select>
     <div className='user-list'>
 <style>
   {`
@@ -124,6 +169,7 @@ function UserAccounts() {
       <span className="user-name column">{`${user.firstName} ${user.lastName}`}</span>
       <span className="user-email column">{user.login.email}</span>
       <span></span>
+     
       <button
         className={`user-status ${user.isActive ? 'active' : 'inactive'} column`}
         onClick={() => handleClick(user.userId, user.isActive)}
@@ -133,7 +179,7 @@ function UserAccounts() {
     </div>
   ))}
 </div>
-
+</div>
   )
 }
 

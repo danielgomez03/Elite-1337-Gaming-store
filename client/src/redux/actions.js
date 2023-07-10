@@ -11,6 +11,8 @@ export const TOTAL_PRODUCTS = "TOTAL_PRODUCTS";
 export const MODIFY_QUANTITY = "MODIFY_QUANTITY";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 export const ACTION_BYNAME = "ACTION_BYNAME";
+export const EDIT_PRODUCT = "EDIT_PRODUCT";
+export const CHANGE_PRODUCT_STATUS = "CHANGE_PRODUCT_STATUS";
 //---------User's types----/
 export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
 export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
@@ -203,7 +205,53 @@ export const fetchUserById = (userId) => {
 
 
 //---------------------------------------------------------------------//
-//Get Products actions---------------------------------//
+//Products actions---------------------------------//
+export const changeProductStatus = (productId) => {
+  return async function (dispatch) {
+    const response = await axios.patch("http://localhost:3001/admin/product/edit/status", {productId});
+    const product = response.data;
+    console.log(product)
+    dispatch({ type: CHANGE_PRODUCT_STATUS, payload: product });
+  };
+}
+export const editProduct = (productId,p,data) =>{
+let modify = {}
+  switch(p){  
+    case "stock":
+    modify = {  productId: productId,
+    updates: {
+    stock:data
+  }}
+  break
+  case "price":
+    modify = {  productId: productId,
+    updates: {
+    price:data
+  }}
+  break
+  case "discount":
+    modify = {  productId: productId,
+    updates: {
+    discount:data
+  }}
+  break
+  case "description":
+    modify = {  productId: productId,
+    updates: {
+    description:data
+  }}
+  break
+  default: modify={}
+
+}
+console.log(modify)
+  return async function (dispatch) {
+    const response = await axios.patch("http://localhost:3001/admin/product/edit", modify);
+    const product = response.data;
+    console.log(product)
+    dispatch({ type: EDIT_PRODUCT, payload: product });
+  };
+}
 
 export const getProducts = () => {
   return async function (dispatch) {
