@@ -2,6 +2,7 @@ import { editProduct, getProducts, changeProductStatus } from '@/redux/actions';
 import React, { useEffect , useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+
 function ProductsAdmin() {
   const dispatch = useDispatch();
   const products = useSelector(state=>state.products)
@@ -33,68 +34,12 @@ const handleDescriptionChange = (index, value) => {
   
   return (
     
-    <div className="product-list">
-  <style>
-    {`
-   .input-stock,
-   .input-container {
-     display: flex;
-     align-items: center;
-   }
-   
-   .input-container {
-     gap: 10px;
-   } 
-    .moto-input {
-      margin: 10px;
-      border: 1px solid #ccc;
-    }
-    .update-button {
-      padding: 0.5rem;
-      background-color: #f0f0f0;
-      color: #333;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-        }
-    .update-button:hover {
-      color: #C0C0C0;
-      background-color: #00315E;
-    }
-    .product-list {
-      width: 100%;
-      max-width: 80rem;
-      margin: 0 auto;
-      margin-top: 2rem;
-    }
-    
-    .table {
-      border-collapse: collapse;
-      width: 100%;
-    }
-    
-    .table-header {
-      font-weight: bold;
-      border-bottom: 1px solid #ccc;
-    }
-    
-    .table-row {
-      border-bottom: 1px solid #ccc;
-    }
-    
-    .table-cell {
-      padding: 0.5rem;
-    }
-    
-    .image {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-    }
-    `}
-  </style>
+    <div 
+    className="product-list">
 
-  <table className="table">
+
+  <table 
+    className="table">
     <thead>
       <tr className="table-header">
         <th className="table-cell"></th>
@@ -190,50 +135,142 @@ const handleDescriptionChange = (index, value) => {
         </td>
         <td className="table-cell">
         <button
-        onClick={()=>{dispatch(changeProductStatus(item.productId))
-          .then(() => {
+  className={`switch-button ${item.isActive ? 'active' : ''}`}
+  onClick={() => {
+    dispatch(changeProductStatus(item.productId)).then(() => {
+      dispatch(getProducts());
+    });
+  }}
+>
+  {item.isActive ? 'on' : 'off'}
+</button>
+        </td>
+        <td className="table-cell">
+  <div className="description-container">
+    <span>{item.description}</span>
+    {!showDescriptionInput && (
+      <button
+        className="update-button"
+        onClick={() => setShowDescriptionInput(true)}
+      >
+        edit
+      </button>
+    )}
+  </div>
+  {showDescriptionInput && (
+    <div>
+      <input
+        className="moto-input"
+        type="textarea"
+        name="description"
+        value={description[item.productId] || ''}
+        onChange={(e) => handleDescriptionChange(item.productId, e.target.value)}
+      />
+      <button
+        className="update-button"
+        onClick={() => {
+          console.log(description[item.productId]);
+          dispatch(editProduct(item.productId, "description", description[item.productId])).then(() => {
             dispatch(getProducts());
+            setDescription([]);
+            setShowDescriptionInput(false);
           });
-        }
-      }
-        >{item.isActive ? 'Active' : 'Inactive'}</button>
-        </td>
-        <td className="table-cell">{item.description}
-        {!showDescriptionInput && 
-        <button 
-        className='update-button'
-        onClick={() => setShowDescriptionInput(true)}>edit</button>
-  }
-        {showDescriptionInput && (
-          <div>
-        <input
-              className="moto-input"
-              type="textarea"
-              name="description"
-              value={description[item.productId] || ''}
-              onChange={(e) => handleDescriptionChange(item.productId, e.target.value)}
-            />
-            <button
-              className="update-button"
-              onClick={() => {
-                console.log(description[item.productId])
-                dispatch(editProduct(item.productId, "description", description[item.productId])).then(() => {
-                  dispatch(getProducts());
-                  setDescription([]);
-                  setShowDescriptionInput(false)
-                });
-              }}
-            >
-              update
-            </button>
-            </div>
-        )}
-        </td>
+        }}
+      >
+        update
+      </button>
+    </div>
+  )}
+</td>
       </tr>
     );
   })}
 </tbody>
   </table>
+  <style>{`
+        
+        .product-list {
+          width: 100%;
+          max-width: 80rem;
+          margin: 0 auto;
+          margin-top: 2rem;
+        }
+        .table {
+          border-collapse: collapse;
+          width: 100%;
+        }
+        .table-header {
+          font-weight: bold;
+          border-bottom: 1px solid #ccc;
+        }
+        .table-row {
+          border-bottom: 1px solid #ccc;
+        }
+        .table-cell {
+          padding: 0.5rem;
+        }
+        .image {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+        .input-stock,
+        .input-container {
+          display: flex;
+          align-items: center;
+        }
+        .input-container {
+          gap: 10px;
+        }
+        .moto-input {
+          margin: 10px;
+          border: 1px solid #ccc;
+        }
+        .description-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .update-button {
+          padding: 0.5rem;
+          background-color: #969696;
+          color: #333;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+        }
+        .update-button:hover {
+          color: #969696;
+          background-color: #00315E;
+        }
+        .switch-button {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 30px;
+          background-color: #ccc;
+          border-radius: 15px;
+          overflow: hidden;
+          cursor: pointer;
+        }
+        .switch-button::before {
+          
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          width: 26px;
+          height: 26px;
+          background-color: #fff;
+          border-radius: 50%;
+          transition: transform 0.3s ease;
+        }
+        .switch-button.active {
+          background-color: #FF5F00;
+        }
+        .switch-button.active::before {
+          transform: translateX(30px);
+        }
+      `}</style>
 </div>
   )
 }
