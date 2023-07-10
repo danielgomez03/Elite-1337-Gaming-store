@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react';
+import FavoritesByUserId from '@/components/FavoritesByUserId'
+
 
 function Favorites() {
+
+
+
   return (
-    <div>Favorites</div>
+    <div>
+      <FavoritesByUserId/>
+    </div>
   )
 }
 
