@@ -27,20 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/admin/Dashboard": [
+    "/users/checkout/checkPay": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/admin/Dashboard.js"
-    ],
-    "/admin/Products": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/admin/Products.js"
-    ],
-    "/users/Products": [
-      "static/chunks/webpack.js",
-      "static/chunks/main.js",
-      "static/chunks/pages/users/Products.js"
+      "static/chunks/pages/users/checkout/checkPay.js"
     ]
   },
   "ampFirstPages": []

@@ -176,9 +176,6 @@ const Checkout = () => {
           {!showDeliveryInfo && !showBillingInfo ? (
             <div>
               <h2>¿Cómo te gustaría recibir tu pedido?</h2>
-              <div>
-                <button>Iniciar sesión</button>
-              </div>
               <h2>Ingresa tu nombre y dirección:</h2>
     <form onSubmit={handleFormSubmit}>
         <div>

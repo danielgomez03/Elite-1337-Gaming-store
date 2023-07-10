@@ -2,8 +2,7 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/admin/Dashboard": "pages/admin/Dashboard.js",
-  "/users/Products": "pages/users/Products.js",
+  "/users/checkout/checkPay": "pages/users/checkout/checkPay.js",
   "/": "pages/index.js",
-  "/admin/Products": "pages/admin/Products.js"
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
 }
