@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -54,6 +55,10 @@ function Index() {
     console.log("session", session);
     console.log("userId", userId);
   }, [tokenRedux, session, userId]);
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
 
   return (
     <div>

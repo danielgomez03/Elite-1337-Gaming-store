@@ -11,11 +11,13 @@ const Footer = () => {
             <h2 className="absolute top-6 text-gray-500 text-2xl">Hardware</h2>
             <h1 className="font-montserrat mb-6 text-4xl">1337</h1>
             <p className="mt-2 ">
-              &lt; <span className="text-orange-500">FUTURE:</span> <span className="text-blue-500">isLoading</span> /&gt;
+              &lt; <span className="text-orange-500">FUTURE:</span>{" "}
+              <span className="text-blue-500">isLoading</span> /&gt;
             </p>
           </div>
           <p className="max-w-xs w-56 mt-2 text-xs ">
-            Unleash Your Gaming Potential and Experience Excellence with 1337 HARDWARE - Your Gateway to Elite Gaming!
+            Unleash Your Gaming Potential and Experience Excellence with 1337
+            HARDWARE - Your Gateway to Elite Gaming!
           </p>
         </div>
         <div className="grid grid-cols-1 px-8 gap-8 lg:col-span-2 sm:grid-cols-2 lg:grid-cols-3">
@@ -36,7 +38,7 @@ const Footer = () => {
           <div>
             <p className="font-medium">Helpful Links</p>
             <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-              <a className="hover:opacity-75" href="_blank" >
+              <a className="hover:opacity-75" href="_blank">
                 {" "}
                 Contact{" "}
               </a>
@@ -66,9 +68,11 @@ const Footer = () => {
             </nav>
           </div>
         </div>
-        <div>
+
+        <div className="flex flex-col items-center justify-center mt-1 pr-6">
           <SubscriptionBox />
         </div>
+
         <div className="space-x-6 ">
           <a className="hover:opacity-75" href="_blank" rel="noreferrer">
             <span className="sr-only"> Facebook </span>
