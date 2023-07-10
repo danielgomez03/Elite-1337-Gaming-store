@@ -33,8 +33,9 @@ import {
   CONFIRM_SESSION,
   CHANGE_USER,
 
-  MODIFI_ISACTIVE_USER
-
+  MODIFI_ISACTIVE_USER,
+  EDIT_PRODUCT,
+  CHANGE_PRODUCT_STATUS,
 
 } from './actions'
 
@@ -91,35 +92,12 @@ const rootReducer = (state = initialState, action) => {
 
       return { ...state, totalProducts: state.totalProducts + 1 };
     case ADD_PRODUCT_TO_CART:
-      return { ...state, cart: action.payload };
-
-
-    //   const existingProduct = state.cart.find(item => item.productId === action.payload);
-    // console.log(state.cart)
-    //   if (existingProduct) {
-
-    //     existingProduct.quantity++;
-    //     return {
-    //       ...state,
-    //       cart: [...state.cart]
-    //     };
-    //   } else {
-    //     // Si el producto no existe 
-    //     const newProduct = {
-    //       productId: action.payload,
-    //       quantity: 1
-    //     };
+      return { ...state, cart: action.payload }
 
   case MODIFI_ISACTIVE_USER:
     return {...state}
 
 
-
-    //     return {
-    //       ...state,
-    //       cart: [...state.cart, newProduct]
-    //     };
-    //   }
 
     //---------------------------------------------------------------------//
     //User´s cases---------------------------------//
@@ -149,7 +127,14 @@ const rootReducer = (state = initialState, action) => {
 
     //---------------------------------------------------------------------//
     //Get Products cases---------------------------------//
-
+    case CHANGE_PRODUCT_STATUS:
+      return {
+        ...state
+      }
+    case EDIT_PRODUCT:
+      return {
+        ...state
+      }
     case GET_PRODUCTS:
       return {
         ...state,
