@@ -234,7 +234,7 @@ function NavBar() {
                   onMouseEnter={() => handleMouseEnter("My account")}
                   onMouseLeave={handleMouseLeave}>
                   <Link
-                    href={`/${typeUser}/Profile`}
+                    href={`/${typeUser}/userProfile`}
                     className=" relative block px-6 py-2 text-sm hover:bg-gray-100 lg:bg-transparent bg-white hover:text-gray-900" >
                     My profile
                   </Link>
@@ -244,9 +244,9 @@ function NavBar() {
                     My purchases
                   </Link>
                   <Link
-                    href={`/${typeUser}/Invoices`}
+                    href={`/${typeUser}/Favorites`}
                     className=" relative block px-6 py-2 text-sm hover:bg-gray-100 lg:bg-transparent bg-white hover:text-gray-900 mb-1" >
-                    Invoices
+                    Favorites
                   </Link>
                 </div>
               )}

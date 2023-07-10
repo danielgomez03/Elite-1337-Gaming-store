@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from 'react';
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { addProductToCart, getCartByIdUser } from "@/redux/actions";
 import Rating from '@/components/Rating';
+import HandleFavorite from '@/components/handleFavorite'
 
 const Card = (props) => {
+  const [isFav, setIsFav] = useState(false);
   const dispatch = useDispatch();
-  const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
   return (
     <article className="h-96 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
         <div className="relative flex items-end overflow-hidden rounded-xl">
@@ -19,9 +20,9 @@ const Card = (props) => {
         </div>
         <div className="mt-1 pb-0 flex-col justify-between items-between flex flex-col h-48 gap-auto">
           <h2 className="h-10 text-slate-700 px-5 font-bold">{props.name}</h2>
+          <HandleFavorite isFav={isFav} setIsFav={setIsFav} />
           <p className="h-6 mt-1 px-5 text-xs text-slate-400">Stock: {props.stock}</p>
           <p className="h-6 mt-1 px-5 text-xs text-slate-400">Made in {props.origin}</p>
-
           <div className="mt-3 flex items-center justify-between">
             <p className="w-1/2 text-[17px] text-center font-bold text-blue-500">$ {props.price}</p>
             <div className="w-1/2 pr-3">
