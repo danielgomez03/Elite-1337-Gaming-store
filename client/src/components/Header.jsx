@@ -1,17 +1,59 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from 'next/router';
 import SearchBar from "../components/SearchBar";
 import SignInRegister from "./SignInRegister";
 import LoginPassport from "./LoginPassport";
 import { useDispatch, useSelector } from 'react-redux';
-import { getProducts, postLogout } from "@/redux/actions";
+import { changeUser, confirmSession, fetchUserById, getProducts, postLogout } from "@/redux/actions";
 
 function Header() {
   const dispatch = useDispatch()
+  const router = useRouter();
 
+  const typeUser = useSelector((state) => state.typeUser);
+  const tokenRedux = useSelector((state) => state.token);
+  const userId = useSelector((state) => state.userId);
+  const session = useSelector((state) => state.session);
   const user = useSelector((state) => state.user);
-  const typeUser = useSelector(state => state.typeUser);
-  const userId = useSelector(state => state.userId);
+
+  const [sessionConfirmed, setSessionConfirmed] = useState(false);
+
+  useEffect(() => {
+    session && dispatch(fetchUserById(userId));
+  }, [session])
+
+  useEffect(() => {
+    const storedTypeUser = localStorage.getItem('typeUser');
+    const storedTokenRedux = localStorage.getItem('tokenRedux');
+    const storedUserId = localStorage.getItem('userId');
+    if (user && Object.keys(user).length !== 0) {
+      if (user.userRole === "admin" || user.userRole === "super") {
+        dispatch(changeUser("admin"));
+      } else if (user.userRole === "common") {
+        dispatch(changeUser("users"));
+      }
+      localStorage.setItem('typeUser', typeUser);
+      localStorage.setItem('tokenRedux', tokenRedux);
+      localStorage.setItem('userId', userId);
+    } else if (storedTokenRedux && storedTypeUser && storedUserId) {
+      dispatch(confirmSession(storedTokenRedux, storedUserId));
+    }
+    setSessionConfirmed(true);
+  }, [tokenRedux, userId, user]);
+
+
+  useEffect(() => {
+    if (sessionConfirmed) {
+      if (!session) {
+        router.push('/');
+      }
+    }
+  }, [sessionConfirmed, session]);
+
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
 
   const [selectedButton, setSelectedButton] = useState(null);
   const [showSignInRegister, setShowSignInRegister] = useState(false);
@@ -27,14 +69,14 @@ function Header() {
   };
 
   const closeSession = () => {
-    dispatch(postLogout(userId));    
+    dispatch(postLogout(userId));
     localStorage.removeItem('typeUser');
     localStorage.removeItem('tokenRedux');
     localStorage.removeItem('userId');
   };
 
   return (
-    <div className="bg-white fixed top-0 left-0 right-0 h-16  z-50 flex justify-between p-4 space-x-10">
+    <div className="bg-white fixed top-0 left-0 right-0 h-16  z-50 flex justify-between p-4">
       <div className="ml-4 flex lg:ml-0">
         <Link href="/" className="ml-10">
           <span className="sr-only">1337 Hardware</span>
