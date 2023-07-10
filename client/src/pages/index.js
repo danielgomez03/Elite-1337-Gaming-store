@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { changeUser, confirmSession, fetchUserById } from '@/redux/actions.js';
+import { changeUser, confirmSession, fetchUserById, getProducts } from '@/redux/actions.js';
 import Products from './guest/Products';
 import CardContainer from '../components/cardsContainer';
 
