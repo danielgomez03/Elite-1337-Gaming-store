@@ -1,21 +1,16 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { getProducts } from '../redux/actions';
+
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Products from './guest/Products';
+import CardContainer from '../components/cardsContainer';
 
-function Home() {
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
+function Index() {
 
   return (
     <div>
-      <Products/>
+      <CardContainer />
     </div>
-  )
+  );
 }
 
-export default Home
+export default Index;

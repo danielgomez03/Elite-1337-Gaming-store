@@ -1,34 +1,47 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { userValidation } from "./validations.js";
-import Link from "next/link";
-import { signIn, useSession } from "next-auth/react";
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios'
+import { userValidation } from './validations.js'
+import Link from 'next/link';
+import { postLogin, changeUser } from '@/redux/actions.js';
+import { signIn, useSession } from 'next-auth/react'
 import Swal from "sweetalert2";
 import Select from "react-select";
 
 function SignInRegister({ selectedButton, onClose }) {
-  const { data: session, status } = useSession();
-  console.log(session, status);
-  const [error, setError] = useState({});
-  const [input, setInput] = useState({
-    firstName: "",
-    lastName: "",
-    country: "",
-    region: "",
-    city: "",
-    address: "",
-    postalCode: "",
-    birthDate: "",
-    phoneNumber: "",
-    idNumber: "",
+  const dispatch = useDispatch();
+  const typeUser = useSelector(state => state.typeUser);
+  const tokenRedux = useSelector(state => state.token);
+  const userId = useSelector(state => state.userId);
+  const session = useSelector(state => state.session);
+
+  const [credentials, setCredentials] = useState({
     email: "",
     password: "",
-    repeatPassword: "",
+  })
+  const [error, setError] = useState({})
+  const [input, setInput] = useState({
+    firstName: '',
+    lastName: '',
+    country: '',
+    region: '',
+    city: '',
+    address: '',
+    postalCode: '',
+    birthDate: '',
+    phoneNumber: '',
+    idNumber: '',
+    email: '',
+    password: '',
     image: "",
   });
 
   const changeHandler = (e) => {
     e.preventDefault();
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    });
     setError(
       userValidation({
         ...input,
@@ -124,8 +137,6 @@ function SignInRegister({ selectedButton, onClose }) {
     return urlPattern.test(url);
   }
 
-  /////
-
   const handleImageUpload = async (event) => {
     const file = event.target.files[0]; // Access the uploaded file
 
@@ -167,7 +178,7 @@ function SignInRegister({ selectedButton, onClose }) {
     },
   };
 
-  const submitHandler = async (e) => {
+  const submitRegister = async (e) => {
     e.preventDefault();
     console.log(input);
 
@@ -245,20 +256,33 @@ function SignInRegister({ selectedButton, onClose }) {
     }
   };
 
+  const submitLogin = async (e) => {
+    e.preventDefault();
+    await dispatch(postLogin(tokenRedux, credentials, userId));
+    typeUser !== "guest" && onClose();
+  };
+
+  useEffect(() => {
+    if (session) {
+      onClose();
+    } else {
+    }
+  }, [session]);
+
   return (
     <form
       action="/products"
       method={selectedButton === "register" ? "POST" : "GET"}
       encType="multipart/form-data"
-      onSubmit={submitHandler}
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50 "
+      onSubmit={selectedButton === "register" ? submitRegister : submitLogin}
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50 ml-0"
     >
       <div className="w-10 relative h-auto min-w-[600px] bg-white rounded-lg flex flex-col justify-center items-center p-8">
         <button
-          className="absolute top-2 right-4 px-3 mt-2 py-1 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 mb-3 font-bold"
+          className="absolute top-2 right-4 px-3 mt-2 py-1"
           onClick={onClose}
         >
-          X
+          x
         </button>
         <div className="w-full flex flex-row flex-wrap justify-between">
           {selectedButton === "register" ? (
@@ -282,32 +306,24 @@ function SignInRegister({ selectedButton, onClose }) {
                   name="firstName"
                   value={input.firstName}
                   type="text"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
-                />
-                {error.firstName ? (
-                  <p className="text-red-500 text-sm">{error.firstName}</p>
-                ) : (
-                  ""
-                )}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500" />
+                {error.firstName ? <p className="text-red-500 text-sm">{error.firstName}</p> : ""}
               </div>
-              <div className="mb-4 w-1/2 pr-2">
+
+              <div className="mb-4 w-1/2">
                 <label htmlFor="lastName" className="block mb-2 font-bold">
                   Last Name <span className="font-bold text-red-500"> *</span>
                 </label>
                 <input
-                  id="lastName"
+                  id='lastName'
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                   onChange={changeHandler}
                   name="lastName"
                   value={input.lastName}
-                  type="text"
-                />
-                {error.lastName ? (
-                  <p className="text-red-500 text-sm">{error.lastName}</p>
-                ) : (
-                  ""
-                )}
+                  type="text" />
+                {error.lastName ? <p className="text-red-500 text-sm">{error.lastName}</p> : ""}
               </div>
+
               <div className="mb-4 w-1/3 pr-2">
                 <label htmlFor="country" className="block mb-2 font-bold">
                   Country
@@ -328,42 +344,36 @@ function SignInRegister({ selectedButton, onClose }) {
                   ""
                 )}
               </div>
+
               <div className="mb-4 w-1/3 pr-2">
                 <label htmlFor="region" className="block mb-2 font-bold">
                   Region
                 </label>
                 <input
-                  id="region"
+                  id='region'
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                   onChange={changeHandler}
                   name="region"
                   value={input.region}
                   type="text"
                 />
-                {error.region ? (
-                  <p className="text-red-500 text-sm">{error.region}</p>
-                ) : (
-                  ""
-                )}
+                {error.region ? <p className="text-red-500 text-sm">{error.region}</p> : ""}
               </div>
-              <div className="mb-4 w-1/3 pr-2">
+
+              <div className="mb-4 w-1/3">
                 <label htmlFor="city" className="block mb-2 font-bold">
                   City
                 </label>
                 <input
-                  id="city"
+                  id='city'
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                   onChange={changeHandler}
                   name="city"
                   value={input.city}
-                  type="text"
-                />
-                {error.city ? (
-                  <p className="text-red-500 text-sm">{error.city}</p>
-                ) : (
-                  ""
-                )}
+                  type="text" />
+                {error.city ? <p className="text-red-500 text-sm">{error.city}</p> : ""}
               </div>
+
               <div className="mb-4 w-4/5 pr-2">
                 <label htmlFor="adress" className="block mb-2 font-bold">
                   Address
@@ -374,54 +384,36 @@ function SignInRegister({ selectedButton, onClose }) {
                   onChange={changeHandler}
                   name="address"
                   value={input.address}
-                  type="text"
-                />
-                {error.address ? (
-                  <p className="text-red-500 text-sm">{error.address}</p>
-                ) : (
-                  ""
-                )}
+                  type="text" />
+                {error.adress ? <p className="text-red-500 text-sm">{error.adress}</p> : ""}
+
               </div>
-              <div className="mb-4 w-1/5 pr-2">
+              <div className="mb-4 w-1/5">
                 <label htmlFor="postalCode" className="block mb-2 font-bold">
                   Postal Code
                 </label>
                 <input
-                  id="postalCode"
+                  id='postalCode'
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                   onChange={changeHandler}
                   name="postalCode"
                   value={input.postalCode}
-                  type="text"
-                />
-                {error.postalCode ? (
-                  <p className="text-red-500 text-sm">{error.postalCode}</p>
-                ) : (
-                  ""
-                )}
+                  type="text" />
+                {error.postalCode ? <p className="text-red-500 text-sm">{error.postalCode}</p> : ""}
               </div>
-            </div>
-          ) : null}
 
-          {selectedButton === "register" ? (
-            <div className="w-full flex flex-wrap justify-between">
               <div className="mb-4 w-1/3 pr-2">
                 <label htmlFor="phoneNumber" className="block mb-2 font-bold">
                   Phone Number
                 </label>
                 <input
-                  id="phoneNumber"
+                  id='phoneNumber'
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                   onChange={changeHandler}
                   name="phoneNumber"
                   value={input.phoneNumber}
-                  type="text"
-                />
-                {error.phoneNumber ? (
-                  <p className="text-red-500 text-sm">{error.phoneNumber}</p>
-                ) : (
-                  ""
-                )}
+                  type="text" />
+                {error.phoneNumber ? <p className="text-red-500 text-sm">{error.phoneNumber}</p> : ""}
               </div>
 
               <div className="mb-4 w-1/3 pr-2">
@@ -443,28 +435,24 @@ function SignInRegister({ selectedButton, onClose }) {
                 )}
               </div>
 
-              <div className="mb-4 w-1/3 pr-2">
+              <div className="mb-4 w-1/3">
                 <label htmlFor="birthDate" className="block mb-2 font-bold">
                   Birth Date
                 </label>
                 <input
-                  id="birthDate"
+                  id='birthDate'
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
                   onChange={changeHandler}
                   name="birthDate"
                   value={input.birthDate}
-                  type="date"
-                />
-                {error.birthDate ? (
-                  <p className="text-red-500 text-sm">{error.birthDate}</p>
-                ) : (
-                  ""
-                )}
+                  type="date" />
+                {error.birthDate ? <p className="text-red-500 text-sm">{error.birthDate}</p> : ""}
               </div>
+
             </div>
           ) : null}
 
-          <div className="mb-4 w-full pr-2">
+          <div className="mb-4 w-full">
             <label htmlFor="email" className="block mb-2 font-bold">
               E-mail
               <span className="font-bold text-red-500"> * </span>
@@ -484,13 +472,13 @@ function SignInRegister({ selectedButton, onClose }) {
             )}
           </div>
 
-          <div className="mb-4 w-1/2 pr-2">
+          <div className={`mb-4 ${selectedButton === "register" ? "w-1/2" : "w-full" } pr-2`} >
             <label htmlFor="password" className="block mb-2 font-bold">
               Password
               <span className="font-bold text-red-500"> * </span>
             </label>
             <input
-              id="password"
+              id='password'
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
               onChange={changeHandler}
               name="password"
@@ -498,7 +486,7 @@ function SignInRegister({ selectedButton, onClose }) {
               type="password"
             />
             {selectedButton === "signIn" ? (
-              <button className="absolute right-10 mt-0 text-sm text-center font-bold w-1/6 px-2 py-1 bg-indigo-500 text-white font-sm rounded-md hover:bg-indigo-600 justify">
+              <button className="absolute right-12 mt-10  text-xs">
                 Reset Password
               </button>
             ) : (
@@ -512,7 +500,7 @@ function SignInRegister({ selectedButton, onClose }) {
           </div>
 
           {selectedButton === "register" ? (
-            <div className="mb-4 w-1/2 pr-2">
+            <div className="mb-4 w-1/2">
               <label htmlFor="repeatPassword" className="block mb-2 font-bold">
                 Repeat Password
                 <span className="font-bold text-red-500"> * </span>
@@ -532,6 +520,7 @@ function SignInRegister({ selectedButton, onClose }) {
               )}
             </div>
           ) : null}
+
         </div>
 
         {selectedButton === "register" && (
@@ -645,7 +634,7 @@ function SignInRegister({ selectedButton, onClose }) {
               </Link>{" "}
               of our services.
             </p>
-            <div className="flex justify-center">
+            <div className='flex justify-center' >
               <input
                 type="checkbox"
                 name="ok"
@@ -660,25 +649,26 @@ function SignInRegister({ selectedButton, onClose }) {
           </div>
         ) : null}
         <button
-          className="w-full px-4 mt-5 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 mb-3 font-bold"
-          type="submit"
-          disabled={
-            selectedButton === "register" && error !== null && !isChecked
-          }
-        >
+          className="w-full px-4 mt-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+          type='submit'
+          disabled={selectedButton === "register" && error !== null && !isChecked}>
           {selectedButton === "register" ? "Register" : "Sign In"}
         </button>
-        <div className="w-full flex flex-col justify-center items-center">
-          <button className="w-1/6 px-2 mt-1 py-1 bg-indigo-500 text-white font-sm rounded-md hover:bg-indigo-600 font-bold">
+        <button
+          className="w-full px-4 mt-4 py-2 border rounded-md"
+          onClick={() => signIn()}>Sign In with Google</button>
+
+
+        <div className='w-full flex flex-col justify-center items-center mt-2'>
+          <p>Don't have an account yet?</p>
+          <button
+            className="w-1/6 px-1 mt-2 py-1 bg-indigo-500 text-white font-sm rounded-md hover:bg-indigo-600" >
             {selectedButton === "register" ? "Sign In" : "Register"}
           </button>
-          <div className="flex font-bold">
-            <button onClick={() => signIn()}>Sign In with Google</button>
-          </div>
         </div>
       </div>
-    </form>
-  );
+    </form >
+  )
 }
 
-export default SignInRegister;
+export default SignInRegister

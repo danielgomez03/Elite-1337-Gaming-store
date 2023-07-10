@@ -41,7 +41,9 @@ import {
 const initialState = {
   token: "",
   typeUser: "guest",
-  session: true,
+  session: false,
+  userId: "",
+  errorMessage: "",
   commentsByProduct: [],
   productsbyName: [],
   page: 1,
@@ -59,7 +61,7 @@ const initialState = {
   favorites: [],
   error: null,
   users: [],
-  user: [],
+  user: {},
   loading: false,
 };
 
@@ -67,13 +69,18 @@ const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     //---------Session cases----/
     case POST_LOGIN:
-      return { ...state, token: action.payload }
+      const { token, userId, error } = action.payload;
+      if (error) {
+        return { ...state, errorMessage: error };
+      } else {
+        return { ...state, token: token, userId: userId, session: true, errorMessage: "" };
+      };
     case POST_LOGOUT:
-      return { ...state, token: action.payload, typeUser: "guest" }
+      return { ...state, token: "", typeUser: "guest", userId: "", session: false, user: {} };
     case CONFIRM_SESSION:
-      return action.payload === state.token ? { ...state, token: action.payload, session: true } : { ...state, session: false, token: "" };
+      return { ...state, token: action.payload.token, userId: action.payload.userId, session: true }
     case CHANGE_USER:
-      return { ...state, typeUser: action.payload }
+      return { ...state, typeUser: action.payload };
     //--------------------------/
     case GET_COMMENTS_BY_PRODUCT:
       return { ...state, commentsByProduct: action.payload }
@@ -179,12 +186,6 @@ const rootReducer = (state = initialState, action) => {
             filteredByCategory.push(product);
           }
         }
-      });
-
-      console.log({
-        ...state,
-        filteredProducts: filteredByCategory,
-        selectedCategory: category,
       });
 
       return {

@@ -4,7 +4,7 @@ import Link from 'next/link';
 function NavBarAdmin() {
   return (
     <ul
-      className="bg-white fixed top-16 left-0 w-full flex justify-center p-4 space-x-10 z-50 font-bold "
+      className="bg-gradient-to-r from-indigo-950 to-indigo-950 via-indigo-900 to-indigo-900 mx-auto px-4 sm:px-6 lg:px-8 w-full flex h-16 items-center justify-center fixed top-16 left-0 z-10 text-white gap-10"
     >
       <li>
         <Link href="/admin/Dashboard">Dashboards</Link>
