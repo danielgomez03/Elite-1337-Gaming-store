@@ -400,8 +400,6 @@ const submitLogin = async (e) => {
                   type="text" />
                 {error.postalCode ? <p className="text-red-500 text-sm">{error.postalCode}</p> : ""}
               </div>
-            </div>
-            <div className="w-full flex flex-wrap justify-between">
               <div className="mb-4 w-1/3 pr-2">
                 <label htmlFor="phoneNumber" className="block mb-2 font-bold">
                   Phone Number
