@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Link from "next/link";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProductToCart, getCartByIdUser } from "@/redux/actions";
 import Rating from '@/components/Rating';
 import HandleFavorite from '@/components/handleFavorite'
 
 const Card = (props) => {
   const [isFav, setIsFav] = useState(false);
+  const userId = useSelector(state=>state.userId)
   const dispatch = useDispatch();
   return (
     <article className="h-96 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
@@ -30,9 +31,9 @@ const Card = (props) => {
                 className="flex items-center justify-center rounded-lg border border-indigo-500 w-full py-1 text-indigo-500 duration-100 hover:bg-blue-600 flex-grow text-sm" 
                 disabled={props.stock === 0}
                 onClick={()=>
-                  {dispatch(addProductToCart(props.id))
+                  {dispatch(addProductToCart(userId,props.id))
                     .then(() => {
-                      dispatch(getCartByIdUser(id));
+                      dispatch(getCartByIdUser(userId));
                     })}
                 } >
                 <svg
@@ -55,7 +56,7 @@ const Card = (props) => {
                 onClick={() =>
                   {dispatch(addProductToCart(props.id))
                     .then(() => {
-                  dispatch(getCartByIdUser(id));
+                  dispatch(getCartByIdUser(userId));
                 })}} >
                 Buy Now
               </button>

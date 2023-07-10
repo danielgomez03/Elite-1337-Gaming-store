@@ -14,7 +14,7 @@ export default function Detail() {
   const router = useRouter();
   // manejar con redux a futuro 
   const purchased = true;
-  const userId = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+  const userId = useSelector(state=>state.userId)
   const { id } = router.query;
   console.log(id);
 
@@ -110,7 +110,7 @@ export default function Detail() {
             className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded"
             disabled={detail.stock === 0}
             onClick={() => {
-              dispatch(addProductToCart(id)).then(() => {
+              dispatch(addProductToCart(userId,id)).then(() => {
                 dispatch(getCartByIdUser(userId));
               });
             }}

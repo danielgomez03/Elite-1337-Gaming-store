@@ -10,7 +10,7 @@ function NavBarAdmin() {
         <Link href="/admin/Dashboard">Dashboards</Link>
       </li>
       <li>
-        <Link href="/admin/Products">Products</Link>
+        <Link href="/admin/ProductsAdmin">Products</Link>
       </li>
       <li>
         <Link href="/admin/Orders">Orders</Link>
