@@ -16,6 +16,7 @@ export default function Detail() {
   // manejar con redux a futuro 
   const purchased = true;
   const userId = useSelector(state => state.userId)
+
   const { id } = router.query;
 
   useEffect(() => {
@@ -108,7 +109,7 @@ export default function Detail() {
             className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded"
             disabled={detail.stock === 0}
             onClick={() => {
-              dispatch(addProductToCart(id)).then(() => {
+              dispatch(addProductToCart(userId,id)).then(() => {
                 dispatch(getCartByIdUser(userId));
               });
             }}

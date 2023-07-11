@@ -5,7 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 
 function ShopCart() {
-  const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
+  const id = useSelector(state=>state.userId);
+  console.log(id)
   const dispatch = useDispatch();
   const [imagesArray, setImagesArray] = useState([]);
 

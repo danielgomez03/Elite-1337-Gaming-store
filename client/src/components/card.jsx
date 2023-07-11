@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
+
 import { useDispatch, useSelector } from 'react-redux';
 import { addProductToCart, getCartByIdUser, addFavorite, deleteFavorite } from "@/redux/actions";
+
 import Rating from '@/components/Rating';
 import HandleFavorite from '@/components/handleFavorite';
 
@@ -18,12 +20,16 @@ const Card = (props) => {
   const favorites = useSelector((state) => state.favorites);
   const [isFav, setIsFav] = useState(false);
 
+  const userId = useSelector(state=>state.userId)
+
+
   useEffect(() => {
     const isProductInFavorites = favorites.some(
       (favorite) => favorite.productId === props.id
     );
     setIsFav(isProductInFavorites);
   }, [favorites, props.id]);
+
 
   const dispatch = useDispatch();
 
@@ -36,6 +42,9 @@ const Card = (props) => {
         <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
           <Rating objProduct={props.objProduct} />
         </div>
+
+
+
         {props.discount > 0.0 && (
           <div className="absolute top-5 right-5 transform translate-x-2 -translate-y-2">
             <div className="bg-[#FF5F00] text-white px-2 py-1 rounded-full flex items-center">
@@ -97,6 +106,7 @@ const Card = (props) => {
                 </button>
               </>
             )}
+
           </div>
         </div>
       </div>

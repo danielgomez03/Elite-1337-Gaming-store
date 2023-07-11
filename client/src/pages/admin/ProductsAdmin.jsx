@@ -1,6 +1,7 @@
 import { editProduct, getProducts, changeProductStatus } from '@/redux/actions';
 import React, { useEffect , useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import CreateProduct from "../../components/CreateProduct"
 
 
 function ProductsAdmin() {
@@ -30,9 +31,28 @@ const handleDescriptionChange = (index, value) => {
     return newDescriptions;
   });
 };
+const [selectedButton, setSelectedButton] = useState(false);
+
+const openCreateProduct = () => {
+  setSelectedButton(true);
+};
+
+const closeCreateProduct = () => {
+  setSelectedButton(false);
+};
  
   
   return (
+    <div>
+    <div>
+      {selectedButton && (
+        <CreateProduct 
+          onClose={closeCreateProduct}
+        />
+      )}
+      <button onClick={ openCreateProduct }>...Add Product</button>
+    </div>
+    
     
     <div 
     className="product-list">
@@ -271,6 +291,7 @@ const handleDescriptionChange = (index, value) => {
           transform: translateX(30px);
         }
       `}</style>
+</div>
 </div>
   )
 }

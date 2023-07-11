@@ -5,7 +5,7 @@ import Card from '@/components/card';
 import Filters from '../../components/Filters';
 
 const Products = () => {
-  const id = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
+  const id = useSelector(state=>state.userId);
   const dispatch = useDispatch();
 
   useEffect(() => {
