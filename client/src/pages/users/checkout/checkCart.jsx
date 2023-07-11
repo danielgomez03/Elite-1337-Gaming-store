@@ -24,8 +24,8 @@ const Checkout = () => {
     payerCountry: "",
     payerRegion: "",
     payerCity: "",
-    payerAddress: "123 Street",
-    payerPostalCode: "12345",
+    payerAddress: "",
+    payerPostalCode: "",
     orderNotes: "note",
     deliveryOption: "Standard",
   });
@@ -121,6 +121,8 @@ const Checkout = () => {
 
         elements.getElement(CardElement).clear();
         console.log("Payment processed successfully");
+
+        localStorage.removeItem("cart");
 
         router.push({
           pathname: "/users/stripe/success",
@@ -328,6 +330,7 @@ const Checkout = () => {
               ) : (
                 "Buy"
               )}
+          
             </button>
           </div>
           <p>Si haces clic en Realizar pedido, aceptas los Términos y condiciones de eShopWorld.</p>

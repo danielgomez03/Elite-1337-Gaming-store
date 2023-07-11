@@ -42,6 +42,7 @@ export const POST_LOGOUT = "POST_LOGOUT";
 export const CONFIRM_SESSION = "CONFIRM_SESSION";
 export const CHANGE_USER = "CHANGE_USER";
 //---------other types----/
+export const CREATE_ORDER = "CREATE_ORDER";
 
 
 
@@ -476,9 +477,20 @@ export function clean() {
 
 
 
+export const createOrder = (input) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.post(`http://localhost:3001/orders/create`, input);
+      const createdOrder = response.data;
 
-
-
-
+      dispatch({
+        type: CREATE_ORDER,
+        payload: createdOrder
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 

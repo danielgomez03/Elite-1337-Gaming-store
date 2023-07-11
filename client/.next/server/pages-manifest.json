@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/users/checkout/checkPay": "pages/users/checkout/checkPay.js",
-  "/": "pages/index.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js"
+  "/users/stripe/success": "pages/users/stripe/success.js",
+  "/users/checkout/checkCart": "pages/users/checkout/checkCart.js"
 }

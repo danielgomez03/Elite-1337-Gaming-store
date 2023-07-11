@@ -37,6 +37,8 @@ import {
   EDIT_PRODUCT,
   CHANGE_PRODUCT_STATUS,
 
+  CREATE_ORDER,
+
 } from './actions'
 
 const initialState = {
@@ -62,8 +64,11 @@ const initialState = {
   favorites: [],
   error: null,
   users: [],
-  user: {},
+  user: {
+    orders: []
+  },
   loading: false,
+  order: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -280,6 +285,18 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state, page: action.payload
       }
+
+      case CREATE_ORDER:
+        const { user } = state;
+        const updatedUser = {
+          ...user,
+          orders: [...user.orders, action.payload]
+        };
+      
+        return {
+          ...state,
+          user: updatedUser
+        };
     default: return { ...state }
   }
 
