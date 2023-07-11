@@ -38,10 +38,6 @@ const Footer = () => {
           <div>
             <p className="font-medium">Helpful Links</p>
             <nav className="flex flex-col mt-4 space-y-2 text-sm text-gray-500">
-              <a className="hover:opacity-75" href="_blank">
-                {" "}
-                Contact{" "}
-              </a>
               <Link href="/guest/Faq" className="hover:opacity-75">
                 FAQ
               </Link>

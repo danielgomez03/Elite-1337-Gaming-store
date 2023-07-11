@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts, clean, filterProductsByPrice, sortProducts, getCartByIdUser} from '../../redux/actions';
+import { getRatings, clean, filterProductsByPrice, sortProducts, getCartByIdUser} from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '@/components/card';
 import Filters from '../../components/Filters';
-import FavoritesByUserId from '@/components/FavoritesByUserId';
-
 
 const Products = () => {
   const id = useSelector(state=>state.userId);
@@ -18,6 +16,11 @@ const Products = () => {
     };
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(getRatings());
+  }, []);
+
+
   const productsbyName = useSelector(state => state.productsbyName);
   const filteredProducts = useSelector(state => state.filteredProducts);
   const actionByName = useSelector(state => state.actionByName);
@@ -25,7 +28,7 @@ const Products = () => {
 
   return (
     <div>
-      <Filters />
+      <Filters /> 
       <div className="px-auto grid lg:grid-cols-5 md:grid-cols-2 xs:grid-cols-1 gap-3 p-4 ">
         {products?.map((product, index) => {
           return (

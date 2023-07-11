@@ -18,11 +18,11 @@ const FavoritesByUserId = () => {
 
 
   return (
-    <div>
+    <div >
       {error ? (
         <p>{error}</p>
       ) : (
-        <ul>
+        <ul className="px-auto grid lg:grid-cols-5 md:grid-cols-2 xs:grid-cols-1 gap-3 p-4 ">
           {favorites?.map((favorite) => {
             const product = products.find((p) => p.productId === favorite.productId);
   

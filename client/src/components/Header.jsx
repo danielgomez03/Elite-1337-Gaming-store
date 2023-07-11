@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import SearchBar from "../components/SearchBar";
 import SignInRegister from "./SignInRegister";
-import LoginPassport from "./LoginPassport";
-import { useDispatch, useSelector } from 'react-redux';
-import { changeUser, confirmSession, fetchUserById, getProducts, postLogout } from "@/redux/actions";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeUser,
+  confirmSession,
+  fetchUserById,
+  getProducts,
+  postLogout,
+} from "@/redux/actions";
 
 function Header() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const typeUser = useSelector((state) => state.typeUser);
@@ -21,32 +26,31 @@ function Header() {
 
   useEffect(() => {
     session && dispatch(fetchUserById(userId));
-  }, [session])
+  }, [session]);
 
   useEffect(() => {
-    const storedTypeUser = localStorage.getItem('typeUser');
-    const storedTokenRedux = localStorage.getItem('tokenRedux');
-    const storedUserId = localStorage.getItem('userId');
+    const storedTypeUser = localStorage.getItem("typeUser");
+    const storedTokenRedux = localStorage.getItem("tokenRedux");
+    const storedUserId = localStorage.getItem("userId");
     if (user && Object.keys(user).length !== 0) {
       if (user.userRole === "admin" || user.userRole === "super") {
         dispatch(changeUser("admin"));
       } else if (user.userRole === "common") {
         dispatch(changeUser("users"));
       }
-      localStorage.setItem('typeUser', typeUser);
-      localStorage.setItem('tokenRedux', tokenRedux);
-      localStorage.setItem('userId', userId);
+      localStorage.setItem("typeUser", typeUser);
+      localStorage.setItem("tokenRedux", tokenRedux);
+      localStorage.setItem("userId", userId);
     } else if (storedTokenRedux && storedTypeUser && storedUserId) {
       dispatch(confirmSession(storedTokenRedux, storedUserId));
     }
     setSessionConfirmed(true);
   }, [tokenRedux, userId, user]);
 
-
   useEffect(() => {
     if (sessionConfirmed) {
       if (!session) {
-        router.push('/');
+        router.push("/");
       }
     }
   }, [sessionConfirmed, session]);
@@ -70,9 +74,9 @@ function Header() {
 
   const closeSession = () => {
     dispatch(postLogout(userId));
-    localStorage.removeItem('typeUser');
-    localStorage.removeItem('tokenRedux');
-    localStorage.removeItem('userId');
+    localStorage.removeItem("typeUser");
+    localStorage.removeItem("tokenRedux");
+    localStorage.removeItem("userId");
   };
 
   return (
@@ -81,8 +85,11 @@ function Header() {
         <Link href="/" className="ml-10">
           <span className="sr-only">1337 Hardware</span>
           <div
-            onClick={() => { dispatch(getProducts()) }}
-            className="relative flex flex-col items-center justify-center pr-4" >
+            onClick={() => {
+              dispatch(getProducts());
+            }}
+            className="relative flex flex-col items-center justify-center pr-4"
+          >
             <h2 className="absolute top-4 text-gray-500 text-xl">Hardware</h2>
             <h1 className="font-montserrat mb-6 text-3xl">1337</h1>
           </div>
@@ -96,11 +103,14 @@ function Header() {
             <img
               src="https://forma-architecture.com/wp-content/uploads/2021/04/Foto-de-perfil-vacia-thegem-person.jpg"
               className="w-8"
-              alt="Foto perfil vacía" />
-            <h3>{user.firstName} {user.lastName}</h3>
+              alt="Foto perfil vacía"
+            />
+            <h3>
+              {user.firstName} {user.lastName}
+            </h3>
           </div>
           <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-          <button onClick={closeSession} >Log out</button>
+          <button onClick={closeSession}>Log out</button>
         </div>
       ) : (
         <div className="hidden lg:flex lg:items-center lg:justify-end lg:space-x-6">

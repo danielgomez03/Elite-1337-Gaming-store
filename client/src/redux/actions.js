@@ -26,7 +26,8 @@ export const FILTER_PRODUCTS_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
 //---------Rating types----/
 export const GET_RATINGS = "GET_RATINGS";
 export const GET_RATINGS_ERROR = "GET_RATINGS_ERROR";
-export const ADD_RATING = 'ADD_RATING';
+export const ADD_RATING_SUCCESS = 'ADD_RATING_SUCCESS';
+export const ADD_RATING_FAILURE = 'ADD_RATING_FAILURE';
 //---------Comments types----/
 export const GET_COMMENTS_BY_PRODUCT = "GET_COMMENTS_BY_PRODUCT";
 //---------Favorites types----/
@@ -361,18 +362,28 @@ export const getRatings = () => {
 };
 
 
-export const addRating = (ratingData) => {
+export const addRating = (userId, productId, value) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post('http://localhost:3001/ratings/add', ratingData);
-      const newRating = response.data;
+      const response = await axios.post('http://localhost:3001/ratings/add', {
+        userId,
+        productId,
+        value,
+      });
+
+      const { rating } = response.data;
 
       dispatch({
-        type: ADD_RATING,
-        payload: newRating,
+        type: ADD_RATING_SUCCESS,
+        payload: rating,
       });
+
+      // Puedes realizar cualquier otra acción necesaria después de agregar el rating, como actualizar la lista de ratings.
     } catch (error) {
-      console.log('Error al agregar el rating:', error);
+      dispatch({
+        type: ADD_RATING_FAILURE,
+        payload: error.message,
+      });
     }
   };
 };

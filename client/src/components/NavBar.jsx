@@ -211,14 +211,6 @@ function NavBar() {
           </Link>
         )}
 
-        {typeUser === "guest" && (
-          <Link
-            href={`/About`}
-            className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
-            Company
-          </Link>
-        )}
-
         <div className='relative h-full'>
           {typeUser === "users" && (
             <button
@@ -271,7 +263,7 @@ function NavBar() {
                 <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
                   favorite
                 </span>
-                <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
+                <span className="ml-2 text-sm font-medium group-hover:text-gray-800"></span>
                 <span className="sr-only">items in favorites, view bag</span>
               </Link>
             )}
