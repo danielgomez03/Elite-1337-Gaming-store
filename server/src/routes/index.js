@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { authenticateJWT } = require("../config/jwt");
 
 const productsRoutes = require("./productsRoutes");
 const usersRoutes = require("./usersRoutes");
@@ -15,6 +16,7 @@ const commentsRoutes = require("./commentsRoutes");
 const favoritesRoutes = require("./favoritesRoutes");
 
 const router = Router();
+router.use(authenticateJWT);
 
 router.use("/products", productsRoutes);
 router.use("/users", usersRoutes);
