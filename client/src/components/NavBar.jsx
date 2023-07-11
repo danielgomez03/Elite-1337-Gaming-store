@@ -271,7 +271,7 @@ function NavBar() {
                 <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
                   favorite
                 </span>
-                <span className="ml-2 text-sm font-medium group-hover:text-gray-800">0</span>
+                <span className="ml-2 text-sm font-medium group-hover:text-gray-800"></span>
                 <span className="sr-only">items in favorites, view bag</span>
               </Link>
             )}

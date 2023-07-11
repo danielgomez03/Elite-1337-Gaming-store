@@ -1,22 +1,22 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addRating } from '../redux/actions'; 
+import { useDispatch, useSelector } from 'react-redux';
+import { addRating } from '../redux/actions';
 
-const addingRating = ({ userId, productId }) => {
+const AddingRating = (props) => {
   const [value, setValue] = useState(0);
+  const userId = useSelector(state => state.userId)
+  const productId = props.productId;
   const dispatch = useDispatch();
+
+  console.log(userId);
+  console.log(productId);
 
   const handleRatingChange = (event) => {
     setValue(parseInt(event.target.value, 10));
   };
 
   const handleRatingSubmit = () => {
-    const ratingData = {
-      userId: "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a",
-      productId: "7d23e873-6bb8-4569-acf5-ebeef606afd6",
-      value: value,
-    };
-    dispatch(addRating(ratingData)); // Dispatch de la acción para agregar el rating
+    dispatch(addRating( userId, productId, value));
   };
 
   return (
@@ -35,4 +35,4 @@ const addingRating = ({ userId, productId }) => {
   );
 };
 
-export default addingRating;
+export default AddingRating;

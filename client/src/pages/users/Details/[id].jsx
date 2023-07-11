@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Rating from '@/components/Rating';
 import Comments from '@/components/Comments';
+import AddingRating from '@/components/addingRating';
 import axios from 'axios';
 
 
@@ -14,9 +15,8 @@ export default function Detail() {
   const router = useRouter();
   // manejar con redux a futuro 
   const purchased = true;
-  const userId = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+  const userId = useSelector(state => state.userId)
   const { id } = router.query;
-  console.log(id);
 
   useEffect(() => {
      
@@ -31,7 +31,6 @@ export default function Detail() {
   }, [dispatch, id]);
   
   const detail = useSelector(state => state.detail);
-  console.log(detail);
   useEffect(()=> {
     if(detail.productId){
     dispatch(getCommentsByProduc(detail.productId))
@@ -39,7 +38,6 @@ export default function Detail() {
     
   },[dispatch,detail.productId])
   const comments = useSelector(state=>state.commentsByProduct)
-  console.log(comments)
   const [content,setContent] = useState()
   const onChange = (e) => {
      

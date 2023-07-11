@@ -9,25 +9,29 @@ const handleFavorite = ({ isFav, setIsFav }) => {
   const error = useSelector((state) => state.error);
 
   const handleAddFavorite = () => {
-    const productId = '263f0f02-99f4-4811-b886-f2c36c2cfc26';
-    dispatch(addFavorite(userId, productId));
-    setIsFav(true); // Actualiza el estado a verdadero (favorito agregado)
+    const productId = props.id;
+    dispatch(addFavorite(userId, productId))
+      .then(() => setIsFav(true)) // Actualiza el estado a verdadero (favorito agregado)
+      .catch((error) => console.error(error));
   };
 
   const handleDeleteFavorite = () => {
-    const productId = '263f0f02-99f4-4811-b886-f2c36c2cfc26';
-    dispatch(deleteFavorite(userId, productId));
-    setIsFav(false); // Actualiza el estado a falso (favorito eliminado)
+    const productId = props.id;
+    dispatch(deleteFavorite(userId, productId))
+      .then(() => setIsFav(false)) // Actualiza el estado a falso (favorito eliminado)
+      .catch((error) => console.error(error));
   };
 
   return (
     <div>
-      {isFav ? (
-        <button onClick={handleDeleteFavorite}>❤️</button>
-      ) : (
-        <button onClick={handleAddFavorite}>🤍</button>
-      )}
-      {error && <p>Error: {error}</p>}
+<div className="absolute top-60 right-5">
+  {isFav ? (
+    <button onClick={handleDeleteFavorite}>❤️</button>
+  ) : (
+    <button onClick={handleAddFavorite}>🤍</button>
+  )}
+  {error && <p>Error: {error}</p>}
+</div>
     </div>
   );
 };

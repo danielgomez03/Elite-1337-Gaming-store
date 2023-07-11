@@ -28,6 +28,9 @@ import {
   FETCH_USERS_FAILURE,
   FETCH_USER_BY_ID,
 
+  ADD_RATING_SUCCESS,
+  ADD_RATING_FAILURE,
+
   POST_LOGIN,
   POST_LOGOUT,
   CONFIRM_SESSION,
@@ -218,14 +221,17 @@ const rootReducer = (state = initialState, action) => {
         ratings: action.payload,
         error: null,
       };
-    case ADD_RATING:
-      const newRating = action.payload;
-      const updatedRatings = [...state.ratings, newRating];
-
-      return {
-        ...state,
-        ratings: updatedRatings,
-      };
+      case ADD_RATING_SUCCESS:
+        return {
+          ...state,
+          ratings: [...state.ratings, action.payload], // Agrega el nuevo rating al estado
+        };
+  
+      case ADD_RATING_FAILURE:
+        return {
+          ...state,
+          error: action.payload,
+        };
     case GET_RATINGS_ERROR:
       return {
         ...state,
