@@ -477,10 +477,10 @@ export function clean() {
 
 
 
-export const createOrder = (input) => {
+export const createOrder = (orderData) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post(`http://localhost:3001/orders/create`, input);
+      const response = await axios.post(`http://localhost:3001/orders/create`, orderData);
       const createdOrder = response.data;
 
       dispatch({

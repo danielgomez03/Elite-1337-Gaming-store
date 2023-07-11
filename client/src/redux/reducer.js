@@ -64,9 +64,7 @@ const initialState = {
   favorites: [],
   error: null,
   users: [],
-  user: {
-    orders: []
-  },
+  user: {},
   loading: false,
   order: []
 };
@@ -287,16 +285,9 @@ const rootReducer = (state = initialState, action) => {
       }
 
       case CREATE_ORDER:
-        const { user } = state;
-        const updatedUser = {
-          ...user,
-          orders: [...user.orders, action.payload]
-        };
-      
         return {
           ...state,
-          user: updatedUser
-        };
+        }
     default: return { ...state }
   }
 

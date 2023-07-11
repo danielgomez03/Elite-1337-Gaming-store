@@ -145,7 +145,21 @@ const Checkout = () => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (Object.keys(error).length === 0) {
-      dispatch(createOrder(input));
+      const orderData = {
+        orderEmail: input.orderEmail,
+        payerFirstName: input.payerFirstName,
+        payerLastName: input.payerLastName,
+        payerPhone: input.payerPhone,
+        payerIdNumber: input.payerIdNumber,
+        payerCountry: input.payerCountry,
+        payerRegion: input.payerRegion,
+        payerCity: input.payerCity,
+        payerAddress: input.payerAddress,
+        payerPostalCode: input.payerPostalCode,
+        orderNotes: input.orderNotes,
+        deliveryOption: input.deliveryOption,
+      };
+      dispatch(createOrder(orderData));
 
       alert("HACEMOS EL DISPATCH");
     } else {
