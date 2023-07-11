@@ -131,7 +131,7 @@ const postCreateUser = async (req, res) => {
       include: [
         {
           model: Login,
-          attributes: ["email", "password"],
+          attributes: ["email"],
         },
         {
           model: Image,

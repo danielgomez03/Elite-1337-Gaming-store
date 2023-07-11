@@ -1,4 +1,4 @@
-const { User, Image, Login, Cart } = require("../database");
+const { User, Image, Login } = require("../database");
 const { Op } = require("sequelize");
 
 const getAllUsers = async () => {
@@ -11,7 +11,7 @@ const getAllUsers = async () => {
         },
         {
           model: Login,
-          attributes: ["loginId", "email", "password", "verify"],
+          attributes: ["loginId", "email"],
         },
       ],
       order: [["firstName", "asc"]],
@@ -39,7 +39,7 @@ const getUsersByName = async (name) => {
         },
         {
           model: Login,
-          attributes: ["loginId", "email", "password", "verify"],
+          attributes: ["loginId", "email"],
         },
       ],
       order: [["firstName", "asc"]],
@@ -65,7 +65,7 @@ const getUserById = async (userId) => {
         },
         {
           model: Login,
-          attributes: ["loginId", "email", "password", "verify"],
+          attributes: ["loginId", "email"],
         },
       ],
     });

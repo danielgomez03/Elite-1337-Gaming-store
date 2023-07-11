@@ -21,7 +21,6 @@ const users = [
       loginId: "e8dfc4b2-858d-45f2-947a-bc3e67c5e6f4",
       email: "super@example.com",
       password: "asd123",
-      verify: false,
     },
   },
   {
@@ -46,7 +45,6 @@ const users = [
       loginId: "42c9d6b2-8b9f-4ae4-8930-88e3fe6d14ad",
       email: "Common@example.com",
       password: "asd123",
-      verify: false,
     },
   },
   {
@@ -71,7 +69,6 @@ const users = [
       loginId: "fed4a200-3dd7-4c54-a768-8b5dd881e92a",
       email: "emmajohnson@example.com",
       password: "$2b$10$j1aK5C5q1TtQpzjsJ9mdeu.JkM2UCVlmKfbbCnKue93ekV4qAxn0.",
-      verify: false,
     },
   },
   {
@@ -96,7 +93,6 @@ const users = [
       loginId: "529fe31e-1da3-44cc-985c-4f30c0bb09d5",
       email: "admin@example.com",
       password: "asd123",
-      verify: false,
     },
   },
   {
@@ -121,7 +117,6 @@ const users = [
       loginId: "cbe60d16-2600-41db-8c20-0b34a3c0c5fb",
       email: "sophiawilson@example.com",
       password: "$2b$10$wj0rWvntanDUN0eD7tczMOzEjM93QJ7ej9ixziHfsYOfspgE9ek7.",
-      verify: false,
     },
   },
   {
@@ -146,7 +141,6 @@ const users = [
       loginId: "a9d75b9d-4e6d-4a17-9b17-b4d943775d1d",
       email: "jamestaylor@example.com",
       password: "$2b$10$XzJUZPwFZYjCpCOOrUk1FOY2IIMKnYvksLsh/Kzq9XlmtB6TVYqGG",
-      verify: false,
     },
   },
   {
@@ -171,7 +165,6 @@ const users = [
       loginId: "b0139b9f-2550-4781-8d6e-26b77e3e15db",
       email: "oliviaanderson@example.com",
       password: "$2b$10$hRDLWEfnTh8Gv0dYqHOhrO56lFCtIdzUW2vB3eJZp9y8trR5gsK2.",
-      verify: false,
     },
   },
   {
@@ -196,7 +189,6 @@ const users = [
       loginId: "a598aa55-df03-432d-8e10-6b7efc57a0c3",
       email: "noahmartinez@example.com",
       password: "$2b$10$e67EO7yxX3SMHGQ3lBGbzu6mo2C/HW5.EHhSwPKrK6Mf0nXZrFkeC",
-      verify: false,
     },
   },
   {
@@ -221,7 +213,6 @@ const users = [
       loginId: "c45e5126-8b29-46a3-96fe-95baf216bb4f",
       email: "isabellagarcia@example.com",
       password: "$2b$10$B7QJYwwZN7H0u1S.0JYVHuY.XaO6CE44t7aVDDAOMCqXJ7Xe8LUgW",
-      verify: false,
     },
   },
   {
@@ -246,7 +237,6 @@ const users = [
       loginId: "f5a0cc43-5a59-4b11-8fb1-449a6d70b273",
       email: "williamdavis@example.com",
       password: "$2b$10$QuNZn0vmlwHKg9JFEJvKo.TVBLK2l56UCz.ZhWqCN2P0.wxxj2XMC",
-      verify: false,
     },
   },
   {
@@ -271,7 +261,6 @@ const users = [
       loginId: "0b45e034-8d82-4766-9a4e-1a4f3eb8b261",
       email: "mialopez@example.com",
       password: "$2b$10$zOjgdMoXkczN5lsB1b9UDe.o4D9ODK8Q4JN33xIMAZWdAk/VqPOai",
-      verify: false,
     },
   },
 ];

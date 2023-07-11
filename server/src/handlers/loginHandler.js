@@ -1,6 +1,6 @@
-const { generateAuthToken } = require("../auth/auth");
+const { generateAuthToken } = require("../config/jwt");
 const { Login, User, Token } = require("../database");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 
 const login = async (req, res, next) => {
   try {
@@ -84,7 +84,7 @@ const persistSession = async (req, res, next) => {
 
     // Actualizar la fecha de vencimiento del token
     existingToken.expiresAt = new Date(
-      Date.now() + 2 * 60 * 60 * 1000 // Extender la fecha de vencimiento por 2 horas más
+      Date.now() + 2 * 60 * 60 * 1000, // Extender la fecha de vencimiento por 2 horas más
     );
     await existingToken.save();
 
@@ -108,7 +108,6 @@ const logout = async (req, res, next) => {
     return next(error);
   }
 };
-
 
 module.exports = {
   login,
