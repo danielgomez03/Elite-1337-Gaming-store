@@ -12,9 +12,6 @@ const Rating = (productId) => {
   const ratings = useSelector((state) => getFilteredRatings(state, productId.objProduct));
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getRatings());
-  }, []);
 
   // Función para generar las estrellas
   const renderStars = (value) => {
