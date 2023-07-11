@@ -211,14 +211,6 @@ function NavBar() {
           </Link>
         )}
 
-        {typeUser === "guest" && (
-          <Link
-            href={`/About`}
-            className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
-            Company
-          </Link>
-        )}
-
         <div className='relative h-full'>
           {typeUser === "users" && (
             <button

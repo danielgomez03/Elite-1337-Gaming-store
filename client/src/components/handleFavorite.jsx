@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite, deleteFavorite } from '../redux/actions';
 
-const handleFavorite = ({ isFav, setIsFav }) => {
+const handleFavorite = ({ isFav, setIsFav, id }) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.userId);
   const favorites = useSelector((state) => state.favorites);
   const error = useSelector((state) => state.error);
 
   const handleAddFavorite = () => {
-    const productId = props.id;
+    const productId = id;
     dispatch(addFavorite(userId, productId))
       .then(() => setIsFav(true)) // Actualiza el estado a verdadero (favorito agregado)
       .catch((error) => console.error(error));
   };
 
   const handleDeleteFavorite = () => {
-    const productId = props.id;
+    const productId = id;
     dispatch(deleteFavorite(userId, productId))
       .then(() => setIsFav(false)) // Actualiza el estado a falso (favorito eliminado)
       .catch((error) => console.error(error));
@@ -24,7 +24,7 @@ const handleFavorite = ({ isFav, setIsFav }) => {
 
   return (
     <div>
-<div className="absolute top-60 right-5">
+<div >
   {isFav ? (
     <button onClick={handleDeleteFavorite}>❤️</button>
   ) : (
