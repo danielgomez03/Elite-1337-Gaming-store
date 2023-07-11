@@ -25,6 +25,9 @@ const Checkout = () => {
     payerPostalCode: "",
     orderNotes: "note",
     deliveryOption: "Standard",
+    orderProducts: [], // Campo adicional para los productos del pedido
+    orderTotalPrice: 0, // Campo adicional para el precio total del pedido
+    deliveryOptionCost: 0,
   });
 
   const [error, setError] = useState({});
@@ -123,6 +126,9 @@ const Checkout = () => {
           payerPostalCode: input.payerPostalCode,
           orderNotes: input.orderNotes,
           deliveryOption: input.deliveryOption,
+          orderProducts: input.orderProducts, // Agregar el campo de productos del pedido
+          orderTotalPrice: input.orderTotalPrice, // Agregar el campo de precio total del pedido
+          deliveryOptionCost: input.deliveryOptionCost, 
 
         });
 

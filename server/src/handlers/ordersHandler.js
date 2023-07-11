@@ -46,6 +46,8 @@ const getOrdersByUserId = async (req, res) => {
 const postCreateOrder = async (req, res) => {
   try {
     const {
+      orderProducts,
+      orderTotalPrice,
       orderEmail,
       payerFirstName,
       payerLastName,
@@ -57,11 +59,14 @@ const postCreateOrder = async (req, res) => {
       payerAddress,
       payerPostalCode,
       orderNotes,
-      deliveryOption
+      deliveryOption,
+      deliveryOptionCost
     } = req.body;
 
     // Crear un nuevo pedido en la base de datos
     const order = await Order.create({
+      orderProducts,
+      orderTotalPrice,
       orderEmail,
       payerFirstName,
       payerLastName,
@@ -72,8 +77,9 @@ const postCreateOrder = async (req, res) => {
       payerCity,
       payerAddress,
       payerPostalCode,
-      orderNotes: orderNotes || "note", // Usar "note" si no se proporciona orderNotes
-      deliveryOption: deliveryOption || "Standard" // Usar "Standard" si no se proporciona deliveryOption
+      orderNotes,
+      deliveryOption,
+      deliveryOptionCost
     });
 
     // Devolver una respuesta de éxito con el ID del pedido creado
