@@ -66,7 +66,6 @@ const initialState = {
   users: [],
   user: {},
   loading: false,
-  order: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -283,11 +282,6 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state, page: action.payload
       }
-
-      case CREATE_ORDER:
-        return {
-          ...state,
-        }
     default: return { ...state }
   }
 
