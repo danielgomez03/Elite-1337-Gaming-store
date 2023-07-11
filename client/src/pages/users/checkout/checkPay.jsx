@@ -109,6 +109,23 @@ const Checkout = () => {
     if (!error) {
       const { id } = paymentMethod;
       try {
+
+        await axios.post("http://localhost:3001/orders/create", {
+          orderEmail: input.orderEmail,
+          payerFirstName: input.payerFirstName,
+          payerLastName: input.payerLastName,
+          payerPhone: input.payerPhone,
+          payerIdNumber: input.payerIdNumber,
+          payerCountry: input.payerCountry,
+          payerRegion: input.payerRegion,
+          payerCity: input.payerCity,
+          payerAddress: input.payerAddress,
+          payerPostalCode: input.payerPostalCode,
+          orderNotes: input.orderNotes,
+          deliveryOption: input.deliveryOption,
+
+        });
+
         const { data } = await axios.post("http://localhost:3001/stripe/process-payment", {
           id,
           amount: Math.round(parseFloat(productPrice) * 100),

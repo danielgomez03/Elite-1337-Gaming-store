@@ -45,27 +45,6 @@ const getOrdersByUserId = async (req, res) => {
 
 const postCreateOrder = async (req, res) => {
   try {
-    if (!req.session.passport || !req.session.passport.user) {
-      throw new Error("User not authenticated");
-    }
-    // Retrieve userId from session and its associated loginId
-    const userId = req.session.passport.user;
-    const user = await User.findOne({
-      where: { userId },
-      include: { model: Login, attributes: ["loginId"] },
-    });
-
-    if (!user || !user.login) {
-      throw new Error("User or associated login not found");
-    }
-
-    const loginId = user.login.loginId;
-
-    // Check if userId is available
-    if (!userId || !loginId) {
-      throw new Error("User not authenticated");
-    }
-
     const {
       orderEmail,
       payerFirstName,
@@ -78,56 +57,11 @@ const postCreateOrder = async (req, res) => {
       payerAddress,
       payerPostalCode,
       orderNotes,
-      deliveryOption,
+      deliveryOption
     } = req.body;
 
-    // Retrieve the user's cart information from the database
-    const userCart = await User.findAll({
-      where: { userId },
-      include: [{ model: Cart, include: [{ model: Product }] }],
-    });
-
-    if (!userCart || userCart.length === 0) {
-      throw new Error("User cart not found");
-    }
-
-    // Extract the cart items and construct the orderProducts array
-    const orderProducts = userCart.map((cartItem) => {
-      const { quantity, product } = cartItem.cart;
-
-      return {
-        productId: product.productId,
-        quantity,
-        price: product.price,
-        discount: product.discount,
-      };
-    });
-
-    // Calculate the orderTotalPrice
-    const orderTotalPrice = orderProducts.reduce(
-      (total, product) =>
-        total +
-        (product.price - (product.price * product.discount) / 100) *
-          product.quantity,
-      0,
-    );
-
-    // Set the delivery option cost based on the selected delivery option
-    let deliveryOptionCost = 0;
-    if (deliveryOption === "Standard") {
-      deliveryOptionCost = 25;
-    } else if (deliveryOption === "Premium") {
-      deliveryOptionCost = 50;
-    } else if (deliveryOption === "International") {
-      deliveryOptionCost = 100;
-    } else {
-      throw new Error("Invalid or missing delivery option");
-    }
-
-    // Create the order
+    // Crear un nuevo pedido en la base de datos
     const order = await Order.create({
-      orderProducts,
-      orderTotalPrice,
       orderEmail,
       payerFirstName,
       payerLastName,
@@ -138,19 +72,26 @@ const postCreateOrder = async (req, res) => {
       payerCity,
       payerAddress,
       payerPostalCode,
-      orderNotes,
-      deliveryOption,
-      deliveryOptionCost,
-      userId,
-      loginId,
+      orderNotes: orderNotes || "note", // Usar "note" si no se proporciona orderNotes
+      deliveryOption: deliveryOption || "Standard" // Usar "Standard" si no se proporciona deliveryOption
     });
 
-    res.status(200).json({ message: "Order created successfully", order });
+    // Devolver una respuesta de éxito con el ID del pedido creado
+    res.status(200).json({
+      success: true,
+      orderId: order.id,
+      message: "Order created successfully",
+    });
   } catch (error) {
-    console.error("Error in postCreateOrder:", error);
-    res.status(400).json({ message: error.message });
+    console.error("Error al crear el pedido:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to create order",
+      error: error.message,
+    });
   }
 };
+
 
 
 
