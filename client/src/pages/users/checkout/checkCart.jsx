@@ -4,8 +4,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
 import "bootswatch/dist/lux/bootstrap.min.css";
 import axios from "axios";
-import { createOrder } from "../../../redux/actions"
-import { useDispatch } from "react-redux";
 
 const stripePromise = loadStripe("pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri");
 
@@ -13,7 +11,6 @@ const Checkout = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const [input, setInput] = useState({
     orderEmail: "",
@@ -24,8 +21,8 @@ const Checkout = () => {
     payerCountry: "",
     payerRegion: "",
     payerCity: "",
-    payerAddress: "123 Street",
-    payerPostalCode: "12345",
+    payerAddress: "",
+    payerPostalCode: "",
     orderNotes: "note",
     deliveryOption: "Standard",
   });
@@ -96,9 +93,8 @@ const Checkout = () => {
   const [showBillingInfo, setShowBillingInfo] = useState(false);
   const { totalPrice } = router.query;
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async () => {
+  const handlePayment = async () => {
     if (!stripe || !elements) {
       return;
     }
@@ -122,6 +118,9 @@ const Checkout = () => {
         elements.getElement(CardElement).clear();
         console.log("Payment processed successfully");
 
+
+        localStorage.removeItem("cart");
+
         router.push({
           pathname: "/users/stripe/success",
           query: { success: true },
@@ -140,34 +139,38 @@ const Checkout = () => {
     }
   };
 
-  const handleFormSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (Object.keys(error).length === 0) {
-      dispatch(createOrder(input));
 
-      alert("HACEMOS EL DISPATCH");
+    if (showBillingInfo) {
+      handlePayment();
     } else {
-      alert("FALTAN CAMPOS A COMPLETAR");
+      if (Object.keys(error).length === 0 && Object.values(input).every(value => value !== '')) {
+        setShowDeliveryInfo(true);
+      } else {
+        alert("FALTAN CAMPOS A COMPLETAR");
+      }
     }
   };
 
   const handleContinue = (e) => {
     e.preventDefault();
+
     if (Object.keys(error).length === 0 && Object.values(input).every(value => value !== '')) {
       setShowDeliveryInfo(true);
     } else {
       alert("FALTAN CAMPOS A COMPLETAR");
     }
   };
-  
+
   const handleEdit = () => {
     setShowDeliveryInfo(false);
   };
 
-    const handleContinueToBilling = () => {
-      setShowDeliveryInfo(false);
-      setShowBillingInfo(true);
-    };
+  const handleContinueToBilling = () => {
+    setShowDeliveryInfo(false);
+    setShowBillingInfo(true);
+  };
 
   return (
     <div>
@@ -176,111 +179,108 @@ const Checkout = () => {
           {!showDeliveryInfo && !showBillingInfo ? (
             <div>
               <h2>¿Cómo te gustaría recibir tu pedido?</h2>
-              <div>
-                <button>Iniciar sesión</button>
-              </div>
               <h2>Ingresa tu nombre y dirección:</h2>
-    <form onSubmit={handleFormSubmit}>
-        <div>
-          <label>Email: </label>
-          <input
-            name="orderEmail"
-            value={input.orderEmail}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.orderEmail}</span>
-        <div>
-          <label>Nombre: </label>
-          <input
-            name="payerFirstName"
-            value={input.payerFirstName}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerFirstName}</span>
-        <div>
-          <label>Apellido: </label>
-          <input
-            name="payerLastName"
-            value={input.payerLastName}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerLastName}</span>
-        <div>
-          <label>Teléfono: </label>
-          <input
-            name="payerPhone"
-            value={input.payerPhone}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerPhone}</span>
-        <div>
-          <label>Número de identificación: </label>
-          <input
-            name="payerIdNumber"
-            value={input.payerIdNumber}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerIdNumber}</span>
-        <div>
-          <label>País: </label>
-          <input
-            name="payerCountry"
-            value={input.payerCountry}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerCountry}</span>
-        <div>
-          <label>Región: </label>
-          <input
-            name="payerRegion"
-            value={input.payerRegion}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerRegion}</span>
-        <div>
-          <label>Ciudad: </label>
-          <input
-            name="payerCity"
-            value={input.payerCity}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerCity}</span>
-        <div>
-          <label>Dirección: </label>
-          <input
-            name="payerAddress"
-            value={input.payerAddress}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerAddress}</span>
-        <div>
-          <label>Código Postal: </label>
-          <input
-            name="payerPostalCode"
-            value={input.payerPostalCode}
-            onChange={handleChange}
-          />
-        </div>
-        <span>{error.payerPostalCode}</span>
-        <div>
-          {Object.keys(error).length === 0 && Object.values(input).every(value => value !== '') ? (
-            <button type="submit" onClick={handleContinue}>
-              Continuar con gastos de envío y gestión
-            </button>
-          ) : (
-            <span>FALTAN CAMPOS A COMPLETAR</span>
-          )}
-        </div>
-      </form>
+              <form onSubmit={handleContinue}>
+                <div>
+                  <label>Email: </label>
+                  <input
+                    name="orderEmail"
+                    value={input.orderEmail}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.orderEmail}</span>
+                <div>
+                  <label>Nombre: </label>
+                  <input
+                    name="payerFirstName"
+                    value={input.payerFirstName}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerFirstName}</span>
+                <div>
+                  <label>Apellido: </label>
+                  <input
+                    name="payerLastName"
+                    value={input.payerLastName}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerLastName}</span>
+                <div>
+                  <label>Teléfono: </label>
+                  <input
+                    name="payerPhone"
+                    value={input.payerPhone}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerPhone}</span>
+                <div>
+                  <label>Número de identificación: </label>
+                  <input
+                    name="payerIdNumber"
+                    value={input.payerIdNumber}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerIdNumber}</span>
+                <div>
+                  <label>País: </label>
+                  <input
+                    name="payerCountry"
+                    value={input.payerCountry}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerCountry}</span>
+                <div>
+                  <label>Región: </label>
+                  <input
+                    name="payerRegion"
+                    value={input.payerRegion}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerRegion}</span>
+                <div>
+                  <label>Ciudad: </label>
+                  <input
+                    name="payerCity"
+                    value={input.payerCity}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerCity}</span>
+                <div>
+                  <label>Dirección: </label>
+                  <input
+                    name="payerAddress"
+                    value={input.payerAddress}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerAddress}</span>
+                <div>
+                  <label>Código Postal: </label>
+                  <input
+                    name="payerPostalCode"
+                    value={input.payerPostalCode}
+                    onChange={handleChange}
+                  />
+                </div>
+                <span>{error.payerPostalCode}</span>
+                <div>
+                  {Object.keys(error).length === 0 && Object.values(input).every(value => value !== '') ? (
+                    <button type="submit" onClick={handleContinue}>
+                      Continuar con gastos de envío y gestión
+                    </button>
+                  ) : (
+                    <span>FALTAN CAMPOS A COMPLETAR</span>
+                  )}
+                </div>
+              </form>
             </div>
           ) : showDeliveryInfo && !showBillingInfo ? (
             <div>
@@ -288,14 +288,14 @@ const Checkout = () => {
               <div>
                 <p>Llega el mié 12 de jul</p>
                 <select
-                   name="deliveryOption"
-                   value={input.deliveryOption}
-                   onChange={handleChange}
-                   >
-                 <option value="Standard">Standard</option>
-                 <option value="Premium">Premium</option>
-                 <option value="International">International</option>
-               </select>
+                  name="deliveryOption"
+                  value={input.deliveryOption}
+                  onChange={handleChange}
+                >
+                  <option value="Standard">Standard</option>
+                  <option value="Premium">Premium</option>
+                  <option value="International">International</option>
+                </select>
               </div>
               <button onClick={handleContinueToBilling}>
                 Continuar a la facturación
@@ -311,30 +311,31 @@ const Checkout = () => {
             </div>
           ) : (
             <div>
-             <h2>Forma de pago</h2>
-          <div>
-            <p>Obtén 3 y 6 meses sin intereses en compras mayores a $3,000. Sólo para miembros.</p>
-            <p>*Promoción con tarjetas de crédito. Consulta bancos participantes.</p>
-            <p>Términos y Condiciones</p>
-          </div>
-          <div>
-            <button>Tarjeta de crédito o débito</button>
-            <h2>Ingresa tus datos de pago:</h2>
-            <div className="form-group">
-              <CardElement className="form-control payment-input" />
-            </div>
-            <button className="btn btn-success payment-button" disabled={!stripe} onClick={handleSubmit}>
-              {loading ? (
-                <div className="spinner-border text-light" role="status">
-                  <span className="sr-only">loading...</span>
-                </div>
-              ) : (
-                "Buy"
-              )}
-            </button>
-          </div>
-          <p>Si haces clic en Realizar pedido, aceptas los Términos y condiciones de eShopWorld.</p>
+              <h2>Forma de pago</h2>
+              <div>
+                <p>Obtén 3 y 6 meses sin intereses en compras mayores a $3,000. Sólo para miembros.</p>
+                <p>*Promoción con tarjetas de crédito. Consulta bancos participantes.</p>
+                <p>Términos y Condiciones</p>
               </div>
+              <div>
+                <button>Tarjeta de crédito o débito</button>
+                <h2>Ingresa tus datos de pago:</h2>
+                <div className="form-group">
+                  <CardElement className="form-control payment-input" />
+                </div>
+                <button className="btn btn-success payment-button" disabled={!stripe} onClick={handleSubmit}>
+                  {loading ? (
+                    <div className="spinner-border text-light" role="status">
+                      <span className="sr-only">loading...</span>
+                    </div>
+                  ) : (
+                    "Buy"
+                  )}
+
+                </button>
+              </div>
+              <p>Si haces clic en Realizar pedido, aceptas los Términos y condiciones de eShopWorld.</p>
+            </div>
           )}
         </div>
         <div style={{ flex: 1 }}>
@@ -362,18 +363,12 @@ const Checkout = () => {
   );
 };
 
-function StripeCart() {
+const StripeCheckout = () => {
   return (
     <Elements stripe={stripePromise}>
-      <div className="container p-4">
-        <div className="row">
-          <div className="col-md-8 offset-md-2">
-            <Checkout />
-          </div>
-        </div>
-      </div>
+      <Checkout />
     </Elements>
   );
-}
+};
 
-export default StripeCart;
+export default StripeCheckout;

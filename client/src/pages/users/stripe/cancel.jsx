@@ -12,9 +12,14 @@ const Cancel = () => {
     }
   }, [router.query]);
 
+  const handleGoBack = () => {
+    router.push("http://localhost:3000/");
+  };
+
   return (
     <div>
       {router.query.success === "false" && <h2>Error en la compra</h2>}
+      <button onClick={handleGoBack}>Volver</button>
     </div>
   );
 };

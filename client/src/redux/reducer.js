@@ -40,6 +40,8 @@ import {
   EDIT_PRODUCT,
   CHANGE_PRODUCT_STATUS,
 
+  CREATE_ORDER,
+
 } from './actions'
 
 const initialState = {
