@@ -12,9 +12,14 @@ const Success = () => {
     }
   }, [router.query]);
 
+  const handleGoBack = () => {
+    router.push("http://localhost:3000/");
+  };
+
   return (
     <div>
       {router.query.success === "true" && <h2>¡Compra exitosa!</h2>}
+      <button onClick={handleGoBack}>Volver</button>
     </div>
   );
 };
