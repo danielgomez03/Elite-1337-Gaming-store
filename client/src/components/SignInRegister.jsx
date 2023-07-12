@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios'
 import { userValidation } from './validations.js'
 import Link from 'next/link';
-import { postLogin, changeUser } from '@/redux/actions.js';
-import { signIn, useSession } from 'next-auth/react'
+import { postLogin, changeUser, LoginRegisterWithGoogle } from '@/redux/actions.js';
 import Swal from "sweetalert2";
 import Select from "react-select";
+import { GoogleLogin } from 'react-google-login';
 
 function SignInRegister({ selectedButton, onClose }) {
   const dispatch = useDispatch();
@@ -269,6 +269,11 @@ function SignInRegister({ selectedButton, onClose }) {
     }
   }, [session]);
 
+  const responseGoogle = (response) => {
+    dispatch(LoginRegisterWithGoogle());
+    console.log("responseG", response);
+  };
+
   return (
     <form
       action="/products"
@@ -472,7 +477,7 @@ function SignInRegister({ selectedButton, onClose }) {
             )}
           </div>
 
-          <div className={`mb-4 ${selectedButton === "register" ? "w-1/2" : "w-full" } pr-2`} >
+          <div className={`mb-4 ${selectedButton === "register" ? "w-1/2" : "w-full"} pr-2`} >
             <label htmlFor="password" className="block mb-2 font-bold">
               Password
               <span className="font-bold text-red-500"> * </span>
@@ -654,10 +659,13 @@ function SignInRegister({ selectedButton, onClose }) {
           disabled={selectedButton === "register" && error !== null && !isChecked}>
           {selectedButton === "register" ? "Register" : "Sign In"}
         </button>
-        <button
-          className="w-full px-4 mt-4 py-2 border rounded-md"
-          onClick={() => signIn()}>Sign In with Google</button>
-
+        < GoogleLogin
+          clientId="636260744727-pbibu3bkr52sjcvt0tci16606o6rl6ld.apps.googleusercontent.com"
+          buttonText="Sign In with Google"
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+        />
 
         <div className='w-full flex flex-col justify-center items-center mt-2'>
           <p>Don't have an account yet?</p>

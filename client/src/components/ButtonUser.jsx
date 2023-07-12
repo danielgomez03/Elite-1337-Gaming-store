@@ -18,7 +18,7 @@ function ButtonUser() {
         dispatch(changeUser(selectedValue));
     };
 
-    if (user && user.userRole !== "common") {
+    if (user && user.userRole === "admin" || user.userRole === "super") {
         return (
             <select value={selectedUser} onChange={handleUserChange} className='fixed'>
                 <option value="admin">Admin</option>

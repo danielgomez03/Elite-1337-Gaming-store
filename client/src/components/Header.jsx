@@ -77,17 +77,14 @@ function Header() {
 
   return (
     <div className="bg-white fixed top-0 left-0 right-0 h-16  z-50 flex justify-between p-4">
-      <div className="ml-4 flex lg:ml-0">
-        <Link href="/" className="ml-10">
-          <span className="sr-only">1337 Hardware</span>
-          <div
-            onClick={() => { dispatch(getProducts()) }}
-            className="relative flex flex-col items-center justify-center pr-4" >
-            <h2 className="absolute top-4 text-gray-500 text-xl">Hardware</h2>
-            <h1 className="font-montserrat mb-6 text-3xl">1337</h1>
-          </div>
-        </Link>
-      </div>
+      <Link href="/" className=" relative ml-5 h-10 flex flex-col items-center">
+        <span className="sr-only w-0 h-0">1337 Hardware</span>
+        <img
+          className="fixed top-0.5 left-16 w-16"
+          src="/db61332f0446b77510935fcb1c3d929b.png"
+          alt="logo" />
+        <h2 className="absolute top-4 left-3.5 text-gray-300 text-xl">Hardware</h2>
+      </Link>
 
       <SearchBar />
       {typeUser !== "guest" ? (

@@ -39,6 +39,8 @@ export const POST_LOGIN = "POST_LOGIN";
 export const POST_LOGOUT = "POST_LOGOUT";
 export const CONFIRM_SESSION = "CONFIRM_SESSION";
 export const CHANGE_USER = "CHANGE_USER";
+//---------Session types with Google----/
+export const LOGIN_REGISTER_GOOGLE = "LOGIN_REGISTER_GOOGLE"
 //---------other types----/
 
 
@@ -68,7 +70,6 @@ export const confirmSession = (tokenRedux, userId) => {
     }
   };
 };
-
 
 export const postLogin = (tokenRedux, credentials, userId) => {
   return async function (dispatch) {
@@ -111,6 +112,27 @@ export const changeUser = (typeUser) => {
     return dispatch({ type: CHANGE_USER, payload: typeUser });
   }
 };
+
+// -----------actions session with Google----------------------------------------------------------------------------------------
+export const LoginRegisterWithGoogle = () => {
+  return async function (dispatch) {
+    try {
+      const res = await axios.get("http://localhost:3001/login/google");
+      const tokenG = res.data.generatedToken;
+      const userIdG = res.data.userId;
+      if (tokenG && userIdG) {
+        console.log("LoginGoogleAction", res.data.message);
+        dispatch({ type: LOGIN_REGISTER_GOOGLE, payload: { tokenG, userIdG } });
+      } else {
+        console.log("Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      dispatch({ type: LOGIN_REGISTER_GOOGLE, payload: { error } });
+    }
+  };
+};
+
 
 // -----------actions cart----------------------------------------------------------------------------------------
 export const deleteProduct = (product) => {
@@ -165,19 +187,20 @@ export const addProductToCart = (id) => {
 
 //---------------------------------------------------------------------//
 //User's actions---------------------------------//
-export const modifyIsActiveUser = (userId,status) =>{
-  console.log(status,userId)
-  if(status){
-   return async function (dispatch) {
-     await axios.patch("http://localhost:3001/admin/user/disable", {userId});
-     dispatch({ type: MODIFY_ISACTIVE_USER });
-   }
-  }else{
-   return async function (dispatch) {
-    await axios.patch("http://localhost:3001/admin/user/enable", {userId});
-    dispatch({ type: MODIFY_ISACTIVE_USER });
-  }}
- }
+export const modifyIsActiveUser = (userId, status) => {
+  console.log(status, userId)
+  if (status) {
+    return async function (dispatch) {
+      await axios.patch("http://localhost:3001/admin/user/disable", { userId });
+      dispatch({ type: MODIFY_ISACTIVE_USER });
+    }
+  } else {
+    return async function (dispatch) {
+      await axios.patch("http://localhost:3001/admin/user/enable", { userId });
+      dispatch({ type: MODIFY_ISACTIVE_USER });
+    }
+  }
+}
 export const fetchUsers = () => async (dispatch) => {
   try {
     const response = await axios.get('http://localhost:3001/users/');

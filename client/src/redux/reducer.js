@@ -32,8 +32,9 @@ import {
   POST_LOGOUT,
   CONFIRM_SESSION,
   CHANGE_USER,
+  LOGIN_REGISTER_GOOGLE,
 
-  MODIFI_ISACTIVE_USER
+  MODIFI_ISACTIVE_USER,
 
 
 } from './actions'
@@ -81,6 +82,14 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, token: action.payload.token, userId: action.payload.userId, session: true }
     case CHANGE_USER:
       return { ...state, typeUser: action.payload };
+    //---------Session cases Google----/
+    case LOGIN_REGISTER_GOOGLE:
+      const { tokenG, userIdG } = action.payload;
+      if (action.payload.error) {
+        return { ...state, errorMessage: action.payload.error };
+      } else {
+        return { ...state, token: tokenG, userId: userIdG, session: true, errorMessage: "" };
+      };
     //--------------------------/
     case GET_COMMENTS_BY_PRODUCT:
       return { ...state, commentsByProduct: action.payload }
@@ -117,8 +126,8 @@ const rootReducer = (state = initialState, action) => {
     //       quantity: 1
     //     };
 
-  case MODIFI_ISACTIVE_USER:
-    return {...state}
+    case MODIFI_ISACTIVE_USER:
+      return { ...state }
 
 
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { SessionProvider } from 'next-auth/react';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import NavBar from '@/components/NavBar';
@@ -10,21 +9,19 @@ import 'tailwindcss/tailwind.css';
 require('typeface-montserrat');
 require('typeface-roboto');
 
-function App({ Component, pageProps: { session, ...pageProps } }) {
+function App({ Component, pageProps }) {
   return (
-    <SessionProvider session={session}>
-      <Provider store={store}>
-        <div className="w-full font-montserrat mt-32 bg-gray-100 text-sm tracking-wider relative">
-          <Header />
-          <ButtonUser />
-          <div className='page-container w-full min-h-[calc(100vh-378px)] flex flex-col justify-center items-center'>
-            <NavBar />
-            <Component {...pageProps} />
-          </div>
-          <Footer className='mt-auto' />
+    <Provider store={store}>
+      <div className="w-full font-montserrat mt-32 bg-gray-100 text-sm tracking-wider relative">
+        <Header />
+        <ButtonUser />
+        <div className='page-container w-full min-h-[calc(100vh-378px)] flex flex-col justify-center items-center'>
+          <NavBar />
+          <Component {...pageProps} />
         </div>
-      </Provider>
-    </SessionProvider>
+        <Footer className='mt-auto' />
+      </div>
+    </Provider>
   );
 }
 
