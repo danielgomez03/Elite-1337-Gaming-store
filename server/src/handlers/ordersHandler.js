@@ -68,6 +68,38 @@ const postCreateOrder = async (req, res) => {
       deliveryOptionCost
     } = req.body;
 
+      // Obtener el inicio de sesión actual
+      const login = await Login.findOne({
+        order: [["createdAt", "DESC"]],
+      });
+
+      // Verificar si se encontró el inicio de sesión
+      if (!login) {
+        return res.status(404).json({
+          success: false,
+          message: 'Login not found',
+        });
+      }
+  
+      // Obtener el loginId del inicio de sesión
+      const loginId = login.loginId;
+
+        // Obtener el usuario actual
+        const user = await User.findOne({
+          order: [["createdAt", "DESC"]],
+        });
+
+        // Verificar si se encontró el usuario
+        if (!user) {
+          return res.status(404).json({
+            success: false,
+            message: 'User not found',
+          });
+        }
+    
+        // Obtener el userId del usuario
+        const userId = user.userId;
+
     // Crear un nuevo pedido en la base de datos
     const order = await Order.create({
       orderProducts,
@@ -84,7 +116,9 @@ const postCreateOrder = async (req, res) => {
       payerPostalCode,
       orderNotes,
       deliveryOption,
-      deliveryOptionCost
+      deliveryOptionCost,
+      userId,
+      loginId
     });
 
     // Devolver una respuesta de éxito con el ID de la orden creada

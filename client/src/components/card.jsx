@@ -20,7 +20,6 @@ const Card = (props) => {
   const favorites = useSelector((state) => state.favorites);
   const [isFav, setIsFav] = useState(false);
 
-  const userId = useSelector(state=>state.userId)
 
 
   useEffect(() => {
