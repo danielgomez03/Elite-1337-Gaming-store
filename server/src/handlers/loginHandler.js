@@ -1,6 +1,7 @@
 const { generateAuthToken } = require("../auth/auth");
 const { Login, User, Token } = require("../database");
 const { Op } = require('sequelize');
+const passport = require('passport');
 
 const login = async (req, res, next) => {
   try {
@@ -109,9 +110,28 @@ const logout = async (req, res, next) => {
   }
 };
 
+const googleLogin = (req, res, next) => {
+  passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
+};
+
+const googleCallback = (req, res, next) => {
+  passport.authenticate('google', { failureMessage: "Error" }, (err, token) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (!token.userId) {
+      return res.json("error");
+    }
+
+    return res.status(200).json(token);
+  })(req, res, next);
+};
 
 module.exports = {
   login,
   persistSession,
   logout,
+  googleLogin,
+  googleCallback,
 };

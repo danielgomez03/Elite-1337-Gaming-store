@@ -27,6 +27,13 @@ module.exports = (sequelize) => {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
       },
+      googleId: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      googleAccessToken: {
+        type: DataTypes.STRING,
+      },
     },
     { timestamps: true },
   );
