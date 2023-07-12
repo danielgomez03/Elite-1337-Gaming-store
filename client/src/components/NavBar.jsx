@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getCategories, filterProductsByCategory } from '@/redux/actions';
+import { getCategories, filterProductsByCategory, getCartByIdUser } from '@/redux/actions';
 import { useRouter } from 'next/router';
 import NavBarAdmin from './NavBarAdmin';
 import axios from 'axios';
@@ -21,6 +21,11 @@ function NavBar() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [activeSubcategory, setActiveSubcategory] = useState(null);
   const cart = useSelector(state => state.cartUser)
+
+  useEffect(() => {
+    dispatch(getCartByIdUser(userId));
+  }, [userId]);
+
   const totalProducts = () => {
     let total = 0;
     for (let i = 0; i < cart.length; i++) {

@@ -36,7 +36,7 @@ import {
   CONFIRM_SESSION,
   CHANGE_USER,
 
-  MODIFI_ISACTIVE_USER,
+  MODIFY_ISACTIVE_USER,
   EDIT_PRODUCT,
   CHANGE_PRODUCT_STATUS,
 
@@ -106,7 +106,7 @@ const rootReducer = (state = initialState, action) => {
     case ADD_PRODUCT_TO_CART:
       return { ...state, cart: action.payload }
 
-  case MODIFI_ISACTIVE_USER:
+  case MODIFY_ISACTIVE_USER:
     return {...state}
 
 
