@@ -28,7 +28,11 @@ const Checkout = () => {
     deliveryOption: "Standard",
     orderProducts: [], // Campo adicional para los productos del pedido
     orderTotalPrice: parseFloat(productPrice), // Campo adicional para el precio total del pedido
-    deliveryOptionCost: 0,
+    deliveryOptions: {
+      Standard: 25,
+      Premium: 50,
+      International: 100,
+    },
   });
 
   const [error, setError] = useState({});
@@ -83,6 +87,7 @@ const Checkout = () => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
+      deliveryOptionCost: input.deliveryOptions[e.target.value],
     });
 
     setError(
