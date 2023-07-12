@@ -22,6 +22,16 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/users/Details/[id]": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/users/Details/[id].js"
+    ],
+    "/users/ShopCart": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/users/ShopCart.js"
+    ],
     "/users/stripe/success": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

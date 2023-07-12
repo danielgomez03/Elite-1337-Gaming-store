@@ -175,6 +175,9 @@ function ShopCart() {
                   totalPrice: calculateTotalPrice(cart),
                   totalProducts: calculateTotalProducts(cart),
                   products: cart.map((product) => product.productId),
+                  quantity: cart.map((product) => product.quantity),
+                  prices: cart.map((product) => product.product.price), // Agregado: precios de los productos
+                  discounts: cart.map((product) => product.product.discount),
                 }
               }}
               passHref
