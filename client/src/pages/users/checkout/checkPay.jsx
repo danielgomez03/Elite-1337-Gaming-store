@@ -211,11 +211,8 @@ const Checkout = () => {
     if (showBillingInfo) {
       handlePayment();
     } else {
-      if (Object.keys(error).length === 0 && Object.values(input).every(value => value !== '')) {
         setShowDeliveryInfo(true);
-      } else {
-        alert("FALTAN CAMPOS A COMPLETAR");
-      }
+      
     }
   };
 
@@ -343,13 +340,9 @@ const Checkout = () => {
                 </div>
                 <span>{error.payerPostalCode}</span>
                 <div>
-                  {Object.keys(error).length === 0 && Object.values(input).every(value => value !== '') ? (
                     <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" type="submit" onClick={handleContinue}>
                       Continuar con gastos de envío y gestión
                     </button>
-                  ) : (
-                    <span>FALTAN CAMPOS A COMPLETAR</span>
-                  )}
                 </div>
               </form>
             </div>
@@ -373,7 +366,7 @@ const Checkout = () => {
               </button>
               <h2>Datos de entrega</h2>
               <div>
-                <button onClick={handleEdit}>Editar</button>
+                <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" onClick={handleEdit}>Editar</button>
                 <p>{input.payerFirstName} {input.payerLastName}</p>
                 <p>{input.payerAddress}</p>
                 <p>{input.orderEmail}</p>
@@ -402,9 +395,6 @@ const Checkout = () => {
                   ) : (
                     "Buy"
                   )}
-
-
-
 
                 </button>
               </div>

@@ -2,8 +2,5 @@
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
   "/_error": "pages/_error.js",
-  "/users/stripe/cancel": "pages/users/stripe/cancel.js",
-  "/users/checkout/checkCart": "pages/users/checkout/checkCart.js",
-  "/": "pages/index.js",
-  "/users/ShopCart": "pages/users/ShopCart.js"
+  "/users/checkout/checkPay": "pages/users/checkout/checkPay.js"
 }
