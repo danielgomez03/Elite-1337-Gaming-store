@@ -11,7 +11,8 @@ const Checkout = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
-
+  const { totalPrice, products } = router.query;
+  
   const [input, setInput] = useState({
     orderEmail: "",
     payerFirstName: "",
@@ -26,7 +27,7 @@ const Checkout = () => {
     orderNotes: "note",
     deliveryOption: "Standard",
     orderProducts: [], // Campo adicional para los productos del pedido
-    orderTotalPrice: 0, // Campo adicional para el precio total del pedido
+    orderTotalPrice: parseFloat(totalPrice), // Campo adicional para el precio total del pedido
     deliveryOptionCost: 0,
   });
 
@@ -94,7 +95,6 @@ const Checkout = () => {
 
   const [showDeliveryInfo, setShowDeliveryInfo] = useState(false);
   const [showBillingInfo, setShowBillingInfo] = useState(false);
-  const { totalPrice } = router.query;
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
@@ -113,6 +113,8 @@ const Checkout = () => {
       const { id } = paymentMethod;
       try {
 
+        const orderProducts = products.map(productId => ({ productId: productId }));
+
         await axios.post("http://localhost:3001/orders/create", {
           orderEmail: input.orderEmail,
           payerFirstName: input.payerFirstName,
@@ -126,8 +128,8 @@ const Checkout = () => {
           payerPostalCode: input.payerPostalCode,
           orderNotes: input.orderNotes,
           deliveryOption: input.deliveryOption,
-          orderProducts: input.orderProducts, // Agregar el campo de productos del pedido
-          orderTotalPrice: input.orderTotalPrice, // Agregar el campo de precio total del pedido
+          orderProducts: orderProducts,// Agregar el campo de productos del pedido
+          orderTotalPrice: parseFloat(totalPrice), // Agregar el campo de precio total del pedido
           deliveryOptionCost: input.deliveryOptionCost, 
 
         });

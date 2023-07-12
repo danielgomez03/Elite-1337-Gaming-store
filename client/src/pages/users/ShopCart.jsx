@@ -174,6 +174,7 @@ function ShopCart() {
                 query: {
                   totalPrice: calculateTotalPrice(cart),
                   totalProducts: calculateTotalProducts(cart),
+                  products: cart.map((product) => product.productId),
                 }
               }}
               passHref

@@ -11,6 +11,7 @@ const Checkout = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
+  const { productPrice, productId } = router.query;
 
   const [input, setInput] = useState({
     orderEmail: "",
@@ -26,7 +27,7 @@ const Checkout = () => {
     orderNotes: "note",
     deliveryOption: "Standard",
     orderProducts: [], // Campo adicional para los productos del pedido
-    orderTotalPrice: 0, // Campo adicional para el precio total del pedido
+    orderTotalPrice: parseFloat(productPrice), // Campo adicional para el precio total del pedido
     deliveryOptionCost: 0,
   });
 
@@ -94,7 +95,6 @@ const Checkout = () => {
 
   const [showDeliveryInfo, setShowDeliveryInfo] = useState(false);
   const [showBillingInfo, setShowBillingInfo] = useState(false);
-  const { productPrice, productId } = router.query;
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
@@ -127,7 +127,7 @@ const Checkout = () => {
           orderNotes: input.orderNotes,
           deliveryOption: input.deliveryOption,
           orderProducts: [`productId: ${productId}`], // Agregar el campo de productos del pedido
-          orderTotalPrice: input.orderTotalPrice, // Agregar el campo de precio total del pedido
+          orderTotalPrice: parseFloat(productPrice), // Agregar el campo de precio total del pedido
           deliveryOptionCost: input.deliveryOptionCost, 
 
         });
