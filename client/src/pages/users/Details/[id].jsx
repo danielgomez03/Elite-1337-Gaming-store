@@ -7,21 +7,26 @@ import Rating from '@/components/Rating';
 import Comments from '@/components/Comments';
 import AddingRating from '@/components/addingRating';
 import axios from 'axios';
+import AddComments from '@/components/addComments';
 
 
 
 export default function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
-  // manejar con redux a futuro 
-  const purchased = true;
+  
   const userId = useSelector(state => state.userId)
 
   const { id } = router.query;
-
+  useEffect(()=> {
+    if(userId){
+      dispatch(getCartByIdUser(userId));
+    }
+    
+  },[userId])
   useEffect(() => {
      
-      dispatch(getCartByIdUser(userId));
+      
      
     
     if (id) {
@@ -109,8 +114,10 @@ export default function Detail() {
             className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded"
             disabled={detail.stock === 0}
             onClick={() => {
-              dispatch(addProductToCart(userId,id)).then(() => {
-                dispatch(getCartByIdUser(userId));
+              const user=userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+
+              dispatch(addProductToCart(user,id)).then(() => {
+                dispatch(getCartByIdUser(user))
               });
             }}
           >
@@ -141,6 +148,7 @@ export default function Detail() {
   </div>
   </div>
   <Comments id={id}/>
+ 
 </div>
   );
 }

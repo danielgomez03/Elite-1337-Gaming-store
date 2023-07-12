@@ -66,14 +66,14 @@ const Card = (props) => {
         <div className="mt-3 flex items-center justify-between">
           <p className="w-1/2 text-[17px] text-center font-bold text-blue-500">$ {props.price}</p>
           <div className="w-1/2 pr-3">
-            {showElements && (
-              <>
+           
                 <button
                   className="flex items-center justify-center rounded-lg border border-indigo-500 w-full py-1 text-indigo-500 duration-100 hover:bg-blue-600 flex-grow text-sm"
                   disabled={props.stock === 0}
                   onClick={() => {
-                    dispatch(addProductToCart(props.id)).then(() => {
-                      dispatch(getCartByIdUser(id));
+                    const user = userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+                    dispatch(addProductToCart(user,props.id)).then(() => {
+                      dispatch(getCartByIdUser(user));
                     });
                   }}
                 >
@@ -97,15 +97,16 @@ const Card = (props) => {
                   className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
                   disabled={props.stock === 0}
                   onClick={() => {
-                    dispatch(addProductToCart(props.id)).then(() => {
-                      dispatch(getCartByIdUser(id));
+                    const user = userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+                    dispatch(addProductToCart(user,props.id)).then(() => {
+                      dispatch(getCartByIdUser(user));
                     });
                   }}
                 >
                   Buy Now
                 </button>
-              </>
-            )}
+              
+            
 
           </div>
         </div>

@@ -5,8 +5,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import Link from 'next/link';
 
 function ShopCart() {
-  const id = useSelector(state=>state.userId);
-  console.log(id)
+  const userId = useSelector(state=>state.userId);
+  const user=userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
   const dispatch = useDispatch();
   const [imagesArray, setImagesArray] = useState([]);
 
@@ -14,7 +14,7 @@ function ShopCart() {
     // Obtener el carrito del almacenamiento local al cargar la página por primera vez
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
-      dispatch(getCartByIdUser(id, JSON.parse(savedCart)));
+      dispatch(getCartByIdUser(user, JSON.parse(savedCart)));
     }
 
     async function fetchImages() {
@@ -26,13 +26,13 @@ function ShopCart() {
       }
     }
 
-    if (id) {
-      dispatch(getCartByIdUser(id));
+    if (user) {
+      dispatch(getCartByIdUser(user))
     }
 
     fetchImages();
     dispatch(clean());
-  }, [dispatch, id]);
+  }, [dispatch, user]);
 
   const cart = useSelector(state => state.cartUser);
 
@@ -91,10 +91,10 @@ function ShopCart() {
                       <button
                         onClick={() => {
                           dispatch(deleteProduct({
-                            userId: id,
+                            userId: user,
                             productId: product.productId
                           })).then(() => {
-                            dispatch(getCartByIdUser(id));
+                            dispatch(getCartByIdUser(user));
                           });
                         }}
                       >
@@ -124,11 +124,11 @@ function ShopCart() {
                           value={product.quantity}
                           onChange={(e) => (
                             dispatch(modifyQuantity({
-                              userId: id,
+                              userId: user,
                               productId: product.productId,
                               quantity: e.target.value
                             })).then(() => {
-                              dispatch(getCartByIdUser(id));
+                              dispatch(getCartByIdUser(user));
                             })
                           )}
                         >
