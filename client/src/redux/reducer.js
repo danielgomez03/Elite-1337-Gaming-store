@@ -42,6 +42,12 @@ import {
 
   CREATE_ORDER,
 
+
+
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
+
 } from './actions'
 
 const initialState = {
@@ -275,8 +281,32 @@ const rootReducer = (state = initialState, action) => {
         favorites: [],
         error: action.error,
       };
-    //---------------------------------------------------------------------//
-    //other cases---------------------------------//  
+//---------------------------------------------------------------------//
+//update profile actions---------------------------------//
+    case UPDATE_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case UPDATE_USER_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        user: action.payload,
+      };
+    case UPDATE_USER_FAILURE:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+
+
+
+//---------------------------------------------------------------------//
+//other cases---------------------------------//  
     case CLEAN:
       return {
         ...state,

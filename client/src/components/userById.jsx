@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { fetchUserById } from '../redux/actions';
+import UpdateUserForm from './updateUserForm';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -34,7 +34,6 @@ const UserProfile = () => {
             </div>
             <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{user.firstName} {user.lastName}</h1>
             <h3 className="text-gray-600 font-lg text-semibold leading-6">Costumer</h3>
-            <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p>
             <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
   <li className="flex items-center py-3">
     <span>Member since</span>
@@ -44,6 +43,7 @@ const UserProfile = () => {
     <span>Last Update</span>
     <span className="ml-auto">{user?.updatedAt?.split('T')[0]}</span>
   </li>
+  <UpdateUserForm/>
 </ul>
           </div>
           {/* End of profile card */}

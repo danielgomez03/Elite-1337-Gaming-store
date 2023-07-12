@@ -44,9 +44,10 @@ export const CONFIRM_SESSION = "CONFIRM_SESSION";
 export const CHANGE_USER = "CHANGE_USER";
 //---------other types----/
 export const CREATE_ORDER = "CREATE_ORDER";
-
-
-
+//---------update Profile types----/
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 
 // -----------actions session----------------------------------------------------------------------------------------
@@ -484,4 +485,30 @@ export function clean() {
     type: CLEAN
   }
 
+};
+
+
+//---------------------------------------------------------------------//
+//update profile actions---------------------------------//
+
+export const updateUser = (userId, userData) => {
+  return async (dispatch) => {
+    try {
+      // Realizar la petición al servidor para actualizar el usuario
+      dispatch({ type: UPDATE_USER_REQUEST });
+      const response = await axios.put(`http://localhost:3001/users/profile/edit/${userId}`, userData);
+
+      // Actualizar el estado del usuario en caso de éxito
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: response.data.updatedUser,
+      });
+    } catch (error) {
+      // Manejar el error en caso de falla
+      dispatch({
+        type: UPDATE_USER_FAILURE,
+        payload: error.message,
+      });
+    }
+  };
 };
