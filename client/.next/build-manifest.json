@@ -27,10 +27,10 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
-    "/users/checkout/checkCart": [
+    "/users/checkout/checkPay": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",
-      "static/chunks/pages/users/checkout/checkCart.js"
+      "static/chunks/pages/users/checkout/checkPay.js"
     ],
     "/users/stripe/success": [
       "static/chunks/webpack.js",

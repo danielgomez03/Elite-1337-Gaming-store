@@ -4,5 +4,5 @@
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
   "/users/stripe/success": "pages/users/stripe/success.js",
-  "/users/checkout/checkCart": "pages/users/checkout/checkCart.js"
+  "/users/checkout/checkPay": "pages/users/checkout/checkPay.js"
 }
