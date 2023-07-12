@@ -209,7 +209,7 @@ const Checkout = () => {
 
   return (
     <div>
-      <div style={{ display: 'flex' }}>
+      <div className="flex">
         <div style={{ flex: 1 }}>
           {!showDeliveryInfo && !showBillingInfo ? (
             <div>

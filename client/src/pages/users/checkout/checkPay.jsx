@@ -207,7 +207,7 @@ const Checkout = () => {
 
   return (
     <div>
-      <div style={{ display: 'flex' }}>
+      <div className="flex">
         <div style={{ flex: 1 }}>
           {!showDeliveryInfo && !showBillingInfo ? (
             <div>
@@ -365,6 +365,7 @@ const Checkout = () => {
                     "Buy"
                   )}
 
+
                 </button>
               </div>
               <p>Si haces clic en Realizar pedido, aceptas los Términos y condiciones de eShopWorld.</p>
@@ -395,6 +396,8 @@ const Checkout = () => {
     </div>
   );
 };
+
+
 
 const StripeCheckout = () => {
   return (
