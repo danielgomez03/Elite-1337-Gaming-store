@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUserById } from '../redux/actions';
+// import { fetchUserById } from '../redux/actions';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
@@ -38,11 +38,11 @@ const UserProfile = () => {
             <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
   <li className="flex items-center py-3">
     <span>Member since</span>
-    <span className="ml-auto">{user.createdAt.split('T')[0]}</span>
+    <span className="ml-auto">{user?.createdAt?.split('T')[0]}</span>
   </li>
   <li className="flex items-center py-3">
     <span>Last Update</span>
-    <span className="ml-auto">{user.updatedAt.split('T')[0]}</span>
+    <span className="ml-auto">{user?.updatedAt?.split('T')[0]}</span>
   </li>
 </ul>
           </div>
@@ -88,7 +88,7 @@ const UserProfile = () => {
                 <div className="grid grid-cols-2">
                   <div className="px-4 py-2 font-semibold">Email.</div>
                   <div className="px-4 py-2">
-                    <a className="text-blue-800" href={user.login.email}>{user.login.email}</a>
+                    <a className="text-blue-800" href={user?.login?.email}>{user?.login?.email}</a>
                   </div>
                 </div>
                 <div className="grid grid-cols-2">

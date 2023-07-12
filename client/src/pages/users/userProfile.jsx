@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import UserById from '@/components/userById';
+// import { useSelector, useDispatch } from 'react-redux';
+import UserById from '../../components/userById';
 
-const userProfile = () => {
+const UserProfile = () => {
   return (
     <div>
       <UserById/>
@@ -10,4 +10,4 @@ const userProfile = () => {
   );
 }
 
-export default userProfile;
+export default UserProfile;
