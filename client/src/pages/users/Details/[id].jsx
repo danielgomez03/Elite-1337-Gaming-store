@@ -126,7 +126,10 @@ export default function Detail() {
       productName: detail.name,
       productPrice: discountedPrice.toFixed(2),
       productDescription: detail.description,
-      productImage: detail.images?.[0]?.url  // Aquí se pasa la URL de la primera imagen del producto
+      productImage: detail.images?.[0]?.url,  // Aquí se pasa la URL de la primera imagen del producto
+      price: detail.price,
+      discount: detail.discount,
+      quantity: 1 
     }
   }}
   passHref

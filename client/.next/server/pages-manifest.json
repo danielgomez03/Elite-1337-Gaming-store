@@ -2,7 +2,6 @@
   "/_error": "pages/_error.js",
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/users/stripe/success": "pages/users/stripe/success.js",
-  "/users/Details/[id]": "pages/users/Details/[id].js",
-  "/users/ShopCart": "pages/users/ShopCart.js"
+  "/users/checkout/checkPay": "pages/users/checkout/checkPay.js",
+  "/users/stripe/success": "pages/users/stripe/success.js"
 }
