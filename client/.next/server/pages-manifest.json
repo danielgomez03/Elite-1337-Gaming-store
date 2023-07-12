@@ -1,7 +1,9 @@
 {
   "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/": "pages/index.js",
-  "/users/stripe/success": "pages/users/stripe/success.js"
+  "/_error": "pages/_error.js",
+  "/users/stripe/success": "pages/users/stripe/success.js",
+  "/users/Products": "pages/users/Products.js",
+  "/users/ShopCart": "pages/users/ShopCart.js",
+  "/users/checkout/checkCart": "pages/users/checkout/checkCart.js"
 }
