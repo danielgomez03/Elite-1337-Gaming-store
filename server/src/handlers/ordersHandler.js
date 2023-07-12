@@ -1,5 +1,10 @@
 const { User, Login, Cart, Order, Product, Payment } = require("../database");
 const { Op } = require("sequelize");
+const Stripe = require("stripe");
+const { STRIPE_SECRET_KEY } = process.env;
+
+// Inicializar la biblioteca de Stripe
+const stripe = new Stripe(STRIPE_SECRET_KEY);
 
 const getAllOrders = async (req, res) => {
   try {
@@ -82,11 +87,13 @@ const postCreateOrder = async (req, res) => {
       deliveryOptionCost
     });
 
-    // Devolver una respuesta de éxito con el ID del pedido creado
+    const orderId = order.orderId; // Obtener el ID del pedido creado
+
+    // Devolver una respuesta de éxito con el ID de la orden creada
     res.status(200).json({
       success: true,
-      orderId: order.id,
-      message: "Order created successfully",
+      message: 'Order created successfully',
+      orderId: orderId, // Incluir el ID del pedido en la respuesta
     });
   } catch (error) {
     console.error("Error al crear el pedido:", error);
@@ -97,8 +104,6 @@ const postCreateOrder = async (req, res) => {
     });
   }
 };
-
-
 
 
 const putEditOrder = async (req, res) => {

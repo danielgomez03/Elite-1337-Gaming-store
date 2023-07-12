@@ -4,7 +4,7 @@ const { Payment } = require("../database")
 
 const stripe = new Stripe(STRIPE_SECRECT_KEY);
 
-const processPayment = async (amount, id) => {
+const processPayment = async (amount, id, orderId) => {
     try {
       // Crear un pago utilizando la biblioteca de Stripe
       const paymentIntent = await stripe.paymentIntents.create({
@@ -20,6 +20,7 @@ const processPayment = async (amount, id) => {
       amount,
       method: "Credit or Debit Card", // Método de pago específico (puedes personalizarlo según tus necesidades)
       transactionData: paymentIntent.id, // ID del pago recibido del servicio de Stripe
+      orderId:orderId
     });
 
     return payment;

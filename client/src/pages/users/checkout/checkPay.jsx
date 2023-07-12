@@ -94,7 +94,7 @@ const Checkout = () => {
 
   const [showDeliveryInfo, setShowDeliveryInfo] = useState(false);
   const [showBillingInfo, setShowBillingInfo] = useState(false);
-  const { productPrice } = router.query;
+  const { productPrice, productId } = router.query;
   const [loading, setLoading] = useState(false);
 
   const handlePayment = async () => {
@@ -126,7 +126,7 @@ const Checkout = () => {
           payerPostalCode: input.payerPostalCode,
           orderNotes: input.orderNotes,
           deliveryOption: input.deliveryOption,
-          orderProducts: input.orderProducts, // Agregar el campo de productos del pedido
+          orderProducts: [`productId: ${productId}`], // Agregar el campo de productos del pedido
           orderTotalPrice: input.orderTotalPrice, // Agregar el campo de precio total del pedido
           deliveryOptionCost: input.deliveryOptionCost, 
 

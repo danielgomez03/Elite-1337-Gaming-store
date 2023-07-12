@@ -25,6 +25,9 @@ const Checkout = () => {
     payerPostalCode: "",
     orderNotes: "note",
     deliveryOption: "Standard",
+    orderProducts: [], // Campo adicional para los productos del pedido
+    orderTotalPrice: 0, // Campo adicional para el precio total del pedido
+    deliveryOptionCost: 0,
   });
 
   const [error, setError] = useState({});
@@ -109,6 +112,26 @@ const Checkout = () => {
     if (!error) {
       const { id } = paymentMethod;
       try {
+
+        await axios.post("http://localhost:3001/orders/create", {
+          orderEmail: input.orderEmail,
+          payerFirstName: input.payerFirstName,
+          payerLastName: input.payerLastName,
+          payerPhone: input.payerPhone,
+          payerIdNumber: input.payerIdNumber,
+          payerCountry: input.payerCountry,
+          payerRegion: input.payerRegion,
+          payerCity: input.payerCity,
+          payerAddress: input.payerAddress,
+          payerPostalCode: input.payerPostalCode,
+          orderNotes: input.orderNotes,
+          deliveryOption: input.deliveryOption,
+          orderProducts: input.orderProducts, // Agregar el campo de productos del pedido
+          orderTotalPrice: input.orderTotalPrice, // Agregar el campo de precio total del pedido
+          deliveryOptionCost: input.deliveryOptionCost, 
+
+        });
+
         const { data } = await axios.post("http://localhost:3001/stripe/process-payment", {
           id,
           amount: Math.round(parseFloat(totalPrice) * 100),
