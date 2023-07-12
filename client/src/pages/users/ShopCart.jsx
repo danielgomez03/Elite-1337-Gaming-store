@@ -27,7 +27,9 @@ function ShopCart() {
     }
 
     if (user) {
+
       dispatch(getCartByIdUser(user))
+
     }
 
     fetchImages();
