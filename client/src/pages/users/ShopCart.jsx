@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
+axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 
 function ShopCart() {
 

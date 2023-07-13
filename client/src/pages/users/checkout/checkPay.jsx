@@ -8,8 +8,8 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-
 import axios from "axios";
+axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 
 const stripePromise = loadStripe(
   "pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri",
@@ -128,7 +128,7 @@ const Checkout = () => {
     if (!error) {
       const { id } = paymentMethod;
       try {
-        await axios.post("http://localhost:3001/orders/create", {
+        await axios.post("/orders/create", {
           orderEmail: input.orderEmail,
           payerFirstName: input.payerFirstName,
           payerLastName: input.payerLastName,
@@ -153,7 +153,7 @@ const Checkout = () => {
         });
 
         const { data } = await axios.post(
-          "http://localhost:3001/stripe/process-payment",
+          "/stripe/process-payment",
           {
             id,
             amount: Math.round(

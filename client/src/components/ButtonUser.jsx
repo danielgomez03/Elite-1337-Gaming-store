@@ -18,15 +18,18 @@ function ButtonUser() {
         dispatch(changeUser(selectedValue));
     };
 
-    if (user && user.userRole !== "common") {
         return (
-            <select value={selectedUser} onChange={handleUserChange} className='fixed'>
+            <select
+                value={selectedUser}
+                onChange={handleUserChange}
+                className={`${ typeUser === "guest" && "hidden" } py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+            >
                 <option value="admin">Admin</option>
                 <option value="users">Users</option>
                 <option value="guest">Guest</option>
             </select>
+
         )
-    }
 }
 
 export default ButtonUser;
