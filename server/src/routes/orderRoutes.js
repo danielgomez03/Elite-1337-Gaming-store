@@ -4,7 +4,6 @@ const {
   getOrdersByProductId,
   getOrdersByUserId,
   postCreateOrder,
-  putEditOrder,
 } = require("../handlers/ordersHandler");
 
 const ordersRoutes = Router();
@@ -14,6 +13,5 @@ ordersRoutes.get("/product/:productId", getOrdersByProductId);
 ordersRoutes.get("/user/:userId", getOrdersByUserId);
 
 ordersRoutes.post("/create", postCreateOrder);
-ordersRoutes.put("/edit", putEditOrder);
 
 module.exports = ordersRoutes;

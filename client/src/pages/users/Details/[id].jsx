@@ -102,9 +102,11 @@ export default function Detail() {
               const user=userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
 
 
+
               dispatch(addProductToCart(user,id)).then(() => {
                 dispatch(getCartByIdUser(user))
               });
+
 
             }}
           >
@@ -118,7 +120,10 @@ export default function Detail() {
       productName: detail.name,
       productPrice: discountedPrice.toFixed(2),
       productDescription: detail.description,
-      productImage: detail.images?.[0]?.url  // Aquí se pasa la URL de la primera imagen del producto
+      productImage: detail.images?.[0]?.url,  // Aquí se pasa la URL de la primera imagen del producto
+      price: detail.price,
+      discount: detail.discount,
+      quantity: 1 
     }
   }}
   passHref
