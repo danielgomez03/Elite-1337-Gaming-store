@@ -35,8 +35,8 @@ const Checkout = () => {
     payerPostalCode: "",
     orderNotes: "note",
     deliveryOption: "Standard",
-    orderProducts: [], // Campo adicional para los productos del pedido
-    orderTotalPrice: parseFloat(productPrice), // Campo adicional para el precio total del pedido
+    orderProducts: [],
+    orderTotalPrice: parseFloat(productPrice),
     deliveryOptions: {
       Standard: 25,
       Premium: 50,

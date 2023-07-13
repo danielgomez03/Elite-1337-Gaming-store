@@ -34,8 +34,7 @@ const patchDisableUserHandler = async (req, res) => {
     const firstName = user.firstName;
 
     // Send disabled user mail
-    // UNCOMMENT THIS LINE!!!
-    // await sendUserDisabledEmailHandler(email, firstName);
+    await sendUserDisabledEmailHandler(email, firstName);
 
     res.json({ message: "User disabled successfully" });
   } catch (error) {

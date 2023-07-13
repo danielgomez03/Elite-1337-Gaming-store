@@ -1,6 +1,9 @@
 const Stripe = require("stripe");
 const { STRIPE_SECRECT_KEY } = process.env;
 const { Payment, Order, Login, Product } = require("../database");
+const {
+  sendOrderConfirmationEmailHandler,
+} = require("../handlers/mailingHandler");
 
 const stripe = new Stripe(STRIPE_SECRECT_KEY);
 
@@ -51,6 +54,13 @@ const processPayment = async (amount, id, userId) => {
       loginId: loginId,
     });
 
+    await sendOrderConfirmationEmailHandler(
+      latestOrder.orderEmail,
+      latestOrder.orderId,
+      latestOrder,
+      payment,
+    );
+
     await Order.update(
       { orderStatus: "Payment confirmed" },
       { where: { orderId: orderId } },
@@ -85,8 +95,8 @@ const getAllPayments = async () => {
 
     return payments;
   } catch (error) {
-    console.error("Error al obtener los pagos:", error);
-    throw new Error("Ocurrió un error al obtener los pagos");
+    console.error("Error in getAllPayments:", error);
+    throw new Error("An error occurred while obtaining all payments");
   }
 };
 

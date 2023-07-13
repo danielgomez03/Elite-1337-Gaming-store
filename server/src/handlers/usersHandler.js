@@ -141,8 +141,7 @@ const postCreateUser = async (req, res) => {
     });
 
     // Send the welcome email
-    // UNCOMMENT THIS LINE!!!
-    // await sendWelcomeEmailHandler(email, firstName);
+    await sendWelcomeEmailHandler(email, firstName);
 
     res.status(200).json({ message: "User created successfully", createdUser });
   } catch (error) {
@@ -287,9 +286,8 @@ const patchUpdateEmail = async (req, res) => {
 
       await login.update({ email: newEmail });
 
-      // UNCOMMENT THIS LINE!!!
       // Send email with updated credentials
-      // await sendEmailUpdateEmailHandler(login.email, newEmail);
+      await sendEmailUpdateEmailHandler(login.email, newEmail);
     }
 
     res.status(200).json({ message: "Email updated successfully", login });
@@ -332,9 +330,9 @@ const patchUpdatePassword = async (req, res) => {
           errors: passwordValidationErrors,
         });
       }
-      // UNCOMMENT THIS LINE!!!
+
       // Send password before hashing
-      // await sendPasswordUpdateEmailHandler(login.email, newPassword);
+      await sendPasswordUpdateEmailHandler(login.email, newPassword);
 
       await login.update({ password: newPassword });
     }
