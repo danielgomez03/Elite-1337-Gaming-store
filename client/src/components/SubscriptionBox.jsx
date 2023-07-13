@@ -18,7 +18,7 @@ const SubscriptionBox = () => {
     }
 
     axios
-      .post("http://localhost:3001/mailing/newsletter/subscribe", { email })
+      .post("/mailing/newsletter/subscribe", { email })
       .then((response) => {
         setMessage(response.data.message);
         setError("");

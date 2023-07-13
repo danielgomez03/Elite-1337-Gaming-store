@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import SubscriptionBox from "./SubscriptionBox";
+import ContactForm from "./ContactForm";
 
 const Footer = () => {
   return (
@@ -66,6 +67,9 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col items-center justify-center mt-1 pr-6">
+          <div className="mb-4 bg-indigo-800 hover:bg-indigo-600 text-white py-2 px-3 rounded">
+            <ContactForm />
+          </div>
           <SubscriptionBox />
         </div>
 
