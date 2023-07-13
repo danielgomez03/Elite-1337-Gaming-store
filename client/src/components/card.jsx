@@ -84,8 +84,9 @@ const Card = (props) => {
                   className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
                   disabled={props.stock === 0}
                   onClick={() => {
-                    dispatch(addProductToCart(props.id)).then(() => {
-                      dispatch(getCartByIdUser(id));
+                    const user = userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+                    dispatch(addProductToCart(user,props.id)).then(() => {
+                      dispatch(getCartByIdUser(user));
                     });
                   }}
                 >
