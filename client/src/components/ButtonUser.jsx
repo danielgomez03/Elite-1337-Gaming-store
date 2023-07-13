@@ -22,7 +22,7 @@ function ButtonUser() {
             <select
                 value={selectedUser}
                 onChange={handleUserChange}
-                className="py-2 px-4  rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className={`${ typeUser === "guest" && "hidden" } py-2 px-4 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
             >
                 <option value="admin">Admin</option>
                 <option value="users">Users</option>
