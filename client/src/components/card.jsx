@@ -5,17 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProductToCart, getCartByIdUser, addFavorite, deleteFavorite } from "@/redux/actions";
 
 import Rating from '@/components/Rating';
-import HandleFavorite from '@/components/handleFavorite';
+import HandleFavorite from '@/components/HandleFavorite';
 
 const Card = (props) => {
-  const userId = useSelector((state) => state.userId);
-  const [showElements, setShowElements] = useState(false);
 
-  useEffect(() => {
-    if (userId) {
-      setShowElements(true);
-    }
-  }, [userId]);
+  
 
   const favorites = useSelector((state) => state.favorites);
   const [isFav, setIsFav] = useState(false);
@@ -34,16 +28,14 @@ const Card = (props) => {
   const dispatch = useDispatch();
 
   return (
-    <article className="h-96 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
-      <div className="relative flex items-end overflow-hidden rounded-xl">
+    <article className="h-4/7 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300 flex-shrink-0">
+      <div className="relative flex items-center justify-center overflow-hidden rounded-xl h-52">
         <Link href={`../users/Details/${props.id}`}>
           <img src={props.image} alt="Product Photo" className="w-full h-44 p-3 object-contain" />
         </Link>
         <div className="absolute bottom-3 left-3 inline-flex items-center rounded-lg bg-white p-2 shadow-md">
           <Rating objProduct={props.objProduct} />
         </div>
-
-
 
         {props.discount > 0.0 && (
           <div className="absolute top-5 right-5 transform translate-x-2 -translate-y-2">
@@ -54,26 +46,21 @@ const Card = (props) => {
           </div>
         )}
       </div>
-      <div className="mt-1 pb-0 flex-col justify-between items-between flex flex-col h-48 gap-auto">
-        <h2 className="h-10 text-slate-700 px-5 font-bold">{props.name}</h2>
-        {showElements && (
-          <div className="favorite-button-container absolute bottom-1/3 right-2 transform -translate-x-1/2">
-            <HandleFavorite isFav={isFav} setIsFav={setIsFav} id={props.id} />
-          </div>
-        )}
+
+      <div className=" relative mt-1 pb-3 flex-col justify-between items-between flex flex-col h-3/7 gap-auto">
+        <h2 className="h-10 text-slate-700 mt-1 px-5 font-bold">{props.name}</h2>
+        <HandleFavorite isFav={isFav} setIsFav={setIsFav} id={props.id} />
         <p className="h-6 mt-1 px-5 text-xs text-slate-400">Stock: {props.stock}</p>
         <p className="h-6 mt-1 px-5 text-xs text-slate-400">Made in {props.origin}</p>
-        <div className="mt-3 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <p className="w-1/2 text-[17px] text-center font-bold text-blue-500">$ {props.price}</p>
           <div className="w-1/2 pr-3">
-           
                 <button
-                  className="flex items-center justify-center rounded-lg border border-indigo-500 w-full py-1 text-indigo-500 duration-100 hover:bg-blue-600 flex-grow text-sm"
+                  className="flex items-center justify-center rounded-lg border border-indigo-500 w-full py-1 text-indigo-500 duration-100 hover:bg-gray-200 flex-grow text-sm"
                   disabled={props.stock === 0}
                   onClick={() => {
-                    const user = userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
-                    dispatch(addProductToCart(user,props.id)).then(() => {
-                      dispatch(getCartByIdUser(user));
+                    dispatch(addProductToCart(props.id)).then(() => {
+                      dispatch(getCartByIdUser(id));
                     });
                   }}
                 >
@@ -97,15 +84,13 @@ const Card = (props) => {
                   className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
                   disabled={props.stock === 0}
                   onClick={() => {
-                    const user = userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
-                    dispatch(addProductToCart(user,props.id)).then(() => {
-                      dispatch(getCartByIdUser(user));
+                    dispatch(addProductToCart(props.id)).then(() => {
+                      dispatch(getCartByIdUser(id));
                     });
                   }}
                 >
                   Buy Now
                 </button>
-            
           </div>
         </div>
       </div>

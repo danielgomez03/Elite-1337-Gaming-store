@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite, deleteFavorite } from '../redux/actions';
 
-const handleFavorite = ({ isFav, setIsFav, id }) => {
+const HandleFavorite = ({ isFav, setIsFav, id }) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.userId);
   const favorites = useSelector((state) => state.favorites);
@@ -23,17 +23,15 @@ const handleFavorite = ({ isFav, setIsFav, id }) => {
   };
 
   return (
-    <div>
-<div >
-  {isFav ? (
-    <button onClick={handleDeleteFavorite}>❤️</button>
-  ) : (
-    <button onClick={handleAddFavorite}>🤍</button>
-  )}
-  {error && <p>Error: {error}</p>}
-</div>
+    <div className='absolute bottom-48 right-4 text-lg'>
+      {isFav ? (
+        <button onClick={handleDeleteFavorite}>❤️</button>
+      ) : (
+        <button onClick={handleAddFavorite}>🤍</button>
+      )}
+      {error && <p>Error: {error}</p>}
     </div>
   );
 };
 
-export default handleFavorite;
+export default HandleFavorite;
