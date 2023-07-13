@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFavorite, deleteFavorite } from '../redux/actions';
 
-const HandleFavorite = ({ isFav, setIsFav, id }) => {
+const handleFavorite = ({ isFav, setIsFav, id }) => {
   const dispatch = useDispatch();
   const userId = useSelector(state => state.userId);
   const favorites = useSelector((state) => state.favorites);
@@ -34,4 +34,4 @@ const HandleFavorite = ({ isFav, setIsFav, id }) => {
   );
 };
 
-export default HandleFavorite;
+export default handleFavorite;
