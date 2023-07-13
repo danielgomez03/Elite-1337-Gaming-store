@@ -4,7 +4,12 @@ import { getCommentsByProduc} from "../redux/actions"
 import { useDispatch, useSelector } from 'react-redux';
 
 import axios from 'axios';
-axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
+
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
 
 
 

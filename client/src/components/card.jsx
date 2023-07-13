@@ -21,12 +21,11 @@ const Card = (props) => {
     setIsFav(isProductInFavorites);
   }, [favorites, props.id]);
 
-
   const dispatch = useDispatch();
 
   return (
     <article className="h-96 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
-      <div className="relative flex items-end overflow-hidden rounded-xl">
+      <div className="h-1/2 relative flex items-center justify-center overflow-hidden rounded-xl">
         <Link href={`../users/Details/${props.id}`}>
           <img src={props.image} alt="Product Photo" className="w-full h-44 p-3 object-contain" />
         </Link>
@@ -44,7 +43,7 @@ const Card = (props) => {
         )}
       </div>
 
-      <div className=" relative mt-1 pb-3 flex-col justify-between items-between flex flex-col h-3/7 gap-auto">
+      <div className="h-1/2 relative mt-1 pb-4 flex-col justify-between items-between flex flex-col h-3/7 gap-auto">
         <h2 className="h-10 text-slate-700 mt-1 px-5 font-bold">{props.name}</h2>
         <HandleFavorite isFav={isFav} setIsFav={setIsFav} id={props.id} />
         <p className="h-6 mt-1 px-5 text-xs text-slate-400">Stock: {props.stock}</p>
@@ -78,8 +77,8 @@ const Card = (props) => {
                   </svg>
                   Add
                 </button>
-                <button
-                  className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                <Link href="/users/ShopCart"
+                  className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-orange-500 text-sm"
                   disabled={props.stock === 0}
                   onClick={() => {
                     const user = userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
@@ -89,7 +88,7 @@ const Card = (props) => {
                   }}
                 >
                   Buy Now
-                </button>
+                </Link>
             
           </div>
         </div>

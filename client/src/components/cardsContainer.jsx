@@ -28,7 +28,7 @@ const PaginationComponent = ({ data, itemsPerPage, info }) => {
   return (
     <div className='mt-6'>
       <h2 className="font-bold mb-4 ml-10">{title}</h2>
-      <ul className="my-2 px-auto flex flex-wrap h-auto gap-3">
+      <ul className="my-2 px-auto flex flex-wrap h-auto gap-3 justify-center ">
         {getPageData().map((product, index) => (
           <Card
             id={product.productId}

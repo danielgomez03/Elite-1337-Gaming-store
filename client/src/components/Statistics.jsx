@@ -3,7 +3,11 @@ import axios from "axios";
 import Chart from "chart.js/auto";
 import "chartjs-plugin-datalabels";
 
-axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
 
 function getRandomColors(length) {
   const colors = [

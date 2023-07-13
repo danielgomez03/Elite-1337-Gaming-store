@@ -1,5 +1,11 @@
 import axios from "axios";
-axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
+
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
+
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART"
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_PRODUCTS = "GET_PRODUCTS";
@@ -45,9 +51,10 @@ export const CONFIRM_SESSION = "CONFIRM_SESSION";
 export const CHANGE_USER = "CHANGE_USER";
 //---------other types----/
 export const CREATE_ORDER = "CREATE_ORDER";
-
-
-
+//---------update Profile types----/
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
 
 
 // -----------actions session----------------------------------------------------------------------------------------
@@ -485,4 +492,30 @@ export function clean() {
     type: CLEAN
   }
 
+};
+
+
+//---------------------------------------------------------------------//
+//update profile actions---------------------------------//
+
+export const updateUser = (userId, userData) => {
+  return async (dispatch) => {
+    try {
+      // Realizar la petición al servidor para actualizar el usuario
+      dispatch({ type: UPDATE_USER_REQUEST });
+      const response = await axios.put(`http://localhost:3001/users/profile/edit/${userId}`, userData);
+
+      // Actualizar el estado del usuario en caso de éxito
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: response.data.updatedUser,
+      });
+    } catch (error) {
+      // Manejar el error en caso de falla
+      dispatch({
+        type: UPDATE_USER_FAILURE,
+        payload: error.message,
+      });
+    }
+  };
 };

@@ -1,7 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { mailValidation } from "./validations";
-axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
+
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
 
 const SubscriptionBox = () => {
   const [email, setEmail] = useState("");

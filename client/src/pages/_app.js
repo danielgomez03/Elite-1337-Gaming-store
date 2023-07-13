@@ -8,8 +8,13 @@ import 'tailwindcss/tailwind.css';
 require('typeface-montserrat');
 require('typeface-roboto');
 import axios from 'axios';
-// axios.defaults.baseURL = "http://localhost:3001/";
-axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
+
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001/';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
+
 function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
       <Provider store={store}>
