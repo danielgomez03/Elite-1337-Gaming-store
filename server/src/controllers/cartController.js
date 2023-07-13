@@ -1,4 +1,4 @@
-const { Cart, User, Product, Category, Sequelize } = require("../database");
+const { Cart, User, Product } = require("../database");
 const { Op } = require("sequelize");
 
 const getCartByUserId = async (userId) => {
@@ -29,31 +29,6 @@ const getCartByUserId = async (userId) => {
     throw new Error("Failed to retrieve the cart for the given user");
   }
 };
-
-// const getCartByUserId = async (userId) => {
-//   try {
-//     const cart = await User.findAll({
-//       where: {
-//         userId: userId,
-//       },
-//       attributes: ["userId"],
-//       include: [
-//         {
-//           model: Cart,
-//         },
-//       ],
-//     });
-
-//     if (!cart) {
-//       throw new Error("Cart not found for the given user");
-//     }
-
-//     return cart;
-//   } catch (error) {
-//     console.error("Error in getCartByUserId:", error);
-//     throw new Error("Failed to retrieve the cart for the given user");
-//   }
-// };
 
 const getCartsByUserName = async (name) => {
   try {

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   const Favorite = sequelize.define(
-    "Favorite",
+    "favorite",
     {
       favoriteId: {
         type: DataTypes.UUID,
@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
     },
-    { timestamps: false }
+    { timestamps: false },
   );
 
   return Favorite;

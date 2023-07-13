@@ -12,11 +12,13 @@ const mailingRoutes = require("./mailingRoutes");
 const ordersRoutes = require("./orderRoutes");
 const ratingsRoutes = require("./ratingRoutes");
 const adminRoutes = require("./adminRoutes");
+const superAdminRoutes = require("./superAdminRoutes");
 const commentsRoutes = require("./commentsRoutes");
 const favoritesRoutes = require("./favoritesRoutes");
+const saleHistoryRoutes = require("./saleHistoryRoutes");
 
 const router = Router();
-router.use(authenticateJWT);
+// router.use(authenticateJWT);
 
 router.use("/products", productsRoutes);
 router.use("/users", usersRoutes);
@@ -29,7 +31,9 @@ router.use("/mailing", mailingRoutes);
 router.use("/orders", ordersRoutes);
 router.use("/ratings", ratingsRoutes);
 router.use("/admin", adminRoutes);
+router.use("/superadmin", superAdminRoutes);
 router.use("/comments", commentsRoutes);
 router.use("/favorites", favoritesRoutes);
+router.use("/salehistory", saleHistoryRoutes);
 
 module.exports = router;

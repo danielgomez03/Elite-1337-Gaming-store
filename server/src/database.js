@@ -136,6 +136,10 @@ SaleHistory.belongsTo(User, { foreignKey: "userId" });
 Product.hasMany(SaleHistory, { foreignKey: "productId" });
 SaleHistory.belongsTo(Product, { foreignKey: "productId" });
 
+// Order many-to-one with SaleHistory
+Order.hasMany(SaleHistory, { foreignKey: "orderId" });
+SaleHistory.belongsTo(Order, { foreignKey: "orderId" });
+
 // ---> CONTACT
 // User many-to-one with Contact
 User.hasMany(Contact, { foreignKey: "userId", sourceKey: "userId" });
