@@ -13,6 +13,7 @@ import {
 } from "@/redux/actions";
 import leetImage from '../../public/leet2.png';
 import Image from 'next/image';
+import ButtonUser from '@/components/ButtonUser';
 
 function Header() {
   const dispatch = useDispatch();
@@ -98,7 +99,9 @@ function Header() {
 
       <SearchBar />
       {typeUser !== "guest" ? (
+
         <div className="lg:flex lg:items-center lg:justify-end lg:space-x-6">
+          <ButtonUser />
           <div className="flex gap-2 items-center">
             <img
               src="https://forma-architecture.com/wp-content/uploads/2021/04/Foto-de-perfil-vacia-thegem-person.jpg"

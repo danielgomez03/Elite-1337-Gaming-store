@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Rating from '@/components/Rating';
 import Comments from '@/components/Comments';
-import AddComments from '@/components/AddComments';
+import AddComments from '@/components/addComments';
 
 
 
