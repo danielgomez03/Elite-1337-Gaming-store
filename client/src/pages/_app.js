@@ -1,9 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
-
-
-import { SessionProvider } from 'next-auth/react';
-
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import NavBar from '@/components/NavBar';
@@ -17,7 +12,6 @@ axios.defaults.baseURL = "http://localhost:3001/";
 axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <SessionProvider session={session}>
       <Provider store={store}>
         <div className="w-full font-montserrat mt-32 bg-gray-100 text-sm tracking-wider relative">
           <Header />
@@ -28,7 +22,6 @@ function App({ Component, pageProps: { session, ...pageProps } }) {
           <Footer className='mt-auto' />
         </div>
       </Provider>
-    </SessionProvider>
   );
 }
 
