@@ -1,12 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { fetchUserById } from '../redux/actions';
+import UpdateUserForm from './updateUserForm';
 
 const UserProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowForm(true);
+  };
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
+
 
 
   if (loading) {
@@ -34,7 +43,6 @@ const UserProfile = () => {
             </div>
             <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{user.firstName} {user.lastName}</h1>
             <h3 className="text-gray-600 font-lg text-semibold leading-6">Costumer</h3>
-            <p className="text-sm text-gray-500 hover:text-gray-600 leading-6">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit, eligendi dolorum sequi illum qui unde aspernatur non deserunt</p>
             <ul className="bg-gray-100 text-gray-600 hover:text-gray-700 hover:shadow py-2 px-3 mt-3 divide-y rounded shadow-sm">
   <li className="flex items-center py-3">
     <span>Member since</span>
@@ -44,6 +52,27 @@ const UserProfile = () => {
     <span>Last Update</span>
     <span className="ml-auto">{user?.updatedAt?.split('T')[0]}</span>
   </li>
+  <div className="flex flex-col items-center justify-center ">
+      <button
+        onClick={handleButtonClick}
+        className="px-8 py-2 bg-blue-500 text-white rounded-md mb-4"
+      >
+        Update Profile
+      </button>
+      {showForm && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className="absolute bg-white p-8 rounded-md shadow-lg">
+            <UpdateUserForm />
+            <button
+              onClick={handleCloseForm}
+              className="px-4 py-2 bg-red-500 text-white rounded-md mt-4"
+            >
+              x
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
 </ul>
           </div>
           {/* End of profile card */}
