@@ -145,7 +145,7 @@ function SignInRegister({ selectedButton, onClose }) {
       formData.append("image", file); // Append the file to the FormData object
 
       const response = await axios.post(
-        "http://localhost:3001/images/users/uploads",
+        "/images/users/uploads",
         formData,
         {
           headers: {
@@ -189,7 +189,7 @@ function SignInRegister({ selectedButton, onClose }) {
         formData.append("image", input.image);
 
         const response = await axios.post(
-          "http://localhost:3001/images/users/uploads",
+          "/images/users/uploads",
           formData,
           {
             headers: {
@@ -215,7 +215,7 @@ function SignInRegister({ selectedButton, onClose }) {
     // Submit the form
     if (selectedButton === "register") {
       axios
-        .post("http://localhost:3001/users/register", input)
+        .post("/users/register", input)
         .then((res) => {
           Swal.fire({
             ...swalConfig,
@@ -235,7 +235,7 @@ function SignInRegister({ selectedButton, onClose }) {
         });
     } else if (selectedButton === "signIn") {
       axios
-        .post("http://localhost:3001/login/signin", input)
+        .post("/login/signin", input)
         .then((res) => {
           Swal.fire({
             ...swalConfig,

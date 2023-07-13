@@ -15,7 +15,7 @@ export default function AddComments({id}) {
     const onSubmitComment=(e) => {
       e.preventDefault();
       const comment = {userId:userId,productId:id,content:content}
-      axios.post("http://localhost:3001/comments/add", comment )
+      axios.post("/comments/add", comment )
       .then(()=>{
         
       setContent("")
