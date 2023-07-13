@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getRatings, clean, filterProductsByPrice, sortProducts, getCartByIdUser} from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import Card from '@/components/card';
+import Card from '@/components/Card';
 import Filters from '../../components/Filters';
 
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFavoritesByUser } from '../redux/actions';
-import Card from './card';
+import Card from './Card';
 
 const FavoritesByUserId = () => {
   const favorites = useSelector(state => state.favorites);

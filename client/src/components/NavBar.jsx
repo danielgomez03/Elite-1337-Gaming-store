@@ -273,7 +273,6 @@ function NavBar() {
               </Link>
             )}
 
-            {/* {typeUser === "users" && ( */}
               <Link href={linkToCart} className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
                 <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
                   shopping_cart
@@ -281,10 +280,6 @@ function NavBar() {
                 <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts()}</span>
                 <span className="sr-only">items in cart, view bag</span>
               </Link>
-
-
-            {/* )} */}
-
           </div>
         </div>
       )}
