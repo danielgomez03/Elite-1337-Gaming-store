@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 
 function UserMetrics() {
   const [users, setUsers] = useState([]);
