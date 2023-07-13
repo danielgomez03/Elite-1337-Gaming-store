@@ -1,4 +1,5 @@
 import axios from "axios";
+axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART"
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_PRODUCTS = "GET_PRODUCTS";

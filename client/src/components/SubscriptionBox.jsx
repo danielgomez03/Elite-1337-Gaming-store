@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { mailValidation } from "./validations";
+axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 
 const SubscriptionBox = () => {
   const [email, setEmail] = useState("");
@@ -18,7 +19,7 @@ const SubscriptionBox = () => {
     }
 
     axios
-      .post("http://localhost:3001/mailing/newsletter/subscribe", { email })
+      .post("/mailing/newsletter/subscribe", { email })
       .then((response) => {
         setMessage(response.data.message);
         setError("");
