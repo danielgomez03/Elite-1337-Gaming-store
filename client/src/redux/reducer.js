@@ -42,7 +42,7 @@ import {
 
   CREATE_ORDER,
 
-
+SET_SALE_HISTORY,
 
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
@@ -75,6 +75,7 @@ const initialState = {
   users: [],
   user: {},
   loading: false,
+    saleHistory: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -282,7 +283,7 @@ const rootReducer = (state = initialState, action) => {
         error: action.error,
       };
 //---------------------------------------------------------------------//
-//update profile actions---------------------------------//
+//update profile cases---------------------------------//
     case UPDATE_USER_REQUEST:
       return {
         ...state,
@@ -302,6 +303,13 @@ const rootReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
+//---------------------------------------------------------------------//
+//sale history cases---------------------------------//
+      case SET_SALE_HISTORY:
+      return {
+        ...state,
+        saleHistory: action.payload,
+      };
 
 
 
