@@ -11,6 +11,9 @@ import {
   getProducts,
   postLogout,
 } from "@/redux/actions";
+import leetImage from '../../public/leet2.png';
+import Image from 'next/image';
+import ButtonUser from '@/components/ButtonUser';
 
 function Header() {
   const dispatch = useDispatch();
@@ -82,23 +85,23 @@ function Header() {
   return (
     <div className="bg-white fixed top-0 left-0 right-0 h-16  z-50 flex justify-between p-4">
       <div className="ml-4 flex lg:ml-0">
-        <Link href="/" className="ml-10">
-          <span className="sr-only">1337 Hardware</span>
-          <div
-            onClick={() => {
-              dispatch(getProducts());
-            }}
-            className="relative flex flex-col items-center justify-center pr-4"
-          >
-            <h2 className="absolute top-4 text-gray-500 text-xl">Hardware</h2>
-            <h1 className="font-montserrat mb-6 text-3xl">1337</h1>
+        <Link href="/" className="ml-10 h-full">
+          <div className="flex justify-center items-center">
+            <div className=" mr-2">
+              <Image className="w-12" src={leetImage} alt="leet" />
+            </div>
+            <h1 className=' mb-1 text-gray-200 text-2xl font-bold tracking-wider uppercase'>
+              Hardware
+            </h1>
           </div>
         </Link>
       </div>
 
       <SearchBar />
       {typeUser !== "guest" ? (
+
         <div className="lg:flex lg:items-center lg:justify-end lg:space-x-6">
+          <ButtonUser />
           <div className="flex gap-2 items-center">
             <img
               src="https://forma-architecture.com/wp-content/uploads/2021/04/Foto-de-perfil-vacia-thegem-person.jpg"
