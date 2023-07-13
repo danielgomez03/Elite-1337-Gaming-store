@@ -48,6 +48,8 @@ export const CREATE_ORDER = "CREATE_ORDER";
 export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
 export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
 export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
+//---------sale history types----/
+export const SET_SALE_HISTORY = "SET_SALE_HISTORY";
 
 
 // -----------actions session----------------------------------------------------------------------------------------
@@ -512,3 +514,22 @@ export const updateUser = (userId, userData) => {
     }
   };
 };
+
+//---------------------------------------------------------------------//
+//--- Sale History-- actions---------------------------------//
+
+export const fetchSaleHistory = (userId) => async (dispatch) => {
+  try {
+    const response = await axios.get(`http://localhost:3001/salehistory/user/${userId}`);
+    console.log(response.data);
+    dispatch(setSaleHistory(response.data));
+  } catch (error) {
+    console.log('Error fetching sale history:', error);
+    // Puedes despachar otra acción para manejar el error si es necesario
+  }
+};
+
+export const setSaleHistory = (saleHistory) => ({
+  type: SET_SALE_HISTORY,
+  payload: saleHistory,
+});
