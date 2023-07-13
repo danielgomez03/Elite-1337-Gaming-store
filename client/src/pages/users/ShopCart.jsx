@@ -157,7 +157,7 @@ function ShopCart() {
                           onChange={(e) =>
                             dispatch(
                               modifyQuantity({
-                                userId: userId,
+                                userId: user,
                                 productId: product.productId,
                                 quantity: e.target.value,
                               }),

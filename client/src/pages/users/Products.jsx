@@ -26,13 +26,16 @@ const Products = () => {
   const actionByName = useSelector(state => state.actionByName);
   const products = actionByName ? productsbyName : filteredProducts;
 
+
   return (
     <div>
       <Filters />
       <div className="px-auto grid lg:grid-cols-5 md:grid-cols-2 xs:grid-cols-1 gap-3 p-4 ">
         {products?.map((product, index) => {
+          
           return (
-            <div key={product.productId}>
+            product.isActive &&
+            (<div key={product.productId}>
               <Card
                 id={product.productId}
                 name={product.name}
@@ -46,7 +49,8 @@ const Products = () => {
                 image={product.images[0].url}
                 objProduct={product.productId}
               />
-            </div>
+            </div>)
+            
           );
         })}
       </div>
