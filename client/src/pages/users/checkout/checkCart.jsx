@@ -229,214 +229,260 @@ const Checkout = () => {
 
   return (
     <div className="mt-8">
-      <div className="flex mt-8">
-        <div className="flex-1">
+      <div className="flex mt-4">
+        <div>
           {!showDeliveryInfo && !showBillingInfo ? (
             <div>
-              <h2 className="font-bold">
-                ¿Cómo te gustaría recibir tu pedido?
-              </h2>
-              <h2>Ingresa tu nombre y dirección:</h2>
-              <form onSubmit={handleContinue}>
-                <div>
-                  <label>Email: </label>
-                  <input
-                    name="orderEmail"
-                    value={input.orderEmail}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.orderEmail}</span>
-                <div>
-                  <label>Nombre: </label>
-                  <input
-                    name="payerFirstName"
-                    value={input.payerFirstName}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerFirstName}</span>
-                <div>
-                  <label>Apellido: </label>
-                  <input
-                    name="payerLastName"
-                    value={input.payerLastName}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerLastName}</span>
-                <div>
-                  <label>Teléfono: </label>
-                  <input
-                    name="payerPhone"
-                    value={input.payerPhone}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerPhone}</span>
-                <div>
-                  <label>Número de identificación: </label>
-                  <input
-                    name="payerIdNumber"
-                    value={input.payerIdNumber}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerIdNumber}</span>
-                <div>
-                  <label>País: </label>
-                  <input
-                    name="payerCountry"
-                    value={input.payerCountry}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerCountry}</span>
-                <div>
-                  <label>Región: </label>
-                  <input
-                    name="payerRegion"
-                    value={input.payerRegion}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerRegion}</span>
-                <div>
-                  <label>Ciudad: </label>
-                  <input
-                    name="payerCity"
-                    value={input.payerCity}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerCity}</span>
-                <div>
-                  <label>Dirección: </label>
-                  <input
-                    name="payerAddress"
-                    value={input.payerAddress}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerAddress}</span>
-                <div>
-                  <label>Código Postal: </label>
-                  <input
-                    name="payerPostalCode"
-                    value={input.payerPostalCode}
-                    onChange={handleChange}
-                  />
-                </div>
-                <span>{error.payerPostalCode}</span>
-                <div>
-                  <button
-                    className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
-                    type="submit"
-                    onClick={handleContinue}
-                  >
-                    Continuar con gastos de envío y gestión
-                  </button>
-                </div>
-              </form>
+              <h2>Porfavor Llena los datos de facturacion:</h2>
+              <form
+  className="w-full max-w-sm mx-auto bg-white p-8 rounded-md shadow-md"
+  onSubmit={handleContinue}
+>
+  <div className="flex flex-wrap -mx-2">
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">Email</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="email"
+        id="email"
+        name="orderEmail"
+        placeholder="john@example.com"
+        value={input.orderEmail}
+        onChange={handleChange}
+      />
+      <span>{error.orderEmail}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">Nombre</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="name"
+        name="payerFirstName"
+        placeholder="John Doe"
+        value={input.payerFirstName}
+        onChange={handleChange}
+      />
+      <span>{error.payerFirstName}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="last-name">Apellido</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="last-name"
+        name="payerLastName"
+        placeholder="Doe"
+        value={input.payerLastName}
+        onChange={handleChange}
+      />
+      <span>{error.payerLastName}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="phone">Teléfono</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="phone"
+        name="payerPhone"
+        placeholder="123-456-7890"
+        value={input.payerPhone}
+        onChange={handleChange}
+      />
+      <span>{error.payerPhone}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="id-number">identificación</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="id-number"
+        name="payerIdNumber"
+        placeholder="123456789"
+        value={input.payerIdNumber}
+        onChange={handleChange}
+      />
+      <span>{error.payerIdNumber}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="country">País</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="country"
+        name="payerCountry"
+        placeholder="País"
+        value={input.payerCountry}
+        onChange={handleChange}
+      />
+      <span>{error.payerCountry}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="region">Región</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="region"
+        name="payerRegion"
+        placeholder="Región"
+        value={input.payerRegion}
+        onChange={handleChange}
+      />
+      <span>{error.payerRegion}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="city">Ciudad</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="city"
+        name="payerCity"
+        placeholder="Ciudad"
+        value={input.payerCity}
+        onChange={handleChange}
+      />
+      <span>{error.payerCity}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="address">Dirección</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="address"
+        name="payerAddress"
+        placeholder="Dirección"
+        value={input.payerAddress}
+        onChange={handleChange}
+      />
+      <span>{error.payerAddress}</span>
+    </div>
+    <div className="mb-4 w-1/2 px-2">
+      <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="postal-code">Código Postal</label>
+      <input
+        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        type="text"
+        id="postal-code"
+        name="payerPostalCode"
+        placeholder="Código Postal"
+        value={input.payerPostalCode}
+        onChange={handleChange}
+      />
+      <span>{error.payerPostalCode}</span>
+    </div>
+  </div>
+  <button
+    className="w-full bg-indigo-500 text-white text-sm font-bold py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
+    type="submit"
+  >
+    Continuar con gastos de envío y gestión
+  </button>
+</form>
             </div>
+
+
           ) : showDeliveryInfo && !showBillingInfo ? (
-            <div>
-              <h2>Fecha estimada de entrega</h2>
-              <div>
-                <p>Llega el mié 12 de jul</p>
-                <select
-                  name="deliveryOption"
-                  value={input.deliveryOption}
-                  onChange={handleChange}
-                >
-                  <option value="Standard">Standard</option>
-                  <option value="Premium">Premium</option>
-                  <option value="International">International</option>
-                </select>
-              </div>
-              <button
-                className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
-                onClick={handleContinueToBilling}
-              >
-                Continuar a la facturación
-              </button>
-              <h2>Datos de entrega</h2>
-              <div>
-                <button
-                  className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
-                  onClick={handleEdit}
-                >
-                  Editar
-                </button>
-                <p>
-                  {input.payerFirstName} {input.payerLastName}
-                </p>
-                <p>{input.payerAddress}</p>
-                <p>{input.orderEmail}</p>
-                <p>{input.payerPhone}</p>
-              </div>
-            </div>
+<div className="w-full max-w-sm mx-auto bg-white p-8 rounded-md shadow-md">
+  <h2 className="text-xl font-bold mb-4">Fecha estimada de entrega</h2>
+  <div className="mb-4">
+    <p>Llega el mié 12 de jul</p>
+    <select
+      className="mt-2 w-full p-2 border border-gray-300 rounded-md"
+      name="deliveryOption"
+      value={input.deliveryOption}
+      onChange={handleChange}
+    >
+      <option value="Standard">Standard</option>
+      <option value="Premium">Premium</option>
+      <option value="International">International</option>
+    </select>
+  </div>
+  <button
+    className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-2 text-white duration-100 hover:bg-blue-600 text-sm"
+    onClick={handleContinueToBilling}
+  >
+    Continuar a la facturación
+  </button>
+  <h2 className="mt-6 text-xl font-bold mb-4">Datos de entrega</h2>
+  <div>
+    <button
+      className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-2 text-white duration-100 hover:bg-blue-600 text-sm"
+      onClick={handleEdit}
+    >
+      Editar
+    </button>
+    <p className="mt-4 text-lg font-semibold">{input.payerFirstName} {input.payerLastName}</p>
+<p className="text-gray-600">{input.payerAddress}</p>
+<p className="text-gray-600">{input.orderEmail}</p>
+<p className="text-gray-600">{input.payerPhone}</p>
+  </div>
+</div>
           ) : (
-            <div>
-              <h2>Forma de pago</h2>
-              <div>
-                <p>
-                  Obtén 3 y 6 meses sin intereses en compras mayores a $3,000.
-                  Sólo para miembros.
-                </p>
-                <p>
-                  *Promoción con tarjetas de crédito. Consulta bancos
-                  participantes.
-                </p>
-                <p>Términos y Condiciones</p>
-              </div>
-              <div>
-                <button>Tarjeta de crédito o débito</button>
-                <h2>Ingresa tus datos de pago:</h2>
-                <div className="form-group">
-                  <CardElement className="form-control payment-input" />
-                </div>
-                <button
-                  className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
-                  disabled={!stripe}
-                  onClick={handleSubmit}
-                >
-                  {loading ? (
-                    <div className="spinner-border text-light" role="status">
-                      <span className="sr-only">loading...</span>
-                    </div>
-                  ) : (
-                    "Buy"
-                  )}
-                </button>
-              </div>
-              <p>
-                Si haces clic en Realizar pedido, aceptas los Términos y
-                condiciones de eShopWorld.
-              </p>
-            </div>
-          )}
-        </div>
-        <div className="flex-1">
-          {/* Resumen del pedido */}
-          <div>
-            <h2 className="mb-4">Resumen del pedido</h2>
-            <div>
-              <div className="flex justify-between">
-                <span>Subtotal:</span>
-                <span>${totalPrice}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Entrega/Envío:</span>
-                <span>{input.deliveryOption}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Total:</span>
-                <span>${totalPrice}</span>
-              </div>
-            </div>
+<div className="p-4">
+  <h2 className="text-2xl font-bold mb-4">Forma de pago</h2>
+  <div className="mb-4">
+    <p>
+      Obtén 3 y 6 meses sin intereses en compras mayores a $3,000.
+      Sólo para miembros.
+    </p>
+    <p>
+      *Promoción con tarjetas de crédito. Consulta bancos
+      participantes.
+    </p>
+    <p className="mt-4">Términos y Condiciones</p>
+  </div>
+  <div>
+    <button className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg py-2 px-4 mb-4">
+      Tarjeta de crédito o débito
+    </button>
+    <h2 className="text-2xl font-bold mb-4">Ingresa tus datos de pago:</h2>
+    <div className="mb-4">
+      <div className="form-group">
+        <CardElement className="form-control payment-input" />
+      </div>
+    </div>
+    <button
+      className="bg-blue-500 hover:bg-blue-600 text-white rounded-lg py-2 px-4 w-full text-sm"
+      disabled={!stripe}
+      onClick={handleSubmit}
+    >
+      {loading ? (
+        <div className="flex items-center justify-center">
+          <div className="spinner-border text-light" role="status">
+            <span className="sr-only">loading...</span>
           </div>
         </div>
+      ) : (
+        "Buy"
+      )}
+    </button>
+  </div>
+  <p class="mt-4">
+    Si haces clic en Realizar pedido, aceptas los Términos y
+    condiciones de eShopWorld.
+  </p>
+</div>
+          )}
+        </div>
+<div className="w-1/2 max-w-sm mx-auto bg-white p-8 rounded-md shadow-md">
+  {/* Resumen del pedido */}
+  <div className="p-4 bg-gray-100 rounded-lg">
+    <h2 className="text-xl font-bold mb-4">Resumen del pedido</h2>
+    <div className="space-y-2">
+      <div className="flex justify-between">
+        <span className="font-semibold">Subtotal:</span>
+        <span>${totalPrice}</span>
+      </div>
+      <div className="flex justify-between">
+        <span className="font-semibold">Entrega/Envío:</span>
+        <span>{input.deliveryOption}</span>
+      </div>
+      <div className="flex justify-between">
+        <span className="font-semibold">Total:</span>
+        <span>${totalPrice}</span>
+      </div>
+    </div>
+  </div>
+</div>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { getCategories } from "@/redux/actions";
 import { productValidation } from "./validations";
 import Select from "react-select";
 import Swal from "sweetalert2";
+axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 
 const CreateProduct = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -170,7 +171,7 @@ const CreateProduct = ({ onClose }) => {
       formData.append("images", file); // Append the file to the FormData object
 
       const response = await axios.post(
-        "http://localhost:3001/images/products/uploads",
+        "/images/products/uploads",
         formData,
         {
           headers: {
@@ -218,7 +219,7 @@ const CreateProduct = ({ onClose }) => {
     setError(productValidation(form));
     if (error !== null) {
       axios
-        .post(`http://localhost:3001/products/create`, form)
+        .post(`/products/create`, form)
         .then((res) => {
           console.log("resCreateProduct", res.data);
           Swal.fire({

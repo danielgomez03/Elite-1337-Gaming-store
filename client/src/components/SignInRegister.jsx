@@ -7,6 +7,7 @@ import { postLogin, changeUser } from '@/redux/actions.js';
 import { signIn, useSession } from 'next-auth/react'
 import Swal from "sweetalert2";
 import Select from "react-select";
+axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 
 function SignInRegister({ selectedButton, onClose }) {
   const dispatch = useDispatch();
