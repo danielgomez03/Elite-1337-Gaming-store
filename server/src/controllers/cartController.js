@@ -1,4 +1,4 @@
-const { Cart, User, Product, Category, Sequelize } = require("../database");
+const { Cart, User, Product } = require("../database");
 const { Op } = require("sequelize");
 
 const getCartByUserId = async (userId) => {

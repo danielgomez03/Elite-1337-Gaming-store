@@ -67,15 +67,3 @@ module.exports = (sequelize) => {
 
   return Product;
 };
-
-// NOTE FOR FRONT-END IMPLEMENTATION OF STOCK DECREASE WHEN A PRODUCT IS SOLD
-// to implement through React Redux
-
-// Hook to automatically update stock when a product is sold
-// Product.afterUpdate(async (product, options) => {
-//     if (product.stock < product.previous("stock")) {
-//       const soldQuantity = product.previous("stock") - product.stock;
-//       // Adjust stock count here (e.g., update inventory)
-//       // You can perform any necessary logic or database updates based on the soldQuantity
-//     }
-//   });

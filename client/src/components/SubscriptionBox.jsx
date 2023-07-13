@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { newsletterValidation } from "./validations";
+import { mailValidation } from "./validations";
 
 const SubscriptionBox = () => {
   const [email, setEmail] = useState("");
@@ -10,7 +10,7 @@ const SubscriptionBox = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const errors = newsletterValidation({ email });
+    const errors = mailValidation({ email });
 
     if (Object.keys(errors).length > 0) {
       setError(errors.email[0]);
@@ -18,7 +18,7 @@ const SubscriptionBox = () => {
     }
 
     axios
-      .post("https://ft37bpfgrupo12-production.up.railway.app/newsletter/subscribe", { email })
+      .post("http://localhost:3001/mailing/newsletter/subscribe", { email })
       .then((response) => {
         setMessage(response.data.message);
         setError("");
@@ -50,27 +50,29 @@ const SubscriptionBox = () => {
   };
 
   return (
-    <div className="bg-gray-100 py-4 px-8">
-      <h2 className="text-2xl font-bold mb-4">Subscribe to Our Newsletter</h2>
-      <form onSubmit={handleSubmit} className="flex">
+    <div className="w-70 mx-2 bg-indigo-800 py-4 px-4 rounded">
+      <h2 className="text-1xl font-bold mb-4 text-center text-gray-200">
+        Subscribe to Our Newsletter
+      </h2>
+      <form onSubmit={handleSubmit} className="flex justify-center">
         <input
           type="email"
           value={email}
           onChange={handleChange}
-          className={`w-60 py-2 px-4 border rounded-l ${
+          className={`w-40 py-2 px-4 rounded-l text-gray-600 ${
             error ? "border-red-500" : "border-gray-300"
           }`}
           placeholder="Enter your email"
         />
         <button
           type="submit"
-          className="bg-indigo-500 hover:bg-indigo-600 text-white py-2 px-2.5 rounded-r"
+          className="bg-indigo-500 hover:bg-indigo-600 text-gray-200 py-2 px-3 rounded-r"
         >
           Subscribe
         </button>
       </form>
-      {error && <p className="text-red-500 mt-2">{error}</p>}
-      {message && <p className="text-green-500 mt-2">{message}</p>}
+      {error && <p className="text-red-500 mt-2 text-center">{error}</p>}
+      {message && <p className="text-green-500 mt-2 text-center">{message}</p>}
     </div>
   );
 };

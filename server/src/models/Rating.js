@@ -12,11 +12,11 @@ module.exports = (sequelize) => {
       },
 
       value: {
-        // a 0 to 5 stars rating system
+        // a 1 to 5 stars rating system
         type: DataTypes.INTEGER,
         allowNull: false,
         validate: {
-          min: 0,
+          min: 1,
           max: 5,
         },
       },
@@ -27,6 +27,14 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.NOW,
       },
     },
-    { timestamps: false },
+    {
+      timestamps: false,
+      indexes: [
+        {
+          unique: true,
+          fields: ["userId", "productId"],
+        },
+      ],
+    },
   );
 };

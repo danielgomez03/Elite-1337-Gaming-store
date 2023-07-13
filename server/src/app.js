@@ -5,11 +5,6 @@ const morgan = require("morgan");
 const routes = require("./routes/index.js");
 require("./database.js");
 
-const passport = require("./auth/passport.js");
-const session = require("express-session");
-const SequelizeStore = require("connect-session-sequelize")(session.Store);
-const { conn } = require("./database");
-
 const server = express();
 
 server.name = "API";
@@ -19,40 +14,29 @@ server.use(bodyParser.json({ limit: "50mb" }));
 server.use(cookieParser());
 server.use(morgan("dev"));
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  // res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "https://ft37b-pf-grupo12.vercel.app");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept",
   );
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE, PATCH");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, DELETE, PATCH",
+  );
+
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    return res.status(200).end();
+  }
+
   next();
 });
 
-const sessionStore = new SequelizeStore({
-  db: conn,
-});
-
-server.use(
-  session({
-    secret: "pfhenry37bg12",
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: {
-      maxAge: 2 * 60 * 60 * 1000, // 2 hours in milliseconds
-    },
-  }),
-);
-
-server.use(passport.initialize());
-server.use(passport.session());
-
-sessionStore.sync();
-
 server.use("/", routes);
 
-// Error catching endware.
+// Middleware para capturar errores
 server.use((err, req, res, next) => {
   const status = err.status || 500;
   const message = err.message || err;

@@ -12,13 +12,16 @@ const Success = () => {
     }
   }, [router.query]);
 
+  const handleGoBack = () => {
+    router.push("http://localhost:3000/");
+  };
+
   return (
     <div>
       {router.query.success === "true" && <h2>¡Compra exitosa!</h2>}
+      <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" onClick={handleGoBack}>Volver</button>
     </div>
   );
 };
 
 export default Success;
-
-

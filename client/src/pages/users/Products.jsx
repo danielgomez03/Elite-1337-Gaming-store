@@ -1,97 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import { getProducts, clean, filterProductsByPrice, sortProducts } from '../../redux/actions';
+import { getRatings, clean, filterProductsByPrice, sortProducts, getCartByIdUser} from '../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import Card from '@/components/card';
+import Filters from '../../components/Filters';
+
+
 
 const Products = () => {
+  const id = useSelector(state=>state.userId)?useSelector(state=>state.userId):"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
   const dispatch = useDispatch();
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
 
   useEffect(() => {
-    dispatch(getProducts());
+    dispatch(getCartByIdUser(id)); 
     return () => {
       dispatch(clean());
     };
   }, [dispatch]);
 
-  const products = useSelector(state => state.filteredProducts);
-  const [sortOrder, setSortOrder] = useState('');
+  useEffect(() => {
+    dispatch(getRatings());
+  }, []);
 
-  const handleFilter = () => {
-    dispatch(filterProductsByPrice(minPrice, maxPrice));
-  };
+  const productsbyName = useSelector(state => state.productsbyName);
+  const filteredProducts = useSelector(state => state.filteredProducts);
+  const actionByName = useSelector(state => state.actionByName);
+  const products = actionByName ? productsbyName : filteredProducts;
 
-  const handleSortOrderChange = (e) => {
-    const order = e.target.value;
-    dispatch(sortProducts(order));
-    setSortOrder(order);
-  };
 
   return (
-    <div className="p-4">
-      <div className="flex flex-col mb-4">
-        <label htmlFor="minPrice" className="text-gray-700">
-          Min Price:
-        </label>
-        <input
-          type="number"
-          id="minPrice"
-          value={minPrice}
-          onChange={e => setMinPrice(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
-        />
+    <div>
+      <Filters />
+      <div className="px-auto grid lg:grid-cols-5 md:grid-cols-2 xs:grid-cols-1 gap-3 p-4 ">
+        {products?.map((product, index) => {
+          
+          return (
+            product.isActive &&
+            (<div key={product.productId}>
+              <Card
+                id={product.productId}
+                name={product.name}
+                description={product.description}
+                manufacture={product.manufacturer}
+                origin={product.origin}
+                price={product.price}
+                discount={product.discount}
+                stock={product.stock}
+                categoryId={product.categoryId}
+                image={product.images[0].url}
+                objProduct={product.productId}
+              />
+            </div>)
+            
+          );
+        })}
       </div>
-      <div className="flex flex-col mb-4">
-        <label htmlFor="maxPrice" className="text-gray-700">
-          Max Price:
-        </label>
-        <input
-          type="number"
-          id="maxPrice"
-          value={maxPrice}
-          onChange={e => setMaxPrice(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
-        />
-      </div>
-      <button
-        onClick={handleFilter}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Filter
-      </button>
-      
-      <div className="flex flex-col mt-4">
-        <label htmlFor="sortOrder" className="text-gray-700">
-          Sort Order:
-        </label>
-        <select
-  id="sortOrder"
-  value={sortOrder}
-  onChange={handleSortOrderChange}
-  className="border border-gray-300 rounded px-2 py-1"
->
-  <option value="">Sort Order</option>
-  <option value="ascending">Ascending</option>
-  <option value="descending">Descending</option>
-</select>
-      </div>
-
-      <div className="grid gap-4">
-    {products.map(product => (
-      <div key={product.productId} className="bg-white shadow rounded p-4">
-        <h2 className="text-xl font-bold mb-2">{product.name}</h2>
-        <p className="text-gray-700 mb-2">{product.description}</p>
-        <div className="grid grid-cols-2 gap-2">
-          <p className="text-gray-700"><span className="font-bold">Manufacturer:</span> {product.manufacturer}</p>
-          <p className="text-gray-700"><span className="font-bold">Origin:</span> {product.origin}</p>
-          <p className="text-gray-700"><span className="font-bold">Price:</span> {product.price}</p>
-          <p className="text-gray-700"><span className="font-bold">Discount:</span> {product.discount}</p>
-          <p className="text-gray-700"><span className="font-bold">Stock:</span> {product.stock} pzs</p>
-          <p className="text-gray-700"><span className="font-bold">Category:</span> {product.categoryId}</p>
-        </div>
-      </div>
-    ))}
-  </div>
     </div>
   );
 };

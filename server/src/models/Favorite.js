@@ -1,7 +1,7 @@
 const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
-  sequelize.define(
+  const Favorite = sequelize.define(
     "favorite",
     {
       favoriteId: {
@@ -10,12 +10,10 @@ module.exports = (sequelize) => {
         allowNull: false,
         primaryKey: true,
       },
-
       userId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
-
       productId: {
         type: DataTypes.UUID,
         allowNull: false,
@@ -23,4 +21,6 @@ module.exports = (sequelize) => {
     },
     { timestamps: false },
   );
+
+  return Favorite;
 };

@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getProductById, clean , addProductToCart , getCartByIdUser} from '../../../redux/actions';
+import { getProductById, clean , addProductToCart , getCartByIdUser , getCommentsByProduc} from '../../../redux/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
+import Rating from '@/components/Rating';
+import Comments from '@/components/Comments';
+import AddComments from '@/components/AddComments';
 
 
 
@@ -10,13 +13,21 @@ import Link from 'next/link';
 export default function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
-  const userId = "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
-  const { id } = router.query;
-  console.log(id);
+  
 
-  useEffect(() => {
-    
+  const userId = useSelector(state => state.userId)?useSelector(state => state.userId):"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+
+
+  const { id } = router.query;
+  useEffect(()=> {
+    if(userId){
       dispatch(getCartByIdUser(userId));
+    }
+    
+  },[userId])
+  useEffect(() => {
+     
+      
      
     
     if (id) {
@@ -27,7 +38,14 @@ export default function Detail() {
   }, [dispatch, id]);
   
   const detail = useSelector(state => state.detail);
-  console.log(detail);
+  useEffect(()=> {
+    if(detail.productId){
+    dispatch(getCommentsByProduc(detail.productId))
+    }
+    
+  },[dispatch,detail.productId])
+
+ 
 
   if (!detail) {
     return <div>Loading...</div>;
@@ -36,6 +54,7 @@ export default function Detail() {
   const discountPercentage = parseFloat(detail.discount);
   const discountedPrice = originalPrice - (originalPrice * (discountPercentage / 100));
   return (
+  <div>
     <div className="bg-white p-4 rounded-lg shadow-md flex items-start">
     {detail && detail.images?.map((image, index) => (
   <div key={index} className="relative flex items-end overflow-hidden rounded-xl">
@@ -53,6 +72,7 @@ export default function Detail() {
           </div>
         )}
         <p className="mb-6 font-bold font-montserrat text-xl">{detail.name}</p>
+        <Rating objProduct={id} />
         <p className="mb-2 font-roboto">Description: {detail.description}</p>
         <p className="mb-2 font-roboto">{detail?.category?.name} ---- {detail?.category?.parent.name}</p>
         <p className="mb-2 font-roboto">manufacturer: <span className='font-bold'>{detail.manufacturer}</span></p>
@@ -79,22 +99,31 @@ export default function Detail() {
             className="bg-[#00315E] hover:bg-[#174E84] text-white px-4 py-2 rounded"
             disabled={detail.stock === 0}
             onClick={() => {
-              dispatch(addProductToCart(id)).then(() => {
-                dispatch(getCartByIdUser(userId));
+              const user=userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+
+
+
+              dispatch(addProductToCart(user,id)).then(() => {
+                dispatch(getCartByIdUser(user))
               });
+
+
             }}
           >
             ADD TO CART
           </button>
     <Link
   href={{
-    pathname: '/users/StripePay',
+    pathname: '/users/checkout/checkPay',
     query: {
       productId: id,
       productName: detail.name,
       productPrice: discountedPrice.toFixed(2),
       productDescription: detail.description,
-      productImage: detail.images?.[0]?.url  // Aquí se pasa la URL de la primera imagen del producto
+      productImage: detail.images?.[0]?.url,  // Aquí se pasa la URL de la primera imagen del producto
+      price: detail.price,
+      discount: detail.discount,
+      quantity: 1 
     }
   }}
   passHref
@@ -109,6 +138,10 @@ export default function Detail() {
   </div>
   </div>
   </div>
+  </div>
+
+  <Comments id={id}/>
+ 
 </div>
   );
 }

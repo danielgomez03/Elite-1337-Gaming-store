@@ -6,6 +6,7 @@ const path = require("path");
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+  // "postgresql://uwlryphhfq6hndderybz:h6HKDgAOvQVHZ3nIOMM3lXfOCwojwa@bgcqaxk2fz7cba14isr6-postgresql.services.clever-cloud.com:5432/bgcqaxk2fz7cba14isr6",
   { logging: false },
 );
 
@@ -135,6 +136,10 @@ SaleHistory.belongsTo(User, { foreignKey: "userId" });
 // Product many-to-one with SaleHistory
 Product.hasMany(SaleHistory, { foreignKey: "productId" });
 SaleHistory.belongsTo(Product, { foreignKey: "productId" });
+
+// Order many-to-one with SaleHistory
+Order.hasMany(SaleHistory, { foreignKey: "orderId" });
+SaleHistory.belongsTo(Order, { foreignKey: "orderId" });
 
 // ---> CONTACT
 // User many-to-one with Contact

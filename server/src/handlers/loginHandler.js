@@ -1,89 +1,116 @@
-const passport = require("passport");
-const { Login } = require("../database");
+const { generateAuthToken } = require("../config/jwt");
+const { Login, User, Token } = require("../database");
+const { Op } = require("sequelize");
 
-// Login handler
-async function login(req, res, next) {
-  if (req.isAuthenticated()) {
-    return res.status(403).json({ message: "User is already logged in." });
-  }
+const login = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
 
-  console.log("Login request received");
+    // Buscar el registro de inicio de sesión según el correo electrónico proporcionado
+    const login = await Login.findOne({ where: { email } });
 
-  passport.authenticate("local", async (err, user, info) => {
-    console.log("Passport authentication callback");
-
-    if (err) {
-      console.error("Passport authentication error:", err);
-      return next(err);
+    if (!login) {
+      return res.status(401).json({ error: "Invalid email or password" });
     }
+
+    // Validar la contraseña
+    const isValidPassword = login.validatePassword(password);
+    if (!isValidPassword) {
+      return res.status(401).json({ error: "Invalid email or password" });
+    }
+
+    // Recuperar el registro de usuario asociado
+    const user = await User.findOne({ where: { userId: login.userId } });
 
     if (!user) {
-      console.log("Authentication failed:", info.message);
-      return res.status(401).json({ message: "Authentication failed" });
+      return res.status(401).json({ error: "User not found" });
     }
 
-    req.login(user, async (err) => {
-      if (err) {
-        console.error("Error during login:", err);
-        return next(err);
-      }
+    // Generar el token de autenticación
+    const token = generateAuthToken(user.userId, login.email);
 
-      // Update the verify field to true for the logged-in user
-      try {
-        await Login.update(
-          { verify: true },
-          { where: { userId: user.userId } },
-        );
-      } catch (error) {
-        console.error("Error updating login:", error);
-        return res.status(500).send("Error updating login");
-      }
+    // Calcular la fecha de vencimiento
+    const expiresIn = 2 * 60 * 60 * 1000; // 2 horas en milisegundos
+    const expiresAt = new Date(Date.now() + expiresIn);
 
-      console.log("Login successful");
-
-      return res.json({ message: "Login successful" });
+    // Eliminar todos los tokens excepto el nuevo
+    await Token.destroy({
+      where: {
+        userId: user.userId,
+        tokenValue: {
+          [Op.not]: token,
+        },
+      },
     });
-  })(req, res, next);
-}
 
-// Logout handler
-async function logout(req, res) {
-  const userId = req.user && req.user.userId;
+    // Insertar el token en la tabla de tokens
+    const createdToken = await Token.create({
+      tokenValue: token,
+      tokenType: "Passport",
+      userId: user.userId,
+      loginId: login.loginId,
+      expiresAt: expiresAt,
+    });
 
-  // Check if the user is logged in
-  if (!userId) {
-    return res.status(401).send("Unauthorized");
-  }
-
-  // Update the verify field to false for users logging out
-  try {
-    await Login.update({ verify: false }, { where: { userId } });
+    return res.json({
+      message: "Login successful",
+      generatedToken: token,
+      createdToken,
+      userId: user.userId,
+    });
   } catch (error) {
-    console.error("Error updating login:", error);
-    return res.status(500).send("Error updating login");
+    console.error("Error during login:", error);
+    return next(error);
   }
+};
 
-  // Destroy the session
-  req.session.destroy((err) => {
-    if (err) {
-      console.error("Error destroying session:", err);
-      return res.status(500).send("Error destroying session");
+const persistSession = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+
+    // Verificar si el token existe y aún no ha expirado
+    const existingToken = await Token.findOne({
+      where: {
+        tokenValue: token,
+        expiresAt: {
+          [Op.gte]: new Date(), // Fecha de vencimiento debe ser mayor o igual a la fecha actual
+        },
+      },
+    });
+
+    if (!existingToken) {
+      return res.status(401).json({ message: "Session expired" });
     }
 
-    res.clearCookie("connect.sid"); // Clear the session cookie
-    console.log("Logout successful");
-    res.send("Logout successful");
-  });
-}
+    // Actualizar la fecha de vencimiento del token
+    existingToken.expiresAt = new Date(
+      Date.now() + 2 * 60 * 60 * 1000, // Extender la fecha de vencimiento por 2 horas más
+    );
+    await existingToken.save();
 
-// Get session handler
-function getSession(req, res) {
-  console.log(req.session);
-  res.send("Session information logged");
-}
+    return res.json({ message: "Session persisted" });
+  } catch (error) {
+    console.error("Error during session persistence:", error);
+    return next(error);
+  }
+};
+
+const logout = async (req, res, next) => {
+  try {
+    const { userId } = req.body;
+
+    // Eliminar todos los tokens asociados al usuario
+    await Token.destroy({ where: { userId } });
+
+    return res.json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Error during logout:", error);
+    return next(error);
+  }
+};
 
 module.exports = {
   login,
+  persistSession,
   logout,
-  getSession,
 };
