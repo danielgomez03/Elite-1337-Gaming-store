@@ -3,7 +3,7 @@ import axios from "axios";
 
 function UserMetrics() {
   const [users, setUsers] = useState([]);
-
+ console.log(users)
   useEffect(() => {
     axios
       .get("/users")
