@@ -71,13 +71,12 @@ function UserMetrics() {
 
   return (
     <div className="p-4 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-4 text-center">User Metrics</h2>
-
+  <h2 className="text-2xl font-bold mb-4 text-center">User Metrics</h2>
+  <div className="grid grid-cols-2 gap-4">
+    <div className="ml-10 flex flex-col justify-center">
       <div>
         <p className="text-gray-500">Total registered users:</p>
-        <p className="text-gray-900 text-lg font-bold">
-          {totalRegisteredUsers}
-        </p>
+        <p className="text-gray-900 text-lg font-bold">{totalRegisteredUsers}</p>
       </div>
       <div>
         <p className="text-gray-500">Total logged-in users:</p>
@@ -91,11 +90,16 @@ function UserMetrics() {
         <p className="text-gray-500">Total disabled users:</p>
         <p className="text-gray-900 text-lg font-bold">{totalDisabledUsers}</p>
       </div>
+    </div>
 
-      <h3 className="text-lg font-bold mt-6">Buyer Users</h3>
+    <div>
+      <h3 className="text-lg font-bold mb-4">Buyer Users</h3>
       <ul className="mt-2">
-        {buyerUsers.map((user) => (
-          <li key={user.userId} className="text-gray-900">
+        {buyerUsers.map((user, index) => (
+          <li
+            key={user.userId}
+            className={`text-gray-900 ${index !== buyerUsers.length - 1 ? 'mb-2' : ''}`}
+          >
             {user.firstName} {user.lastName}
           </li>
         ))}
@@ -103,8 +107,11 @@ function UserMetrics() {
 
       <h3 className="text-lg font-bold mt-6">Users Ordered by Location</h3>
       <ul className="mt-2">
-        {usersOrderedByLocation.map((user) => (
-          <li key={user.userId} className="text-gray-900">
+        {usersOrderedByLocation.map((user, index) => (
+          <li
+            key={user.userId}
+            className={`text-gray-900 ${index !== usersOrderedByLocation.length - 1 ? 'mb-2' : ''}`}
+          >
             {user.firstName} {user.lastName}
             <span className="text-gray-500 ml-2">
               Location: {getLocationString(user)}
@@ -113,6 +120,8 @@ function UserMetrics() {
         ))}
       </ul>
     </div>
+  </div>
+</div>
   );
 }
 
@@ -222,52 +231,66 @@ function ProductMetrics() {
 
   return (
     <div className="p-4 bg-white rounded shadow">
-      <h2 className="text-2xl font-bold mb-4 text-center">Product Metrics</h2>
+      <h2 className="text-2xl font-bold mb-4 text-center">
+        Product Metrics
+        <span className="text-sm ml-4">(Top five)</span>
+      </h2>
+      <div className="grid grid-cols-5 gap-4">
+        <div className="border p-4">
+          <h3 className="text-lg font-bold mb-2">Most Sold Products</h3>
+          <ul>
+            {mostSoldProducts.slice(0, 5).map((product) => (
+              <li key={product.productId} className="text-gray-900">
+                {product.name}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <h3 className="text-lg font-bold mt-6">Most Sold Products</h3>
-      <ul className="mt-2">
-        {mostSoldProducts.map((product) => (
-          <li key={product.productId} className="text-gray-900">
-            {product.name}
-          </li>
-        ))}
-      </ul>
+        <div className="border p-4">
+          <h3 className="text-lg font-bold mb-2">Most Commented Products</h3>
+          <ul>
+            {mostCommentedProducts.slice(0, 5).map((product) => (
+              <li key={product.productId} className="text-gray-900">
+                {product.name}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <h3 className="text-lg font-bold mt-6">Most Commented Products</h3>
-      <ul className="mt-2">
-        {mostCommentedProducts.map((product) => (
-          <li key={product.productId} className="text-gray-900">
-            {product.name}
-          </li>
-        ))}
-      </ul>
+        <div className="border p-4">
+          <h3 className="text-lg font-bold mb-2">Most Favorited Products</h3>
+          <ul>
+            {mostFavoritedProducts.slice(0, 5).map((product) => (
+              <li key={product.productId} className="text-gray-900">
+                {product.name}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <h3 className="text-lg font-bold mt-6">Most Favorited Products</h3>
-      <ul className="mt-2">
-        {mostFavoritedProducts.map((product) => (
-          <li key={product.productId} className="text-gray-900">
-            {product.name}
-          </li>
-        ))}
-      </ul>
+        <div className="border p-4">
+          <h3 className="text-lg font-bold mb-2">Highest Rated Products</h3>
+          <ul>
+            {highestRatedProducts.slice(0, 5).map((product) => (
+              <li key={product.productId} className="text-gray-900">
+                {product.name}
+              </li>
+            ))}
+          </ul>
+        </div>
 
-      <h3 className="text-lg font-bold mt-6">Highest Rated Products</h3>
-      <ul className="mt-2">
-        {highestRatedProducts.map((product) => (
-          <li key={product.productId} className="text-gray-900">
-            {product.name}
-          </li>
-        ))}
-      </ul>
-
-      <h3 className="text-lg font-bold mt-6">Payment Methods Used</h3>
-      <ul className="mt-2">
-        {paymentMethodsUsed.map((method) => (
-          <li key={method} className="text-gray-900">
-            {method}
-          </li>
-        ))}
-      </ul>
+        <div className="border p-4">
+          <h3 className="text-lg font-bold mb-2">Payment Methods Used</h3>
+          <ul>
+            {paymentMethodsUsed.slice(0, 5).map((method) => (
+              <li key={method} className="text-gray-900">
+                {method}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 }
