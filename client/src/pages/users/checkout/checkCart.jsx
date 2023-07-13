@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { loadStripe } from "@stripe/stripe-js";
-import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  CardElement,
+  Elements,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
 import axios from "axios";
 
-
-const stripePromise = loadStripe("pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri");
+const stripePromise = loadStripe(
+  "pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri",
+);
 
 const Checkout = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
   const { totalPrice, products, quantity, prices, discounts } = router.query;
-  
+  const userId = useSelector((state) => state.userId);
+
   const [input, setInput] = useState({
     orderEmail: "",
     payerFirstName: "",
@@ -40,7 +48,9 @@ const Checkout = () => {
   const validate = (input) => {
     let errors = {};
 
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.orderEmail)) {
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.orderEmail)
+    ) {
       errors.orderEmail = "Ingrese un correo electrónico";
     }
 
@@ -94,7 +104,7 @@ const Checkout = () => {
       validate({
         ...input,
         [e.target.name]: e.target.value,
-      })
+      }),
     );
   };
 
@@ -117,8 +127,7 @@ const Checkout = () => {
     if (!error) {
       const { id } = paymentMethod;
       try {
-
-        const orderProducts = products.map((productId, index) => ({ 
+        const orderProducts = products.map((productId, index) => ({
           productId: productId,
           quantity: parseInt(quantity[index]),
           price: parseFloat(prices[index]), // Agregar el campo de precio del producto
@@ -138,21 +147,27 @@ const Checkout = () => {
           payerPostalCode: input.payerPostalCode,
           orderNotes: input.orderNotes,
           deliveryOption: input.deliveryOption,
-          orderProducts: orderProducts,// Agregar el campo de productos del pedido
+          orderProducts: orderProducts, // Agregar el campo de productos del pedido
           orderTotalPrice: parseFloat(totalPrice), // Agregar el campo de precio total del pedido
-          deliveryOptionCost: input.deliveryOptionCost, 
-
+          deliveryOptionCost: input.deliveryOptions[input.deliveryOption],
+          userId,
         });
 
-        const { data } = await axios.post("http://localhost:3001/stripe/process-payment", {
-          id,
-          amount: Math.round(parseFloat(totalPrice) * 100),
-        });
+        const { data } = await axios.post(
+          "http://localhost:3001/stripe/process-payment",
+          {
+            id,
+            amount: Math.round(
+              parseFloat(totalPrice) +
+                input.deliveryOptions[input.deliveryOption],
+            ),
+            userId,
+          },
+        );
         console.log(data);
 
         elements.getElement(CardElement).clear();
         console.log("Payment processed successfully");
-
 
         localStorage.removeItem("cart");
 
@@ -177,20 +192,20 @@ const Checkout = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-
     if (showBillingInfo) {
       handlePayment();
     } else {
-        setShowDeliveryInfo(true);
-      
+      setShowDeliveryInfo(true);
     }
   };
-
 
   const handleContinue = (e) => {
     e.preventDefault();
 
-    if (Object.keys(error).length === 0 && Object.values(input).every(value => value !== '')) {
+    if (
+      Object.keys(error).length === 0 &&
+      Object.values(input).every((value) => value !== "")
+    ) {
       setShowDeliveryInfo(true);
     } else {
       alert("FALTAN CAMPOS A COMPLETAR");
@@ -212,7 +227,9 @@ const Checkout = () => {
         <div className="flex-1">
           {!showDeliveryInfo && !showBillingInfo ? (
             <div>
-              <h2 className="font-bold">¿Cómo te gustaría recibir tu pedido?</h2>
+              <h2 className="font-bold">
+                ¿Cómo te gustaría recibir tu pedido?
+              </h2>
               <h2>Ingresa tu nombre y dirección:</h2>
               <form onSubmit={handleContinue}>
                 <div>
@@ -306,9 +323,13 @@ const Checkout = () => {
                 </div>
                 <span>{error.payerPostalCode}</span>
                 <div>
-                    <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"  type="submit" onClick={handleContinue}>
-                      Continuar con gastos de envío y gestión
-                    </button>
+                  <button
+                    className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                    type="submit"
+                    onClick={handleContinue}
+                  >
+                    Continuar con gastos de envío y gestión
+                  </button>
                 </div>
               </form>
             </div>
@@ -327,13 +348,23 @@ const Checkout = () => {
                   <option value="International">International</option>
                 </select>
               </div>
-              <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"  onClick={handleContinueToBilling}>
+              <button
+                className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                onClick={handleContinueToBilling}
+              >
                 Continuar a la facturación
-              </button >
+              </button>
               <h2>Datos de entrega</h2>
               <div>
-                <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" onClick={handleEdit}>Editar</button>
-                <p>{input.payerFirstName} {input.payerLastName}</p>
+                <button
+                  className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                  onClick={handleEdit}
+                >
+                  Editar
+                </button>
+                <p>
+                  {input.payerFirstName} {input.payerLastName}
+                </p>
                 <p>{input.payerAddress}</p>
                 <p>{input.orderEmail}</p>
                 <p>{input.payerPhone}</p>
@@ -343,8 +374,14 @@ const Checkout = () => {
             <div>
               <h2>Forma de pago</h2>
               <div>
-                <p>Obtén 3 y 6 meses sin intereses en compras mayores a $3,000. Sólo para miembros.</p>
-                <p>*Promoción con tarjetas de crédito. Consulta bancos participantes.</p>
+                <p>
+                  Obtén 3 y 6 meses sin intereses en compras mayores a $3,000.
+                  Sólo para miembros.
+                </p>
+                <p>
+                  *Promoción con tarjetas de crédito. Consulta bancos
+                  participantes.
+                </p>
                 <p>Términos y Condiciones</p>
               </div>
               <div>
@@ -353,7 +390,11 @@ const Checkout = () => {
                 <div className="form-group">
                   <CardElement className="form-control payment-input" />
                 </div>
-                <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" disabled={!stripe} onClick={handleSubmit}>
+                <button
+                  className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                  disabled={!stripe}
+                  onClick={handleSubmit}
+                >
                   {loading ? (
                     <div className="spinner-border text-light" role="status">
                       <span className="sr-only">loading...</span>
@@ -361,10 +402,12 @@ const Checkout = () => {
                   ) : (
                     "Buy"
                   )}
-
                 </button>
               </div>
-              <p>Si haces clic en Realizar pedido, aceptas los Términos y condiciones de eShopWorld.</p>
+              <p>
+                Si haces clic en Realizar pedido, aceptas los Términos y
+                condiciones de eShopWorld.
+              </p>
             </div>
           )}
         </div>
@@ -392,7 +435,6 @@ const Checkout = () => {
     </div>
   );
 };
-
 
 const StripeCheckout = () => {
   return (

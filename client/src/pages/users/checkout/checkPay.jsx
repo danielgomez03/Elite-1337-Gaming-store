@@ -1,20 +1,26 @@
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { loadStripe } from "@stripe/stripe-js";
-import { CardElement, Elements, useElements, useStripe } from "@stripe/react-stripe-js";
+import {
+  CardElement,
+  Elements,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
 
 import axios from "axios";
 
-
-const stripePromise = loadStripe("pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri");
-
+const stripePromise = loadStripe(
+  "pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri",
+);
 
 const Checkout = () => {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter();
   const { productPrice, productId, quantity, price, discount } = router.query;
-
+  const userId = useSelector((state) => state.userId);
 
   const [input, setInput] = useState({
     orderEmail: "",
@@ -38,67 +44,55 @@ const Checkout = () => {
     },
   });
 
-
   const [error, setError] = useState({});
-
 
   const validate = (input) => {
     let errors = {};
 
-
-    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.orderEmail)) {
+    if (
+      !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.orderEmail)
+    ) {
       errors.orderEmail = "Ingrese un correo electrónico";
     }
-
 
     if (!/^[a-zA-Z]+$/.test(input.payerFirstName)) {
       errors.payerFirstName = "Ingrese un nombre válido";
     }
 
-
     if (!/^[a-zA-Z]+$/.test(input.payerLastName)) {
       errors.payerLastName = "Ingrese un apellido valido";
     }
-
 
     if (!/^\d+$/.test(input.payerPhone)) {
       errors.payerPhone = "Ingrese un número de teléfono";
     }
 
-
     if (!/^[A-Z0-9]+$/.test(input.payerIdNumber)) {
       errors.payerIdNumber = "Ingrese un número de identificación";
     }
-
 
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(input.payerCountry)) {
       errors.payerCountry = "Ingrese un país";
     }
 
-
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(input.payerRegion)) {
       errors.payerRegion = "Ingrese una región";
     }
-
 
     if (!/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ\s]+$/.test(input.payerCity)) {
       errors.payerCity = "Ingrese una ciudad";
     }
 
-
     if (!/^[\w\s.-]+$/.test(input.payerAddress)) {
       errors.payerAddress = "Ingrese una dirección";
     }
-
 
     if (!/^\d+$/.test(input.payerPostalCode)) {
       errors.payerPostalCode = "Ingrese un código postal";
     }
 
-
     return errors;
   };
-
 
   const handleChange = (e) => {
     setInput({
@@ -107,41 +101,33 @@ const Checkout = () => {
       deliveryOptionCost: input.deliveryOptions[e.target.value],
     });
 
-
     setError(
       validate({
         ...input,
         [e.target.name]: e.target.value,
-      })
+      }),
     );
   };
-
 
   const [showDeliveryInfo, setShowDeliveryInfo] = useState(false);
   const [showBillingInfo, setShowBillingInfo] = useState(false);
   const [loading, setLoading] = useState(false);
-
 
   const handlePayment = async () => {
     if (!stripe || !elements) {
       return;
     }
 
-
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card: elements.getElement(CardElement),
     });
 
-
     setLoading(true);
-
 
     if (!error) {
       const { id } = paymentMethod;
       try {
-
-
         await axios.post("http://localhost:3001/orders/create", {
           orderEmail: input.orderEmail,
           payerFirstName: input.payerFirstName,
@@ -155,34 +141,34 @@ const Checkout = () => {
           payerPostalCode: input.payerPostalCode,
           orderNotes: input.orderNotes,
           deliveryOption: input.deliveryOption,
-          orderProducts:  [
+          orderProducts: [
             `productId: ${productId}`,
             `quantity: ${quantity}`,
             `price: ${price}`,
-            `discount: ${discount}`
+            `discount: ${discount}`,
           ], // Agregar el campo de productos del pedido
           orderTotalPrice: parseFloat(productPrice), // Agregar el campo de precio total del pedido
-          deliveryOptionCost: input.deliveryOptionCost,
-
-
+          deliveryOptionCost: input.deliveryOptions[input.deliveryOption],
+          userId,
         });
 
-
-        const { data } = await axios.post("http://localhost:3001/stripe/process-payment", {
-          id,
-          amount: Math.round(parseFloat(productPrice) * 100),
-        });
+        const { data } = await axios.post(
+          "http://localhost:3001/stripe/process-payment",
+          {
+            id,
+            amount: Math.round(
+              parseFloat(productPrice) +
+                input.deliveryOptions[input.deliveryOption],
+            ),
+            userId,
+          },
+        );
         console.log(data);
-
 
         elements.getElement(CardElement).clear();
         console.log("Payment processed successfully");
 
-
-
-
         localStorage.removeItem("cart");
-
 
         router.push({
           pathname: "/users/stripe/success",
@@ -191,7 +177,6 @@ const Checkout = () => {
       } catch (error) {
         console.log(error);
       }
-
 
       setLoading(false);
     } else {
@@ -203,42 +188,37 @@ const Checkout = () => {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-
 
     if (showBillingInfo) {
       handlePayment();
     } else {
-        setShowDeliveryInfo(true);
-      
+      setShowDeliveryInfo(true);
     }
   };
-
 
   const handleContinue = (e) => {
     e.preventDefault();
 
-
-    if (Object.keys(error).length === 0 && Object.values(input).every(value => value !== '')) {
+    if (
+      Object.keys(error).length === 0 &&
+      Object.values(input).every((value) => value !== "")
+    ) {
       setShowDeliveryInfo(true);
     } else {
       alert("FALTAN CAMPOS A COMPLETAR");
     }
   };
 
-
   const handleEdit = () => {
     setShowDeliveryInfo(false);
   };
-
 
   const handleContinueToBilling = () => {
     setShowDeliveryInfo(false);
     setShowBillingInfo(true);
   };
-
 
   return (
     <div className="mt-8">
@@ -340,9 +320,13 @@ const Checkout = () => {
                 </div>
                 <span>{error.payerPostalCode}</span>
                 <div>
-                    <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" type="submit" onClick={handleContinue}>
-                      Continuar con gastos de envío y gestión
-                    </button>
+                  <button
+                    className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                    type="submit"
+                    onClick={handleContinue}
+                  >
+                    Continuar con gastos de envío y gestión
+                  </button>
                 </div>
               </form>
             </div>
@@ -361,13 +345,23 @@ const Checkout = () => {
                   <option value="International">International</option>
                 </select>
               </div>
-              <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" onClick={handleContinueToBilling}>
+              <button
+                className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                onClick={handleContinueToBilling}
+              >
                 Continuar a la facturación
               </button>
               <h2>Datos de entrega</h2>
               <div>
-                <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" onClick={handleEdit}>Editar</button>
-                <p>{input.payerFirstName} {input.payerLastName}</p>
+                <button
+                  className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                  onClick={handleEdit}
+                >
+                  Editar
+                </button>
+                <p>
+                  {input.payerFirstName} {input.payerLastName}
+                </p>
                 <p>{input.payerAddress}</p>
                 <p>{input.orderEmail}</p>
                 <p>{input.payerPhone}</p>
@@ -377,8 +371,14 @@ const Checkout = () => {
             <div>
               <h2>Forma de pago</h2>
               <div>
-                <p>Obtén 3 y 6 meses sin intereses en compras mayores a $3,000. Sólo para miembros.</p>
-                <p>*Promoción con tarjetas de crédito. Consulta bancos participantes.</p>
+                <p>
+                  Obtén 3 y 6 meses sin intereses en compras mayores a $3,000.
+                  Sólo para miembros.
+                </p>
+                <p>
+                  *Promoción con tarjetas de crédito. Consulta bancos
+                  participantes.
+                </p>
                 <p>Términos y Condiciones</p>
               </div>
               <div>
@@ -387,7 +387,11 @@ const Checkout = () => {
                 <div className="form-group">
                   <CardElement className="form-control payment-input" />
                 </div>
-                <button className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm" disabled={!stripe} onClick={handleSubmit}>
+                <button
+                  className="flex items-center justify-center rounded-lg bg-blue-500 w-full mt-2 py-1 text-white duration-100 hover:bg-blue-600 text-sm"
+                  disabled={!stripe}
+                  onClick={handleSubmit}
+                >
                   {loading ? (
                     <div className="spinner-border text-light" role="status">
                       <span className="sr-only">loading...</span>
@@ -395,10 +399,12 @@ const Checkout = () => {
                   ) : (
                     "Buy"
                   )}
-
                 </button>
               </div>
-              <p>Si haces clic en Realizar pedido, aceptas los Términos y condiciones de eShopWorld.</p>
+              <p>
+                Si haces clic en Realizar pedido, aceptas los Términos y
+                condiciones de eShopWorld.
+              </p>
             </div>
           )}
         </div>
@@ -435,6 +441,4 @@ const StripeCheckout = () => {
   );
 };
 
-
 export default StripeCheckout;
-

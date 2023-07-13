@@ -65,42 +65,23 @@ const postCreateOrder = async (req, res) => {
       payerPostalCode,
       orderNotes,
       deliveryOption,
-      deliveryOptionCost
+      deliveryOptionCost,
+      userId,
     } = req.body;
 
-      // Obtener el inicio de sesión actual
-      const login = await Login.findOne({
-        order: [["createdAt", "DESC"]],
+    const login = await Login.findOne({
+      where: { userId: userId },
+    });
+
+    if (!login) {
+      return res.status(404).json({
+        success: false,
+        message: "Login not found",
       });
+    }
 
-      // Verificar si se encontró el inicio de sesión
-      if (!login) {
-        return res.status(404).json({
-          success: false,
-          message: 'Login not found',
-        });
-      }
-  
-      // Obtener el loginId del inicio de sesión
-      const loginId = login.loginId;
+    const loginId = login.loginId;
 
-        // Obtener el usuario actual
-        const user = await User.findOne({
-          order: [["createdAt", "DESC"]],
-        });
-
-        // Verificar si se encontró el usuario
-        if (!user) {
-          return res.status(404).json({
-            success: false,
-            message: 'User not found',
-          });
-        }
-    
-        // Obtener el userId del usuario
-        const userId = user.userId;
-
-    // Crear un nuevo pedido en la base de datos
     const order = await Order.create({
       orderProducts,
       orderTotalPrice,
@@ -118,13 +99,14 @@ const postCreateOrder = async (req, res) => {
       deliveryOption,
       deliveryOptionCost,
       userId,
-      loginId
+      loginId,
     });
 
     // Devolver una respuesta de éxito con el ID de la orden creada
     res.status(200).json({
       success: true,
-      message: 'Order created successfully',
+      message: "Order created successfully",
+      order,
     });
   } catch (error) {
     console.error("Error al crear el pedido:", error);
@@ -136,71 +118,9 @@ const postCreateOrder = async (req, res) => {
   }
 };
 
-
-const putEditOrder = async (req, res) => {
-  try {
-    const {
-      orderId,
-      orderEmail,
-      payerFirstName,
-      payerLastName,
-      payerPhone,
-      payerIdNumber,
-      payerCountry,
-      payerRegion,
-      payerCity,
-      payerAddress,
-      payerPostalCode,
-      orderNotes,
-      deliveryOption,
-    } = req.body;
-
-    // Find the order by its orderId
-    const order = await Order.findByPk(orderId);
-
-    if (!order) {
-      throw new Error("Order not found");
-    }
-
-    // Update the order fields
-    order.orderEmail = orderEmail;
-    order.payerFirstName = payerFirstName;
-    order.payerLastName = payerLastName;
-    order.payerPhone = payerPhone;
-    order.payerIdNumber = payerIdNumber;
-    order.payerCountry = payerCountry;
-    order.payerRegion = payerRegion;
-    order.payerCity = payerCity;
-    order.payerAddress = payerAddress;
-    order.payerPostalCode = payerPostalCode;
-    order.orderNotes = orderNotes;
-    order.deliveryOption = deliveryOption;
-
-    // Set the delivery option cost based on the selected delivery option
-    if (deliveryOption === "Standard") {
-      order.deliveryOptionCost = 25;
-    } else if (deliveryOption === "Premium") {
-      order.deliveryOptionCost = 50;
-    } else if (deliveryOption === "International") {
-      order.deliveryOptionCost = 100;
-    } else {
-      throw new Error("Invalid or missing delivery option");
-    }
-
-    // Save the updated order
-    await order.save();
-
-    res.status(200).json({ message: "Order updated successfully", order });
-  } catch (error) {
-    console.error("Error in putEditOrder:", error);
-    res.status(400).json({ message: error.message });
-  }
-};
-
 module.exports = {
   postCreateOrder,
   getAllOrders,
   getOrdersByProductId,
   getOrdersByUserId,
-  putEditOrder,
 };
