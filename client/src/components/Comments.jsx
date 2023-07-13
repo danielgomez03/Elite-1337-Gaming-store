@@ -25,7 +25,7 @@ export default function Comments({id}) {
   useEffect(() => {
     const fetchUsersData = async () => {
       const userPromises = comments.map(comment =>
-        axios.get(`http://localhost:3001/users/id/${comment.userId}`)
+        axios.get(`/users/id/${comment.userId}`)
       );
       try {
         const responses = await Promise.all(userPromises);

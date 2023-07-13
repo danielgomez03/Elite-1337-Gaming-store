@@ -28,7 +28,7 @@ function ShopCart() {
     async function fetchImages() {
       try {
         const response = await axios.get(
-          "http://localhost:3001/images/products",
+          "/images/products",
         );
         setImagesArray(response.data);
       } catch (error) {
