@@ -48,12 +48,13 @@ function ProductsAdmin() {
   
 
   return (
-    <div className="w-4/6 bg-white container mx-auto py-10 px-16">
+    <div className="w-4/6 bg-white container mx-auto py-10 px-16 z-0">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Product List</h1>
-        <button className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Add Product</button>
+        <button className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+        onClick={openCreateProduct}>Add Product</button>
       </div>
-
+      { setSelectedButton && <CreateProduct closeCreateProduct={closeCreateProduct} /> }
       <div className="product-list">
         <table className="w-full border-collapse relative">
           <thead className='sticky'>
