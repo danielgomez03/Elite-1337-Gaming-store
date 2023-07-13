@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import UpdateUserForm from './updateUserForm';
 
@@ -7,6 +7,15 @@ const UserProfile = () => {
   const user = useSelector((state) => state.user);
   const loading = useSelector((state) => state.loading);
   const error = useSelector((state) => state.error);
+  const [showForm, setShowForm] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowForm(true);
+  };
+  const handleCloseForm = () => {
+    setShowForm(false);
+  };
+
 
 
   if (loading) {
@@ -43,7 +52,27 @@ const UserProfile = () => {
     <span>Last Update</span>
     <span className="ml-auto">{user?.updatedAt?.split('T')[0]}</span>
   </li>
-  <UpdateUserForm/>
+  <div className="flex flex-col items-center justify-center ">
+      <button
+        onClick={handleButtonClick}
+        className="px-8 py-2 bg-blue-500 text-white rounded-md mb-4"
+      >
+        Update Profile
+      </button>
+      {showForm && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className="absolute bg-white p-8 rounded-md shadow-lg">
+            <UpdateUserForm />
+            <button
+              onClick={handleCloseForm}
+              className="px-4 py-2 bg-red-500 text-white rounded-md mt-4"
+            >
+              x
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
 </ul>
           </div>
           {/* End of profile card */}
