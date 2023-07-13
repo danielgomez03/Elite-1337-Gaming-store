@@ -1,5 +1,4 @@
 const { DataTypes } = require("sequelize");
-// const { PriceHistory } = require("../database");
 
 module.exports = (sequelize) => {
   const Product = sequelize.define(
@@ -43,27 +42,6 @@ module.exports = (sequelize) => {
     },
     { timestamps: true },
   );
-
-  // // Hook for PriceHistory on price modifications
-  // Product.addHook("afterUpdate", async (product, options) => {
-  //   if (product.changed("price")) {
-  //     const modifiedPrice = product.price;
-
-  //     if (!product.previous("price")) {
-  //       const initialPrice = 0;
-
-  //       await PriceHistory.create({
-  //         price: initialPrice,
-  //         productId: product.productId,
-  //       });
-  //     }
-
-  //     await PriceHistory.create({
-  //       price: modifiedPrice,
-  //       productId: product.productId,
-  //     });
-  //   }
-  // });
 
   return Product;
 };

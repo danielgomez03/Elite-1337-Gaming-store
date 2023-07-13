@@ -1,4 +1,4 @@
-const { User, Login, Product } = require("../database");
+const { User, Login, Product, PriceHistory } = require("../database");
 const { sendUserDisabledEmailHandler } = require("../handlers/mailingHandler");
 const { editProduct } = require("../controllers/adminControllers");
 
@@ -102,10 +102,48 @@ const patchProductHandler = async (req, res) => {
   }
 };
 
+const getAllProductsWithPriceHistoryHandler = async (req, res) => {
+  try {
+    // Logic to retrieve all products with price history
+    const products = await Product.findAll({
+      include: {
+        model: PriceHistory,
+        where: {},
+        required: true,
+      },
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve products with price history" });
+  }
+};
+
+const getPriceHistoryByProductIdHandler = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    // Logic to retrieve price history by productId
+    const priceHistory = await PriceHistory.findAll({ where: { productId } });
+
+    res.json(priceHistory);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve price history for the product" });
+  }
+};
+
 module.exports = {
   getDisabledUsersHandler,
   patchDisableUserHandler,
   patchEnableUserHandler,
   patchProductHandler,
   patchProductStatusHandler,
+  getAllProductsWithPriceHistoryHandler,
+  getPriceHistoryByProductIdHandler,
 };

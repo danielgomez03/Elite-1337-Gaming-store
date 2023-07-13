@@ -3,8 +3,6 @@ import axios from "axios";
 import Chart from "chart.js/auto";
 import "chartjs-plugin-datalabels";
 
-axios.defaults.baseURL = "http://localhost:3001";
-
 function getRandomColors(length) {
   const colors = [
     "rgba(75, 192, 192, 0.8)",
