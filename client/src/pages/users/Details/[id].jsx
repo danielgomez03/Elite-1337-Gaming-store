@@ -5,9 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Rating from '@/components/Rating';
 import Comments from '@/components/Comments';
-// import AddingRating from '@/components/addingRating';
+import AddComments from '@/components/AddComments';
 
-// import AddComments from '@/components/addComments';
 
 
 
@@ -15,7 +14,9 @@ export default function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
   
+
   const userId = useSelector(state => state.userId)?useSelector(state => state.userId):"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+
 
   const { id } = router.query;
   useEffect(()=> {
