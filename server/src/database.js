@@ -5,8 +5,8 @@ const fs = require("fs");
 const path = require("path");
 
 const sequelize = new Sequelize(
-  // `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
-  "postgresql://uwlryphhfq6hndderybz:h6HKDgAOvQVHZ3nIOMM3lXfOCwojwa@bgcqaxk2fz7cba14isr6-postgresql.services.clever-cloud.com:5432/bgcqaxk2fz7cba14isr6",
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}`,
+  // "postgresql://uwlryphhfq6hndderybz:h6HKDgAOvQVHZ3nIOMM3lXfOCwojwa@bgcqaxk2fz7cba14isr6-postgresql.services.clever-cloud.com:5432/bgcqaxk2fz7cba14isr6",
   { logging: false },
 );
 
