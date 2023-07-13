@@ -2,14 +2,8 @@ import React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
-    
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'http://localhost:3001';
-} else {
-  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
-}
 
-export default function AddComments({id}) {
+export default function addComments({id}) {
     const [content,setContent] = useState('')
     const userId = useSelector(state=> state.userId)
     // const userId ="ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
