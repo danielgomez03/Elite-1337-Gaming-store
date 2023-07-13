@@ -249,4 +249,66 @@ const mailValidation = ({ email }) => {
   return errors;
 };
 
-module.exports = { productValidation, userValidation, mailValidation };
+// CONTACT FORM VALIDATIONS
+const contactValidation = ({
+  firstName,
+  lastName,
+  email,
+  phoneNumber,
+  message,
+}) => {
+  const errors = {};
+
+  // FIRST NAME
+  if (!firstName) {
+    errors.firstName = ["First name is required"];
+  } else if (firstName.length > 50) {
+    errors.firstName = ["First name can't be longer than 50 characters"];
+  } else if (/\d/.test(firstName)) {
+    errors.firstName = ["First name should not contain numbers"];
+  }
+
+  // LAST NAME
+  if (!lastName) {
+    errors.lastName = ["Last name is required"];
+  } else if (lastName.length > 50) {
+    errors.lastName = ["Last name can't be longer than 50 characters"];
+  } else if (/\d/.test(lastName)) {
+    errors.lastName = ["Last name should not contain numbers"];
+  }
+
+  // EMAIL
+  if (!email) {
+    errors.email = ["Email is required"];
+  } else if (email.length > 50) {
+    errors.email = ["Email can't be longer than 50 characters"];
+  } else if (!isValidEmail(email)) {
+    errors.email = ["Invalid email format"];
+  }
+
+  // PHONE NUMBER
+  if (phoneNumber) {
+    const phoneNumberRegex = /^[0-9]+$/;
+    if (!phoneNumber.match(phoneNumberRegex)) {
+      errors.phoneNumber = ["Phone number should contain only numbers"];
+    } else if (phoneNumber.length > 50) {
+      errors.phoneNumber = ["Phone number can't be longer than 50 characters"];
+    }
+  }
+
+  // MESSAGE
+  if (!message) {
+    errors.message = ["Message is required"];
+  } else if (message.length > 500) {
+    errors.message = ["Message can't be longer than 500 characters"];
+  }
+
+  return errors;
+};
+
+module.exports = {
+  productValidation,
+  userValidation,
+  mailValidation,
+  contactValidation,
+};

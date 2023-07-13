@@ -33,7 +33,6 @@ const Checkout = () => {
     payerCity: "",
     payerAddress: "",
     payerPostalCode: "",
-    orderNotes: "note",
     deliveryOption: "Standard",
     orderProducts: [],
     orderTotalPrice: parseFloat(productPrice),
@@ -139,15 +138,14 @@ const Checkout = () => {
           payerCity: input.payerCity,
           payerAddress: input.payerAddress,
           payerPostalCode: input.payerPostalCode,
-          orderNotes: input.orderNotes,
           deliveryOption: input.deliveryOption,
           orderProducts: [
             `productId: ${productId}`,
             `quantity: ${quantity}`,
             `price: ${price}`,
             `discount: ${discount}`,
-          ], // Agregar el campo de productos del pedido
-          orderTotalPrice: parseFloat(productPrice), // Agregar el campo de precio total del pedido
+          ],
+          orderTotalPrice: parseFloat(productPrice),
           deliveryOptionCost: input.deliveryOptions[input.deliveryOption],
           userId,
         });

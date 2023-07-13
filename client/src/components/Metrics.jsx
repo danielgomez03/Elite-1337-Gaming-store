@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3001";
 
 function UserMetrics() {
   const [users, setUsers] = useState([]);
@@ -170,20 +169,6 @@ function ProductMetrics() {
     return sortedProducts.slice(0, 5); // Return top 5 highest rated products
   };
 
-  const getPaymentMethodsUsed = (products) => {
-    if (!products || products.length === 0) {
-      return [];
-    }
-
-    const paymentMethods = new Set();
-    products.forEach((product) => {
-      product.saleHistory?.forEach((sale) => {
-        paymentMethods.add(sale.payment?.paymentMethod);
-      });
-    });
-    return Array.from(paymentMethods);
-  };
-
   const getPriceVariation = (product) => {
     if (!product || !product.priceHistory || product.priceHistory.length <= 1) {
       return 0; // No variation if there's only one price or no price history
@@ -213,7 +198,6 @@ function ProductMetrics() {
   const mostCommentedProducts = getMostCommentedProducts(products);
   const mostFavoritedProducts = getMostFavoritedProducts(products);
   const highestRatedProducts = getHighestRatedProducts(products);
-  const paymentMethodsUsed = getPaymentMethodsUsed(products);
 
   return (
     <div className="p-4 bg-white rounded shadow">
@@ -251,15 +235,6 @@ function ProductMetrics() {
         {highestRatedProducts.map((product) => (
           <li key={product.productId} className="text-gray-900">
             {product.name}
-          </li>
-        ))}
-      </ul>
-
-      <h3 className="text-lg font-bold mt-6">Payment Methods Used</h3>
-      <ul className="mt-2">
-        {paymentMethodsUsed.map((method) => (
-          <li key={method} className="text-gray-900">
-            {method}
           </li>
         ))}
       </ul>
