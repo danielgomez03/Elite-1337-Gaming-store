@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
+axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
 
 export default function AddComments({id}) {
     const [content,setContent] = useState('')

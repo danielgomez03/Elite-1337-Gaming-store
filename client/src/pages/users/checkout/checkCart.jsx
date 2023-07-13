@@ -146,7 +146,7 @@ const Checkout = () => {
           discount: parseFloat(discounts[index]),
         }));
 
-        await axios.post("http://localhost:3001/orders/create", {
+        await axios.post("/orders/create", {
           orderEmail: input.orderEmail,
           payerFirstName: input.payerFirstName,
           payerLastName: input.payerLastName,
@@ -166,7 +166,7 @@ const Checkout = () => {
         });
 
         const { data } = await axios.post(
-          "http://localhost:3001/stripe/process-payment",
+          "/stripe/process-payment",
           {
             id,
             amount: Math.round(
