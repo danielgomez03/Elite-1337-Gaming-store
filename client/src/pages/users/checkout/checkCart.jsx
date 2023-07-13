@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const stripePromise = loadStripe(
-  "pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri",
+  "sk_test_51NLpy7I38Ri7taZJwxLQeDqX4h30nyrYtP6xzNp4riZiIpW6SjDUj6tv0bSvt2r8TF8oyZk1ktdl1WkEkIQg8wzx00frsMA10o",
 );
 
 const Checkout = () => {
