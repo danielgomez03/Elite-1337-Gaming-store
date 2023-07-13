@@ -1,84 +1,85 @@
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { editProduct, getProducts, changeProductStatus } from '@/redux/actions';
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import CreateProduct from "../../components/CreateProduct"
-
+import CreateProduct from '../../components/CreateProduct';
 
 function ProductsAdmin() {
   const dispatch = useDispatch();
-  const products = useSelector(state => state.products)
-  console.log(products)
+  const products = useSelector(state => state.products);
+
   useEffect(() => {
-    dispatch(getProducts())
+    dispatch(getProducts());
+  }, [dispatch]);
 
-  }, [])
+  const [updatedPrice, setUpdatedPrice] = useState({});
+  const [showDescriptionInput, setShowDescriptionInput] = useState({});
+  const [description, setDescription] = useState({});
+  const [isCreatingProduct, setIsCreatingProduct] = useState(false);
 
-  const [updatedPrice, setUpdatedPrice] = useState([]);
-  const handlePriceChange = (index, value) => {
-    setUpdatedPrice((prevPrice) => {
-      const newPrice = [...prevPrice];
-      newPrice[index] = value;
-      return newPrice;
-    });
+  const handlePriceChange = (productId, value) => {
+    setUpdatedPrice(prevPrice => ({
+      ...prevPrice,
+      [productId]: value,
+    }));
   };
-  const [showDescriptionInput, setShowDescriptionInput] = useState(false);
-  const [description, setDescription] = useState([]);
 
-  const handleDescriptionChange = (index, value) => {
-    setDescription((prevDescriptions) => {
-      const newDescriptions = [...prevDescriptions];
-      newDescriptions[index] = value;
-      return newDescriptions;
-    });
+  const handleDescriptionChange = (productId, value) => {
+    setDescription(prevDescriptions => ({
+      ...prevDescriptions,
+      [productId]: value,
+    }));
   };
-  const [selectedButton, setSelectedButton] = useState(false);
+
+  const toggleDescriptionInput = (productId) => {
+    setShowDescriptionInput(prevInputState => ({
+      ...prevInputState,
+      [productId]: !prevInputState[productId],
+    }));
+  };
 
   const openCreateProduct = () => {
-    setSelectedButton(true);
+    setIsCreatingProduct(!isCreatingProduct);
   };
-
-  const closeCreateProduct = () => {
-    setSelectedButton(false);
-  };
-
-  const toggleDescriptionInput = () => {
-    setShowDescriptionInput(!showDescriptionInput);
-  };
-
-  
 
   return (
     <div className="w-4/6 bg-white container mx-auto py-10 px-16 z-0">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Product List</h1>
-        <button className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-        onClick={openCreateProduct}>Add Product</button>
+        <button
+          className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+          onClick={openCreateProduct}
+        >
+          Add Product
+        </button>
       </div>
-      { selectedButton && <CreateProduct closeCreateProduct={closeCreateProduct} /> }
+      {isCreatingProduct && (
+        <CreateProduct openCreateProduct={openCreateProduct} />
+      )}
       <div className="product-list">
         <table className="w-full border-collapse relative">
           <thead className='sticky'>
-          {products.length === 0 && (
-          // Esqueleto de carga para cuando no hay datos
-          <tr className="table-row border-b gap-1">
-            <td className="table-cell bg-gray-100 animate-pulse h-10 w-10"></td>
-            <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/6"></td>
-            <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/12"></td>
-            <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/5"></td>
-            <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/12"></td>
-            <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/12"></td>
-            <td className="table-cell bg-gray-100 animate-pulse h-20 w-1/4"></td>
-          </tr>
-        )}
-            <tr className="table-header">
-              <th className="table-cell"></th>
-              <th className="table-cell">Product</th>
-              <th className="table-cell">Stock</th>
-              <th className="table-cell">Price</th>
-              <th className="table-cell">Discount % off</th>
-              <th className="table-cell">Active</th>
-              <th className="table-cell w-1/5">Description</th>
-            </tr>
+            {products.length === 0 ? (
+              // Esqueleto de carga cuando no hay datos
+              <tr className="table-row border-b gap-1">
+                <td className="table-cell bg-gray-100 animate-pulse h-10 w-10"></td>
+                <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/6"></td>
+                <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/12"></td>
+                <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/5"></td>
+                <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/12"></td>
+                <td className="table-cell bg-gray-100 animate-pulse h-4 w-1/12"></td>
+                <td className="table-cell bg-gray-100 animate-pulse h-20 w-1/4"></td>
+              </tr>
+            ) : (
+              <tr className="table-header">
+                <th className="table-cell"></th>
+                <th className="table-cell">Product</th>
+                <th className="table-cell">Stock</th>
+                <th className="table-cell">Price</th>
+                <th className="table-cell">Discount % off</th>
+                <th className="table-cell">Active</th>
+                <th className="table-cell w-1/5">Description</th>
+              </tr>
+            )}
           </thead>
           <tbody>
             {products.map((item) => (
@@ -133,7 +134,7 @@ function ProductsAdmin() {
                       onClick={() => {
                         dispatch(editProduct(item.productId, 'price', updatedPrice[item.productId])).then(() => {
                           dispatch(getProducts());
-                          setUpdatedPrice('');
+                          setUpdatedPrice({});
                         });
                       }}
                     >
@@ -167,33 +168,32 @@ function ProductsAdmin() {
                   >
                     {item.isActive ? 'on' : 'off'}
                   </button>
-
                 </td>
                 <td className="table-cell w-1/4 flex ">
                   <textarea
-                    className={`w-[75%] h-20 px-auto py-1 mb-2 border rounded ${showDescriptionInput ? '' : 'border-transparent'}`}
+                    className={`w-[75%] h-20 px-auto py-1 mb-2 border rounded ${showDescriptionInput[item.productId] ? '' : 'border-transparent'}`}
                     name="description"
                     value={description[item.productId] || item.description}
-                    readOnly={!showDescriptionInput}
+                    readOnly={!showDescriptionInput[item.productId]}
                     onChange={(e) => handleDescriptionChange(item.productId, e.target.value)}
                   />
-                  {!showDescriptionInput && (
+                  {!showDescriptionInput[item.productId] && (
                     <button
                       className="w-[25%] px-auto py-1 text-blue-500 underline"
-                      onClick={() => toggleDescriptionInput()}
+                      onClick={() => toggleDescriptionInput(item.productId)}
                     >
                       Edit
                     </button>
                   )}
-                  {showDescriptionInput && (
+                  {showDescriptionInput[item.productId] && (
                     <div className="w-1/4 p-2">
                       <button
                         className="px-4 py-1 mr-2 text-white bg-blue-500 rounded hover:bg-blue-600"
                         onClick={() => {
                           dispatch(editProduct(item.productId, 'description', description[item.productId])).then(() => {
                             dispatch(getProducts());
-                            setDescription([]);
-                            toggleDescriptionInput();
+                            setDescription({});
+                            toggleDescriptionInput(item.productId);
                           });
                         }}
                       >
@@ -201,7 +201,7 @@ function ProductsAdmin() {
                       </button>
                       <button
                         className="px-4 py-1 text-gray-500 underline"
-                        onClick={() => toggleDescriptionInput()}
+                        onClick={() => toggleDescriptionInput(item.productId)}
                       >
                         Cancel
                       </button>
@@ -214,7 +214,7 @@ function ProductsAdmin() {
         </table>
       </div>
     </div>
-  )
+  );
 }
 
-export default ProductsAdmin
+export default ProductsAdmin;
