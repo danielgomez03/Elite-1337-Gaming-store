@@ -231,22 +231,22 @@ const UserStatistics = () => {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className="flex w-full gap-2 px-2">
+      <div className="w-1/3">
         <h1 className="font-bold mt-4 mb-4 text-center">Users by Age</h1>
         <canvas
           id="userAgeChart"
           style={{ width: "600px", height: "300px" }}
         ></canvas>
       </div>
-      <div>
+      <div className="w-1/3">
         <h1 className="font-bold mt-4 mb-4 text-center">Users Age Average</h1>
         <canvas
           id="ageChart"
           style={{ width: "600px", height: "300px" }}
         ></canvas>
       </div>
-      <div>
+      <div className="w-1/3">
         <h1 className="font-bold mt-4 mb-4 text-center">
           Users by Nationality
         </h1>
@@ -419,8 +419,8 @@ const ProductStatistics = () => {
   }, []);
 
   return (
-    <div>
-      <div>
+    <div className="flex w-full gap-2 px-2">
+      <div className="w-1/3">
         <h1 className="font-bold mt-4 mb-4 text-center">
           Products by Manufacturer
         </h1>
@@ -429,14 +429,14 @@ const ProductStatistics = () => {
           style={{ width: "600px", height: "300px" }}
         ></canvas>
       </div>
-      <div>
+      <div className="w-1/3">
         <h1 className="font-bold mt-4 mb-4 text-center">Products by Origin</h1>
         <canvas
           id="originChart"
           style={{ width: "600px", height: "300px" }}
         ></canvas>
       </div>
-      <div>
+      <div className="w-1/3">
         <h1 className="font-bold mt-4 mb-4 text-center">Products by Price</h1>
         <canvas
           id="priceChart"
