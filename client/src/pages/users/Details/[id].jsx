@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import Rating from '@/components/Rating';
 import Comments from '@/components/Comments';
-import AddingRating from '@/components/addingRating';
-import axios from 'axios';
-import AddComments from '@/components/addComments';
+// import AddingRating from '@/components/addingRating';
+
+// import AddComments from '@/components/addComments';
 
 
 
@@ -15,7 +15,7 @@ export default function Detail() {
   const dispatch = useDispatch();
   const router = useRouter();
   
-  const userId = useSelector(state => state.userId)
+  const userId = useSelector(state => state.userId)?useSelector(state => state.userId):"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
 
   const { id } = router.query;
   useEffect(()=> {
@@ -43,25 +43,9 @@ export default function Detail() {
     }
     
   },[dispatch,detail.productId])
-  const comments = useSelector(state=>state.commentsByProduct)
-  const [content,setContent] = useState()
-  const onChange = (e) => {
-     
-     setContent(e.target.value)
-  }
- 
-  const onSubmitComment=(e) => {
-    e.preventDefault();
-    const comment = {userId:userId,productId:detail.productId,content:content}
-    axios.post("http://localhost:3001/comments/add", comment )
-    .then(()=>{
-      dispatch(getCommentsByProduc(detail.productId))
-    setContent("")
-    })
-    .catch(error=>alert(error.data))
-    
 
-  }
+ 
+
   if (!detail) {
     return <div>Loading...</div>;
   }
@@ -149,6 +133,7 @@ export default function Detail() {
   </div>
   </div>
   </div>
+
   <Comments id={id}/>
  
 </div>
