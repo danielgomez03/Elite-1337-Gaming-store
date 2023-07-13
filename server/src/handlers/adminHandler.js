@@ -1,6 +1,6 @@
-const { User, Login ,Product} = require("../database");
+const { User, Login, Product } = require("../database");
 const { sendUserDisabledEmailHandler } = require("../handlers/mailingHandler");
-const { editProduct } = require("../controllers/adminControllers")
+const { editProduct } = require("../controllers/adminControllers");
 
 const getDisabledUsersHandler = async (req, res) => {
   try {
@@ -68,7 +68,6 @@ const patchEnableUserHandler = async (req, res) => {
   }
 };
 
-
 const patchProductStatusHandler = async (req, res) => {
   const { productId } = req.body;
 
@@ -90,8 +89,6 @@ const patchProductStatusHandler = async (req, res) => {
   }
 };
 
-
-
 const patchProductHandler = async (req, res) => {
   const { productId, updates } = req.body;
   try {
@@ -112,5 +109,4 @@ module.exports = {
   patchEnableUserHandler,
   patchProductHandler,
   patchProductStatusHandler,
-  
 };

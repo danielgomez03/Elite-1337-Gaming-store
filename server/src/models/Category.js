@@ -25,5 +25,3 @@ module.exports = (sequelize) => {
     { timestamps: false },
   );
 };
-
-// We can access the category of a product using product.getCategory() and retrieve all products belonging to a category using category.getProducts().

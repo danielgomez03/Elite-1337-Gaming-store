@@ -18,10 +18,7 @@ const SubscriptionBox = () => {
     }
 
     axios
-      .post(
-        "https://ft37bpfgrupo12-production.up.railway.app/mailing/newsletter/subscribe",
-        { email },
-      )
+      .post("http://localhost:3001/mailing/newsletter/subscribe", { email })
       .then((response) => {
         setMessage(response.data.message);
         setError("");

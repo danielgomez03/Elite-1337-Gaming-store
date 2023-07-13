@@ -75,11 +75,6 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
-      orderNotes: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-
       deliveryOption: {
         type: DataTypes.ENUM("Standard", "Premium", "International"),
         allowNull: false,
@@ -109,8 +104,8 @@ module.exports = (sequelize) => {
   return Order;
 };
 
-// With this updated Order model, you can store an array of objects in the products field,
-// where each object represents a product and its quantity. For example:
+// You can store an array of objects in the products field,
+// where each object represents a product and its quantity.
 
 // const order = await Order.create({
 //   amount: 100.0,
@@ -118,8 +113,8 @@ module.exports = (sequelize) => {
 //   method: "Credit or Debit Card",
 //   transactionId: "123456789",
 //   orderProducts: [
-//     { productId: 1, quantity: 2 },
-//     { productId: 2, quantity: 3 },
+//     { productId: 1, quantity: 2, price: 100, discount: 10 },
+//     { productId: 2, quantity: 3, price: 100, discount: 10 },
 //   ],
 // });
 //

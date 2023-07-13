@@ -1,4 +1,4 @@
-const { User, Login, Cart, Order, Product, Payment } = require("../database");
+const { Login, Order, Payment, Product, SaleHistory } = require("../database");
 const { Op } = require("sequelize");
 
 const getAllOrders = async (req, res) => {
@@ -45,6 +45,37 @@ const getOrdersByUserId = async (req, res) => {
   } catch (error) {
     console.error("Error in getOrdersByUserId:", error);
     res.status(400).json({ message: error.message });
+  }
+};
+
+const createSaleHistoryForOrder = async (order) => {
+  try {
+    console.log("Creating sale history for order:", order.orderId);
+
+    for (const orderProduct of order.orderProducts) {
+      const product = await Product.findByPk(orderProduct.productId);
+
+      if (product) {
+        console.log("Creating sale history for product:", product.productId);
+
+        // Convert discountAtSale to integer
+        const discountAtSale = parseInt(product.discount, 10);
+
+        // Create a new SaleHistory entry for each order product
+        await SaleHistory.create({
+          priceAtSale: product.price,
+          discountAtSale: discountAtSale,
+          quantity: orderProduct.quantity,
+          userId: order.userId,
+          productId: orderProduct.productId,
+          orderId: order.orderId,
+        });
+      }
+    }
+
+    console.log("Sale history creation completed for order:", order.orderId);
+  } catch (error) {
+    console.error("Error setting product values in saleHistory:", error);
   }
 };
 
@@ -101,6 +132,8 @@ const postCreateOrder = async (req, res) => {
       userId,
       loginId,
     });
+
+    await createSaleHistoryForOrder(order);
 
     // Devolver una respuesta de éxito con el ID de la orden creada
     res.status(200).json({

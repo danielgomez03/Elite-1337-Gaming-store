@@ -1,12 +1,13 @@
 const Stripe = require("stripe");
 const { STRIPE_SECRECT_KEY } = process.env;
-const { Payment, Order, User, Login } = require("../database");
+const { Payment, Order, Login, Product } = require("../database");
 
 const stripe = new Stripe(STRIPE_SECRECT_KEY);
 
 const processPayment = async (amount, id, userId) => {
   try {
-    // Crear un pago utilizando la biblioteca de Stripe
+    console.log("Processing payment for user:", userId);
+
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "USD",
@@ -15,7 +16,6 @@ const processPayment = async (amount, id, userId) => {
       confirm: true,
     });
 
-    console.log("USER ID: ", userId);
     const login = await Login.findOne({
       where: { userId: userId },
     });
@@ -29,34 +29,53 @@ const processPayment = async (amount, id, userId) => {
 
     const loginId = login.loginId;
 
-    // Obtener el orderId del último pedido realizado
     const latestOrder = await Order.findOne({
       where: { userId: userId },
       order: [["createdAt", "DESC"]],
     });
 
     if (!latestOrder) {
-      throw new Error("No se encontró ningún pedido en la base de datos");
+      throw new Error("No order was found in the database");
     }
+
+    console.log("Latest order found:", latestOrder.orderId);
 
     const orderId = latestOrder.orderId;
 
-    // Crear un registro de pago en la base de datos
     const payment = await Payment.create({
       amount,
-      method: "Credit or Debit Card", // Método de pago específico (puedes personalizarlo según tus necesidades)
-      transactionData: paymentIntent.id, // ID del pago recibido del servicio de Stripe
+      method: "Credit or Debit Card",
+      transactionData: paymentIntent.id,
       orderId: orderId,
       userId: userId,
       loginId: loginId,
     });
-    // Actualizar el estado del pedido a "Pagado" en la base de datos
-    await Order.update({ status: "Paid" }, { where: { id: orderId } });
+
+    await Order.update(
+      { orderStatus: "Payment confirmed" },
+      { where: { orderId: orderId } },
+    );
+
+    console.log("Payment processed successfully:", payment.paymentId);
+
+    // Update product stock
+    const orderProducts = latestOrder.orderProducts;
+    for (const orderProduct of orderProducts) {
+      const productId = orderProduct.productId;
+      const quantity = orderProduct.quantity;
+      const product = await Product.findByPk(productId);
+      if (product) {
+        product.stock -= quantity;
+        await product.save();
+      }
+    }
+
+    console.log("Product stock updated successfully");
 
     return payment;
   } catch (error) {
-    console.error("Error al procesar el pago:", error);
-    throw new Error("Ocurrió un error al procesar el pago");
+    console.error("Error in processPayment:", error);
+    throw new Error("An error occurred while processing the payment");
   }
 };
 
