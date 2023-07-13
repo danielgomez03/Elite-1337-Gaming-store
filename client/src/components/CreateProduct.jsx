@@ -376,7 +376,7 @@ const CreateProduct = ({ openCreateProduct }) => {
       method="POST"
       encType="multipart/form-data"
       onSubmit={onSubmithandler}
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50"
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-20 z-50"
     >
       <div className="relative w-10/10 max-w-2xl bg-white rounded-lg flex flex-col justify-start items-center p-8">
         <button
