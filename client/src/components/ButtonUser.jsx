@@ -18,7 +18,6 @@ function ButtonUser() {
         dispatch(changeUser(selectedValue));
     };
 
-    if (user && user.userRole !== "common") {
         return (
             <select
                 value={selectedUser}
@@ -31,7 +30,6 @@ function ButtonUser() {
             </select>
 
         )
-    }
 }
 
 export default ButtonUser;
