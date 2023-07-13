@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
   axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
 }
 
-const CreateProduct = ({ onClose }) => {
+const CreateProduct = ({ closeCreateProduct }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -233,7 +233,7 @@ const CreateProduct = ({ onClose }) => {
             text: "Product created successfully!",
             icon: "success",
           });
-          onClose();
+          closeCreateProduct();
         })
         .catch((error) => {
           Swal.fire({
@@ -381,7 +381,7 @@ const CreateProduct = ({ onClose }) => {
       <div className="relative w-10/10 max-w-2xl bg-white rounded-lg flex flex-col justify-start items-center p-8">
         <button
           className="absolute top-2 right-4 px-3 mt-2 py-1 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 mb-3 font-bold"
-          onClick={onClose}
+          onClick={closeCreateProduct()}
         >
           X
         </button>
@@ -768,7 +768,7 @@ const CreateProduct = ({ onClose }) => {
           </button>
           <button
             className="lg:hidden w-full px-4 mt-4 py-2 bg-gray-200 rounded-md font-bold tracking-wider"
-            onClick={onClose}
+            onClick={closeCreateProduct()}
           >
             Cancel
           </button>

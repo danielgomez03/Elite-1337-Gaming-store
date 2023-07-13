@@ -26,18 +26,18 @@ export default function SearchBar() {
     }
 
 return (
-    <div className='flex items-center justify-center relative'>
+    <div className='flex items-center justify-center relative w-1/5'>
         <input
             type='text'
             value={name}
-            placeholder='Search Product...'
+            placeholder='Search Product'
             onChange={handleInputChange}
-            className="w-full px-4 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+            className="w-full input-field px-3 py-2 rounded-md mr-2 shadow-md"
         />
         <button
             type='submit'
             onClick={handleSubmit}
-            className='absolute right-2'>
+            className='absolute right-4'>
             <span className="material-symbols-rounded pt-1">
                 search
             </span>
