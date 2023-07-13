@@ -127,10 +127,16 @@ const Checkout = () => {
     if (!error) {
       const { id } = paymentMethod;
       try {
-        const orderProducts = products.map((productId, index) => ({
+        // Convert 'products' to an array if it's a string
+        const productList = Array.isArray(products)
+          ? products
+          : products.split(",");
+
+        // Iterate over the 'productList' array using 'map'
+        const orderProducts = productList.map((productId, index) => ({
           productId: productId,
           quantity: parseInt(quantity[index]),
-          price: parseFloat(prices[index]), // Agregar el campo de precio del producto
+          price: parseFloat(prices[index]),
           discount: parseFloat(discounts[index]),
         }));
 
