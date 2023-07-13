@@ -107,8 +107,6 @@ const Card = (props) => {
                 >
                   Buy Now
                 </button>
-              
-            
 
           </div>
         </div>
