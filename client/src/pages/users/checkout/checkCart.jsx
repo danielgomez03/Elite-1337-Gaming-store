@@ -9,7 +9,12 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import axios from "axios";
-axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
+
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001/';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
 
 const stripePromise = loadStripe(
   "pk_test_51NLpy7I38Ri7taZJ4rFoHHQbU6O1RGWVIsZTDSWgZegydWiZxtDuP5jPA6deFh70cKwtAb2l8MB3SwsS6EBO12To00c4iLaQri",

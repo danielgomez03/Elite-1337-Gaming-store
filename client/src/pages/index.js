@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Products from './guest/Products';
 import CardContainer from '../components/cardsContainer';
-import Link from 'next/link';
 import leetImage from '../../public/leet2.png';
 import Image from 'next/image';
 

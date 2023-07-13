@@ -5,7 +5,12 @@ import { getCategories } from "@/redux/actions";
 import { productValidation } from "./validations";
 import Select from "react-select";
 import Swal from "sweetalert2";
-axios.defaults.baseURL = "https://ft37bpfgrupo12-production.up.railway.app/";
+
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
 
 const CreateProduct = ({ onClose }) => {
   const dispatch = useDispatch();
