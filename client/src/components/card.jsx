@@ -5,17 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addProductToCart, getCartByIdUser, addFavorite, deleteFavorite } from "@/redux/actions";
 
 import Rating from '@/components/Rating';
-import HandleFavorite from '@/components/HandleFavorite';
+import HandleFavorite from '@/components/handleFavorite';
 
 const Card = (props) => {
-
   
+  const userId = useSelector((state) => state.userId);
 
   const favorites = useSelector((state) => state.favorites);
   const [isFav, setIsFav] = useState(false);
-
-  
-
 
   useEffect(() => {
     const isProductInFavorites = favorites.some(
@@ -28,8 +25,8 @@ const Card = (props) => {
   const dispatch = useDispatch();
 
   return (
-    <article className="h-4/7 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300 flex-shrink-0">
-      <div className="relative flex items-center justify-center overflow-hidden rounded-xl h-52">
+    <article className="h-96 w-52 rounded-xl bg-white shadow-lg hover:shadow-xl hover:transform hover:scale-95 duration-300">
+      <div className="relative flex items-end overflow-hidden rounded-xl">
         <Link href={`../users/Details/${props.id}`}>
           <img src={props.image} alt="Product Photo" className="w-full h-44 p-3 object-contain" />
         </Link>
@@ -59,8 +56,9 @@ const Card = (props) => {
                   className="flex items-center justify-center rounded-lg border border-indigo-500 w-full py-1 text-indigo-500 duration-100 hover:bg-gray-200 flex-grow text-sm"
                   disabled={props.stock === 0}
                   onClick={() => {
-                    dispatch(addProductToCart(props.id)).then(() => {
-                      dispatch(getCartByIdUser(id));
+                    const user = userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+                    dispatch(addProductToCart(user,props.id)).then(() => {
+                      dispatch(getCartByIdUser(user));
                     });
                   }}
                 >
@@ -92,6 +90,7 @@ const Card = (props) => {
                 >
                   Buy Now
                 </button>
+            
           </div>
         </div>
       </div>
