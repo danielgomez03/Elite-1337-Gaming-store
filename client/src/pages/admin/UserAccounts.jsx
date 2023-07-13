@@ -6,7 +6,7 @@ function UserAccounts() {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const [name, setName] = useState("");
-  const [filteredUsers, setFilteredUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState(users);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -43,9 +43,6 @@ function UserAccounts() {
   return (
     <div className="user-accounts-container">
       <div className="search-filter-container">
-        <button className="button" onClick={() => setFilteredUsers(users)}>
-          Reset
-        </button>
         <input
           type="text"
           placeholder="Search User"
@@ -63,12 +60,16 @@ function UserAccounts() {
           Search
         </button>
         <select className="button" onChange={typeAdmin} name="" id="">
-          <option value="" selected="selected">
-            TypeUser:
+          <option value="" selected="">
+            <strong>Role:</strong>
           </option>
-          <option value="common">TypeUser: User</option>
-          <option value="super">TypeUser: Admin</option>
+          <option value="common">User</option>
+          <option value="admin">Admin</option>
+          <option value="super">Super</option>
         </select>
+        <button className="button" onClick={() => setFilteredUsers(users)}>
+          Reset
+        </button>
       </div>
       <div className="user-list">
         <style>
@@ -171,7 +172,7 @@ function UserAccounts() {
           <span className="column">Status</span>
         </div>
 
-        {users.map((user) => (
+        {filteredUsers.map((user) => (
           <div key={user.userId} className="user-item">
             <img
               src={user.image.url}

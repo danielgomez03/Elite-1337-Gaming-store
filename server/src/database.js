@@ -217,8 +217,8 @@ Newsletter.belongsTo(User, {
 });
 
 // // ---> PRICEHISTORY
-// // Product one-to-one with PriceHistory
-// Product.hasOne(PriceHistory, {
+// // Product many-to-one with PriceHistory
+// Product.hasMany(PriceHistory, {
 //   foreignKey: {
 //     name: "productId",
 //     allowNull: false,
