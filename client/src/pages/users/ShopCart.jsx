@@ -10,8 +10,11 @@ import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 
 function ShopCart() {
-  const userId = useSelector((state) => state.userId);
-  const user = userId ? userId : "ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a";
+
+  const userId = useSelector(state=>state.userId);
+  const user=userId?userId:"ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
+
+
   const dispatch = useDispatch();
   const [imagesArray, setImagesArray] = useState([]);
 
@@ -34,7 +37,11 @@ function ShopCart() {
     }
 
     if (user) {
-      dispatch(getCartByIdUser(user));
+
+
+      dispatch(getCartByIdUser(user))
+
+
     }
 
     fetchImages();
@@ -100,12 +107,16 @@ function ShopCart() {
                     <div>
                       <button
                         onClick={() => {
+
+                        
+
                           dispatch(
                             deleteProduct({
                               userId: user,
                               productId: product.productId,
                             }),
                           ).then(() => {
+
                             dispatch(getCartByIdUser(user));
                           });
                         }}
@@ -141,6 +152,8 @@ function ShopCart() {
                           id={`quantity-${product.cartId}`}
                           className="border border-gray-300 rounded px-2 py-1"
                           value={product.quantity}
+
+
                           onChange={(e) =>
                             dispatch(
                               modifyQuantity({
@@ -149,6 +162,7 @@ function ShopCart() {
                                 quantity: e.target.value,
                               }),
                             ).then(() => {
+
                               dispatch(getCartByIdUser(user));
                             })
                           }

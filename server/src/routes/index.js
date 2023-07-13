@@ -16,7 +16,7 @@ const commentsRoutes = require("./commentsRoutes");
 const favoritesRoutes = require("./favoritesRoutes");
 
 const router = Router();
-router.use(authenticateJWT);
+// router.use(authenticateJWT);
 
 router.use("/products", productsRoutes);
 router.use("/users", usersRoutes);

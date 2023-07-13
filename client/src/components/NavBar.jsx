@@ -281,7 +281,10 @@ function NavBar() {
                 <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts()}</span>
                 <span className="sr-only">items in cart, view bag</span>
               </Link>
+
+
             {/* )} */}
+
           </div>
         </div>
       )}

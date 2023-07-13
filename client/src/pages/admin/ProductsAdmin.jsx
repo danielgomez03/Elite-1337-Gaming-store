@@ -147,9 +147,11 @@ const closeCreateProduct = () => {
             value={item.discount}
           
             onChange={(e) => {
-              dispatch(editProduct(item.productId, "discount", e.target.value)).then(() => {
-                dispatch(getProducts());
-              });
+             
+                dispatch(editProduct(item.productId, "discount", e.target.value)).then(() => {
+                  dispatch(getProducts());
+                });
+             
             }}
           />
         </td>
