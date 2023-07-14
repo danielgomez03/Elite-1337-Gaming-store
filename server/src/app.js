@@ -13,7 +13,7 @@ require("dotenv").config();
 
 const baseURL = process.env.NODE_ENV === 'production'
   ? 'http://localhost:3000'
-  : 'https://ft37b-pf-grupo12.vercel.app';
+  : 'https://ft37b-pf-grupo12-eupcdgh1y-danielgomez03.vercel.app/';
 
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
