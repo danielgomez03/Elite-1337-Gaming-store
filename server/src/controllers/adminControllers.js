@@ -1,4 +1,4 @@
-const { Product } = require("../database");
+const { Product, PriceHistory } = require("../database");
 
 const editProduct = async (productId, updates) => {
   try {
@@ -12,13 +12,46 @@ const editProduct = async (productId, updates) => {
       throw new Error("Product not found");
     }
 
-    if (typeof updates.price !== "undefined") {
-      if (updates.price < 0) {
-        throw new Error("Price must be at least 0");
+    const hasPriceChange =
+      typeof updates.price !== "undefined" && product.price !== updates.price;
+
+    // Check if the price is changing
+    if (hasPriceChange) {
+      // Find the current PriceHistory entry
+      const currentPriceHistory = await PriceHistory.findOne({
+        where: {
+          productId: productId,
+        },
+        order: [["createdAt", "DESC"]],
+      });
+
+      // Set the last price (current) in the current PriceHistory entry
+      if (currentPriceHistory) {
+        currentPriceHistory.price = product.price;
+        await currentPriceHistory.save();
+      } else {
+        // Create a new PriceHistory entry with the initial price
+        const initialPriceHistoryEntry = {
+          price: product.price,
+          createdAt: new Date(),
+          productId: productId,
+        };
+        await PriceHistory.create(initialPriceHistoryEntry);
       }
+
+      // Create a new PriceHistory entry with the new price
+      const priceHistoryEntry = {
+        price: updates.price,
+        createdAt: new Date(),
+        productId: productId,
+      };
+      await PriceHistory.create(priceHistoryEntry);
+
+      // Update the product's price
       product.price = updates.price;
     }
 
+    // Update other properties if they are changing
     if (typeof updates.stock !== "undefined") {
       if (updates.stock < 0) {
         throw new Error("Stock must be at least 0");

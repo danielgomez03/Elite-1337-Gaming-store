@@ -104,13 +104,13 @@ const patchProductHandler = async (req, res) => {
 
 const getAllProductsWithPriceHistoryHandler = async (req, res) => {
   try {
-    // Logic to retrieve all products with price history
-    const products = await Product.findAll({
+    const products = await PriceHistory.findAll({
       include: {
-        model: PriceHistory,
-        where: {},
-        required: true,
+        model: Product,
+        attributes: ["productId", "name"],
+        group: ["productId"],
       },
+      attributes: ["price", "createdAt"],
     });
 
     res.json(products);
@@ -126,8 +126,10 @@ const getPriceHistoryByProductIdHandler = async (req, res) => {
   const { productId } = req.params;
 
   try {
-    // Logic to retrieve price history by productId
-    const priceHistory = await PriceHistory.findAll({ where: { productId } });
+    const priceHistory = await PriceHistory.findAll({
+      where: { productId: productId },
+      attributes: ["priceHistoryId", "price", "createdAt"],
+    });
 
     res.json(priceHistory);
   } catch (error) {

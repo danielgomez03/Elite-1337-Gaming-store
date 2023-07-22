@@ -27,28 +27,21 @@ import {
   FETCH_USERS_SUCCESS,
   FETCH_USERS_FAILURE,
   FETCH_USER_BY_ID,
-
   ADD_RATING_SUCCESS,
   ADD_RATING_FAILURE,
-
   POST_LOGIN,
   POST_LOGOUT,
   CONFIRM_SESSION,
   CHANGE_USER,
-
   MODIFY_ISACTIVE_USER,
   EDIT_PRODUCT,
   CHANGE_PRODUCT_STATUS,
-
   CREATE_ORDER,
-
-SET_SALE_HISTORY,
-
+  SET_SALE_HISTORY,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
-
-} from './actions'
+} from "./actions";
 
 const initialState = {
   token: "",
@@ -62,7 +55,7 @@ const initialState = {
   products: [],
   filteredProducts: [],
   selectedCategory: "",
-  sortOrder: '',
+  sortOrder: "",
   detail: [],
   categories: [],
   cart: [],
@@ -75,7 +68,7 @@ const initialState = {
   users: [],
   user: {},
   loading: false,
-    saleHistory: [],
+  saleHistory: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -86,37 +79,51 @@ const rootReducer = (state = initialState, action) => {
       if (error) {
         return { ...state, errorMessage: error };
       } else {
-        return { ...state, token: token, userId: userId, session: true, errorMessage: "" };
-      };
+        return {
+          ...state,
+          token: token,
+          userId: userId,
+          session: true,
+          errorMessage: "",
+        };
+      }
     case POST_LOGOUT:
-      return { ...state, token: "", typeUser: "guest", userId: "", session: false, user: {} };
+      return {
+        ...state,
+        token: "",
+        typeUser: "guest",
+        userId: "",
+        session: false,
+        user: {},
+      };
     case CONFIRM_SESSION:
-      return { ...state, token: action.payload.token, userId: action.payload.userId, session: true }
+      return {
+        ...state,
+        token: action.payload.token,
+        userId: action.payload.userId,
+        session: true,
+      };
     case CHANGE_USER:
       return { ...state, typeUser: action.payload };
     //--------------------------/
     case GET_COMMENTS_BY_PRODUCT:
-      return { ...state, commentsByProduct: action.payload }
+      return { ...state, commentsByProduct: action.payload };
 
     case ACTION_BYNAME:
-      return { ...state, actionByName: true }
+      return { ...state, actionByName: true };
     case DELETE_PRODUCT:
-      return { ...state }
+      return { ...state };
     case MODIFY_QUANTITY:
-
-      return { ...state }
+      return { ...state };
     case GET_CART_BY_ID_USER:
       return { ...state, cartUser: action.payload };
     case TOTAL_PRODUCTS:
-
       return { ...state, totalProducts: state.totalProducts + 1 };
     case ADD_PRODUCT_TO_CART:
-      return { ...state, cart: action.payload }
+      return { ...state, cart: action.payload };
 
-  case MODIFY_ISACTIVE_USER:
-    return {...state}
-
-
+    case MODIFY_ISACTIVE_USER:
+      return { ...state };
 
     //---------------------------------------------------------------------//
     //User´s cases---------------------------------//
@@ -141,28 +148,30 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         user: action.payload,
-        error: action.payload ? null : 'An error occurred while retrieving the user by ID'
+        error: action.payload
+          ? null
+          : "An error occurred while retrieving the user by ID",
       };
 
     //---------------------------------------------------------------------//
     //Get Products cases---------------------------------//
     case CHANGE_PRODUCT_STATUS:
       return {
-        ...state
-      }
+        ...state,
+      };
     case EDIT_PRODUCT:
       return {
-        ...state
-      }
+        ...state,
+      };
     case GET_PRODUCTS:
       return {
         ...state,
         actionByName: false,
         products: [...action.payload],
-        filteredProducts: [...action.payload]
+        filteredProducts: [...action.payload],
       };
     case GET_PRODUCT_BY_NAME:
-      console.log(action.payload)
+      console.log(action.payload);
       return { ...state, productsbyName: action.payload };
 
     //---------------------------------------------------------------------//
@@ -179,7 +188,9 @@ const rootReducer = (state = initialState, action) => {
           product.category.parent.parent?.name === category
         ) {
           // Verificar si el producto ya existe en el nuevo array antes de agregarlo
-          if (!filteredByCategory.some((p) => p.productId === product.productId)) {
+          if (
+            !filteredByCategory.some((p) => p.productId === product.productId)
+          ) {
             filteredByCategory.push(product);
           }
         }
@@ -195,9 +206,7 @@ const rootReducer = (state = initialState, action) => {
       return { ...state, categories: action.payload };
 
     case GET_PRODUCT_BY_ID:
-
-      if (action.payload === 'not found')
-        return { ...state }
+      if (action.payload === "not found") return { ...state };
       return { ...state, detail: action.payload };
 
     //---------------------------------------------------------------------//
@@ -207,7 +216,7 @@ const rootReducer = (state = initialState, action) => {
       const filteredProducts = state.products.filter(
         (product) =>
           parseFloat(product.price) >= parseFloat(minPrice) &&
-          parseFloat(product.price) <= parseFloat(maxPrice)
+          parseFloat(product.price) <= parseFloat(maxPrice),
       );
       return {
         ...state,
@@ -220,27 +229,27 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         filteredProducts: action.payload,
-        sortOrder: action.payload.length > 0 ? state.sortOrder : '', // Restablece el sortOrder si no hay productos filtrados
+        sortOrder: action.payload.length > 0 ? state.sortOrder : "", // Restablece el sortOrder si no hay productos filtrados
       };
     //---------------------------------------------------------------------//
-    //Rating cases---------------------------------//   
+    //Rating cases---------------------------------//
     case GET_RATINGS:
       return {
         ...state,
         ratings: action.payload,
         error: null,
       };
-      case ADD_RATING_SUCCESS:
-        return {
-          ...state,
-          ratings: [...state.ratings, action.payload], // Agrega el nuevo rating al estado
-        };
-  
-      case ADD_RATING_FAILURE:
-        return {
-          ...state,
-          error: action.payload,
-        };
+    case ADD_RATING_SUCCESS:
+      return {
+        ...state,
+        ratings: [...state.ratings, action.payload], // Agrega el nuevo rating al estado
+      };
+
+    case ADD_RATING_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
+      };
     case GET_RATINGS_ERROR:
       return {
         ...state,
@@ -252,17 +261,23 @@ const rootReducer = (state = initialState, action) => {
       return {
         ...state,
         favorites: [...state.favorites, action.favorite],
-        error: null
+        error: null,
       };
     case ADD_FAVORITE_ERROR:
       return {
         ...state,
-        error: action.error
+        error: action.error,
       };
 
     case DELETE_FAVORITE:
       // Filtrar el producto favorito eliminado del state
-      return state.filter((favorite) => !(favorite.userId === action.userId && favorite.productId === action.productId));
+      return state.filter(
+        (favorite) =>
+          !(
+            favorite.userId === action.userId &&
+            favorite.productId === action.productId
+          ),
+      );
 
     case DELETE_FAVORITE_ERROR:
       // Manejar el error y posiblemente actualizar el estado o mostrar un mensaje de error
@@ -282,8 +297,8 @@ const rootReducer = (state = initialState, action) => {
         favorites: [],
         error: action.error,
       };
-//---------------------------------------------------------------------//
-//update profile cases---------------------------------//
+    //---------------------------------------------------------------------//
+    //update profile cases---------------------------------//
     case UPDATE_USER_REQUEST:
       return {
         ...state,
@@ -303,31 +318,31 @@ const rootReducer = (state = initialState, action) => {
         error: action.payload,
       };
 
-//---------------------------------------------------------------------//
-//sale history cases---------------------------------//
-      case SET_SALE_HISTORY:
+    //---------------------------------------------------------------------//
+    //sale history cases---------------------------------//
+    case SET_SALE_HISTORY:
       return {
         ...state,
         saleHistory: action.payload,
       };
 
-
-
-//---------------------------------------------------------------------//
-//other cases---------------------------------//  
+    //---------------------------------------------------------------------//
+    //other cases---------------------------------//
     case CLEAN:
       return {
         ...state,
         // actionByName:false,
-        detail: []
-      }
+        detail: [],
+      };
+
     case PAGE:
-
       return {
-        ...state, page: action.payload
-      }
-    default: return { ...state }
-  }
+        ...state,
+        page: action.payload,
+      };
 
-}
+    default:
+      return { ...state };
+  }
+};
 export default rootReducer;

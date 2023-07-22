@@ -1,5 +1,5 @@
 import axios from "axios";
-export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART"
+export const ADD_PRODUCT_TO_CART = "ADD_PRODUCT_TO_CART";
 export const GET_PRODUCT_BY_NAME = "GET_PRODUCT_BY_NAME";
 export const GET_PRODUCTS = "GET_PRODUCTS";
 export const GET_PRODUCT_BY_ID = "GET_PRODUCT_BY_ID";
@@ -16,8 +16,8 @@ export const CHANGE_PRODUCT_STATUS = "CHANGE_PRODUCT_STATUS";
 //---------User's types----/
 export const FETCH_USERS_SUCCESS = "FETCH_USERS_SUCCESS";
 export const FETCH_USERS_FAILURE = "FETCH_USERS_FAILURE";
-export const FETCH_USER_BY_ID = 'FETCH_USER_BY_ID';
-export const MODIFY_ISACTIVE_USER = "MODIFI_ISACTIVE_USER"
+export const FETCH_USER_BY_ID = "FETCH_USER_BY_ID";
+export const MODIFY_ISACTIVE_USER = "MODIFI_ISACTIVE_USER";
 //---------Sort types----/
 export const SORT_PRODUCTS = "SORT_PRODUCTS";
 //---------Filters types----/
@@ -26,17 +26,17 @@ export const FILTER_PRODUCTS_BY_CATEGORY = "FILTER_PRODUCTS_BY_CATEGORY";
 //---------Rating types----/
 export const GET_RATINGS = "GET_RATINGS";
 export const GET_RATINGS_ERROR = "GET_RATINGS_ERROR";
-export const ADD_RATING_SUCCESS = 'ADD_RATING_SUCCESS';
-export const ADD_RATING_FAILURE = 'ADD_RATING_FAILURE';
+export const ADD_RATING_SUCCESS = "ADD_RATING_SUCCESS";
+export const ADD_RATING_FAILURE = "ADD_RATING_FAILURE";
 //---------Comments types----/
 export const GET_COMMENTS_BY_PRODUCT = "GET_COMMENTS_BY_PRODUCT";
 //---------Favorites types----/
-export const ADD_FAVORITE = 'ADD_FAVORITE';
-export const ADD_FAVORITE_ERROR = 'ADD_FAVORITE_ERROR';
-export const DELETE_FAVORITE = 'DELETE_FAVORITE';
-export const DELETE_FAVORITE_ERROR = 'DELETE_FAVORITE_ERROR';
-export const GET_FAVORITES_SUCCESS = 'GET_FAVORITES_SUCCESS';
-export const GET_FAVORITES_FAILURE = 'GET_FAVORITES_FAILURE';
+export const ADD_FAVORITE = "ADD_FAVORITE";
+export const ADD_FAVORITE_ERROR = "ADD_FAVORITE_ERROR";
+export const DELETE_FAVORITE = "DELETE_FAVORITE";
+export const DELETE_FAVORITE_ERROR = "DELETE_FAVORITE_ERROR";
+export const GET_FAVORITES_SUCCESS = "GET_FAVORITES_SUCCESS";
+export const GET_FAVORITES_FAILURE = "GET_FAVORITES_FAILURE";
 //---------Session types----/
 export const POST_LOGIN = "POST_LOGIN";
 export const POST_LOGOUT = "POST_LOGOUT";
@@ -45,12 +45,11 @@ export const CHANGE_USER = "CHANGE_USER";
 //---------other types----/
 export const CREATE_ORDER = "CREATE_ORDER";
 //---------update Profile types----/
-export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
-export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
-export const UPDATE_USER_FAILURE = 'UPDATE_USER_FAILURE';
+export const UPDATE_USER_REQUEST = "UPDATE_USER_REQUEST";
+export const UPDATE_USER_SUCCESS = "UPDATE_USER_SUCCESS";
+export const UPDATE_USER_FAILURE = "UPDATE_USER_FAILURE";
 //---------sale history types----/
 export const SET_SALE_HISTORY = "SET_SALE_HISTORY";
-
 
 // -----------actions session----------------------------------------------------------------------------------------
 export const confirmSession = (tokenRedux, userId) => {
@@ -65,7 +64,10 @@ export const confirmSession = (tokenRedux, userId) => {
       const { data } = response;
       console.log("confirmSession", data);
       if (data && data.message === "Session persisted") {
-        dispatch({ type: CONFIRM_SESSION, payload: { token: tokenRedux, userId } });
+        dispatch({
+          type: CONFIRM_SESSION,
+          payload: { token: tokenRedux, userId },
+        });
         console.log("Session confirmed");
       } else {
         console.log("Not session persisted");
@@ -76,12 +78,14 @@ export const confirmSession = (tokenRedux, userId) => {
   };
 };
 
-
 export const postLogin = (tokenRedux, credentials, userId) => {
   return async function (dispatch) {
     try {
       if (tokenRedux === "" && userId === "") {
-        const response = await axios.post("http://localhost:3001/login/signin", credentials);
+        const response = await axios.post(
+          "http://localhost:3001/login/signin",
+          credentials,
+        );
         const token = response.data.generatedToken;
         const userId = response.data.userId;
         if (token && userId) {
@@ -104,7 +108,10 @@ export const postLogout = (userId) => {
   return async function (dispatch) {
     try {
       const data = { userId: userId };
-      const response = await axios.post("http://localhost:3001/login/signout", data);
+      const response = await axios.post(
+        "http://localhost:3001/login/signout",
+        data,
+      );
       dispatch({ type: POST_LOGOUT, payload: "" });
     } catch (error) {
       console.error("Error during logout:", error);
@@ -116,82 +123,88 @@ export const postLogout = (userId) => {
 export const changeUser = (typeUser) => {
   return function (dispatch) {
     return dispatch({ type: CHANGE_USER, payload: typeUser });
-  }
+  };
 };
 
 // -----------actions cart----------------------------------------------------------------------------------------
 export const deleteProduct = (product) => {
-  console.log(product)
+  console.log(product);
   return async function (dispatch) {
-    const response = await axios.delete("http://localhost:3001/carts/remove", { data: product });
+    const response = await axios.delete("http://localhost:3001/carts/remove", {
+      data: product,
+    });
     const cart = response.data;
-    console.log(cart)
+    console.log(cart);
     dispatch({ type: DELETE_PRODUCT, payload: cart });
   };
-}
+};
 
 export const modifyQuantity = (product) => {
-  console.log(product)
+  console.log(product);
   return async function (dispatch) {
-    const response = await axios.patch("http://localhost:3001/carts/edit", product);
+    const response = await axios.patch(
+      "http://localhost:3001/carts/edit",
+      product,
+    );
     const cart = response.data;
-    console.log(cart)
+    console.log(cart);
     dispatch({ type: MODIFY_QUANTITY, payload: cart });
   };
-}
+};
 export const getCartByIdUser = (id) => {
   return async function (dispatch) {
     const response = await axios.get(`http://localhost:3001/carts/user/${id}`);
     const cart = response.data;
     dispatch({ type: GET_CART_BY_ID_USER, payload: cart });
   };
-}
+};
 export const countCart = () => {
-
   return function (dispatch) {
     return dispatch({ type: TOTAL_PRODUCTS });
-  }
-}
-export const addProductToCart = (userId,id) => {
+  };
+};
+export const addProductToCart = (userId, id) => {
   const product = {
     userId: userId,
     productId: id,
-    quantity: 1
-  }
+    quantity: 1,
+  };
 
   return async function (dispatch) {
+    const response = await axios.post(
+      "http://localhost:3001/carts/add",
+      product,
+    );
 
-    const response = await axios.post("http://localhost:3001/carts/add", product);
-
-    const cart = response.data
-    console.log(cart
-    )
-    dispatch({ type: ADD_PRODUCT_TO_CART, payload: cart })
+    const cart = response.data;
+    console.log(cart);
+    dispatch({ type: ADD_PRODUCT_TO_CART, payload: cart });
   };
-}
+};
 
 //---------------------------------------------------------------------//
 //User's actions---------------------------------//
-export const modifyIsActiveUser = (userId,status) =>{
-  console.log(status,userId)
-  if(status){
-   return async function (dispatch) {
-     await axios.patch("http://localhost:3001/admin/user/disable", {userId});
-     dispatch({ type: MODIFY_ISACTIVE_USER });
-   }
-  }else{
-   return async function (dispatch) {
-    await axios.patch("http://localhost:3001/admin/user/enable", {userId});
-    dispatch({ type: MODIFY_ISACTIVE_USER });
-  }}
- }
+export const modifyIsActiveUser = (userId, status) => {
+  console.log(status, userId);
+  if (status) {
+    return async function (dispatch) {
+      await axios.patch("http://localhost:3001/admin/user/disable", { userId });
+      dispatch({ type: MODIFY_ISACTIVE_USER });
+    };
+  } else {
+    return async function (dispatch) {
+      await axios.patch("http://localhost:3001/admin/user/enable", { userId });
+      dispatch({ type: MODIFY_ISACTIVE_USER });
+    };
+  }
+};
 export const fetchUsers = () => async (dispatch) => {
   try {
-    const response = await axios.get('http://localhost:3001/users/');
+    const response = await axios.get("http://localhost:3001/users/");
     const users = response.data;
     dispatch({ type: FETCH_USERS_SUCCESS, payload: users });
   } catch (error) {
-    console.error('Error fetching users:', error);
+    console.error("Error fetching users:", error);
     dispatch({ type: FETCH_USERS_FAILURE, payload: error.message });
   }
 };
@@ -199,64 +212,80 @@ export const fetchUsers = () => async (dispatch) => {
 export const fetchUserById = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/id/${userId}`);
+      const response = await axios.get(
+        `http://localhost:3001/users/id/${userId}`,
+      );
       dispatch({ type: FETCH_USER_BY_ID, payload: response.data });
     } catch (error) {
-      console.error('Error in fetchUserById:', error);
+      console.error("Error in fetchUserById:", error);
       dispatch({ type: FETCH_USER_BY_ID, payload: null });
     }
   };
 };
 
-
 //---------------------------------------------------------------------//
 //Products actions---------------------------------//
 export const changeProductStatus = (productId) => {
   return async function (dispatch) {
-    const response = await axios.patch("http://localhost:3001/admin/product/edit/status", {productId});
+    const response = await axios.patch(
+      "http://localhost:3001/admin/product/edit/status",
+      { productId },
+    );
     const product = response.data;
-    console.log(product)
+    console.log(product);
     dispatch({ type: CHANGE_PRODUCT_STATUS, payload: product });
   };
-}
-export const editProduct = (productId,p,data) =>{
-let modify = {}
-  switch(p){  
-    case "stock":
-    modify = {  productId: productId,
-    updates: {
-    stock:data
-  }}
-  break
-  case "price":
-    modify = {  productId: productId,
-    updates: {
-    price:data
-  }}
-  break
-  case "discount":
-    modify = {  productId: productId,
-    updates: {
-    discount:data
-  }}
-  break
-  case "description":
-    modify = {  productId: productId,
-    updates: {
-    description:data
-  }}
-  break
-  default: modify={}
+};
 
-}
-console.log(modify)
+export const editProduct = (productId, p, data) => {
+  let modify = {};
+  switch (p) {
+    case "stock":
+      modify = {
+        productId: productId,
+        updates: {
+          stock: data,
+        },
+      };
+      break;
+    case "price":
+      modify = {
+        productId: productId,
+        updates: {
+          price: data,
+        },
+      };
+      break;
+    case "discount":
+      modify = {
+        productId: productId,
+        updates: {
+          discount: data,
+        },
+      };
+      break;
+    case "description":
+      modify = {
+        productId: productId,
+        updates: {
+          description: data,
+        },
+      };
+      break;
+    default:
+      modify = {};
+  }
+  console.log(modify);
   return async function (dispatch) {
-    const response = await axios.patch("http://localhost:3001/admin/product/edit", modify);
+    const response = await axios.patch(
+      "http://localhost:3001/admin/product/edit",
+      modify,
+    );
     const product = response.data;
-    console.log(product)
+    console.log(product);
     dispatch({ type: EDIT_PRODUCT, payload: product });
   };
-}
+};
 
 export const getProducts = () => {
   return async function (dispatch) {
@@ -269,7 +298,7 @@ export const getProducts = () => {
 export const getProductByName = (name) => {
   return async function (dispatch) {
     const bd = await axios.get(`http://localhost:3001/products?name=${name}`);
-    const product = bd.data
+    const product = bd.data;
     dispatch({ type: GET_PRODUCT_BY_NAME, payload: product });
   };
 };
@@ -277,7 +306,7 @@ export const getProductByName = (name) => {
 export const getProductById = (id) => {
   return async function (dispatch) {
     const bd = await axios.get(`http://localhost:3001/products/id/${id}`);
-    const detail = bd.data
+    const detail = bd.data;
     dispatch({ type: GET_PRODUCT_BY_ID, payload: detail });
   };
 };
@@ -288,7 +317,7 @@ export const getProductById = (id) => {
 export const getCategories = () => {
   return async function (dispatch) {
     const bd = await axios.get("http://localhost:3001/categories");
-    const categories = bd.data
+    const categories = bd.data;
     dispatch({ type: GET_CATEGORIES, payload: categories });
   };
 };
@@ -307,7 +336,7 @@ export const filterProductsByPrice = (minPrice, maxPrice) => {
     const priceFilteredProducts = products.filter(
       (product) =>
         parseFloat(product.price) >= parseFloat(minPrice) &&
-        parseFloat(product.price) <= parseFloat(maxPrice)
+        parseFloat(product.price) <= parseFloat(maxPrice),
     );
     dispatch({
       type: FILTER_PRODUCTS_BY_PRICE,
@@ -316,7 +345,6 @@ export const filterProductsByPrice = (minPrice, maxPrice) => {
   };
 };
 
-
 //---------------------------------------------------------------------//
 //Ordenamientos actions---------------------------------//
 
@@ -324,9 +352,9 @@ export const sortProducts = (order) => {
   return function (dispatch, getState) {
     const { filteredProducts } = getState();
     let sortedProducts = [...filteredProducts];
-    if (order === 'ascending') {
+    if (order === "ascending") {
       sortedProducts.sort((a, b) => a.price - b.price);
-    } else if (order === 'descending') {
+    } else if (order === "descending") {
       sortedProducts.sort((a, b) => b.price - a.price);
     }
     dispatch({ type: SORT_PRODUCTS, payload: sortedProducts });
@@ -334,21 +362,22 @@ export const sortProducts = (order) => {
 };
 export const actionByName = () => {
   return {
-    type: ACTION_BYNAME
-  }
-}
+    type: ACTION_BYNAME,
+  };
+};
 
 //---------------------------------------------------------------------//
 //Comments actions---------------------------------//
 
 export const getCommentsByProduc = (id) => {
   return async function (dispatch) {
-    const response = await axios.get(`http://localhost:3001/comments/product/${id}`);
+    const response = await axios.get(
+      `http://localhost:3001/comments/product/${id}`,
+    );
     const comments = response.data;
     dispatch({ type: GET_COMMENTS_BY_PRODUCT, payload: comments });
   };
-}
-
+};
 
 //---------------------------------------------------------------------//
 //Ratings actions---------------------------------//
@@ -356,20 +385,21 @@ export const getCommentsByProduc = (id) => {
 export const getRatings = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get('http://localhost:3001/ratings/products');
+      const response = await axios.get(
+        "http://localhost:3001/ratings/products",
+      );
       const data = response.data.products;
-      dispatch({ type: 'GET_RATINGS', payload: data });
+      dispatch({ type: "GET_RATINGS", payload: data });
     } catch (error) {
-      dispatch({ type: 'GET_RATINGS_ERROR', payload: error });
+      dispatch({ type: "GET_RATINGS_ERROR", payload: error });
     }
   };
 };
 
-
 export const addRating = (userId, productId, value) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post('http://localhost:3001/ratings/add', {
+      const response = await axios.post("http://localhost:3001/ratings/add", {
         userId,
         productId,
         value,
@@ -381,8 +411,6 @@ export const addRating = (userId, productId, value) => {
         type: ADD_RATING_SUCCESS,
         payload: rating,
       });
-
-      // Puedes realizar cualquier otra acción necesaria después de agregar el rating, como actualizar la lista de ratings.
     } catch (error) {
       dispatch({
         type: ADD_RATING_FAILURE,
@@ -397,54 +425,59 @@ export const addRating = (userId, productId, value) => {
 export const addFavorite = (userId, productId) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post('http://localhost:3001/favorites/add', {
+      const response = await axios.post("http://localhost:3001/favorites/add", {
         userId,
-        productId
+        productId,
       });
 
       if (response.status === 200) {
         const favorite = response.data;
         dispatch({
           type: ADD_FAVORITE,
-          favorite
+          favorite,
         });
       } else {
-        throw new Error('Error al agregar el favorito');
+        throw new Error("Error al agregar el favorito");
       }
     } catch (error) {
-      let errorMessage = 'Error de conexión';
+      let errorMessage = "Error de conexión";
 
-      if (error.response && error.response.data && error.response.data.message) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         errorMessage = error.response.data.message;
       }
 
       dispatch({
         type: ADD_FAVORITE_ERROR,
-        error: errorMessage
+        error: errorMessage,
       });
     }
   };
 };
 
-
 export const deleteFavorite = (userId, productId) => {
   return async (dispatch) => {
     try {
       // Hacer la solicitud DELETE al backend
-      await axios.delete(`http://localhost:3001/favorites/delete/${userId}/${productId}`);
+      await axios.delete(
+        `http://localhost:3001/favorites/delete/${userId}/${productId}`,
+      );
 
       // Dispatch de la acción para eliminar el producto favorito del state
       dispatch({
         type: DELETE_FAVORITE,
         userId,
-        productId
+        productId,
       });
     } catch (error) {
       console.error(error);
       // Manejar el error en caso de fallo en la solicitud
       dispatch({
         type: DELETE_FAVORITE_ERROR,
-        error: 'Error al eliminar el producto favorito'
+        error: "Error al eliminar el producto favorito",
       });
     }
   };
@@ -453,7 +486,9 @@ export const deleteFavorite = (userId, productId) => {
 export const getFavoritesByUser = (userId) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:3001/favorites/${userId}`);
+      const response = await axios.get(
+        `http://localhost:3001/favorites/${userId}`,
+      );
       const favorites = response.data;
 
       dispatch({
@@ -470,25 +505,20 @@ export const getFavoritesByUser = (userId) => {
   };
 };
 
-
 //---------------------------------------------------------------------//
 //Other actions---------------------------------//
 export const page = (page) => {
-  console.log(page)
+  console.log(page);
   return function (dispatch) {
-    return dispatch({ type: PAGE, payload: page })
-  }
-
-}
-
-export function clean() {
-
-  return {
-    type: CLEAN
-  }
-
+    return dispatch({ type: PAGE, payload: page });
+  };
 };
 
+export function clean() {
+  return {
+    type: CLEAN,
+  };
+}
 
 //---------------------------------------------------------------------//
 //update profile actions---------------------------------//
@@ -496,17 +526,17 @@ export function clean() {
 export const updateUser = (userId, userData) => {
   return async (dispatch) => {
     try {
-      // Realizar la petición al servidor para actualizar el usuario
       dispatch({ type: UPDATE_USER_REQUEST });
-      const response = await axios.put(`http://localhost:3001/users/profile/edit/${userId}`, userData);
+      const response = await axios.put(
+        `http://localhost:3001/users/profile/edit/${userId}`,
+        userData,
+      );
 
-      // Actualizar el estado del usuario en caso de éxito
       dispatch({
         type: UPDATE_USER_SUCCESS,
         payload: response.data.updatedUser,
       });
     } catch (error) {
-      // Manejar el error en caso de falla
       dispatch({
         type: UPDATE_USER_FAILURE,
         payload: error.message,
@@ -520,12 +550,13 @@ export const updateUser = (userId, userData) => {
 
 export const fetchSaleHistory = (userId) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:3001/salehistory/user/${userId}`);
+    const response = await axios.get(
+      `http://localhost:3001/salehistory/user/${userId}`,
+    );
     console.log(response.data);
     dispatch(setSaleHistory(response.data));
   } catch (error) {
-    console.log('Error fetching sale history:', error);
-    // Puedes despachar otra acción para manejar el error si es necesario
+    console.log("Error fetching sale history:", error);
   }
 };
 

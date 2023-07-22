@@ -9,11 +9,12 @@ const processPaymentHandler = async (req, res) => {
   try {
     const paymentIntent = await processPayment(amount, id, userId);
 
-    // Si el pago es exitoso, devuelve una respuesta al cliente
     res.status(200).json({ success: true, paymentIntent });
   } catch (error) {
-    console.error("Error en processPaymentHandler:", error);
-    res.status(500).json({ error: "Ocurrió un error al procesar el pago" });
+    console.error("Error in processPaymentHandler:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while processing the payment" });
   }
 };
 
@@ -23,8 +24,10 @@ const getAllPaymentsHandler = async (req, res) => {
 
     res.status(200).json({ success: true, payments });
   } catch (error) {
-    console.error("Error en getAllPaymentsHandler:", error);
-    res.status(500).json({ error: "Ocurrió un error al obtener los pagos" });
+    console.error("Error in getAllPaymentsHandler:", error);
+    res
+      .status(500)
+      .json({ error: "An error occurred while obtaining the payments" });
   }
 };
 

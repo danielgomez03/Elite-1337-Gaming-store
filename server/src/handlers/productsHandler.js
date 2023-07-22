@@ -1,4 +1,4 @@
-const { conn, Product, Image, Category } = require("../database");
+const { Product, Image, Category } = require("../database");
 const {
   getAllProducts,
   getProductsByName,

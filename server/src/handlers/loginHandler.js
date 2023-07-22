@@ -7,34 +7,28 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
-    // Buscar el registro de inicio de sesión según el correo electrónico proporcionado
     const login = await Login.findOne({ where: { email } });
 
     if (!login) {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    // Validar la contraseña
     const isValidPassword = login.validatePassword(password);
     if (!isValidPassword) {
       return res.status(401).json({ error: "Invalid email or password" });
     }
 
-    // Recuperar el registro de usuario asociado
     const user = await User.findOne({ where: { userId: login.userId } });
 
     if (!user) {
       return res.status(401).json({ error: "User not found" });
     }
 
-    // Generar el token de autenticación
     const token = generateAuthToken(user.userId, login.email);
 
-    // Calcular la fecha de vencimiento
-    const expiresIn = 2 * 60 * 60 * 1000; // 2 horas en milisegundos
+    const expiresIn = 2 * 60 * 60 * 1000;
     const expiresAt = new Date(Date.now() + expiresIn);
 
-    // Eliminar todos los tokens excepto el nuevo
     await Token.destroy({
       where: {
         userId: user.userId,
@@ -44,7 +38,6 @@ const login = async (req, res, next) => {
       },
     });
 
-    // Insertar el token en la tabla de tokens
     const createdToken = await Token.create({
       tokenValue: token,
       tokenType: "Passport",

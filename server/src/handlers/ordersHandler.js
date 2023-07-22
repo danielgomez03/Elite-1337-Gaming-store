@@ -133,14 +133,13 @@ const postCreateOrder = async (req, res) => {
 
     await createSaleHistoryForOrder(order);
 
-    // Devolver una respuesta de éxito con el ID de la orden creada
     res.status(200).json({
       success: true,
       message: "Order created successfully",
       order,
     });
   } catch (error) {
-    console.error("Error al crear el pedido:", error);
+    console.error("Error in postCreateOrder:", error);
     res.status(500).json({
       success: false,
       message: "Failed to create order",
