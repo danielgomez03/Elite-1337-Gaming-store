@@ -1,4 +1,4 @@
-const { conn, Product, Image, Category } = require("../database");
+const { Product, Image, Category } = require("../database");
 const {
   getAllProducts,
   getProductsByName,
@@ -258,17 +258,31 @@ const putUpdateProduct = async (req, res) => {
     }
     await product.setCategory(selectedCategory);
 
-    let uploadedImage;
+    let uploadedImages = [];
 
     if (req.file) {
       // If an image file was uploaded, create a new image record
       const imageUrl = req.file.path;
-      uploadedImage = await Image.create({ url: imageUrl, caption });
-      await product.setImages([uploadedImage]);
-    } else if (images) {
-      // If an image URL is provided, create a new image record
-      uploadedImage = await Image.create({ url: images, caption });
-      await product.setImages([uploadedImage]);
+      const uploadedImage = await Image.create({ url: imageUrl, caption });
+      uploadedImages.push(uploadedImage);
+    } else if (images && Array.isArray(images)) {
+      // If an array of image objects is provided, create new image records
+      for (const image of images) {
+        if (typeof image.url === "string") {
+          const uploadedImage = await Image.create({
+            url: image.url,
+            caption: image.caption,
+          });
+          uploadedImages.push(uploadedImage);
+        }
+      }
+    } else if (images && !Array.isArray(images)) {
+      return res.status(400).json({ message: "Invalid image array format" });
+    }
+
+    // Associate the uploaded images with the product
+    if (uploadedImages.length > 0) {
+      await product.setImages(uploadedImages);
     }
 
     // Return the updated product

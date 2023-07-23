@@ -16,6 +16,7 @@ const superAdminRoutes = require("./superAdminRoutes");
 const commentsRoutes = require("./commentsRoutes");
 const favoritesRoutes = require("./favoritesRoutes");
 const saleHistoryRoutes = require("./saleHistoryRoutes");
+const contactRoutes = require("./contactRoutes");
 
 const router = Router();
 // router.use(authenticateJWT);
@@ -35,5 +36,6 @@ router.use("/superadmin", superAdminRoutes);
 router.use("/comments", commentsRoutes);
 router.use("/favorites", favoritesRoutes);
 router.use("/salehistory", saleHistoryRoutes);
+router.use("/contact", contactRoutes);
 
 module.exports = router;

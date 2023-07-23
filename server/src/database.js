@@ -217,24 +217,24 @@ Newsletter.belongsTo(User, {
   },
 });
 
-// // ---> PRICEHISTORY
-// // Product one-to-one with PriceHistory
-// Product.hasOne(PriceHistory, {
-//   foreignKey: {
-//     name: "productId",
-//     allowNull: false,
-//   },
-//   onDelete: "CASCADE",
-// });
+// ---> PRICEHISTORY
+// Product one-to-one with PriceHistory
+Product.hasOne(PriceHistory, {
+  foreignKey: {
+    name: "productId",
+    // allowNull: false,
+  },
+  // onDelete: "CASCADE",
+});
 
-// // PriceHistory one-to-one with Product
-// PriceHistory.belongsTo(Product, {
-//   foreignKey: {
-//     name: "productId",
-//     allowNull: false,
-//   },
-//   onDelete: "CASCADE",
-// });
+// PriceHistory one-to-one with Product
+PriceHistory.belongsTo(Product, {
+  foreignKey: {
+    name: "productId",
+    // allowNull: false,
+  },
+  // onDelete: "CASCADE",
+});
 
 module.exports = {
   ...sequelize.models, // to be able to import models like this: const { Product, User } = require("./database.js");

@@ -27,56 +27,56 @@ function Reports() {
 
   return (
     <div>
-      <div className="mb-8">
+      <div className="mb-4">
         <button
           onClick={toggleUserMetrics}
-          className="w-full px-4 mt-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+          className="w-full px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
         >
           <strong>View User Metrics</strong>
         </button>
       </div>
-      <div className="mb-12">
+      <div className="mb-4">
         {userMetricsOpen && <UserMetrics onClose={toggleUserMetrics} />}
       </div>
 
-      <div className="mb-8">
+      <div className="mb-4">
         <button
           onClick={toggleUserStatistics}
-          className="w-full px-4 mt-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+          className="w-full px-4  py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
         >
           <strong>View User Graphs</strong>
         </button>
       </div>
-      <div className="mb-12">
+      <div className="mb-4">
         {userStatisticsOpen && (
           <UserStatistics onClose={toggleUserStatistics} />
         )}
       </div>
 
-      <div className="mb-8">
+      <div className="mb-4">
         <button
           onClick={toggleProductMetrics}
-          className="w-full px-4 mt-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+          className="w-full px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
         >
           <strong>View Product Metrics</strong>
         </button>
       </div>
-      <div className="mb-12">
+      <div className="mb-4">
         {productMetricsOpen && (
           <ProductMetrics onClose={toggleProductMetrics} />
         )}
       </div>
 
-      <div className="mb-8">
+      <div className="mb-4">
         <button
           onClick={toggleProductStatistics}
-          className="w-full px-4 mt-6 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
+          className="w-full px-4 py-2 bg-indigo-500 text-white rounded-md hover:bg-indigo-600"
         >
           <strong>View Product Graphs</strong>
         </button>
       </div>
       {productStatisticsOpen && (
-        <div className="mb-12">
+        <div className="mb-4">
           <ProductStatistics onClose={toggleProductStatistics} />
         </div>
       )}

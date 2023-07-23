@@ -1,4 +1,4 @@
-const { User, Login, Product } = require("../database");
+const { User, Login, Product, PriceHistory } = require("../database");
 const { sendUserDisabledEmailHandler } = require("../handlers/mailingHandler");
 const { editProduct } = require("../controllers/adminControllers");
 
@@ -34,8 +34,7 @@ const patchDisableUserHandler = async (req, res) => {
     const firstName = user.firstName;
 
     // Send disabled user mail
-    // UNCOMMENT THIS LINE!!!
-    // await sendUserDisabledEmailHandler(email, firstName);
+    await sendUserDisabledEmailHandler(email, firstName);
 
     res.json({ message: "User disabled successfully" });
   } catch (error) {
@@ -103,10 +102,50 @@ const patchProductHandler = async (req, res) => {
   }
 };
 
+const getAllProductsWithPriceHistoryHandler = async (req, res) => {
+  try {
+    const products = await PriceHistory.findAll({
+      include: {
+        model: Product,
+        attributes: ["productId", "name"],
+        group: ["productId"],
+      },
+      attributes: ["price", "createdAt"],
+    });
+
+    res.json(products);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve products with price history" });
+  }
+};
+
+const getPriceHistoryByProductIdHandler = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const priceHistory = await PriceHistory.findAll({
+      where: { productId: productId },
+      attributes: ["priceHistoryId", "price", "createdAt"],
+    });
+
+    res.json(priceHistory);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: "Failed to retrieve price history for the product" });
+  }
+};
+
 module.exports = {
   getDisabledUsersHandler,
   patchDisableUserHandler,
   patchEnableUserHandler,
   patchProductHandler,
   patchProductStatusHandler,
+  getAllProductsWithPriceHistoryHandler,
+  getPriceHistoryByProductIdHandler,
 };

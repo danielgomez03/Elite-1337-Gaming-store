@@ -4,16 +4,21 @@ module.exports = (sequelize) => {
   const PriceHistory = sequelize.define(
     "priceHistory",
     {
-      priceId: {
+      priceHistoryId: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },
+
       price: {
         type: DataTypes.DECIMAL(10, 2),
-        defaultValue: 0,
       },
+
+      // discount: {
+      //   type: DataTypes.INTEGER,
+      // },
+
       createdAt: {
         type: DataTypes.DATE,
         allowNull: false,

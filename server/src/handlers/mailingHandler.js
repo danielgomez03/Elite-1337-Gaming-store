@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const { Newsletter, User } = require("../database");
+const { Newsletter, User, Product } = require("../database");
 const { Op } = require("sequelize");
 
 // Create the transporter object
@@ -11,7 +11,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Update with the correct URL
 const homeLink = "https://ft37b-pf-grupo12.vercel.app/";
+const loginLink = "https://ft37b-pf-grupo12.vercel.app/login";
 
 const sendEmailUpdateEmailHandler = async (email, newEmail) => {
   const mailOptions = {
@@ -82,9 +84,6 @@ const sendPasswordUpdateEmailHandler = async (email, newPassword) => {
 };
 
 const sendWelcomeEmailHandler = async (email, firstName) => {
-  // Update with the correct URL
-  const loginLink = "https://ft37b-pf-grupo12.vercel.app/login";
-
   const mailOptions = {
     from: "1337 HARDWARE <newsletter@1337hardware.com>",
     to: email,
@@ -110,7 +109,7 @@ const sendWelcomeEmailHandler = async (email, firstName) => {
         To get started, simply click the button below to log in to your account and explore the platform:
       </p>
       <p style="text-align: center;">
-        <a href="${loginLink}" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; font-weight: bold;">Log In</a>
+        <a href="${loginLink}" style="display: inline-block; padding: 10px 20px; background-color: indigo; color: white; text-decoration: none; font-weight: bold;">Log In</a>
       </p>
       <p>
         Once again, welcome to the <span style="font-weight: bold;">1337 HARDWARE</span> family. We are thrilled to have you on board and can't wait to share our gaming expertise and exciting updates with you!
@@ -249,6 +248,176 @@ const postSubscriptionHandler = async (req, res, next) => {
   }
 };
 
+const sendOrderConfirmationEmailHandler = async (
+  email,
+  orderId,
+  latestOrder,
+  payment,
+) => {
+  const {
+    orderTotalPrice,
+    payerFirstName,
+    payerLastName,
+    payerPhone,
+    payerAddress,
+    orderProducts,
+  } = latestOrder;
+
+  const getProductDetails = async (productId) => {
+    const product = await Product.findByPk(productId);
+    return product
+      ? {
+          name: product.name,
+          price: product.price,
+          discount: product.discount,
+        }
+      : { name: "Product Not Found", price: 0, discount: 0 };
+  };
+
+  const productsTableRows = await Promise.all(
+    orderProducts.map(async (product) => {
+      const productDetails = await getProductDetails(product.productId);
+      const productName = productDetails.name;
+      const productPrice = productDetails.price;
+      const productDiscount = productDetails.discount;
+      const discountedPrice = (
+        productPrice -
+        (productPrice * productDiscount) / 100
+      ).toFixed(2);
+      return `
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${productName}</td>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${product.quantity}</td>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">$${discountedPrice}</td>
+        </tr>
+      `;
+    }),
+  );
+
+  const mailOptions = {
+    from: "1337 HARDWARE <newsletter@1337hardware.com>",
+    to: email,
+    subject: "Order Confirmation",
+    html: `
+      <h1>Thank you for your order!</h1>
+      <p>
+        Dear <span style="font-weight: bold;">${payerFirstName} ${payerLastName}</span>,
+      </p>
+      <p>
+        Thank you for placing an order with <span style="font-weight: bold;">1337 HARDWARE</span>! We're excited to fulfill your order and provide you with top-notch products and services.
+      </p>
+      <p>
+        <span style="font-weight: bold;">Order details:</span>
+      </p>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Order ID</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Date</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Total Price</th>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${orderId}</td>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${new Date().toLocaleString()}</td>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">$${orderTotalPrice}</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-weight: bold;">Shipping details:</span>
+      </p>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Name</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Address</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Contact</th>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${payerFirstName} ${payerLastName}</td>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${payerAddress}</td>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${payerPhone}</td>
+        </tr>
+      </table>
+      <p>
+        <span style="font-weight: bold;">Order Items:</span>
+      </p>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Product</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Quantity</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Price</th>
+        </tr>
+        ${productsTableRows.join("")}
+      </table>
+      <p>
+      <span style="font-weight: bold;">Payment details:</span>
+      </p>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Payment Method</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Amount</th>
+          <th style="border: 1px solid #ddd; padding: 8px; text-align: center; font-weight: bold;">Transaction ID</th>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${
+            payment.method
+          }</td>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">$${
+            payment.amount
+          }</td>
+          <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${
+            payment.transactionData
+          }</td>
+        </tr>
+      </table>
+      <p>
+        If you have any questions or need further assistance regarding your order, please feel free to contact our customer support team.
+      </p>
+      <p style="text-align: right;">
+        <span style="font-weight: bold;">Best regards,</span><br>
+        The <span style="font-weight: bold;">1337 HARDWARE Team</span>
+      </p>
+      <p style="text-align: center;">
+        <a href="${homeLink}" style="display: inline-block;">
+          <img src="https://content.ibuypower.com//Images/en-US/Lobby/TvWall/katapult-TVWall-Mobile.jpg" alt="Welcome Image" style="display: block; margin: 0 auto;">
+        </a>
+      </p>
+    `,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
+const sendPasswordResetEmailHandler = async (email, firstName, newPassword) => {
+  const mailOptions = {
+    from: "1337 HARDWARE <newsletter@1337hardware.com>",
+    to: email,
+    subject: "Password Reset",
+    html: `
+    <h1>Request for Password Reset</h1>
+    <p>Dear <strong>${firstName}</strong>,</p>
+    <div style="text-align: center;">
+      <p>We have received a request to reset your password for your account at <span style="font-weight: bold;">1337 HARDWARE</span>.</p>
+      <p>Your new password is: <strong>${newPassword}</strong></p>
+      <p>Please login to your account using this new password and remember to change it once you log in.</p>
+      <p>
+        <a href="${loginLink}" style="display: inline-block; padding: 10px 20px; background-color: indigo; color: white; text-decoration: none; font-weight: bold;">Log In</a>
+      </p>
+      <p>If you did not request a password reset, please contact our support team immediately.</p>
+    </div>
+    <p style="text-align: right;">
+      <span style="font-weight: bold;">Best regards,</span><br>
+      The <span style="font-weight: bold;">1337 HARDWARE Team</span>
+    </p>
+    <p style="text-align: center;">
+      <a href="${homeLink}" style="display: inline-block;">
+        <img src="https://content.ibuypower.com//Images/en-US/Lobby/TvWall/katapult-TVWall-Mobile.jpg" alt="Welcome Image" style="display: block; margin: 0 auto;">
+      </a>
+    </p>
+  `,
+  };
+
+  await transporter.sendMail(mailOptions);
+};
+
 const patchNewsletterEmailHandler = async (req, res, next) => {
   try {
     const { userId } = req.user;
@@ -367,4 +536,6 @@ module.exports = {
   sendEmailUpdateEmailHandler,
   sendPasswordUpdateEmailHandler,
   sendUserDisabledEmailHandler,
+  sendOrderConfirmationEmailHandler,
+  sendPasswordResetEmailHandler,
 };

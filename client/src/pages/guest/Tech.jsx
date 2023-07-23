@@ -27,11 +27,12 @@ const Tech = () => {
         <h2 className="text-2xl font-bold mb-2">Other Technologies:</h2>
         <ul className="list-disc pl-6 mb-6">
           <li>Google Analytics</li>
-          <li>Socket.io</li>
           <li>NodeMailer</li>
           <li>Cloudinary</li>
           <li>Multer</li>
           <li>Stripe</li>
+          <li>Sweet Alerts</li>
+          <li>Chart.js</li>
         </ul>
       </div>
     </div>

@@ -255,6 +255,11 @@ function NavBar() {
                     className=" relative block px-6 py-2 text-sm hover:bg-gray-100 lg:bg-transparent bg-white hover:text-gray-900 mb-1" >
                     Favorites
                   </Link>
+                  <Link
+                    href={`/${typeUser}/Reviews`}
+                    className=" relative block px-6 py-2 text-sm hover:bg-gray-100 lg:bg-transparent bg-white hover:text-gray-900" >
+                    Reviews
+                  </Link>
                 </div>
               )}
             </div>
