@@ -9,6 +9,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001/';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
+
 function ShopCart() {
 
   const userId = useSelector(state=>state.userId);
@@ -28,7 +34,7 @@ function ShopCart() {
     async function fetchImages() {
       try {
         const response = await axios.get(
-          "http://localhost:3001/images/products",
+          "/images/products",
         );
         setImagesArray(response.data);
       } catch (error) {
@@ -157,7 +163,7 @@ function ShopCart() {
                           onChange={(e) =>
                             dispatch(
                               modifyQuantity({
-                                userId: userId,
+                                userId: user,
                                 productId: product.productId,
                                 quantity: e.target.value,
                               }),

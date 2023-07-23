@@ -8,6 +8,12 @@ import { signIn, useSession } from 'next-auth/react'
 import Swal from "sweetalert2";
 import Select from "react-select";
 
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
+
 function SignInRegister({ selectedButton, onClose }) {
   const dispatch = useDispatch();
   const typeUser = useSelector(state => state.typeUser);
@@ -145,7 +151,7 @@ function SignInRegister({ selectedButton, onClose }) {
       formData.append("image", file); // Append the file to the FormData object
 
       const response = await axios.post(
-        "http://localhost:3001/images/users/uploads",
+        "/images/users/uploads",
         formData,
         {
           headers: {
@@ -189,7 +195,7 @@ function SignInRegister({ selectedButton, onClose }) {
         formData.append("image", input.image);
 
         const response = await axios.post(
-          "http://localhost:3001/images/users/uploads",
+          "/images/users/uploads",
           formData,
           {
             headers: {
@@ -215,7 +221,7 @@ function SignInRegister({ selectedButton, onClose }) {
     // Submit the form
     if (selectedButton === "register") {
       axios
-        .post("http://localhost:3001/users/register", input)
+        .post("/users/register", input)
         .then((res) => {
           Swal.fire({
             ...swalConfig,
@@ -235,7 +241,7 @@ function SignInRegister({ selectedButton, onClose }) {
         });
     } else if (selectedButton === "signIn") {
       axios
-        .post("http://localhost:3001/login/signin", input)
+        .post("/login/signin", input)
         .then((res) => {
           Swal.fire({
             ...swalConfig,

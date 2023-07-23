@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 
-export default function AddComments({id}) {
+export default function addComments({id}) {
     const [content,setContent] = useState('')
     const userId = useSelector(state=> state.userId)
     // const userId ="ac5b18b6-6383-4a9f-8e4c-65ad3c93b81a"
@@ -15,7 +15,7 @@ export default function AddComments({id}) {
     const onSubmitComment=(e) => {
       e.preventDefault();
       const comment = {userId:userId,productId:id,content:content}
-      axios.post("http://localhost:3001/comments/add", comment )
+      axios.post("/comments/add", comment )
       .then(()=>{
         
       setContent("")

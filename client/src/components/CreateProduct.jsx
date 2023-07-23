@@ -6,7 +6,13 @@ import { productValidation } from "./validations";
 import Select from "react-select";
 import Swal from "sweetalert2";
 
-const CreateProduct = ({ onClose }) => {
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
+
+const CreateProduct = ({ openCreateProduct }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -86,8 +92,8 @@ const CreateProduct = ({ onClose }) => {
     value === "true"
       ? (value = true)
       : value === "false"
-      ? (value = false)
-      : null;
+        ? (value = false)
+        : null;
 
     if (name === "stock" && value.length > 3) {
       e.preventDefault();
@@ -170,7 +176,7 @@ const CreateProduct = ({ onClose }) => {
       formData.append("images", file); // Append the file to the FormData object
 
       const response = await axios.post(
-        "http://localhost:3001/images/products/uploads",
+        "/images/products/uploads",
         formData,
         {
           headers: {
@@ -218,7 +224,7 @@ const CreateProduct = ({ onClose }) => {
     setError(productValidation(form));
     if (error !== null) {
       axios
-        .post(`http://localhost:3001/products/create`, form)
+        .post(`/products/create`, form)
         .then((res) => {
           console.log("resCreateProduct", res.data);
           Swal.fire({
@@ -227,7 +233,7 @@ const CreateProduct = ({ onClose }) => {
             text: "Product created successfully!",
             icon: "success",
           });
-          onClose();
+          openCreateProduct();
         })
         .catch((error) => {
           Swal.fire({
@@ -370,12 +376,22 @@ const CreateProduct = ({ onClose }) => {
       method="POST"
       encType="multipart/form-data"
       onSubmit={onSubmithandler}
-      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-5 z-50"
+      className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-20 z-50"
     >
       <div className="relative w-10/10 max-w-2xl bg-white rounded-lg flex flex-col justify-start items-center p-8">
         <button
           className="absolute top-2 right-4 px-3 mt-2 py-1 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 mb-3 font-bold"
-          onClick={onClose}
+          onClick={() => {
+            if (Object.keys(form).every((key) => form[key] === "")) {
+              // El formulario está vacío, puedes cerrarlo
+              openCreateProduct();
+            } else if (Object.keys(error).length === 0) {
+              // El formulario no está vacío y no hay errores, puedes cerrarlo
+              openCreateProduct();
+            } else {
+              // Mostrar una notificación o mensaje de error indicando que el formulario no se puede cerrar
+            }
+          }}
         >
           X
         </button>
@@ -594,9 +610,9 @@ const CreateProduct = ({ onClose }) => {
               options={
                 selectedCategory && listSubCategories
                   ? listSubCategories.map((subcategory) => ({
-                      value: subcategory.name,
-                      label: subcategory.name,
-                    }))
+                    value: subcategory.name,
+                    label: subcategory.name,
+                  }))
                   : []
               }
             />
@@ -620,9 +636,9 @@ const CreateProduct = ({ onClose }) => {
               options={
                 selectedCategory && selectedSubcategory && listSubSubCategories
                   ? listSubSubCategories.map((subsubcategory) => ({
-                      value: subsubcategory.name,
-                      label: subsubcategory.name,
-                    }))
+                    value: subsubcategory.name,
+                    label: subsubcategory.name,
+                  }))
                   : []
               }
             />
@@ -762,13 +778,23 @@ const CreateProduct = ({ onClose }) => {
           </button>
           <button
             className="lg:hidden w-full px-4 mt-4 py-2 bg-gray-200 rounded-md font-bold tracking-wider"
-            onClick={onClose}
+            onClick={() => {
+              if (Object.keys(form).every((key) => form[key] === "")) {
+                // El formulario está vacío, puedes cerrarlo
+                openCreateProduct();
+              } else if (Object.keys(error).length === 0) {
+                // El formulario no está vacío y no hay errores, puedes cerrarlo
+                openCreateProduct();
+              } else {
+                // Mostrar una notificación o mensaje de error indicando que el formulario no se puede cerrar
+              }
+            }}
           >
             Cancel
           </button>
         </div>
       </div>
-    </form>
+    </form >
   );
 };
 

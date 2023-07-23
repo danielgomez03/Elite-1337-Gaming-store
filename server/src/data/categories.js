@@ -170,11 +170,6 @@ const categories = [
     isMainCategory: true,
     parentId: null,
   },
-  {
-    name: "On Sale",
-    isMainCategory: true,
-    parentId: null,
-  },
 ];
 
 module.exports = categories;

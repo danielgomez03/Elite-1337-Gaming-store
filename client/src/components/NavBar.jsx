@@ -6,6 +6,12 @@ import { useRouter } from 'next/router';
 import NavBarAdmin from './NavBarAdmin';
 import axios from 'axios';
 
+if (process.env.NODE_ENV === 'development') {
+  axios.defaults.baseURL = 'http://localhost:3001';
+} else {
+  axios.defaults.baseURL = 'https://ft37bpfgrupo12-production.up.railway.app/';
+}
+
 function NavBar() {
   const dispatch = useDispatch();
   const typeUser = useSelector(state => state.typeUser);
@@ -111,6 +117,10 @@ function NavBar() {
 
   const [view, setView] = useState(true);
 
+  const isActiveLink = (href) => {
+    return router.pathname === href ? 'bg-white text-gray-900' : '';
+  };
+
   return (
     <nav
       aria-label="Top"
@@ -149,7 +159,7 @@ function NavBar() {
                     pathname: `/${typeUser}/Products`,
                     query: { category: category.name },
                   }}
-                  className={`flex items-center justify-center h-full w-full px-5 text-sm font-medium lg:bg-transparent bg-white text-gray-900 hover:bg-white hover:text-gray-900 focus:outline-none ${activeCategory === index ? 'lg:bg-white lg:text-gray-900' : 'lg:text-white'}`}
+                  className={`flex items-center justify-center h-full w-full px-5 text-sm font-medium lg:bg-transparent bg-white text-gray-900 hover:bg-white hover:text-gray-900 ${isActiveLink(`/${typeUser}/Products`)} focus:outline-none ${activeCategory === index ? 'lg:bg-white lg:text-gray-900' : 'lg:text-white'}`}
                 >
                   {category.name}
                 </Link>
@@ -208,23 +218,23 @@ function NavBar() {
 
             <span className="lg:block lg:h-6 lg:w-px mx-5 bg-gray-200 block h-px w-full" aria-hidden="true" />
 
-        {typeUser === "guest" && (
-          <Link
-            href="/"
-            className="flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900">
-            Home
-          </Link>
-        )}
+            {typeUser === "guest" && (
+              <Link
+                href="/"
+                className={`${isActiveLink(`/${typeUser}/Products`)} flex h-full px-5 items-center justify-center text-sm lg:text-white font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900`}>
+                Home
+              </Link>
+            )}
 
-        <div className='relative h-full'>
-          {typeUser === "users" && (
-            <button
-              onMouseEnter={() => handleMouseEnter("My account")}
-              onMouseLeave={handleMouseLeave}
-              className={`flex w-full h-full px-5 items-center justify-center text-sm font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900 ${activeCategory === "My account" ? 'lg:bg-white text-gray-900' : 'lg:text-white'}`}>
-              My account
-            </button>
-          )}
+            <div className='relative h-full'>
+              {typeUser === "users" && (
+                <button
+                  onMouseEnter={() => handleMouseEnter("My account")}
+                  onMouseLeave={handleMouseLeave}
+                  className={`flex w-full h-full px-5 items-center justify-center text-sm font-medium lg:bg-transparent bg-white hover:bg-white hover:text-gray-900 ${activeCategory === "My account" ? 'lg:bg-white text-gray-900' : 'lg:text-white'}`}>
+                  My account
+                </button>
+              )}
               {activeCategory === "My account" && (
                 <div
                   className="hidden lg:block absolute top-full lg:w-64 z-10 bg-white shadow-lg rounded-bl-md rounded-br-md border-t"
@@ -257,7 +267,7 @@ function NavBar() {
             {typeUser === "users" && (
               <Link
                 href={`/${typeUser}/Notificacions`}
-                className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
+                className={`${isActiveLink(`/${typeUser}/Notificacions`)} group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white`}>
                 <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
                   notifications
                 </span>
@@ -269,7 +279,7 @@ function NavBar() {
             {typeUser === "users" && (
               <Link
                 href={`/${typeUser}/Favorites`}
-                className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
+                className={`${isActiveLink('/${typeUser}/Products')} group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white`}>
                 <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
                   favorite
                 </span>
@@ -279,13 +289,13 @@ function NavBar() {
             )}
 
             {/* {typeUser === "users" && ( */}
-              <Link href={linkToCart} className="group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white">
-                <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
-                  shopping_cart
-                </span>
-                <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts()}</span>
-                <span className="sr-only">items in cart, view bag</span>
-              </Link>
+            <Link href={linkToCart} className={`${isActiveLink('/${typeUser}/Products')} group flex items-center justify-center h-full px-5 lg:bg-transparent bg-white hover:bg-white lg:text-white`}>
+              <span className="material-symbols-rounded group-hover:text-gray-900 text-lg">
+                shopping_cart
+              </span>
+              <span className="ml-2 text-sm font-medium group-hover:text-gray-800">{totalProducts()}</span>
+              <span className="sr-only">items in cart, view bag</span>
+            </Link>
 
 
             {/* )} */}
